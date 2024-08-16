@@ -56,7 +56,7 @@ export default function App() {
                 base: 300,
                 lg: 500,
               }}
-              scrollSnapAlign={"center"}
+              scrollSnapAlign={"start"}
               key={spec.key}
             />
           ))}
