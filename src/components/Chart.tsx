@@ -1,4 +1,10 @@
-import { type CenterProps, Flex, Heading, useBreakpointValue } from "@chakra-ui/react";
+import {
+  type CenterProps,
+  Flex,
+  Heading,
+  useBreakpointValue,
+  useColorMode,
+} from "@chakra-ui/react";
 import { memo } from "react";
 import { Vega, type VisualizationSpec } from "react-vega";
 
@@ -11,6 +17,7 @@ interface ChartProps extends CenterProps {
 function Chart({ spec, chartWidth, chartHeight, ...props }: ChartProps) {
   const width = useBreakpointValue(chartWidth);
   const height = useBreakpointValue(chartHeight);
+  const { colorMode } = useColorMode();
   return (
     <Flex {...props}>
       <Heading>{spec.key}</Heading>
@@ -19,7 +26,9 @@ function Chart({ spec, chartWidth, chartHeight, ...props }: ChartProps) {
           ...spec,
           width,
           height,
+          background: "transparent",
         }}
+        theme={colorMode === "dark" ? "dark" : undefined}
         actions={false}
         renderer="canvas"
       />
