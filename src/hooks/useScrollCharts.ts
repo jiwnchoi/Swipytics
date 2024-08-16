@@ -5,7 +5,7 @@ import MockChart from "../assets/MockChart.json";
 
 type ObjectWithKey<T> = T & { key: string };
 
-const DEBOUNCE_DELAY = 200;
+const DEBOUNCE_DELAY = 100;
 const DUMMY = [
   { ...MockChart, key: `chart-${Math.random()}` } as ObjectWithKey<VisualizationSpec>,
   { ...MockChart, key: `chart-${Math.random()}` } as ObjectWithKey<VisualizationSpec>,
@@ -31,7 +31,6 @@ export default function useScrollCharts() {
   const scrollToChart = (direction: "up" | "down") => {
     const container = scrollContainerRef.current;
     if (!container) return;
-    console.log(container.clientHeight);
     const scrollAmount = direction === "up" ? -container.clientHeight : container.clientHeight;
     container.scrollTo({
       top: container.scrollTop + scrollAmount,

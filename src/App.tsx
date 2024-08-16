@@ -36,7 +36,7 @@ export default function App() {
           }}
           sx={{
             "&::-webkit-scrollbar": {
-              width: "0px",
+              display: "none",
             },
           }}>
           {charts.map(spec => (

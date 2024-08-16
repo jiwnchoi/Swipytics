@@ -23,9 +23,13 @@ export const theme = extendTheme({
     global: {
       body: {
         height: "100lvh",
+        overflow: "hidden",
+        overscrollBehavior: "none",
       },
       html: {
         height: "100lvh",
+        overflow: "hidden",
+        overscrollBehavior: "none",
       },
     },
   },
