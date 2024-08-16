@@ -28,21 +28,16 @@ export default function useScrollCharts() {
     [charts.length],
   );
 
-  const scrollToChart = useCallback(
-    (direction: "up" | "down") => {
-      const container = scrollContainerRef.current;
-      if (!container) return;
-      if (currentChartIndex === 0 && direction === "up") return;
+  const scrollToChart = (direction: "up" | "down") => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
 
-      const scrollAmount = direction === "up" ? -10 : 10;
-      container.scrollBy({
-        top: scrollAmount,
-        behavior: "smooth",
-      });
-    },
-    [currentChartIndex],
-  );
-
+    const scrollAmount = direction === "up" ? -10 : 10;
+    container.scrollBy({
+      top: scrollAmount,
+      behavior: "smooth",
+    });
+  };
   const handleNextChart = useCallback(() => {
     scrollToChart("down");
   }, [scrollToChart]);
