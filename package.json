@@ -13,7 +13,7 @@
     "prepare": "husky",
     "test": "vitest --globals --run",
     "lint-staged": "lint-staged",
-    "deploy": "pnpm build && gh-pages -d dist"
+    "deploy": "pnpm build && gh-pages -d dist --dotfiles"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
