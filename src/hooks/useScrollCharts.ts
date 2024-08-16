@@ -3,8 +3,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { VisualizationSpec } from "react-vega";
 import MockChart from "../assets/MockChart.json";
 
-type ObjectWithKey<T> = T & { key: string };
-
 const DEBOUNCE_DELAY = 100;
 const DUMMY = [
   { ...MockChart, key: `chart-${Math.random()}` } as ObjectWithKey<VisualizationSpec>,

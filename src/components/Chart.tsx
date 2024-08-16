@@ -3,7 +3,7 @@ import { memo } from "react";
 import { Vega, type VisualizationSpec } from "react-vega";
 
 interface ChartProps extends CenterProps {
-  spec: VisualizationSpec;
+  spec: ObjectWithKey<VisualizationSpec>;
   chartWidth: Partial<Record<string, number>> | (number | null)[];
   chartHeight: Partial<Record<string, number>> | (number | null)[];
 }
