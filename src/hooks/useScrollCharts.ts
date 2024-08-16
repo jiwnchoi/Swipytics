@@ -31,10 +31,10 @@ export default function useScrollCharts() {
   const scrollToChart = (direction: "up" | "down") => {
     const container = scrollContainerRef.current;
     if (!container) return;
-
-    const scrollAmount = direction === "up" ? -10 : 10;
-    container.scrollBy({
-      top: scrollAmount,
+    console.log(container.clientHeight);
+    const scrollAmount = direction === "up" ? -container.clientHeight : container.clientHeight;
+    container.scrollTo({
+      top: container.scrollTop + scrollAmount,
       behavior: "smooth",
     });
   };

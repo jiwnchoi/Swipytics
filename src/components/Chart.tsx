@@ -13,7 +13,7 @@ function Chart({ spec, chartWidth, chartHeight, ...props }: ChartProps) {
   const height = useBreakpointValue(chartHeight);
   return (
     <Flex {...props}>
-      <Heading>Exploring a and b</Heading>
+      <Heading>{spec.key}</Heading>
       <Vega
         spec={{
           ...spec,

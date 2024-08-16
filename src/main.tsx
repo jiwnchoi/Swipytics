@@ -8,7 +8,7 @@ import { theme } from "./theme";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ChakraProvider theme={theme}>
-      <Center w="full" minH="100vh" p={0} m={0}>
+      <Center id="eelll" w="full" minH={"100lvh"} p={0} m={0} maxH={"100lvh"}>
         <App />
       </Center>
     </ChakraProvider>

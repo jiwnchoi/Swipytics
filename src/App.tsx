@@ -21,18 +21,19 @@ export default function App() {
       flexDir={{ base: "column", md: "row" }}
       gap={4}
       p={2}>
-      <Flex w="full" flexDir={"column"} gap={4}>
+      <Flex w="full" flexDir={"column"} gap={4} minH={"100lvh"}>
         <Flex
           ref={scrollContainerRef}
-          // border={"4px solid"}
-          // borderColor={"blue.50"}
           flexDir={"column"}
           w={"full"}
-          h={"min(100vh, 700px)"}
+          h={"min(100lvh, 1080px)"}
           gap={4}
           rounded="md"
           scrollSnapType={"y mandatory"}
           overflowY={"auto"}
+          style={{
+            WebkitOverflowScrolling: "touch",
+          }}
           sx={{
             "&::-webkit-scrollbar": {
               width: "0px",
@@ -46,16 +47,16 @@ export default function App() {
               gap={4}
               spec={spec}
               minW="full"
-              minH={"min(100vh, 700px)"}
+              minH={"min(100lvh, 1080px)"}
               chartWidth={{
                 base: 300,
-                lg: 600,
+                lg: 500,
               }}
               chartHeight={{
                 base: 300,
                 lg: 500,
               }}
-              scrollSnapAlign={"start"}
+              scrollSnapAlign={"center"}
               key={spec.key}
             />
           ))}

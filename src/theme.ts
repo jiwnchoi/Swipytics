@@ -19,4 +19,14 @@ export const theme = extendTheme({
     initialColorMode: "dark",
     useSystemColorMode: true,
   },
+  styles: {
+    global: {
+      body: {
+        height: "100lvh",
+      },
+      html: {
+        height: "100lvh",
+      },
+    },
+  },
 });
