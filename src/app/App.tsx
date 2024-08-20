@@ -1,4 +1,6 @@
 import { Center, Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Chart, ResponsiveButton } from "@components";
+import { useScrollCharts } from "@hooks";
 import {
   ArrowDown01Icon,
   ArrowUp01Icon,
@@ -6,8 +8,6 @@ import {
   Exchange01Icon,
   LinkForwardIcon,
 } from "hugeicons-react";
-import { Chart, ResponsiveButton } from "./components";
-import { useScrollCharts } from "./hooks";
 
 export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart } = useScrollCharts();

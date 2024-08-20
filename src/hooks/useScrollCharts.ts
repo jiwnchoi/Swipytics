@@ -1,7 +1,7 @@
+import MockChart from "@assets/MockChart.json";
 import { debounce } from "es-toolkit";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { VisualizationSpec } from "react-vega";
-import MockChart from "../assets/MockChart.json";
 
 const DEBOUNCE_DELAY = 100;
 const DUMMY = [

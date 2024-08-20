@@ -5,7 +5,6 @@ import {
   useBreakpointValue,
   useColorMode,
 } from "@chakra-ui/react";
-import { memo } from "react";
 import { Vega, type VisualizationSpec } from "react-vega";
 
 interface ChartProps extends CenterProps {
@@ -36,5 +35,4 @@ function Chart({ spec, chartWidth, chartHeight, ...props }: ChartProps) {
   );
 }
 
-const MemoChart = memo(Chart);
-export default MemoChart;
+export default Chart;
