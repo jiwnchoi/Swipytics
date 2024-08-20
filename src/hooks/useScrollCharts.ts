@@ -35,27 +35,20 @@ export default function useScrollCharts() {
       behavior: "smooth",
     });
   };
-  const handleNextChart = useCallback(() => {
-    scrollToChart("down");
-  }, [scrollToChart]);
-
-  const handlePreviousChart = useCallback(() => {
-    scrollToChart("up");
-  }, [currentChartIndex, scrollToChart]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowUp") {
         event.preventDefault();
-        handlePreviousChart();
+        scrollToChart("up");
       } else if (event.key === "ArrowDown") {
         event.preventDefault();
-        handleNextChart();
+        scrollToChart("down");
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleNextChart, handlePreviousChart]);
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -77,7 +70,6 @@ export default function useScrollCharts() {
     scrollContainerRef,
     charts,
     currentChartIndex,
-    handleNextChart,
-    handlePreviousChart,
+    scrollToChart,
   };
 }

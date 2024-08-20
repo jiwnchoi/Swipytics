@@ -10,8 +10,7 @@ import { Chart, ResponsiveButton } from "./components";
 import { useScrollCharts } from "./hooks";
 
 export default function App() {
-  const { scrollContainerRef, currentChartIndex, charts, handleNextChart, handlePreviousChart } =
-    useScrollCharts();
+  const { scrollContainerRef, currentChartIndex, charts, scrollToChart } = useScrollCharts();
 
   const isMobile = useBreakpointValue({ base: true, md: false });
 
@@ -64,11 +63,7 @@ export default function App() {
       </Flex>
       {isMobile ? (
         <BottomDrawer>
-          <Controller
-            handlePreviousChart={handlePreviousChart}
-            handleNextChart={handleNextChart}
-            currentChartIndex={currentChartIndex}
-          />
+          <Controller scrollToChart={scrollToChart} currentChartIndex={currentChartIndex} />
         </BottomDrawer>
       ) : (
         <Flex
@@ -79,11 +74,7 @@ export default function App() {
           bgColor="blue.50"
           position={{ base: "absolute", md: "static" }}
           bottom={0}>
-          <Controller
-            handlePreviousChart={handlePreviousChart}
-            handleNextChart={handleNextChart}
-            currentChartIndex={currentChartIndex}
-          />
+          <Controller scrollToChart={scrollToChart} currentChartIndex={currentChartIndex} />
           This Chart contains ...
         </Flex>
       )}
@@ -96,13 +87,12 @@ import { type PropsWithChildren, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
 interface ControllerProps {
-  handlePreviousChart: () => void;
-  handleNextChart: () => void;
+  scrollToChart: (direction: "up" | "down") => void;
   currentChartIndex: number;
 }
 
 const Controller = (props: ControllerProps) => {
-  const { handlePreviousChart, handleNextChart, currentChartIndex } = props;
+  const { scrollToChart, currentChartIndex } = props;
   return (
     <Flex w="full" gap={2}>
       <ResponsiveButton
@@ -110,7 +100,7 @@ const Controller = (props: ControllerProps) => {
         colorScheme="blue"
         label="이전 시각화"
         icon={ArrowUp01Icon}
-        onClick={handlePreviousChart}
+        onClick={() => scrollToChart("up")}
         isDisabled={currentChartIndex === 0}
       />
       <ResponsiveButton
@@ -118,7 +108,7 @@ const Controller = (props: ControllerProps) => {
         colorScheme="blue"
         label="다음 시각화"
         icon={ArrowDown01Icon}
-        onClick={handleNextChart}
+        onClick={() => scrollToChart("down")}
       />
       <ResponsiveButton w="full" colorScheme="blue" label="다른 속성" icon={LinkForwardIcon} />
       <ResponsiveButton w="full" colorScheme="blue" label="다른 시각화" icon={Exchange01Icon} />
