@@ -1,5 +1,5 @@
 import { Card, Flex } from "@chakra-ui/react";
-import { Chart, Controller } from "@components";
+import { Chart, Controller, FileForm } from "@components";
 import { useSession } from "@hooks";
 
 const HEIGHT = "80vh";
@@ -58,7 +58,7 @@ export default function App() {
           p={4}
           rounded="lg"
           bottom={0}>
-          This Chart contains ...
+          <FileForm />
           <Controller
             scrollToChart={scrollToChart}
             currentChartIndex={currentChartIndex}
