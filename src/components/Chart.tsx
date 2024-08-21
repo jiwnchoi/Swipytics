@@ -21,19 +21,21 @@ function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
   const height = useBreakpointValue(chartHeight);
   const { colorMode } = useColorMode();
   return (
-    <Flex as={Card} {...props}>
-      <Heading>{chart.title}</Heading>
-      <Vega
-        spec={{
-          ...chart.spec,
-          width,
-          height,
-          background: "transparent",
-        }}
-        theme={colorMode === "dark" ? "dark" : undefined}
-        actions={false}
-        renderer="canvas"
-      />
+    <Flex minW="full" scrollSnapAlign={"start"} {...props}>
+      <Card w="full" h="full" alignItems={"center"} rounded="lg" p={4} gap={4}>
+        <Heading>{chart.title}</Heading>
+        <Vega
+          spec={{
+            ...chart.spec,
+            width,
+            height,
+            background: "transparent",
+          }}
+          theme={colorMode === "dark" ? "dark" : undefined}
+          actions={false}
+          renderer="canvas"
+        />
+      </Card>
     </Flex>
   );
 }

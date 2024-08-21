@@ -2,6 +2,8 @@ import { Card, Flex } from "@chakra-ui/react";
 import { Chart, Controller } from "@components";
 import { useSession } from "@hooks";
 
+const HEIGHT = "80vh";
+
 export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
     useSession("dummy-session");
@@ -9,15 +11,15 @@ export default function App() {
   return (
     <Flex
       w={{ base: "full", md: "container.xl" }}
-      h={{ base: "full", md: "80vh" }}
-      flexDir={{ base: "column", md: "row" }}
-      gap={4}>
+      h={{ base: "full", md: HEIGHT }}
+      flexDir={{ base: "column", md: "row" }}>
       <Flex w="full" flexDir={"column"} gap={4} minH={"100lvh"}>
         <Flex
+          p={2}
           ref={scrollContainerRef}
           flexDir={"column"}
           w={"full"}
-          maxH={{ base: "full", md: "80vh" }}
+          maxH={{ base: "full", md: HEIGHT }}
           gap={4}
           rounded="md"
           scrollSnapType={"y mandatory"}
@@ -32,13 +34,10 @@ export default function App() {
           }}>
           {charts.map(chart => (
             <Chart
+              key={chart.key}
+              p={2}
               chart={chart}
-              flexDir={"column"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              gap={4}
-              minW="full"
-              minH={"80vh"}
+              minH={HEIGHT}
               chartWidth={{
                 base: 300,
                 lg: 500,
@@ -47,26 +46,25 @@ export default function App() {
                 base: 300,
                 lg: 500,
               }}
-              scrollSnapAlign={"start"}
-              key={chart.key}
             />
           ))}
         </Flex>
       </Flex>
-      <Flex
-        as={Card}
-        flexDir={"column"}
-        justifyContent={"space-between"}
-        w={{ base: "full", md: "md" }}
-        p={4}
-        rounded="md"
-        bottom={0}>
-        This Chart contains ...
-        <Controller
-          scrollToChart={scrollToChart}
-          currentChartIndex={currentChartIndex}
-          renewCurrentChart={renewCurrentChart}
-        />
+      <Flex w={{ base: "full", md: "md" }} p={2}>
+        <Card
+          flexDir={"column"}
+          w="full"
+          justifyContent={"space-between"}
+          p={4}
+          rounded="lg"
+          bottom={0}>
+          This Chart contains ...
+          <Controller
+            scrollToChart={scrollToChart}
+            currentChartIndex={currentChartIndex}
+            renewCurrentChart={renewCurrentChart}
+          />
+        </Card>
       </Flex>
     </Flex>
   );

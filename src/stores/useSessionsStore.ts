@@ -24,7 +24,7 @@ const DUMMY: ChartModel[] = [
 ];
 
 interface SessionsState {
-  _sessions: Record<string, TSession>;
+  _sessions: TSession[];
   createSession: (session: TSession) => void;
   getSession: (key: string) => TSession | undefined;
 
@@ -33,23 +33,22 @@ interface SessionsState {
 }
 
 const useSessionsStore = create<SessionsState>((set, get) => ({
-  _sessions: {
-    "dummy-session": {
+  _sessions: [
+    {
       key: "dummy-session",
       charts: DUMMY,
       groundingAttributes: ["dummy"],
     },
-  },
-
+  ],
   // Manage sessions
   createSession: (session: TSession) =>
     set(
       produce((state: SessionsState) => {
-        state._sessions[session.key] = session;
+        state._sessions.push(session);
       }),
     ),
   getSession: (key: string) => {
-    return get()._sessions[key];
+    return get()._sessions.find(session => session.key === key);
   },
 
   // Manage charts in single session
@@ -57,7 +56,7 @@ const useSessionsStore = create<SessionsState>((set, get) => ({
     return (chart: ChartModel) => {
       set(
         produce((state: SessionsState) => {
-          const session = state._sessions[sessionKey];
+          const session = state._sessions.find(session => session.key === sessionKey);
           if (!session) {
             throw new Error(`Session ${sessionKey} not found`);
           }
@@ -70,11 +69,16 @@ const useSessionsStore = create<SessionsState>((set, get) => ({
     return (chartKey: string) => {
       set(
         produce((state: SessionsState) => {
-          const session = state._sessions[sessionKey];
+          const session = state._sessions.find(session => session.key === sessionKey);
+          if (!session) {
+            throw new Error(`Session ${sessionKey} not found`);
+          }
+
           const chart = session?.charts.find(chart => chart.key === chartKey);
           if (!chart) {
             throw new Error(`Chart ${chartKey} not found in session ${sessionKey}`);
           }
+
           chart.renew({});
           session.charts = [...session.charts];
         }),

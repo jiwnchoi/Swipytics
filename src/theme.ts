@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { type StyleFunctionProps, type ThemeConfig, extendTheme } from "@chakra-ui/react";
 
 export const PRIMARY_COLOR = "orange";
 export const PRIMARY = {
@@ -14,23 +14,26 @@ export const PRIMARY = {
   900: `${PRIMARY_COLOR}.900`,
 };
 
+const config: ThemeConfig = {
+  initialColorMode: "dark",
+  useSystemColorMode: true,
+};
+
 export const theme = extendTheme({
-  config: {
-    initialColorMode: "dark",
-    useSystemColorMode: true,
-  },
+  config,
   styles: {
-    global: {
+    global: (props: StyleFunctionProps) => ({
       body: {
         height: "100lvh",
         overflow: "hidden",
         overscrollBehavior: "none",
+        bg: props.colorMode === "light" ? "gray.100" : undefined,
       },
       html: {
         height: "100lvh",
         overflow: "hidden",
         overscrollBehavior: "none",
       },
-    },
+    }),
   },
 });
