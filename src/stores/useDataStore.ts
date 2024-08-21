@@ -1,5 +1,5 @@
 import { ArrowLoader, type ArrowTable } from "@loaders.gl/arrow";
-import { JSONLoader, type Loader, load, registerLoaders } from "@loaders.gl/core";
+import { JSONLoader, load } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
 import { ParquetLoader } from "@loaders.gl/parquet";
 import type {
@@ -12,8 +12,6 @@ import type {
 } from "@loaders.gl/schema";
 import { getFileNameFromURL } from "@shared/utils";
 import { create } from "zustand";
-
-registerLoaders([JSONLoader, CSVLoader, ParquetLoader, ArrowLoader]);
 
 type SupportedDataType =
   | ArrowTable
@@ -34,23 +32,6 @@ interface DataState {
   loading: boolean;
 }
 
-const getLoaderByFileExtension = (url: string | File): Loader | undefined => {
-  if (url instanceof File) {
-    return undefined;
-  }
-  const extension = url.split(".").pop();
-  switch (extension) {
-    case "json":
-      return JSONLoader;
-    case "csv":
-      return CSVLoader;
-    case "parquet":
-      return ParquetLoader;
-    default:
-      return JSONLoader;
-  }
-};
-
 const useDataStore = create<DataState>(set => ({
   data: undefined,
   dataName: null,
@@ -60,7 +41,7 @@ const useDataStore = create<DataState>(set => ({
 
   load: async (file: File | string) => {
     set({ loading: true });
-    load(file, {
+    load(file, [JSONLoader, CSVLoader, ParquetLoader, ArrowLoader], {
       worker: true,
       fetch: { mode: "no-cors" },
       arrow: {
@@ -77,6 +58,7 @@ const useDataStore = create<DataState>(set => ({
     })
       .then(data => {
         const loadedData = data as SupportedDataType;
+        // biome-ignore lint/nursery/noConsole: <explanation>
         console.log(loadedData);
         set({
           data: loadedData,
