@@ -79,7 +79,7 @@ export default function App() {
         closeThreshold={0.5}>
         <Drawer.Portal>
           <Drawer.Content
-            onOpenAutoFocus={(event: Event) => {}}
+            onOpenAutoFocus={() => {}}
             style={{
               position: "fixed",
               bottom: 0,
