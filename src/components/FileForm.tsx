@@ -33,7 +33,7 @@ export default function FileForm() {
             display={"none"}
             ref={fileInputRef}
             onChange={handleFileChange}
-            accept=".csv,.json,.arrow,.parquet"
+            accept=".csv,.json,.parquet"
           />
           <IconButton
             aria-label="파일 선택"

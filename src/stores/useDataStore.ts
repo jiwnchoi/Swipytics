@@ -1,4 +1,3 @@
-import { ArrowLoader } from "@loaders.gl/arrow";
 import { JSONLoader, fetchFile, parse } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
 import { ParquetLoader } from "@loaders.gl/parquet";
@@ -19,7 +18,13 @@ interface DataState {
   loading: boolean;
 }
 
-const useDataStore = create<DataState>((set, get) => ({
+const loaderMap = {
+  json: JSONLoader,
+  csv: CSVLoader,
+  parquet: ParquetLoader,
+};
+
+const useDataStore = create<DataState>(set => ({
   file: null,
   data: undefined,
   dataName: null,
@@ -30,6 +35,7 @@ const useDataStore = create<DataState>((set, get) => ({
   load: async (file: File | string) => {
     set({ loading: true });
     const fileName = file instanceof File ? file.name : getFileNameFromURL(file);
+    const fileExtension = fileName.split(".").pop();
 
     try {
       // Fetching Files
@@ -42,22 +48,18 @@ const useDataStore = create<DataState>((set, get) => ({
         throw new Error("Pyodide not loaded");
       }
       pyodide.FS.writeFile(`/${fileName}`, uint8Array, { encoding: "binary" });
+      pyodide.runPython(
+        `
+        import pandas as pd
+        df = pd.read_${fileExtension !== "arrow" ? fileExtension : "feather"}('/${fileName}')
+        print(df.head())
+      `,
+      );
 
       // Parse the file
-      const data = await parse(file, [JSONLoader, CSVLoader, ParquetLoader, ArrowLoader], {
+      const data = await parse(buffer, loaderMap[fileExtension as keyof typeof loaderMap], {
         worker: true,
         fetch: { mode: "no-cors" },
-        arrow: {
-          shape: "columnar-table",
-        },
-        json: {
-          header: "auto",
-          shape: "object-row-table",
-        },
-        csv: {
-          header: "auto",
-          shape: "object-row-table",
-        },
       });
 
       const loadedData = data as TSupportedDataType;
