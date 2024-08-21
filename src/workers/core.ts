@@ -11,6 +11,6 @@ async function loadEnvs() {
   await pyodide.loadPackage(["draco"]);
 }
 
-await loadEnvs();
+loadEnvs();
 
 export { loadEnvs, pyodide };

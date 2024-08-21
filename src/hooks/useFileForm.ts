@@ -4,7 +4,6 @@ import { type ChangeEvent, useMemo, useRef, useState } from "react";
 
 function useFileForm() {
   const loading = useDataStore(state => state.loading);
-  const blob = useDataStore(state => state.blob);
   const load = useDataStore(state => state.load);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -44,7 +43,6 @@ function useFileForm() {
 
   return {
     loading,
-    blob,
     fileInputRef,
     load,
     handleInputChange,

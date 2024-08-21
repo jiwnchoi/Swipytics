@@ -12,6 +12,9 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     VitePWA({
+      workbox: {
+        maximumFileSizeToCacheInBytes: 1024 * 1024 * 1024,
+      },
       registerType: "autoUpdate",
       devOptions: {
         enabled: true,

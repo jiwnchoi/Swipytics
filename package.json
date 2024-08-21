@@ -24,7 +24,6 @@
     "@loaders.gl/core": "^4.2.2",
     "@loaders.gl/csv": "^4.2.2",
     "@loaders.gl/json": "^4.2.2",
-    "@loaders.gl/parquet": "^4.2.2",
     "@loaders.gl/schema": "^4.2.2",
     "@tanstack/react-query": "^5.51.24",
     "@use-gesture/react": "^10.3.1",

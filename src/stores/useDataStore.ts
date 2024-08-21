@@ -1,6 +1,5 @@
 import { JSONLoader, fetchFile, parse } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
-import { ParquetLoader } from "@loaders.gl/parquet";
 import type { Schema } from "@loaders.gl/schema";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
@@ -21,7 +20,6 @@ interface DataState {
 const loaderMap = {
   json: JSONLoader,
   csv: CSVLoader,
-  parquet: ParquetLoader,
 };
 
 const useDataStore = create<DataState>(set => ({
