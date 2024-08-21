@@ -1,17 +1,16 @@
-import { Card, Flex } from "@chakra-ui/react";
+import { Card, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { Chart, Controller, FileForm } from "@components";
 import { useSession } from "@hooks";
-
-const HEIGHT = "80vh";
 
 export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
     useSession("dummy-session");
+  const cardHeight = useBreakpointValue({ base: "100vh", md: "80vh" });
 
   return (
     <Flex
       w={{ base: "full", md: "container.xl" }}
-      h={{ base: "full", md: HEIGHT }}
+      h={cardHeight}
       flexDir={{ base: "column", md: "row" }}>
       <Flex w="full" flexDir={"column"} gap={4} minH={"100lvh"}>
         <Flex
@@ -19,7 +18,7 @@ export default function App() {
           ref={scrollContainerRef}
           flexDir={"column"}
           w={"full"}
-          maxH={{ base: "full", md: HEIGHT }}
+          maxH={cardHeight}
           gap={4}
           rounded="md"
           scrollSnapType={"y mandatory"}
@@ -37,7 +36,7 @@ export default function App() {
               key={chart.key}
               p={2}
               chart={chart}
-              minH={HEIGHT}
+              minH={cardHeight}
               chartWidth={{
                 base: 300,
                 lg: 500,
@@ -50,7 +49,7 @@ export default function App() {
           ))}
         </Flex>
       </Flex>
-      <Flex w={{ base: "full", md: "md" }} p={2}>
+      <Flex w={{ base: "full", md: "md" }} p={2} display={{ base: "none", md: "block" }}>
         <Card
           flexDir={"column"}
           w="full"
@@ -61,8 +60,8 @@ export default function App() {
           <FileForm />
           <Controller
             scrollToChart={scrollToChart}
-            currentChartIndex={currentChartIndex}
             renewCurrentChart={renewCurrentChart}
+            currentChartIndex={currentChartIndex}
           />
         </Card>
       </Flex>
