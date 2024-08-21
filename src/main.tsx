@@ -1,10 +1,20 @@
-import { App, theme } from "@app";
-import { Center, ChakraProvider } from "@chakra-ui/react";
+import { Center, ChakraProvider, Heading, Spinner, VStack } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { StrictMode } from "react";
+import { theme } from "@theme";
+import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
-
 const queryClient = new QueryClient();
+
+const LazyApp = lazy(() => import("@app/App"));
+
+function Fallback() {
+  return (
+    <VStack gap={12}>
+      <Heading>Initializing System...</Heading>
+      <Spinner size={"xl"} />
+    </VStack>
+  );
+}
 
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 createRoot(document.getElementById("root")!).render(
@@ -12,7 +22,9 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <Center w="full" minH={"100lvh"} p={0} m={0} maxH={"100lvh"}>
-          <App />
+          <Suspense fallback={<Fallback />}>
+            <LazyApp />
+          </Suspense>
         </Center>
       </ChakraProvider>
     </QueryClientProvider>

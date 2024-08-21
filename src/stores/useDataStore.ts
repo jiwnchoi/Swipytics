@@ -1,76 +1,80 @@
-import { ArrowLoader, type ArrowTable } from "@loaders.gl/arrow";
-import { JSONLoader, load } from "@loaders.gl/core";
+import { ArrowLoader } from "@loaders.gl/arrow";
+import { JSONLoader, fetchFile, parse } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
 import { ParquetLoader } from "@loaders.gl/parquet";
-import type {
-  ArrayRowTable,
-  ColumnarTable,
-  GeoJSONTable,
-  ObjectRowTable,
-  Schema,
-  Table,
-} from "@loaders.gl/schema";
+import type { Schema } from "@loaders.gl/schema";
+import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
+import { pyodide } from "@workers/core";
 import { create } from "zustand";
 
-type SupportedDataType =
-  | ArrowTable
-  | ArrayRowTable
-  | ObjectRowTable
-  | GeoJSONTable
-  | ColumnarTable
-  | ArrowTable
-  | Table;
-
 interface DataState {
-  data: SupportedDataType | undefined;
+  file: string | File | null;
+  data: TSupportedDataType | undefined;
   dataName: string | null;
   schema: Schema | null;
-  blob: Blob | null;
+  byte: Uint8Array | null;
 
   load: (file: File | string) => void;
   loading: boolean;
 }
 
-const useDataStore = create<DataState>(set => ({
+const useDataStore = create<DataState>((set, get) => ({
+  file: null,
   data: undefined,
   dataName: null,
   schema: null,
-  blob: null,
+  byte: null,
   loading: false,
 
   load: async (file: File | string) => {
     set({ loading: true });
-    load(file, [JSONLoader, CSVLoader, ParquetLoader, ArrowLoader], {
-      worker: true,
-      fetch: { mode: "no-cors" },
-      arrow: {
-        shape: "columnar-table",
-      },
-      json: {
-        header: "auto",
-        shape: "object-row-table",
-      },
-      csv: {
-        header: "auto",
-        shape: "object-row-table",
-      },
-    })
-      .then(data => {
-        const loadedData = data as SupportedDataType;
-        // biome-ignore lint/nursery/noConsole: <explanation>
-        console.log(loadedData);
-        set({
-          data: loadedData,
-          dataName: file instanceof File ? file.name : getFileNameFromURL(file),
-          schema: loadedData.schema,
-          blob: file instanceof File ? file : null,
-          loading: false,
-        });
-      })
-      .catch(e => {
-        throw e;
+    const fileName = file instanceof File ? file.name : getFileNameFromURL(file);
+
+    try {
+      // Fetching Files
+      const fetchedFile = await fetchFile(file);
+      const buffer = await fetchedFile.arrayBuffer();
+      const uint8Array = new Uint8Array(buffer);
+
+      // Save buffer to pyodide
+      if (!pyodide) {
+        throw new Error("Pyodide not loaded");
+      }
+      pyodide.FS.writeFile(`/${fileName}`, uint8Array, { encoding: "binary" });
+
+      // Parse the file
+      const data = await parse(file, [JSONLoader, CSVLoader, ParquetLoader, ArrowLoader], {
+        worker: true,
+        fetch: { mode: "no-cors" },
+        arrow: {
+          shape: "columnar-table",
+        },
+        json: {
+          header: "auto",
+          shape: "object-row-table",
+        },
+        csv: {
+          header: "auto",
+          shape: "object-row-table",
+        },
       });
+
+      const loadedData = data as TSupportedDataType;
+      // biome-ignore lint/nursery/noConsole: <explanation>
+      console.log(loadedData);
+      set({
+        data: loadedData,
+        dataName: fileName,
+        schema: loadedData.schema,
+        loading: false,
+      });
+    } catch (error) {
+      set({
+        loading: false,
+      });
+      throw error;
+    }
   },
 }));
 

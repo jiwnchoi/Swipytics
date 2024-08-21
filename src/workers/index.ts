@@ -1,0 +1,1 @@
+export { pyodide } from "./core";

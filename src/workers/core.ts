@@ -1,13 +1,16 @@
-import { type PyodideInterface, loadPyodide } from "pyodide";
+import type { PyodideInterface } from "pyodide";
 
 let pyodide: PyodideInterface | null = null;
 
-async function pyodideReadyPromise() {
+async function loadEnvs() {
+  const { loadPyodide } = await import("pyodide");
   pyodide = await loadPyodide({
     indexURL: "https://dig.cmu.edu/draco2/jupyterlite/static/pyodide",
   });
 
-  await pyodide.loadPackage(["numpy", "pandas", "draco"]);
+  await pyodide.loadPackage(["draco"]);
 }
 
-export { pyodide, pyodideReadyPromise };
+await loadEnvs();
+
+export { loadEnvs, pyodide };
