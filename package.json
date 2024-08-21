@@ -26,11 +26,13 @@
     "es-toolkit": "^1.16.0",
     "framer-motion": "^11.3.24",
     "hugeicons-react": "^0.3.0",
+    "immer": "^10.1.1",
     "pyodide": "^0.26.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-swipeable": "^7.0.1",
     "react-vega": "^7.6.0",
+    "vaul": "^0.9.1",
     "vega": "^5.30.0",
     "vega-lite": "^5.20.1",
     "zustand": "^4.5.5"

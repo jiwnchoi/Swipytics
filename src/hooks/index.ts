@@ -1,1 +1,1 @@
-export { default as useScrollCharts } from "./useScrollCharts";
+export { default as useSession } from "./useSession";

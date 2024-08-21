@@ -1,28 +1,31 @@
 import {
+  Card,
   type CenterProps,
   Flex,
   Heading,
   useBreakpointValue,
   useColorMode,
 } from "@chakra-ui/react";
-import { Vega, type VisualizationSpec } from "react-vega";
+import type { ChartModel } from "@shared/models";
+import { memo } from "react";
+import { Vega } from "react-vega";
 
 interface ChartProps extends CenterProps {
-  spec: ObjectWithKey<VisualizationSpec>;
+  chart: ChartModel;
   chartWidth: Partial<Record<string, number>> | (number | null)[];
   chartHeight: Partial<Record<string, number>> | (number | null)[];
 }
 
-function Chart({ spec, chartWidth, chartHeight, ...props }: ChartProps) {
+function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
   const width = useBreakpointValue(chartWidth);
   const height = useBreakpointValue(chartHeight);
   const { colorMode } = useColorMode();
   return (
-    <Flex {...props}>
-      <Heading>{spec.key}</Heading>
+    <Flex as={Card} {...props}>
+      <Heading>{chart.title}</Heading>
       <Vega
         spec={{
-          ...spec,
+          ...chart.spec,
           width,
           height,
           background: "transparent",
@@ -35,4 +38,4 @@ function Chart({ spec, chartWidth, chartHeight, ...props }: ChartProps) {
   );
 }
 
-export default Chart;
+export default memo(Chart);
