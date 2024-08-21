@@ -5,7 +5,7 @@ import { useSession } from "@hooks";
 export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
     useSession("dummy-session");
-  const cardHeight = useBreakpointValue({ base: "100vh", md: "80vh" });
+  const cardHeight = useBreakpointValue({ base: "98vh", md: "80vh" });
 
   return (
     <Flex
