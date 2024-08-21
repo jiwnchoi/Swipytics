@@ -1,7 +1,6 @@
 import { Box, Card, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { Chart, Controller, FileForm } from "@components";
 import { useSession } from "@hooks";
-import { useState } from "react";
 import { Drawer } from "vaul";
 
 export default function App() {
@@ -10,7 +9,7 @@ export default function App() {
   const cardHeight = useBreakpointValue({ base: "100vh", md: "80vh" });
   const cardPadding = useBreakpointValue({ base: 0, md: 2 });
   const isDrawerVisible = useBreakpointValue({ base: true, md: false });
-  const [snap, setSnap] = useState<number | string | null>("196px");
+  // const [snap, setSnap] = useState<number | string | null>("196px");
 
   return (
     <Flex
@@ -72,7 +71,7 @@ export default function App() {
         </Flex>
       )}
       <Drawer.Root
-        open={true}
+        open={isDrawerVisible}
         modal={false}
         // activeSnapPoint={snap}
         // setActiveSnapPoint={setSnap}
@@ -80,6 +79,7 @@ export default function App() {
         closeThreshold={0.5}>
         <Drawer.Portal>
           <Drawer.Content
+            onOpenAutoFocus={(event: Event) => {}}
             style={{
               position: "fixed",
               bottom: 0,
