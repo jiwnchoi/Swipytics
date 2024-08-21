@@ -22,7 +22,13 @@ function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
   const { colorMode } = useColorMode();
   return (
     <Flex minW="full" scrollSnapAlign={"start"} {...props}>
-      <Card w="full" h="full" alignItems={"center"} rounded="lg" p={4} gap={4}>
+      <Card
+        w="full"
+        h="full"
+        alignItems={"center"}
+        rounded={{ base: "none", md: "md" }}
+        p={4}
+        gap={4}>
         <Heading>{chart.title}</Heading>
         <Vega
           spec={{
