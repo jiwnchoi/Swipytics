@@ -4,11 +4,14 @@ import pandas as pd
 import sklearn
 from api.functions import load_data
 from api.models import Chart, Session, State
+from draco import Draco
+from draco.renderer import AltairRenderer
 
 print(
   f"Package Loaded. draco: {draco.__version__}, numpy: {np.__version__}, pandas: {pd.__version__}, sklearn: {sklearn.__version__}"
 )
 
+drc = Draco()
 
 state = State()
 
