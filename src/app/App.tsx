@@ -4,8 +4,13 @@ import { useSession } from "@hooks";
 import { Drawer } from "vaul";
 
 export default function App() {
-  const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
-    useSession("dummy-session");
+  const {
+    scrollContainerRef,
+    currentChartIndex,
+    // charts,
+    scrollToChart,
+    renewCurrentChart,
+  } = useSession("dummy-session");
   const cardHeight = useBreakpointValue({ base: "100vh", md: "80vh" });
   const cardPadding = useBreakpointValue({ base: 0, md: 2 });
   const isDrawerVisible = useBreakpointValue({ base: true, md: false });
