@@ -31,8 +31,8 @@ Documentation = "https://github.com/jiwnchoi/swipytics#readme"
 Issues = "https://github.com/jiwnchoi/swipytics/issues"
 Source = "https://github.com/jiwnchoi/swipytics"
 
-[tool.hatch.version]
-path = "api/__about__.py"
+# [tool.hatch.version]
+# path = "api/__about__.py"
 
 [tool.hatch.envs.default]
 features = ["dev"]
@@ -51,7 +51,7 @@ python = ["3.9", "3.10", "3.11"]
 source_pkgs = ["swipytics", "tests"]
 branch = true
 parallel = true
-omit = ["api/__about__.py"]
+# omit = ["api/__about__.py"]
 
 [tool.coverage.paths]
 swipytics = ["api", "*/swipytics/api"]

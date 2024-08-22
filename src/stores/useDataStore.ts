@@ -3,7 +3,7 @@ import { CSVLoader } from "@loaders.gl/csv";
 import type { Schema } from "@loaders.gl/schema";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
-import { pyodide } from "@workers/core";
+import { getPyodide } from "@workers/core";
 import { create } from "zustand";
 
 interface DataState {
@@ -40,18 +40,13 @@ const useDataStore = create<DataState>(set => ({
       const fetchedFile = await fetchFile(file);
       const buffer = await fetchedFile.arrayBuffer();
       const uint8Array = new Uint8Array(buffer);
-
+      const pyodide = getPyodide();
       // Save buffer to pyodide
       if (!pyodide) {
         throw new Error("Pyodide not loaded");
       }
       pyodide.FS.writeFile(`/${fileName}`, uint8Array, { encoding: "binary" });
-      pyodide.runPython(
-        `
-        df = pd.read_${fileExtension !== "arrow" ? fileExtension : "feather"}('/${fileName}')
-        print(df.head())
-      `,
-      );
+      pyodide.runPython(`loadData("/${fileName}")`);
 
       // Parse the file
       const data = await parse(buffer, loaderMap[fileExtension as keyof typeof loaderMap], {

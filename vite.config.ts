@@ -1,6 +1,7 @@
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import pyodidePlugin from "vite-plugin-pyodide";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
@@ -9,6 +10,10 @@ export default defineConfig({
   },
   base: "/Swipytics",
   plugins: [
+    pyodidePlugin({
+      base: "api",
+      entryPoint: "app.py",
+    }),
     react(),
     tsconfigPaths(),
     VitePWA({
