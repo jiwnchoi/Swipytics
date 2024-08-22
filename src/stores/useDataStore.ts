@@ -3,7 +3,7 @@ import { CSVLoader } from "@loaders.gl/csv";
 import type { Schema } from "@loaders.gl/schema";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
-import { getPyodide } from "@workers/core";
+import { getPyodide } from "@workers";
 import { create } from "zustand";
 
 interface DataState {
