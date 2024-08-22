@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Deploy Github Pages
 
 on:
   push:
@@ -46,8 +46,8 @@ jobs:
         run: pnpm build
 
       - name: Deploy Projects
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GH_ACTIONS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
         
