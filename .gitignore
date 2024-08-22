@@ -24,3 +24,11 @@ dist-ssr
 *.sw?
 dev-dist
 .venv
+
+# Python ignores
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+
+
