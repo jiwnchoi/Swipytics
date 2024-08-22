@@ -13,16 +13,16 @@ import { FileUploadIcon } from "hugeicons-react";
 
 export default function FileForm() {
   const {
-    loading,
+    loadingData,
     fileInputRef,
     urlInput,
     inputDisabled,
+    loadingPyodide,
     handleFileButtonClick,
     handleFileChange,
     handleInputChange,
     handleSubmit,
   } = useFileForm();
-
   return (
     <Flex as={FormControl} flexDir={"column"} gap={0}>
       <InputGroup>
@@ -45,13 +45,13 @@ export default function FileForm() {
       </InputGroup>
       <Button
         mt={2}
-        colorScheme="blue"
+        colorScheme="gray"
         type="submit"
-        isLoading={loading}
-        loadingText={"Loading..."}
+        isLoading={loadingData || loadingPyodide}
+        loadingText={`Loading ${loadingData ? "data" : "pyodide"}...`}
         isDisabled={inputDisabled}
         onClick={handleSubmit}>
-        분석하기
+        {inputDisabled ? "Please Input Data" : "Load Data"}
       </Button>
     </Flex>
   );

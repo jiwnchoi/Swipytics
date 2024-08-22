@@ -9,8 +9,13 @@ async function loadEnvs() {
   });
 
   await pyodide.loadPackage(["draco"]);
-}
+  pyodide.runPython(`
+    import pandas as pd
+    import numpy as np
+    import sklearn 
+  `);
 
-loadEnvs();
+  return pyodide;
+}
 
 export { loadEnvs, pyodide };

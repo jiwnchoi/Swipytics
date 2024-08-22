@@ -48,7 +48,6 @@ const useDataStore = create<DataState>(set => ({
       pyodide.FS.writeFile(`/${fileName}`, uint8Array, { encoding: "binary" });
       pyodide.runPython(
         `
-        import pandas as pd
         df = pd.read_${fileExtension !== "arrow" ? fileExtension : "feather"}('/${fileName}')
         print(df.head())
       `,

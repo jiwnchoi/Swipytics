@@ -1,5 +1,5 @@
 import { Box, Card, Flex, useBreakpointValue } from "@chakra-ui/react";
-import { Chart, Controller, FileForm } from "@components";
+import { Controller, FileForm, PlaceHolder } from "@components";
 import { useSession } from "@hooks";
 import { Drawer } from "vaul";
 
@@ -34,7 +34,8 @@ export default function App() {
               display: "none",
             },
           }}>
-          {charts.map(chart => (
+          <PlaceHolder as={Card} flexDir={"column"} h={cardHeight} gap={4} p={cardPadding} />
+          {/* {charts.map(chart => (
             <Chart
               key={chart.key}
               p={cardPadding}
@@ -49,7 +50,7 @@ export default function App() {
                 lg: 500,
               }}
             />
-          ))}
+          ))} */}
         </Flex>
       </Flex>
       {!isDrawerVisible && (
