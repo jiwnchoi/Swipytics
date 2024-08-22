@@ -1,1 +1,1 @@
-export { pyodide } from "./core";
+export { getPyodide, loadEnvs } from "./core";

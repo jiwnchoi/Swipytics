@@ -1,7 +1,7 @@
 import { isURL } from "@shared/utils";
 import { useDataStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
-import { loadEnvs } from "@workers/core";
+import { loadEnvs } from "@workers";
 import { type ChangeEvent, useMemo, useRef, useState } from "react";
 
 function useFileForm() {
