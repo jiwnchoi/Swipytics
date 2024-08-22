@@ -1,14 +1,10 @@
 import { isURL } from "@shared/utils";
 import { useDataStore } from "@stores";
-import { useQuery } from "@tanstack/react-query";
-import { loadEnvs } from "@workers";
 import { type ChangeEvent, useMemo, useRef, useState } from "react";
+import usePyodide from "./usePyodide";
 
 function useFileForm() {
-  const { isLoading: loadingPyodide } = useQuery({
-    queryKey: ["pyodide"],
-    queryFn: loadEnvs,
-  });
+  const { loadingPyodide, pyodide } = usePyodide();
 
   const loadingData = useDataStore(state => state.loading);
   const load = useDataStore(state => state.load);
@@ -40,10 +36,14 @@ function useFileForm() {
   };
 
   const handleSubmit = async () => {
+    if (!pyodide) {
+      throw new Error("Pyodide is not loaded");
+    }
+
     if (isFileValid() && fileInputRef.current?.files?.[0]) {
-      load(fileInputRef.current?.files?.[0]);
+      load(pyodide, fileInputRef.current?.files?.[0]);
     } else if (isURL(urlInput)) {
-      load(urlInput);
+      load(pyodide, urlInput);
     }
   };
 

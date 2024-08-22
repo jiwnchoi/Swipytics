@@ -3,7 +3,7 @@ import { CSVLoader } from "@loaders.gl/csv";
 import type { Schema } from "@loaders.gl/schema";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
-import { getPyodide } from "@workers";
+import type { PyodideInterface } from "pyodide";
 import { create } from "zustand";
 
 interface DataState {
@@ -13,7 +13,7 @@ interface DataState {
   schema: Schema | null;
   byte: Uint8Array | null;
 
-  load: (file: File | string) => void;
+  load: (pyodide: PyodideInterface, file: File | string) => void;
   loading: boolean;
 }
 
@@ -30,7 +30,7 @@ const useDataStore = create<DataState>(set => ({
   byte: null,
   loading: false,
 
-  load: async (file: File | string) => {
+  load: async (pyodide: PyodideInterface, file: File | string) => {
     set({ loading: true });
     const fileName = file instanceof File ? file.name : getFileNameFromURL(file);
     const fileExtension = fileName.split(".").pop();
@@ -40,7 +40,7 @@ const useDataStore = create<DataState>(set => ({
       const fetchedFile = await fetchFile(file);
       const buffer = await fetchedFile.arrayBuffer();
       const uint8Array = new Uint8Array(buffer);
-      const pyodide = getPyodide();
+
       // Save buffer to pyodide
       if (!pyodide) {
         throw new Error("Pyodide not loaded");

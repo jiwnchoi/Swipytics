@@ -15,14 +15,15 @@ export default function FileForm() {
   const {
     loadingData,
     fileInputRef,
+    loadingPyodide,
     urlInput,
     inputDisabled,
-    loadingPyodide,
     handleFileButtonClick,
     handleFileChange,
     handleInputChange,
     handleSubmit,
   } = useFileForm();
+
   return (
     <Flex as={FormControl} flexDir={"column"} gap={0}>
       <InputGroup>
