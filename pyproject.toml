@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "tindervis"
+name = "swipytics"
 dynamic = ["version"]
 description = 'EDA with tinder-like interaction'
 readme = "README.md"
@@ -27,9 +27,9 @@ dev = ["ruff", "pyright", "pytest", "pytest-cov"]
 [tool.hatch.build.targets.wheel]
 packages = ["api"]
 [project.urls]
-Documentation = "https://github.com/jiwnchoi/tindervis#readme"
-Issues = "https://github.com/jiwnchoi/tindervis/issues"
-Source = "https://github.com/jiwnchoi/tindervis"
+Documentation = "https://github.com/jiwnchoi/swipytics#readme"
+Issues = "https://github.com/jiwnchoi/swipytics/issues"
+Source = "https://github.com/jiwnchoi/swipytics"
 
 [tool.hatch.version]
 path = "api/__about__.py"
@@ -48,13 +48,13 @@ cov = ["test-cov", "cov-report"]
 python = ["3.9", "3.10", "3.11"]
 
 [tool.coverage.run]
-source_pkgs = ["tindervis", "tests"]
+source_pkgs = ["swipytics", "tests"]
 branch = true
 parallel = true
 omit = ["api/__about__.py"]
 
 [tool.coverage.paths]
-tindervis = ["api", "*/tindervis/api"]
+swipytics = ["api", "*/swipytics/api"]
 tests = ["tests", "*/api/tests"]
 
 [tool.coverage.report]

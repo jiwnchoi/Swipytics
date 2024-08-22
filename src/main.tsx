@@ -1,11 +1,10 @@
+import { App } from "@app";
 import { Center, ChakraProvider, Heading, Spinner, VStack } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { theme } from "@theme";
-import { StrictMode, Suspense, lazy } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 const queryClient = new QueryClient();
-
-const LazyApp = lazy(() => import("@app/App"));
 
 function Fallback() {
   return (
@@ -22,9 +21,10 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <Center w="full" minH={"100lvh"} p={0} m={0} maxH={"100lvh"}>
-          <Suspense fallback={<Fallback />}>
+          {/* <Suspense fallback={<Fallback />}>
             <LazyApp />
-          </Suspense>
+          </Suspense> */}
+          <App />
         </Center>
       </ChakraProvider>
     </QueryClientProvider>

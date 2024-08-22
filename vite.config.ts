@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
   },
-  base: "/tindervis",
+  base: "/swipytics",
   plugins: [
     react(),
     tsconfigPaths(),
@@ -20,8 +20,8 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: "TinderVis",
-        short_name: "TinderVis",
+        name: "swipytics",
+        short_name: "swipytics",
         theme_color: "#000000",
         background_color: "#ffffff",
       },
