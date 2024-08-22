@@ -2,11 +2,9 @@
   "name": "Swipytics",
   "short_name": "Swipytics",
   "display": "standalone",
-  "start_url": "/Swipytics",
-
   "theme_color": {
-    "dark": "#000000",
-    "light": "#ffffff"
+    "dark": "#1A202C",
+    "light": "#EDF2F7"
   },
   "background_color": {
     "dark": "#1A202C",
