@@ -1,4 +1,5 @@
 import type { PyodideInterface } from "pyodide";
+import { main } from "./manifest";
 
 let pyodide: PyodideInterface | null = null;
 
@@ -9,11 +10,7 @@ async function loadEnvs() {
   });
 
   await pyodide.loadPackage(["draco"]);
-  pyodide.runPython(`
-    import pandas as pd
-    import numpy as np
-    import sklearn 
-  `);
+  pyodide.runPython(main);
 
   return pyodide;
 }

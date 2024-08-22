@@ -1,0 +1,23 @@
+{
+  "name": "Swipytics",
+  "short_name": "Swipytics",
+  "display": "standalone",
+  "start_url": "/Swipytics",
+
+  "theme_color": {
+    "dark": "#000000",
+    "light": "#ffffff"
+  },
+  "background_color": {
+    "dark": "#1A202C",
+    "light": "#EDF2F7"
+  },
+  "icons": [
+    {
+      "src": "/Swipytics/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

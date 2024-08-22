@@ -19,12 +19,7 @@ export default defineConfig({
       devOptions: {
         enabled: true,
       },
-      manifest: {
-        name: "Swipytics",
-        short_name: "Swipytics",
-        theme_color: "#000000",
-        background_color: "#ffffff",
-      },
+      manifest: false,
     }),
   ],
 });
