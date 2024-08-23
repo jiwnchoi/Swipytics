@@ -9,12 +9,11 @@ async function loadEnvs(): Promise<PyodideInterface> {
     return pyodide;
   }
   const { loadPyodide } = await import("pyodide");
+
   // biome-ignore lint/nursery/noConsole: <explanation>
-  console.log("Loading Envs TEST");
-  // biome-ignore lint/nursery/noConsole: <explanation>
-  console.log("Loading Pyodide from https://jiwnchoi.github.io/Swipytics/artifacts");
+  console.log(`Loading Pyodide from ${import.meta.env.BASE_URL}/artifacts`);
   pyodide = await loadPyodide({
-    indexURL: "https://jiwnchoi.github.io/Swipytics/artifacts",
+    indexURL: `${import.meta.env.BASE_URL}/artifacts`,
   });
   await pyodide.loadPackage(["draco"]);
   await setupPyodideFiles(pyodide);
