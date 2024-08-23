@@ -1,13 +1,13 @@
 import { isURL } from "@shared/utils";
 import { useDataStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
-import { loadEnvs } from "@workers/core";
-import { type ChangeEvent, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type ChangeEvent } from "react";
+import { initializePyodide } from "../workers";
 
 function useFileForm() {
   const { isLoading: loadingPyodide } = useQuery({
     queryKey: ["pyodide"],
-    queryFn: loadEnvs,
+    queryFn: ()=>initializePyodide({packages:["draco"]}),
   });
 
   const loadingData = useDataStore(state => state.loading);

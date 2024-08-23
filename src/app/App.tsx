@@ -1,7 +1,10 @@
 import { Box, Card, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { Controller, FileForm, PlaceHolder } from "@components";
 import { useSession } from "@hooks";
+import { useEffect } from "react";
 import { Drawer } from "vaul";
+import { usePyodide } from "../hooks/usePyodide";
+import { initializePyodide } from "../workers/pyodide-initializer";
 
 export default function App() {
   const {
@@ -15,6 +18,21 @@ export default function App() {
   const cardPadding = useBreakpointValue({ base: 0, md: 2 });
   const isDrawerVisible = useBreakpointValue({ base: true, md: false });
   // const [snap, setSnap] = useState<number | string | null>("196px");
+
+  const {pyodide} = usePyodide();
+
+  useEffect(() => {
+    initializePyodide({packages:["draco"]});
+  }, []);
+
+  useEffect(() => {
+    if(pyodide) {
+      pyodide.callPythonFunction("print_args_kwargs", [4,5,6], {name: "Bob", age: 25, country: "California"})
+      pyodide.callPythonFunction("print_args", [1, 2, 3])
+      pyodide.callPythonFunction("print_kwargs", undefined, { name: "Alice", age: 30, country: "Seoul" })
+      pyodide.callPythonFunction("print_versions")
+    }
+  }, [pyodide]);
 
   return (
     <Flex
