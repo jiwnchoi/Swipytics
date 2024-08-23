@@ -2,7 +2,7 @@
 
 import { type Pyodide, initializeWorker } from "./pyodide-worker-api";
 
-let pyodide: Promise<Pyodide> | undefined;
+let pyodide: Pyodide | undefined = undefined;
 
 /**
  * Initialize Pyodide, ensuring we only initialize it once.
@@ -15,7 +15,7 @@ export async function initializePyodide(options?: {
   const { packages } = options || {};
 
   if (pyodide === undefined) {
-    pyodide = _initializePyodide(packages);
+    pyodide = await _initializePyodide(packages);
   }
   return pyodide;
 }
@@ -24,7 +24,7 @@ export async function initializePyodide(options?: {
  * Initialize Pyodide, and load any given packages.
  */
 const _initializePyodide = async (packages?: string[]): Promise<Pyodide> => {
-  pyodide = initializeWorker(packages);
+  pyodide = await initializeWorker(packages);
   return pyodide;
 };
 

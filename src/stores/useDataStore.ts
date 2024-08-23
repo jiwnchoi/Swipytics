@@ -45,8 +45,8 @@ const useDataStore = create<DataState>(set => ({
       if (!pyodide) {
         throw new Error("Pyodide not loaded");
       }
-      pyodide.writeFile(`/${fileName}`, uint8Array);
-      pyodide.runPython(`loadData("/${fileName}")`);
+      pyodide.writeFile(fileName, uint8Array);
+      pyodide.callPythonFunction("loadData", [fileName]);
 
       // Parse the file
       const data = await parse(buffer, loaderMap[fileExtension as keyof typeof loaderMap], {
