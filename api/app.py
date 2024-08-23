@@ -6,13 +6,7 @@ import sklearn
 from api.functions import load_data
 from api.models import Chart, Session, State
 from draco import Draco
-
-# from draco.renderer import AltairRenderer
-
-
-print(
-  f"Package Loaded. draco: {draco.__version__}, numpy: {np.__version__}, pandas: {pd.__version__}, sklearn: {sklearn.__version__},  pydantic: {pydantic.__version__}"
-)
+from draco.renderer import AltairRenderer
 
 drc = Draco()
 
@@ -25,3 +19,8 @@ def loadData(filename: str):
   print(f"Data Loaded: {state.filename}")
   print(f"Data Shape: {state.df.shape}")
   print(state.df.head())
+
+
+print(
+  f"Package Loaded. draco: {draco.__version__}, numpy: {np.__version__}, pandas: {pd.__version__}, sklearn: {sklearn.__version__},  pydantic: {pydantic.__version__}"
+)

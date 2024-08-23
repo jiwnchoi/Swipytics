@@ -10,7 +10,7 @@
     "format": "biome format --write .",
     "check": "biome check --write .",
     "preview": "vite preview",
-    "prepare": "husky",
+    "prepare": "husky && ./install-draco.sh",
     "test": "vitest --globals --run",
     "lint-staged": "lint-staged",
     "deploy": "pnpm build && gh-pages -d dist --dotfiles"
@@ -27,7 +27,7 @@
     "framer-motion": "^11.3.29",
     "hugeicons-react": "^0.3.0",
     "immer": "^10.1.1",
-    "pyodide": "^0.25.1",
+    "pyodide": "0.25.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-vega": "^7.6.0",

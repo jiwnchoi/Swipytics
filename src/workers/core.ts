@@ -9,7 +9,7 @@ async function loadEnvs(): Promise<PyodideInterface> {
   }
   const { loadPyodide } = await import("pyodide");
   pyodide = await loadPyodide({
-    indexURL: "https://dig.cmu.edu/draco2/jupyterlite/static/pyodide",
+    indexURL: `${import.meta.env.BASE_URL}/artifacts`,
   });
   await pyodide.loadPackage(["draco"]);
   await setupPyodideFiles(pyodide);

@@ -32,3 +32,4 @@ dev-dist
 __pycache__
 
 
+public/artifacts
