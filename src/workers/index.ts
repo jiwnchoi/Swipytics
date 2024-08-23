@@ -1,1 +1,1 @@
-export { loadEnvs } from "./core";
+export { getPyodide, initializePyodide } from "./pyodide-initializer";
