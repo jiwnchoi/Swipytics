@@ -11,6 +11,8 @@ async function loadEnvs(): Promise<PyodideInterface> {
   const { loadPyodide } = await import("pyodide");
   try {
     // biome-ignore lint/nursery/noConsole: <explanation>
+    console.log("Loading Envs");
+    // biome-ignore lint/nursery/noConsole: <explanation>
     console.log("Loading Pyodide from https://jiwnchoi.github.io/Swipytics/artifacts");
     pyodide = await loadPyodide({
       indexURL: "https://jiwnchoi.github.io/Swipytics/artifacts",
