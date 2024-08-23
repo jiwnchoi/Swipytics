@@ -8,6 +8,7 @@ async function loadEnvs(): Promise<PyodideInterface> {
     return pyodide;
   }
   const { loadPyodide } = await import("pyodide");
+  console.log(`Loading Pyodide from ${import.meta.env.BASE_URL}/artifacts`);
   pyodide = await loadPyodide({
     indexURL: `${import.meta.env.BASE_URL}/artifacts`,
   });
