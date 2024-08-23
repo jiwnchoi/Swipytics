@@ -11,16 +11,16 @@ export default function App() {
     scrollToChart,
     renewCurrentChart,
   } = useSession("dummy-session");
-  const cardHeight = useBreakpointValue({ base: "100vh", md: "80vh" });
-  const cardPadding = useBreakpointValue({ base: 0, md: 2 });
-  const isDrawerVisible = useBreakpointValue({ base: true, md: false });
+  const cardHeight = useBreakpointValue({ base: "100vh", lg: "80vh" });
+  const cardPadding = useBreakpointValue({ base: 0, lg: 2 });
+  const isDrawerVisible = useBreakpointValue({ base: true, lg: false });
   // const [snap, setSnap] = useState<number | string | null>("196px");
 
   return (
     <Flex
-      w={{ base: "full", md: "container.xl" }}
+      w={{ base: "full", lg: "container.xl" }}
       h={cardHeight}
-      flexDir={{ base: "column", md: "row" }}>
+      flexDir={{ base: "column", lg: "row" }}>
       <Flex w="full" flexDir={"column"} gap={4} minH={"100lvh"}>
         <Flex
           p={cardPadding}
@@ -28,7 +28,7 @@ export default function App() {
           flexDir={"column"}
           w={"full"}
           maxH={cardHeight}
-          gap={{ base: 0, md: 4 }}
+          gap={{ base: 0, lg: 4 }}
           scrollSnapType={"y mandatory"}
           overflowY={"auto"}
           style={{
@@ -39,7 +39,14 @@ export default function App() {
               display: "none",
             },
           }}>
-          <PlaceHolder as={Card} flexDir={"column"} h={cardHeight} gap={4} p={cardPadding} />
+          <PlaceHolder
+            as={Card}
+            flexDir={"column"}
+            w="full"
+            h={cardHeight}
+            gap={4}
+            p={cardPadding}
+          />
           {/* {charts.map(chart => (
             <Chart
               key={chart.key}
@@ -59,9 +66,10 @@ export default function App() {
         </Flex>
       </Flex>
       {!isDrawerVisible && (
-        <Flex w={{ base: "full", md: "md" }} p={cardPadding}>
+        <Flex w={"fit-content"} p={cardPadding}>
           <Card
             flexDir={"column"}
+            w={"xs"}
             h={"full"}
             justifyContent={"space-between"}
             rounded="lg"
