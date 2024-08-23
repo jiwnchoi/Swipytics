@@ -7,6 +7,7 @@
 import * as Comlink from "comlink";
 
 import type { PyodideRunner } from "./pyodide-worker";
+import Worker from './pyodide-worker?worker';
 
 export type JSONPrimitive = string | number | boolean | null;
 
@@ -33,7 +34,9 @@ export interface Pyodide {
  */
 export const initializeWorker = async (packages?: string[]): Promise<Pyodide> => {
   if (!_worker) {
-    _worker = new Worker(new URL("./pyodide-worker", import.meta.url), { type: "module" });
+    _worker = new Worker({
+      name: "pyodide-worker",
+    });
     _runner = Comlink.wrap(_worker);
     await _runner.initialize(packages);
   }

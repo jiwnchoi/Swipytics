@@ -8,6 +8,15 @@ export default defineConfig({
     host: "0.0.0.0",
   },
   base: "/Swipytics",
+  worker: {
+    format: "es",
+    plugins: () => [
+      pyodidePlugin({
+        base: "api",
+        entryPoint: "app.py",
+      }),
+    ],
+  },
   plugins: [
     pyodidePlugin({
       base: "api",

@@ -21,11 +21,6 @@ export const PyodideWorker: PyodideRunner = {
     if (!this.pyodide) throw new Error("Pyodide is not initialized");
     console.log(`[worker] writeFile ${fileName}`);
     this.pyodide.FS.writeFile(`${fileName}`, data, { encoding: "binary" });
-
-    this.pyodide.runPython(`
-      import os
-      print(os.listdir())
-    `);
   },
 
   async readFile(fileName: string): Promise<Uint8Array> {
