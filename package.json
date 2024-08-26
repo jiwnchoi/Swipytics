@@ -55,6 +55,7 @@
     "vitest": "^2.0.5"
   },
   "lint-staged": {
-    "*.{js,ts,tsx,css,html,json}": ["vitest --globals --run related", "biome check --write"]
+    "*.{js,ts,tsx,css,html,json}": ["vitest --globals --run related", "biome check --write"],
+    "*.{py}": ["hatch run ruff check", "hatch run ruff format"]
   }
 }

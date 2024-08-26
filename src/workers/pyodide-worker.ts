@@ -28,6 +28,7 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
     try {
       await runEntryPointAsync(this.pyodide);
     } catch (e) {
+      // biome-ignore lint/nursery/noConsole: <explanation>
       console.error(e);
     }
   },
