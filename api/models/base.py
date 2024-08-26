@@ -26,16 +26,6 @@ def dataclass(_cls=None, **kwargs):
   def wrap(cls):
     cls = dataclass_base(cls, **kwargs)
 
-    def __post_init__(self):
-      for field in fields(self):
-        if field.default is not MISSING or field.default_factory is not MISSING:
-          continue
-        if not hasattr(self, field.name):
-          setattr(self, field.name, None)
-
-      if hasattr(self, "post_init_hook"):
-        self.post_init_hook()
-
     def to_dict(self):
       return convert_dict_keys_to_camel_case(
         {f.name: getattr(self, f.name) for f in fields(self)}
@@ -45,7 +35,6 @@ def dataclass(_cls=None, **kwargs):
       for key, value in self.to_dict().items():
         yield key, value
 
-    cls.__post_init__ = __post_init__
     cls.to_dict = to_dict
     cls.__iter__ = __iter__
     return cls

@@ -15,7 +15,7 @@ def get_base_facts(df: pd.DataFrame) -> list[str]:
   ]
 
 
-def get_attribute_fact(field: str, code: int = 0) -> list[str]:
+def get_attribute_facts(field: str, code: int = 0) -> list[str]:
   field = field.replace(" ", "_")
   field = field[0].lower() + field[1:]
 
@@ -25,4 +25,4 @@ def get_attribute_fact(field: str, code: int = 0) -> list[str]:
   ]
 
 
-__all__ = ["get_base_facts", "get_attribute_fact"]
+__all__ = ["get_base_facts", "get_attribute_facts"]

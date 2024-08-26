@@ -31,7 +31,7 @@ def answer_set_to_spec(answer_set: Iterable[Symbol], df: pd.DataFrame) -> dict:
   return clean_spec(vega)
 
 
-def get_charts(
+def get_specs_from_facts(
   df: pd.DataFrame,
   facts: list[str],
   num: int = 5,
@@ -42,4 +42,4 @@ def get_charts(
   ]
 
 
-__all__ = ["get_charts"]
+__all__ = ["get_specs_from_facts"]

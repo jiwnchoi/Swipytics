@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pandas as pd
-from api.models import State
 from api.store import state
 from api.utils import get_file_extension
 from vega_datasets import data

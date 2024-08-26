@@ -8,13 +8,15 @@ from .base import dataclass
 
 @dataclass
 class Chart:
-  time_stamp: int = field(default=get_time_stamp)
+  facts: list[str]
 
   title: str = field(default="")
   description: str = field(default="")
 
   specs: list[dict[str, Any]] = field(default_factory=list)
   attributes: list[str] = field(default_factory=list)
+
+  time_stamp: int = field(default=get_time_stamp)
 
   @property
   def key(self) -> str:
