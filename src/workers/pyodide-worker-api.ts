@@ -7,7 +7,7 @@
 import * as Comlink from "comlink";
 
 import type { PyodideRunner } from "./pyodide-worker";
-import Worker from './pyodide-worker?worker';
+import Worker from "./pyodide-worker?worker";
 
 export type JSONPrimitive = string | number | boolean | null;
 
@@ -21,7 +21,7 @@ export interface Pyodide {
   runPythonJson: (code: string, globals?: Record<string, JSONValue>) => Promise<JSONValue | null>;
   callPythonFunction: (
     funcName: string,
-    args?: any[],
+    args?: unknown[],
     kwargs?: Record<string, JSONValue>,
   ) => Promise<unknown>;
   terminate: () => void;
@@ -81,7 +81,7 @@ const runPythonJson = async (
 
 const callPythonFunction = async (
   funcName: string,
-  args?: any[],
+  args?: unknown[],
   kwargs?: Record<string, JSONValue>,
 ): Promise<unknown> => {
   if (!_worker || !_runner) {
@@ -108,7 +108,7 @@ const writeFile = async (fileName: string, data: Uint8Array): Promise<void> => {
   }
 
   return _runner.writeFile(fileName, data);
-}
+};
 
 const readFile = async (fileName: string): Promise<Uint8Array> => {
   if (!_worker || !_runner) {
@@ -116,4 +116,4 @@ const readFile = async (fileName: string): Promise<Uint8Array> => {
   }
 
   return _runner.readFile(fileName);
-}
+};
