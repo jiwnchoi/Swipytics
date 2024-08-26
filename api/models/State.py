@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import field
-from random import choice
+from functools import wraps
+from typing import Any
 
 import pandas as pd
+from numpy.random import choice
 
 from .base import dataclass
 from .Chart import Chart

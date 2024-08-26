@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { VisualizationSpec } from "react-vega";
 
 const DEBOUNCE_DELAY = 100;
-const CHART_PREFETCH_DELAY = 2;
+const CHART_PREFETCH_DELAY = 1;
 
 export default function useSession(sessionKey: string) {
   const session = useSessionsStore(state => state.getSession(sessionKey ?? "dummy-session"));

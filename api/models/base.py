@@ -26,8 +26,6 @@ def dataclass(_cls=None, **kwargs):
   def wrap(cls):
     cls = dataclass_base(cls, **kwargs)
 
-    original_init = cls.__init__
-
     def __post_init__(self):
       for field in fields(self):
         if field.default is not MISSING or field.default_factory is not MISSING:
