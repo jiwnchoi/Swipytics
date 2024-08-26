@@ -6,6 +6,7 @@ import pandas as pd
 from clingo import Symbol
 from draco.renderer import AltairRenderer
 
+drc = draco.Draco()
 renderer = AltairRenderer()
 
 
@@ -32,7 +33,6 @@ def answer_set_to_spec(answer_set: Iterable[Symbol], df: pd.DataFrame) -> dict:
 
 def get_charts(
   df: pd.DataFrame,
-  drc: draco.Draco,
   facts: list[str],
   num: int = 5,
 ) -> dict[str, tuple[list[str], dict]]:

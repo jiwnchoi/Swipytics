@@ -24,3 +24,4 @@ def loadData(filename: str):
 print(
   f"Package Loaded. draco: {draco.__version__}, numpy: {np.__version__}, pandas: {pd.__version__}, sklearn: {sklearn.__version__},  pydantic: {pydantic.__version__}"
 )
+print(dict(state))
