@@ -1,5 +1,5 @@
 import time
 
 
-def get_time_stamp():
+def get_timestamp():
   return int(time.time() * 1000)

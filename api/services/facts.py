@@ -1,8 +1,10 @@
 import draco
 import pandas as pd
+from api.utils import get_clingo_field_name
 
 
 def get_base_facts(df: pd.DataFrame) -> list[str]:
+  df.columns = [get_clingo_field_name(col) for col in df.columns]
   base_scheme = draco.schema_from_dataframe(df)
   base_facts = draco.dict_to_facts(base_scheme)
 
@@ -16,12 +18,9 @@ def get_base_facts(df: pd.DataFrame) -> list[str]:
 
 
 def get_attribute_facts(field: str, code: int = 0) -> list[str]:
-  field = field.replace(" ", "_")
-  field = field[0].lower() + field[1:]
-
   return [
     f"entity(encoding,m0,e{code}).",
-    f"attribute((encoding,field),e{code},{field}).",
+    f"attribute((encoding,field),e{code},{get_clingo_field_name(field)}).",
   ]
 
 

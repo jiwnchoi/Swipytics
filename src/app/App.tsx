@@ -5,12 +5,11 @@ import { Drawer } from "vaul";
 
 export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
-    useSession("dummy-session");
+    useSession();
   const cardHeight = useBreakpointValue({ base: "100vh", lg: "80vh" });
   const cardPadding = useBreakpointValue({ base: 0, lg: 2 });
   const isDrawerVisible = useBreakpointValue({ base: true, lg: false });
   // const [snap, setSnap] = useState<number | string | null>("196px");
-
   return (
     <Flex
       w={{ base: "full", lg: "container.xl" }}
@@ -34,17 +33,19 @@ export default function App() {
               display: "none",
             },
           }}>
-          <PlaceHolder
-            as={Card}
-            flexDir={"column"}
-            w="full"
-            h={cardHeight}
-            gap={4}
-            p={cardPadding}
-          />
+          {charts.length === 0 && (
+            <PlaceHolder
+              as={Card}
+              flexDir={"column"}
+              w="full"
+              h={cardHeight}
+              gap={4}
+              p={cardPadding}
+            />
+          )}
           {charts.map(chart => (
             <Chart
-              key={chart.key}
+              key={chart.timestamp}
               p={cardPadding}
               chart={chart}
               minH={cardHeight}

@@ -1,51 +1,33 @@
-import MockChart from "@assets/MockChart.json";
-import { ChartModel } from "@shared/models";
 import { useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { VisualizationSpec } from "react-vega";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEBOUNCE_DELAY = 100;
 const CHART_PREFETCH_DELAY = 1;
 
-export default function useSession(sessionKey: string) {
-  const session = useSessionsStore(state => state.getSession(sessionKey ?? "dummy-session"));
-  if (!session) {
-    throw new Error(`Session ${sessionKey} not found`);
-  }
+export default function useSession() {
+  const session = useSessionsStore(state => (state.sessions.length > 0 ? state.sessions[0] : null));
+  const appendChart = useSessionsStore(state => state.appendChart);
 
-  const { appendChartToSession, renewChartInSession } = useSessionsStore(state => ({
-    appendChartToSession: state.appendChartToSession(sessionKey),
-    renewChartInSession: state.renewChartInSession(sessionKey),
-  }));
-
-  const [charts, sessionLength] = useMemo(
-    () => [session.charts, session.charts.length],
-    [session.charts],
-  );
+  const charts = session?.charts ?? [];
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentChartIndex, setCurrentChartIndex] = useState(0);
 
   const scrollEndCallback = useCallback(
-    (newIndex: number) => {
+    async (newIndex: number) => {
       setCurrentChartIndex(newIndex);
-      if (newIndex < sessionLength - CHART_PREFETCH_DELAY) return;
-      appendChartToSession(
-        new ChartModel({
-          spec: MockChart as VisualizationSpec,
-          description: "This is a new chart",
-        }),
-      );
+      if (newIndex < charts.length - CHART_PREFETCH_DELAY) return;
+      await appendChart(session?.key ?? "");
     },
-    [sessionLength, currentChartIndex],
+    [charts, appendChart, session?.key],
   );
 
   const renewCurrentChart = useCallback(() => {
-    const currentChart = charts[currentChartIndex];
-    if (!currentChart) return;
-    renewChartInSession(currentChart.key);
-  }, [currentChartIndex, charts]);
+    // const currentChart = charts[currentChartIndex];
+    // if (!currentChart) return;
+    // renewChartInSession(currentChart.key);
+  }, [currentChartIndex]);
 
   const scrollToChart = useCallback((direction: "up" | "down") => {
     const container = scrollContainerRef.current;

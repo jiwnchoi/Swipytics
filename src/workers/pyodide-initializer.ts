@@ -1,6 +1,7 @@
 // https://github.com/holdenmatt/use-pyodide/blob/main/src/initializePyodide.ts
 
-import { type Pyodide, initializeWorker } from "./pyodide-worker-api";
+import { initializeWorker } from "./pyodide-worker-api";
+import type { Pyodide } from "./types";
 
 let pyodide: Pyodide | undefined = undefined;
 

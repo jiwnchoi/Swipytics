@@ -1,23 +1,12 @@
 import * as Comlink from "comlink";
-import { type PyodideInterface, loadPyodide } from "pyodide";
+import { loadPyodide } from "pyodide";
 import type { PyCallable, PyProxy } from "pyodide/ffi";
 
 import { runEntryPointAsync, setupPyodideFiles } from "virtual:pyodide-files";
+import type { PythonManifest } from "./manifest";
+import type { PyodideRunner } from "./types";
 
-export interface PyodideRunner {
-  pyodide: PyodideInterface | null;
-  runPython: (code: string, globals?: Record<string, unknown>) => Promise<unknown>;
-  callPythonFunction: (
-    funcName: string,
-    args?: unknown[],
-    kwargs?: Record<string, unknown>,
-  ) => Promise<unknown>;
-  initialize: (packages?: string[]) => Promise<void>;
-  writeFile: (fileName: string, data: Uint8Array) => Promise<void>;
-  readFile: (fileName: string) => Promise<Uint8Array>;
-}
-
-export const PyodideWorker: PyodideRunner = {
+export const PyodideWorker: PyodideRunner<PythonManifest> = {
   pyodide: null,
 
   async writeFile(fileName: string, data: Uint8Array): Promise<void> {
@@ -36,7 +25,20 @@ export const PyodideWorker: PyodideRunner = {
       await this.pyodide.loadPackage(p);
     }
     await setupPyodideFiles(this.pyodide);
-    await runEntryPointAsync(this.pyodide);
+    try {
+      await runEntryPointAsync(this.pyodide);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  terminate() {
+    if (this.pyodide) {
+      const interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+      interruptBuffer[0] = 2;
+      this.pyodide.setInterruptBuffer(interruptBuffer);
+      this.pyodide = null;
+    }
   },
 
   async runPython(code: string, globals: Record<string, unknown> = {}): Promise<unknown> {
@@ -50,20 +52,20 @@ export const PyodideWorker: PyodideRunner = {
     return this.pyodide.runPython(code, { globals: namespace });
   },
 
-  async callPythonFunction(
-    funcName: string,
-    args: unknown[] = [],
-    kwargs?: Record<string, unknown>,
-  ): Promise<unknown> {
+  async callPythonFunction<K extends keyof PythonManifest>(
+    funcName: K,
+    args: PythonManifest[K]["args"] = [],
+    kwargs?: PythonManifest[K]["kwargs"],
+  ): Promise<PythonManifest[K]["returns"]> {
     if (!this.pyodide) throw new Error("Pyodide is not initialized");
 
-    const func: PyCallable = this.pyodide.globals.get(funcName);
+    const func: PyCallable = this.pyodide.globals.get(funcName as string);
     if (!func) throw new Error(`Function ${funcName} is not defined in globals`);
 
     const pyArgs = this.pyodide.toPy(args);
     const result: PyProxy = kwargs ? func.callKwargs(pyArgs, kwargs) : func(...pyArgs);
 
-    return result?.toJs ? result.toJs() : result;
+    return result?.toJs ? result.toJs({ dict_converter: Object.fromEntries }) : result;
   },
 };
 

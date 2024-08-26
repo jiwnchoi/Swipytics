@@ -3,6 +3,8 @@ from typing import Iterable
 import altair as alt
 import draco
 import pandas as pd
+from api.state import state
+from api.utils import replace_clingo_field_name
 from clingo import Symbol
 from draco.renderer import AltairRenderer
 
@@ -28,16 +30,15 @@ def answer_set_to_spec(answer_set: Iterable[Symbol], df: pd.DataFrame) -> dict:
     chart = chart.configure_view(continuousWidth=130, continuousHeight=130)
 
   vega = chart.to_dict()
-  return clean_spec(vega)
+  return replace_clingo_field_name(clean_spec(vega))
 
 
 def get_specs_from_facts(
-  df: pd.DataFrame,
   facts: list[str],
   num: int = 5,
 ) -> dict[str, tuple[list[str], dict]]:
   return [
-    answer_set_to_spec(model.answer_set, df)
+    answer_set_to_spec(model.answer_set, state.df)
     for model in drc.complete_spec(facts, num)
   ]
 

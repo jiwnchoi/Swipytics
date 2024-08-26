@@ -1,11 +1,12 @@
-import { isURL } from "@shared/utils";
-import { useDataStore } from "@stores";
+import { getFileNameFromURL, isURL } from "@shared/utils";
+import { useDataStore, useSessionsStore } from "@stores";
 import { type ChangeEvent, useMemo, useRef, useState } from "react";
 import usePyodide from "./usePyodide";
 
 function useFileForm() {
   const { loadingPyodide, pyodide } = usePyodide();
-
+  const appendSession = useSessionsStore(state => state.appendSession);
+  const initSessions = useSessionsStore(state => state.initSessions);
   const loadingData = useDataStore(state => state.loading);
   const load = useDataStore(state => state.load);
 
@@ -36,15 +37,21 @@ function useFileForm() {
   };
 
   const handleSubmit = async () => {
+    initSessions();
     if (!pyodide) {
       throw new Error("Pyodide is not loaded");
     }
+    let filename = "";
 
     if (isFileValid() && fileInputRef.current?.files?.[0]) {
-      load(pyodide, fileInputRef.current?.files?.[0]);
+      await load(fileInputRef.current?.files?.[0]);
+      filename = fileInputRef.current.files[0].name;
     } else if (isURL(urlInput)) {
-      load(pyodide, urlInput);
+      await load(urlInput);
+      filename = getFileNameFromURL(urlInput);
     }
+    await pyodide.callPythonFunction("loadData", [filename]);
+    await appendSession();
   };
 
   return {

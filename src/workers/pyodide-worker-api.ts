@@ -6,55 +6,13 @@
  */
 import * as Comlink from "comlink";
 
-import type { PyodideRunner } from "./pyodide-worker";
 import Worker from "./pyodide-worker?worker";
-
-export type JSONPrimitive = string | number | boolean | null;
-
-export type JSONValue = JSONPrimitive | readonly JSONValue[] | { [key: string]: JSONValue };
+import type { Pyodide, PyodideRunner, WorkerManifest } from "./types";
 
 let _worker: Worker | null = null;
 let _runner: Comlink.Remote<PyodideRunner> | null = null;
 
-export interface Pyodide {
-  runPython: (code: string, globals?: Record<string, JSONValue>) => Promise<unknown>;
-  runPythonJson: (code: string, globals?: Record<string, JSONValue>) => Promise<JSONValue | null>;
-  callPythonFunction: (
-    funcName: string,
-    args?: unknown[],
-    kwargs?: Record<string, JSONValue>,
-  ) => Promise<unknown>;
-  terminate: () => void;
-  writeFile: (fileName: string, data: Uint8Array) => Promise<void>;
-  readFile: (fileName: string) => Promise<Uint8Array>;
-}
-
-/**
- * Initialize the pyodide worker and load some given packages.
- */
-export const initializeWorker = async (packages?: string[]): Promise<Pyodide> => {
-  if (!_worker) {
-    _worker = new Worker({
-      name: "pyodide-worker",
-    });
-    _runner = Comlink.wrap(_worker);
-    await _runner.initialize(packages);
-  }
-
-  return {
-    runPython,
-    runPythonJson,
-    callPythonFunction,
-    terminate,
-    writeFile,
-    readFile,
-  };
-};
-
-/**
- * Run a Python code string and return the value of the last statement.
- */
-const runPython = async (code: string, globals?: Record<string, JSONValue>): Promise<unknown> => {
+const runPython = async (code: string, globals?: Record<string, unknown>): Promise<unknown> => {
   if (!_worker || !_runner) {
     throw new Error("pyodide isn't loaded yet");
   }
@@ -63,43 +21,18 @@ const runPython = async (code: string, globals?: Record<string, JSONValue>): Pro
   return value;
 };
 
-/**
- * Run a Python code string, and parse its result as JSON.
- */
-const runPythonJson = async (
-  code: string,
-  globals?: Record<string, JSONValue>,
-): Promise<JSONValue | null> => {
-  const result = (await runPython(code, globals)) as string;
-  if (result) {
-    const json = JSON.parse(result) as JSONValue;
-    return json;
-  }
-
-  return null;
-};
-
-const callPythonFunction = async (
-  funcName: string,
-  args?: unknown[],
-  kwargs?: Record<string, JSONValue>,
-): Promise<unknown> => {
+const callPythonFunction = async <K extends keyof WorkerManifest>(
+  funcName: K,
+  args?: WorkerManifest[K]["args"],
+  kwargs?: WorkerManifest[K]["kwargs"],
+): Promise<WorkerManifest[K]["returns"]> => {
   if (!_worker || !_runner) {
     throw new Error("pyodide isn't loaded yet");
   }
 
-  return _runner.callPythonFunction(funcName, args, kwargs);
-};
-
-/**
- * Terminate the worker.
- */
-const terminate = () => {
-  _worker?.terminate();
-  _worker = null;
-
-  _runner?.[Comlink.releaseProxy]();
-  _runner = null;
+  return _runner.callPythonFunction(funcName, args, kwargs) as Promise<
+    WorkerManifest[K]["returns"]
+  >;
 };
 
 const writeFile = async (fileName: string, data: Uint8Array): Promise<void> => {
@@ -116,4 +49,35 @@ const readFile = async (fileName: string): Promise<Uint8Array> => {
   }
 
   return _runner.readFile(fileName);
+};
+
+export const initializeWorker = async (packages?: string[]): Promise<Pyodide> => {
+  if (!_worker) {
+    _worker = new Worker({
+      name: "pyodide-worker",
+    });
+    _runner = Comlink.wrap(_worker);
+    await _runner.initialize(packages);
+  }
+
+  return {
+    runPython,
+    callPythonFunction,
+    writeFile,
+    readFile,
+    terminate: () => {
+      _worker?.terminate();
+      _worker = null;
+
+      _runner?.[Comlink.releaseProxy]();
+      _runner = null;
+    },
+    initialize: async (packages?: string[]) => {
+      if (!_worker || !_runner) {
+        throw new Error("pyodide isn't loaded yet");
+      }
+
+      await _runner.initialize(packages);
+    },
+  };
 };

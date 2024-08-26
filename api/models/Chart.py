@@ -1,9 +1,7 @@
-from dataclasses import field
+from dataclasses import dataclass, field
 from typing import Any
 
-from api.utils import get_time_stamp
-
-from .base import dataclass
+from api.utils import get_timestamp
 
 
 @dataclass
@@ -16,8 +14,8 @@ class Chart:
   specs: list[dict[str, Any]] = field(default_factory=list)
   attributes: list[str] = field(default_factory=list)
 
-  time_stamp: int = field(default=get_time_stamp)
+  timestamp: int = field(default_factory=get_timestamp)
+  key: str = field(default="")
 
-  @property
-  def key(self) -> str:
-    return f"chart-{self.time_stamp}-{str(self.attributes)}"
+  def __post_init__(self):
+    self.key = f"chart-{self.timestamp}-{str(self.attributes)}"

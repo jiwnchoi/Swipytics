@@ -1,17 +1,16 @@
-from dataclasses import field
+from dataclasses import dataclass, field
 
-from api.utils import get_time_stamp
+from api.utils import get_timestamp
 
-from .base import dataclass
 from .chart import Chart
 
 
 @dataclass
 class Session:
   charts: list[Chart]
-  grounding_attributes: list[str]
-  time_stamp: int = field(default_factory=get_time_stamp)
+  groundingAttributes: list[str]
+  timestamp: int = field(default_factory=get_timestamp)
+  key: str = field(default="")
 
-  @property
-  def key(self):
-    return f"session-{self.time_stamp}-{str(self.grounding_attributes)}"
+  def __post_init__(self):
+    self.key = f"session-{self.timestamp}-{str(self.groundingAttributes)}"

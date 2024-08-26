@@ -1,4 +1,3 @@
-from .base import dataclass
 from .chart import Chart
 from .session import Session
 from .state import State

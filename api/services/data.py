@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import os
+import pathlib
+
 import pandas as pd
-from api.store import state
+from api.state import state
 from api.utils import get_file_extension
 from vega_datasets import data
 
@@ -16,7 +19,7 @@ def load_data(fileName: str | None = None) -> None:
   extension = get_file_extension(fileName)
 
   state.filename = fileName
-  state.df = getattr(pd, f"read_{extension}")(fileName)
+  state.df = getattr(pd, f"read_{extension}")(pathlib.Path("./", fileName))
 
 
 __all__ = ["load_data"]

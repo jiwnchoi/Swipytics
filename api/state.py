@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from api.models import State
 
 state = State()
@@ -7,7 +9,9 @@ state = State()
 def return_state(func):
   def wrapper(*args, **kwargs):
     func(*args, **kwargs)
-    return dict(state)
+
+    # remove df, filename in asdict(state)
+    
 
   return wrapper
 
