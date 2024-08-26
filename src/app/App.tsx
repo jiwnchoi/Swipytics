@@ -45,7 +45,7 @@ export default function App() {
           )}
           {charts.map(chart => (
             <Chart
-              key={chart.timestamp}
+              key={chart.key}
               p={cardPadding}
               chart={chart}
               minH={cardHeight}

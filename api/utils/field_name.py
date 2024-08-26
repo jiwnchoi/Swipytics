@@ -6,7 +6,10 @@ id_to_name: dict[str, str] = {}
 name_to_id: dict[str, str] = {}
 
 
-def get_clingo_field_name(field_name: str | int) -> str:
+def get_clingo_field_name(field_name: str | int | list) -> str:
+  if isinstance(field_name, list):
+    return [get_clingo_field_name(f) for f in field_name]
+
   if field_name in id_to_name:
     return field_name
 
