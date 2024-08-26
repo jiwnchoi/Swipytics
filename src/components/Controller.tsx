@@ -12,10 +12,11 @@ interface ControllerProps {
   scrollToChart: (direction: "up" | "down") => void;
   renewCurrentChart: () => void;
   currentChartIndex: number;
+  disabled: boolean;
 }
 
 const Controller = (props: ControllerProps) => {
-  const { scrollToChart, renewCurrentChart, currentChartIndex } = props;
+  const { scrollToChart, renewCurrentChart, currentChartIndex, disabled } = props;
   return (
     <Flex w="full" gap={2}>
       <ResponsiveButton
@@ -23,24 +24,24 @@ const Controller = (props: ControllerProps) => {
         label="이전 시각화"
         icon={ArrowUp01Icon}
         onClick={() => scrollToChart("up")}
-        isDisabled={currentChartIndex === 0}
+        isDisabled={currentChartIndex === 0 || disabled}
       />
       <ResponsiveButton
         w="full"
         label="다음 시각화"
         icon={ArrowDown01Icon}
         onClick={() => scrollToChart("down")}
+        isDisabled={disabled}
       />
-      <ResponsiveButton w="full" label="다른 속성" icon={LinkForwardIcon} />
+      <ResponsiveButton w="full" label="다른 속성" icon={LinkForwardIcon} isDisabled={disabled} />
       <ResponsiveButton
         w="full"
         label="다른 시각화"
         icon={Exchange01Icon}
-        onClick={() => {
-          renewCurrentChart();
-        }}
+        onClick={renewCurrentChart}
+        isDisabled={disabled}
       />
-      <ResponsiveButton w="full" label="저장 하기" icon={BookmarkAdd01Icon} />
+      <ResponsiveButton w="full" label="저장 하기" icon={BookmarkAdd01Icon} isDisabled={disabled} />
     </Flex>
   );
 };

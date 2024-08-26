@@ -50,7 +50,7 @@
     "typescript": "^5.5.4",
     "vite": "^5.4.2",
     "vite-plugin-pwa": "^0.20.1",
-    "vite-plugin-pyodide": "^0.0.14",
+    "vite-plugin-pyodide": "^0.0.15",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.0.5"
   },

@@ -1,27 +1,26 @@
-import MockChart from "@assets/MockChart.json";
-import { ChartModel, type TSession } from "@shared/models";
+import type { ChartModel, TSession } from "@shared/models";
 
 import { produce } from "immer";
-import type { VisualizationSpec } from "react-vega";
 import { create } from "zustand";
 
-const DUMMY: ChartModel[] = [
-  new ChartModel({
-    spec: MockChart as VisualizationSpec,
-    description: "This is chart 1",
-    title: "Chart 1",
-  }),
-  new ChartModel({
-    spec: MockChart as VisualizationSpec,
-    description: "This is chart 2",
-    title: "Chart 2",
-  }),
-  new ChartModel({
-    spec: MockChart as VisualizationSpec,
-    description: "This is chart 3",
-    title: "Chart 3",
-  }),
-];
+const DUMMY: ChartModel[] = [];
+// [
+//   new ChartModel({
+//     spec: MockChart as VisualizationSpec,
+//     description: "This is chart 1",
+//     title: "Chart 1",
+//   }),
+//   new ChartModel({
+//     spec: MockChart as VisualizationSpec,
+//     description: "This is chart 2",
+//     title: "Chart 2",
+//   }),
+//   new ChartModel({
+//     spec: MockChart as VisualizationSpec,
+//     description: "This is chart 3",
+//     title: "Chart 3",
+//   }),
+// ];
 
 interface SessionsState {
   _sessions: TSession[];

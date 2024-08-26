@@ -1,16 +1,11 @@
 import { Box, Card, Flex, useBreakpointValue } from "@chakra-ui/react";
-import { Controller, FileForm, PlaceHolder } from "@components";
+import { Chart, Controller, FileForm, PlaceHolder } from "@components";
 import { useSession } from "@hooks";
 import { Drawer } from "vaul";
 
 export default function App() {
-  const {
-    scrollContainerRef,
-    currentChartIndex,
-    // charts,
-    scrollToChart,
-    renewCurrentChart,
-  } = useSession("dummy-session");
+  const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
+    useSession("dummy-session");
   const cardHeight = useBreakpointValue({ base: "100vh", lg: "80vh" });
   const cardPadding = useBreakpointValue({ base: 0, lg: 2 });
   const isDrawerVisible = useBreakpointValue({ base: true, lg: false });
@@ -47,7 +42,7 @@ export default function App() {
             gap={4}
             p={cardPadding}
           />
-          {/* {charts.map(chart => (
+          {charts.map(chart => (
             <Chart
               key={chart.key}
               p={cardPadding}
@@ -62,7 +57,7 @@ export default function App() {
                 lg: 500,
               }}
             />
-          ))} */}
+          ))}
         </Flex>
       </Flex>
       {!isDrawerVisible && (
@@ -80,6 +75,7 @@ export default function App() {
               scrollToChart={scrollToChart}
               renewCurrentChart={renewCurrentChart}
               currentChartIndex={currentChartIndex}
+              disabled={charts.length === 0}
             />
           </Card>
         </Flex>
@@ -128,6 +124,7 @@ export default function App() {
                 gap={4}
                 bottom={0}>
                 <Controller
+                  disabled={charts.length === 0}
                   scrollToChart={scrollToChart}
                   renewCurrentChart={renewCurrentChart}
                   currentChartIndex={currentChartIndex}
