@@ -16,7 +16,7 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
 
   async readFile(fileName: string): Promise<Uint8Array> {
     if (!this.pyodide) throw new Error("Pyodide is not initialized");
-    return this.pyodide.FS.readFile(`${fileName}`);
+    return this.pyodide.FS.readFile(`${fileName}`, { encoding: "utf-8" });
   },
 
   async initialize(packages: string[] = []): Promise<void> {
@@ -30,6 +30,14 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
     } catch (e) {
       // biome-ignore lint/nursery/noConsole: <explanation>
       console.error(e);
+    }
+
+    if (import.meta.hot) {
+      import.meta.hot.on("pyodide-update", async () => {
+        console.log("Reloading Pyodide...");
+        await setupPyodideFiles(this.pyodide);
+        await runEntryPointAsync(this.pyodide);
+      });
     }
   },
 

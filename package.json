@@ -37,7 +37,6 @@
     "vaul": "^0.9.1",
     "vega": "^5.30.0",
     "vega-lite": "^5.20.1",
-    "vite-plugin-pyodide": "^0.0.15",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
