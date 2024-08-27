@@ -71,9 +71,6 @@ importers:
       vega-lite:
         specifier: ^5.20.1
         version: 5.20.1(vega@5.30.0)
-      vite-plugin-pyodide:
-        specifier: ^0.0.15
-        version: 0.0.15(vite@5.4.2(@types/node@22.5.0)(terser@5.31.6))
       zustand:
         specifier: ^4.5.5
         version: 4.5.5(@types/react@18.3.4)(immer@10.1.1)(react@18.3.1)
@@ -3620,11 +3617,6 @@ packages:
     peerDependenciesMeta:
       '@vite-pwa/assets-generator':
         optional: true
-
-  vite-plugin-pyodide@0.0.15:
-    resolution: {integrity: sha512-NFg77gcM/Ns9AvVNDP2/tf6vqvY7ZvxTSZnT2ja7t9cJ2RBKUg6RNmRZVyS11sVqPmDj0C80rfyM34FokvUdXQ==}
-    peerDependencies:
-      vite: ^5.0.0
 
   vite-tsconfig-paths@5.0.1:
     resolution: {integrity: sha512-yqwv+LstU7NwPeNqajZzLEBVpUFU6Dugtb2P84FXuvaoYA+/70l9MHE+GYfYAycVyPSDYZ7mjOFuYBRqlEpTig==}
@@ -7850,10 +7842,6 @@ snapshots:
       workbox-window: 7.1.0
     transitivePeerDependencies:
       - supports-color
-
-  vite-plugin-pyodide@0.0.15(vite@5.4.2(@types/node@22.5.0)(terser@5.31.6)):
-    dependencies:
-      vite: 5.4.2(@types/node@22.5.0)(terser@5.31.6)
 
   vite-tsconfig-paths@5.0.1(typescript@5.5.4)(vite@5.4.2(@types/node@22.5.0)(terser@5.31.6)):
     dependencies:
