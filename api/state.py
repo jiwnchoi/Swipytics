@@ -1,6 +1,6 @@
-from api.models import State
+from api.models import Session
 
-state = State()
+state = Session()
 
 
 # decorator that return dict(state)

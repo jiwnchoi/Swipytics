@@ -14,8 +14,13 @@ class Chart:
   specs: list[dict[str, Any]] = field(default_factory=list)
   attributes: list[str] = field(default_factory=list)
 
-  timestamp: int = field(default_factory=get_timestamp)
-  key: str = field(default="")
+  timestamp: int = field(
+    default_factory=get_timestamp, init=False, repr=False, compare=False
+  )
+  key: str = field(init=False, repr=False, compare=False)
 
   def __post_init__(self):
-    self.key = f"chart-{self.timestamp}-{str(self.attributes)}"
+    self.key = f"chart-{str(self.attributes)}"
+
+  def __hash__(self):
+    return hash(self.key)

@@ -30,7 +30,7 @@ def get_encoding_facts(fields: list[str]) -> list[str]:
 
 
 def get_facts(fields: list[str]) -> list[str]:
-  print(fields)
+  print(fields, type(fields))
   return (
     get_base_facts() + get_attribute_facts(fields) + get_encoding_facts(fields)
   )

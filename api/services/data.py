@@ -10,19 +10,19 @@ from vega_datasets import data
 
 
 def load_data(fileName: str | None = None) -> None:
+  df: pd.DataFrame
   if fileName is None:
     state.filename = "Cars"
-    state.df = pd.DataFrame(data.cars())
+    df = pd.DataFrame(data.cars())
 
-    return
+  else:
+    state.filename = fileName
+    extension = get_file_extension(fileName)
+    df = getattr(pd, f"read_{extension}")(pathlib.Path("./", fileName))
 
-  extension = get_file_extension(fileName)
-
-  state.filename = fileName
-  state.df = getattr(pd, f"read_{extension}")(pathlib.Path("./", fileName))
-  state.df.columns = [
-    get_clingo_field_name(column) for column in state.df.columns
-  ]
+  state.df = df.rename(
+    columns={col: get_clingo_field_name(col) for col in df.columns}
+  )
 
 
 __all__ = ["load_data"]
