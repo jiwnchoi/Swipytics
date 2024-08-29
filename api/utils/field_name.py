@@ -1,12 +1,20 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, overload
 
 id_to_name: dict[str, str] = {}
 name_to_id: dict[str, str] = {}
 
 
-def get_clingo_field_name(field_name: str | int | list) -> str:
+@overload
+def get_clingo_field_name(field_name: str) -> str: ...
+
+
+@overload
+def get_clingo_field_name(field_name: list[str]) -> list[str]: ...
+
+
+def get_clingo_field_name(field_name: str | list[str]) -> str | list[str]:
   if isinstance(field_name, list):
     return [get_clingo_field_name(f) for f in field_name]
 

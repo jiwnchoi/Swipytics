@@ -1,5 +1,10 @@
+from typing import TYPE_CHECKING
+
 import draco
-from api.state import state
+import pandas as pd
+
+if TYPE_CHECKING:
+  from api.models import Session
 
 
 def get_base_facts() -> list[str]:
@@ -11,8 +16,8 @@ def get_base_facts() -> list[str]:
   ]
 
 
-def get_attribute_facts(fields: list[str]) -> list[str]:
-  base_scheme = draco.schema_from_dataframe(state.df[fields])
+def get_attribute_facts(df: pd.DataFrame, fields: list[str]) -> list[str]:
+  base_scheme = draco.schema_from_dataframe(df[fields])
   return draco.dict_to_facts(base_scheme)
 
 
@@ -29,10 +34,11 @@ def get_encoding_facts(fields: list[str]) -> list[str]:
   )
 
 
-def get_facts(fields: list[str]) -> list[str]:
-  print(fields)
+def get_facts(session: "Session", fields: list[str]) -> list[str]:
   return (
-    get_base_facts() + get_attribute_facts(fields) + get_encoding_facts(fields)
+    get_base_facts()
+    + get_attribute_facts(session.df, fields)
+    + get_encoding_facts(fields)
   )
 
 
