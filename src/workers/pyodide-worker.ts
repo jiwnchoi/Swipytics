@@ -10,13 +10,25 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
   pyodide: null,
 
   async writeFile(fileName: string, data: Uint8Array): Promise<void> {
-    if (!this.pyodide) throw new Error("Pyodide is not initialized");
-    this.pyodide.FS.writeFile(`${fileName}`, data, { encoding: "binary" });
+    try {
+      if (!this.pyodide) throw new Error("Pyodide is not initialized");
+      this.pyodide.FS.writeFile(fileName, data, { encoding: "binary", flags: "w" });
+    } catch (error) {
+      // biome-ignore lint/nursery/noConsole: <explanation>
+      console.error(error);
+      throw error;
+    }
   },
 
   async readFile(fileName: string): Promise<Uint8Array> {
-    if (!this.pyodide) throw new Error("Pyodide is not initialized");
-    return this.pyodide.FS.readFile(`${fileName}`, { encoding: "utf-8" });
+    try {
+      if (!this.pyodide) throw new Error("Pyodide is not initialized");
+      return this.pyodide.FS.readFile(`${fileName}`, { encoding: "utf-8" });
+    } catch (error) {
+      // biome-ignore lint/nursery/noConsole: <explanation>
+      console.error(error);
+      throw error;
+    }
   },
 
   async initialize(packages: string[] = []): Promise<void> {
@@ -30,14 +42,6 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
     } catch (e) {
       // biome-ignore lint/nursery/noConsole: <explanation>
       console.error(e);
-    }
-
-    if (import.meta.hot) {
-      import.meta.hot.on("pyodide-update", async () => {
-        console.log("Reloading Pyodide...");
-        await setupPyodideFiles(this.pyodide);
-        await runEntryPointAsync(this.pyodide);
-      });
     }
   },
 
@@ -63,16 +67,14 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
 
   async callPythonFunction<K extends keyof PythonManifest>(
     funcName: K,
-    args: PythonManifest[K]["args"] = [],
-    kwargs?: PythonManifest[K]["kwargs"],
+    args: PythonManifest[K]["args"] = {},
   ): Promise<PythonManifest[K]["returns"]> {
     if (!this.pyodide) throw new Error("Pyodide is not initialized");
 
     const func: PyCallable = this.pyodide.globals.get(funcName as string);
     if (!func) throw new Error(`Function ${funcName} is not defined in globals`);
 
-    const pyArgs = this.pyodide.toPy(args);
-    const result: PyProxy = kwargs ? func.callKwargs(pyArgs, kwargs) : func(...pyArgs);
+    const result: PyProxy = func.callKwargs(args);
 
     return result?.toJs ? result.toJs({ dict_converter: Object.fromEntries }) : result;
   },

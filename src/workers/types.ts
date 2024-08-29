@@ -3,9 +3,8 @@ import type PythonManifest from "./manifest";
 
 export interface WorkerManifest {
   [funcName: string]: {
-    args?: unknown[];
-    kwargs?: Record<string, unknown>;
     returns: unknown;
+    args: { [key: string]: unknown };
   };
 }
 export interface PyodideRunner<T extends WorkerManifest = PythonManifest> {
@@ -13,8 +12,7 @@ export interface PyodideRunner<T extends WorkerManifest = PythonManifest> {
   runPython: (code: string, globals?: Record<string, unknown>) => Promise<unknown>;
   callPythonFunction: <K extends keyof T>(
     funcName: K,
-    args?: T[K]["args"],
-    kwargs?: T[K]["kwargs"],
+    args: T[K]["args"],
   ) => Promise<T[K]["returns"]>;
   initialize: (packages?: string[]) => Promise<void>;
   writeFile: (fileName: string, data: Uint8Array) => Promise<void>;

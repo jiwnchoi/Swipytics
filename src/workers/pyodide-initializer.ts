@@ -36,8 +36,5 @@ const _initializePyodide = async (packages?: string[]): Promise<Pyodide> => {
  * method provides access outside of React contexts.
  */
 export const getPyodide = async (): Promise<Pyodide> => {
-  if (pyodide) {
-    return pyodide;
-  }
   return await initializePyodide({ packages: ["draco"] });
 };

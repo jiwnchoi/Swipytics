@@ -6,10 +6,8 @@ const DEBOUNCE_DELAY = 100;
 const CHART_PREFETCH_DELAY = 1;
 
 export default function useSession() {
-  const session = useSessionsStore(state => (state.sessions.length > 0 ? state.sessions[0] : null));
+  const charts = useSessionsStore(state => state.charts);
   const appendChart = useSessionsStore(state => state.appendChart);
-
-  const charts = session?.charts ?? [];
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentChartIndex, setCurrentChartIndex] = useState(0);
@@ -18,27 +16,26 @@ export default function useSession() {
     async (newIndex: number) => {
       setCurrentChartIndex(newIndex);
       if (newIndex < charts.length - CHART_PREFETCH_DELAY) return;
-      await appendChart(session?.key ?? "");
+      await appendChart();
     },
-    [charts, appendChart, session?.key],
+    [charts, appendChart],
   );
 
-  const renewCurrentChart = useCallback(() => {
-    // const currentChart = charts[currentChartIndex];
-    // if (!currentChart) return;
-    // renewChartInSession(currentChart.key);
-  }, [currentChartIndex]);
+  const renewCurrentChart = useCallback(() => {}, [currentChartIndex]);
 
-  const scrollToChart = useCallback((direction: "up" | "down") => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      const scrollAmount = direction === "up" ? -container.clientHeight : container.clientHeight;
-      container.scrollTo({
-        top: container.scrollTop + scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  }, []);
+  const scrollToChart = useCallback(
+    (direction: "up" | "down") => {
+      const container = scrollContainerRef.current;
+      if (container) {
+        const scrollAmount = direction === "up" ? -container.clientHeight : container.clientHeight;
+        container.scrollTo({
+          top: container.scrollTop + scrollAmount,
+          behavior: "smooth",
+        });
+      }
+    },
+    [scrollContainerRef],
+  );
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -64,7 +61,7 @@ export default function useSession() {
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [scrollEndCallback]);
+  }, [scrollEndCallback, scrollContainerRef]);
 
   return {
     scrollContainerRef,

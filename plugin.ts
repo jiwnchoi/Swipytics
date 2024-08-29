@@ -8,9 +8,11 @@ interface PyodidePluginOptions {
 }
 
 function pyodidePlugin(options: PyodidePluginOptions): Plugin {
-  let pythonFiles: Record<string, string> = {};
   const virtualModuleId = "virtual:pyodide-files";
   const resolvedVirtualModuleId = `\0${virtualModuleId}`;
+
+  // Move pythonFiles inside the plugin function
+  let pythonFiles: Record<string, string> = {};
 
   const loadPythonFilesRecursively = (dir: string, baseDir: string) => {
     const files = fs.readdirSync(dir, { withFileTypes: true });
@@ -27,23 +29,25 @@ function pyodidePlugin(options: PyodidePluginOptions): Plugin {
   };
 
   const loadPythonFiles = () => {
-    pythonFiles = {};
     const basePath = path.resolve(options.base);
+    pythonFiles = {}; // Reset pythonFiles before loading
     loadPythonFilesRecursively(basePath, basePath);
+    return pythonFiles; // Return the updated pythonFiles
   };
 
   return {
     name: "vite-plugin-pyodide",
 
-    configureServer(server) {
-      loadPythonFiles();
+    handleHotUpdate({ file, server }) {
+      if (file.endsWith(".py")) {
+        loadPythonFiles();
+        server.ws.send({ type: "full-reload" });
 
-      server.watcher.on("change", (filePath: string) => {
-        if (filePath.startsWith(options.base) && filePath.endsWith(".py")) {
-          loadPythonFiles();
-          server.ws.send({ type: "full-reload" });
+        const mod = server.moduleGraph.getModuleById(resolvedVirtualModuleId);
+        if (mod) {
+          server.moduleGraph.invalidateModule(mod);
         }
-      });
+      }
     },
 
     buildStart() {
@@ -58,15 +62,17 @@ function pyodidePlugin(options: PyodidePluginOptions): Plugin {
 
     load(id: string) {
       if (id === resolvedVirtualModuleId) {
+        // Call loadPythonFiles() here to get the latest content
+        const files = loadPythonFiles();
         const baseName = path.basename(options.base);
         const entryPointFullPath = options.entryPoint
           ? path.join(baseName, options.entryPoint)
           : "";
-        const entryPointContent = entryPointFullPath ? pythonFiles[entryPointFullPath] : "";
+        const entryPointContent = entryPointFullPath ? files[entryPointFullPath] : "";
 
         return `
           export async function setupPyodideFiles(pyodide) {
-            const files = ${JSON.stringify(pythonFiles)};
+            const files = ${JSON.stringify(files)};
             for (const [filename, content] of Object.entries(files)) {
               const dirs = filename.split('/').slice(0, -1);
               let currentDir = '';

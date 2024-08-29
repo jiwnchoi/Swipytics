@@ -1,10 +1,9 @@
 import type TChart from "./TChart";
 
 type TSession = {
-  key: string;
-  charts: TChart[];
-  groundingAttributes: string[];
+  filename: string;
   timestamp: number;
+  charts: TChart[];
 };
 
 export default TSession;

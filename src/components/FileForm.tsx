@@ -8,15 +8,15 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { useFileForm } from "@hooks";
+import { useFileForm, usePyodide } from "@hooks";
 import { FileUploadIcon } from "hugeicons-react";
 
 export default function FileForm() {
+  const { loadingPyodide } = usePyodide();
   const {
     loadingData,
     fileInputRef,
-    loadingPyodide,
-    urlInput,
+    pathInput,
     inputDisabled,
     handleFileButtonClick,
     handleFileChange,
@@ -27,7 +27,7 @@ export default function FileForm() {
   return (
     <Flex as={FormControl} flexDir={"column"} gap={0}>
       <InputGroup>
-        <Input placeholder="URL 또는 파일 선택" onChange={handleInputChange} value={urlInput} />
+        <Input placeholder="URL 또는 파일 선택" onChange={handleInputChange} value={pathInput} />
         <InputRightElement>
           <Input
             type="file"

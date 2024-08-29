@@ -3,17 +3,15 @@ import { CSVLoader } from "@loaders.gl/csv";
 import type { Schema } from "@loaders.gl/schema";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
-import { getPyodide } from "@workers";
 import { create } from "zustand";
 
 interface DataState {
-  file: string | File | null;
+  filename: string | null;
+  fileBuffer: Uint8Array | null;
   data: TSupportedDataType | undefined;
-  dataName: string | null;
   schema: Schema | null;
-  byte: Uint8Array | null;
 
-  load: (file: File | string) => void;
+  load: (file: File | string) => Promise<[string | null, Uint8Array | null]>;
   loading: boolean;
 }
 
@@ -23,51 +21,50 @@ const loaderMap = {
 };
 
 const useDataStore = create<DataState>(set => ({
-  file: null,
+  filename: null,
+  fileBuffer: null,
+
   data: undefined,
-  dataName: null,
   schema: null,
-  byte: null,
   loading: false,
 
   load: async (file: File | string) => {
     set({ loading: true });
-    const fileName = file instanceof File ? file.name : getFileNameFromURL(file);
-    const fileExtension = fileName.split(".").pop();
 
     try {
+      const filename = file instanceof File ? file.name : getFileNameFromURL(file);
+      const fileExtension = filename.split(".").pop();
+
       // Fetching Files
       const fetchedFile = await fetchFile(file);
       const buffer = await fetchedFile.arrayBuffer();
-      const uint8Array = new Uint8Array(buffer);
+      const fileBuffer = new Uint8Array(buffer);
 
-      const pyodide = await getPyodide();
-      // Save buffer to pyodide
-      if (!pyodide) {
-        throw new Error("Pyodide not loaded");
-      }
-      await pyodide.writeFile(fileName, uint8Array);
       // Parse the file
-      const data = await parse(buffer, loaderMap[fileExtension as keyof typeof loaderMap], {
+      const data = (await parse(buffer, loaderMap[fileExtension as keyof typeof loaderMap], {
         worker: true,
         fetch: { mode: "no-cors" },
-      });
+      })) as TSupportedDataType;
 
-      const loadedData = data as TSupportedDataType;
       // biome-ignore lint/nursery/noConsole: <explanation>
-      console.log(loadedData);
+      console.log(data);
       set({
-        data: loadedData,
-        dataName: fileName,
-        schema: loadedData.schema,
+        filename,
+        fileBuffer,
+        data,
+        schema: data.schema,
         loading: false,
       });
+      return [filename, fileBuffer];
     } catch (error) {
+      // biome-ignore lint/nursery/noConsole: <explanation>
+      console.error(error);
+    } finally {
       set({
         loading: false,
       });
-      throw error;
     }
+    return [null, null];
   },
 }));
 

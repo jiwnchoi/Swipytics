@@ -23,16 +23,13 @@ const runPython = async (code: string, globals?: Record<string, unknown>): Promi
 
 const callPythonFunction = async <K extends keyof WorkerManifest>(
   funcName: K,
-  args?: WorkerManifest[K]["args"],
-  kwargs?: WorkerManifest[K]["kwargs"],
+  args: WorkerManifest[K]["args"],
 ): Promise<WorkerManifest[K]["returns"]> => {
   if (!_worker || !_runner) {
     throw new Error("pyodide isn't loaded yet");
   }
 
-  return _runner.callPythonFunction(funcName, args, kwargs) as Promise<
-    WorkerManifest[K]["returns"]
-  >;
+  return _runner.callPythonFunction(funcName, args) as Promise<WorkerManifest[K]["returns"]>;
 };
 
 const writeFile = async (fileName: string, data: Uint8Array): Promise<void> => {
