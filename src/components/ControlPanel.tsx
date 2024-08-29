@@ -3,15 +3,15 @@ import type { ReactNode } from "react";
 import { Drawer } from "vaul";
 
 interface ControlPanelProps {
-  isMobile: boolean;
+  mobile: boolean;
   children: ReactNode;
 }
 
-export default function ControlPanel({ isMobile, children }: ControlPanelProps) {
+export default function ControlPanel({ mobile, children }: ControlPanelProps) {
   return (
     <>
-      {!isMobile && <> {children} </>}
-      <Drawer.Root open={isMobile} modal={false} closeThreshold={0.5}>
+      {!mobile && <> {children} </>}
+      <Drawer.Root open={mobile} modal={false} closeThreshold={0.5}>
         <Drawer.Portal>
           <Drawer.Content
             onOpenAutoFocus={e => e.preventDefault()}

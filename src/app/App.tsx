@@ -6,44 +6,22 @@ export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
     useSession();
   const cardHeight = useBreakpointValue({ base: "100vh", lg: "80vh" });
-  const cardPadding = useBreakpointValue({ base: 0, lg: 2 });
-  const isMobile = useBreakpointValue({ base: true, lg: false }) ?? false;
+  const mobile = useBreakpointValue({ base: true, lg: false });
 
   return (
     <Flex
       minW={{ base: "full", lg: "container.xl" }}
       h={cardHeight}
+      gap={4}
       flexDir={{ base: "column", lg: "row" }}>
-      <ChartPanel
-        ref={scrollContainerRef}
-        p={cardPadding}
-        maxH={cardHeight}
-        flexDir={"column"}
-        gap={{ base: 0, lg: 4 }}>
-        <PlaceHolder
-          as={Card}
-          flexDir={"column"}
-          minW="full"
-          h={cardHeight}
-          gap={4}
-          p={cardPadding}
-        />
+      <ChartPanel ref={scrollContainerRef} flexDir={"column"} gap={{ base: 0, lg: 4 }}>
+        <PlaceHolder as={Card} flexDir={"column"} minW="full" gap={4} h={cardHeight} />
         {charts.map(chart => (
-          <Chart
-            key={chart.key}
-            p={cardPadding}
-            chart={chart}
-            minH={cardHeight}
-            chartSize={{
-              base: 300,
-              lg: 550,
-            }}
-          />
+          <Chart key={chart.key} chart={chart} minH={cardHeight} />
         ))}
       </ChartPanel>
-      <ControlPanel isMobile={isMobile}>
+      <ControlPanel mobile={!!mobile}>
         <ControlPanelContent
-          p={2}
           w={{ base: "full", lg: "md" }}
           disabled={charts.length === 0}
           currentChartIndex={currentChartIndex}
