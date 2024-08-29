@@ -1,17 +1,22 @@
-import { Flex, Icon, IconButton } from "@chakra-ui/react";
+import { Flex, type FlexProps, Icon, IconButton } from "@chakra-ui/react";
 import { ArrowDown01Icon, ArrowUp01Icon, BookmarkAdd01Icon, Exchange01Icon } from "hugeicons-react";
 
-interface ControllerProps {
+interface ControllerProps extends FlexProps {
   scrollToChart: (direction: "up" | "down") => void;
   renewCurrentChart: () => void;
   currentChartIndex: number;
   disabled: boolean;
 }
 
-const Controller = (props: ControllerProps) => {
-  const { scrollToChart, renewCurrentChart, currentChartIndex, disabled } = props;
+function Controller({
+  scrollToChart,
+  renewCurrentChart,
+  currentChartIndex,
+  disabled,
+  ...props
+}: ControllerProps) {
   return (
-    <Flex w="full" gap={2}>
+    <Flex {...props}>
       <IconButton
         w="full"
         aria-label="Previous chart"
@@ -42,6 +47,6 @@ const Controller = (props: ControllerProps) => {
       />
     </Flex>
   );
-};
+}
 
 export default Controller;

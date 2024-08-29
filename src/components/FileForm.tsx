@@ -1,5 +1,4 @@
 import {
-  Button,
   Flex,
   type FlexProps,
   FormControl,
@@ -10,7 +9,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { useFileForm, usePyodide } from "@hooks";
-import { FileUploadIcon } from "hugeicons-react";
+import { FileAttachmentIcon, StartUp02Icon } from "hugeicons-react";
 
 interface FileFormProps extends FlexProps {}
 
@@ -30,7 +29,13 @@ export default function FileForm(props: FileFormProps) {
   return (
     <Flex as={FormControl} {...props}>
       <InputGroup>
-        <Input placeholder="URL 또는 파일 선택" onChange={handleInputChange} value={pathInput} />
+        <Input
+          placeholder="Input .csv/.json Link or File"
+          onChange={handleInputChange}
+          value={pathInput}
+          borderRightRadius={0}
+          _focusVisible={{ borderColor: "blue.200" }}
+        />
         <InputRightElement>
           <Input
             type="file"
@@ -40,23 +45,24 @@ export default function FileForm(props: FileFormProps) {
             accept=".csv,.json"
           />
           <IconButton
-            aria-label="파일 선택"
-            icon={<Icon as={FileUploadIcon} />}
+            aria-label="Select File"
+            icon={<Icon as={FileAttachmentIcon} />}
             variant={"link"}
             onClick={handleFileButtonClick}
           />
         </InputRightElement>
       </InputGroup>
-      <Button
-        mt={2}
-        colorScheme="gray"
+      <IconButton
+        borderLeftRadius={0}
+        colorScheme="blue"
         type="submit"
         isLoading={loadingData || loadingPyodide}
-        loadingText={`Loading ${loadingData ? "data" : "pyodide"}...`}
+        icon={<Icon as={StartUp02Icon} />}
+        aria-label="Load Data"
         isDisabled={inputDisabled}
         onClick={handleSubmit}>
         {inputDisabled ? "Please Input Data" : "Load Data"}
-      </Button>
+      </IconButton>
     </Flex>
   );
 }

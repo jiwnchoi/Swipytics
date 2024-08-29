@@ -1,5 +1,13 @@
-import { Card, Flex, useBreakpointValue } from "@chakra-ui/react";
-import { Chart, ChartPanel, ControlPanel, ControlPanelContent, PlaceHolder } from "@components";
+import { Card, Flex, Heading, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Chart,
+  ChartPanel,
+  ControlPanel,
+  ControlPanelContent,
+  Controller,
+  FileForm,
+  PlaceHolder,
+} from "@components";
 import { useSession } from "@hooks";
 
 export default function App() {
@@ -21,13 +29,21 @@ export default function App() {
         ))}
       </ChartPanel>
       <ControlPanel mobile={!!mobile}>
-        <ControlPanelContent
-          w={{ base: "full", lg: "md" }}
-          disabled={charts.length === 0}
-          currentChartIndex={currentChartIndex}
-          scrollToChart={scrollToChart}
-          renewCurrentChart={renewCurrentChart}
-        />
+        <ControlPanelContent w={{ base: "full", lg: "md" }}>
+          <Controller
+            w="full"
+            gap={2}
+            scrollToChart={scrollToChart}
+            renewCurrentChart={renewCurrentChart}
+            currentChartIndex={currentChartIndex}
+            disabled={charts.length === 0}
+          />
+          <Heading size="sm">Load File</Heading>
+          <FileForm />
+          {/* <Heading size="sm">Settings</Heading>
+          <Button>Settings</Button>
+          <Button>Load Demo</Button> */}
+        </ControlPanelContent>
       </ControlPanel>
     </Flex>
   );
