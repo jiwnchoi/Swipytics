@@ -3,6 +3,7 @@ import { CSVLoader } from "@loaders.gl/csv";
 import type { Schema } from "@loaders.gl/schema";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
+import { getPyodide } from "@workers";
 import { create } from "zustand";
 
 interface DataState {
@@ -11,7 +12,7 @@ interface DataState {
   data: TSupportedDataType | undefined;
   schema: Schema | null;
 
-  load: (file: File | string) => Promise<[string | null, Uint8Array | null]>;
+  loadData: (file: File | string) => Promise<void>;
   loading: boolean;
 }
 
@@ -28,10 +29,11 @@ const useDataStore = create<DataState>(set => ({
   schema: null,
   loading: false,
 
-  load: async (file: File | string) => {
+  loadData: async (file: File | string) => {
     set({ loading: true });
 
     try {
+      const pyodide = await getPyodide();
       const filename = file instanceof File ? file.name : getFileNameFromURL(file);
       const fileExtension = filename.split(".").pop();
 
@@ -48,6 +50,8 @@ const useDataStore = create<DataState>(set => ({
 
       // biome-ignore lint/nursery/noConsole: <explanation>
       console.log(data);
+
+      await pyodide.writeFile(filename, fileBuffer);
       set({
         filename,
         fileBuffer,
@@ -55,7 +59,6 @@ const useDataStore = create<DataState>(set => ({
         schema: data.schema,
         loading: false,
       });
-      return [filename, fileBuffer];
     } catch (error) {
       // biome-ignore lint/nursery/noConsole: <explanation>
       console.error(error);
@@ -64,7 +67,6 @@ const useDataStore = create<DataState>(set => ({
         loading: false,
       });
     }
-    return [null, null];
   },
 }));
 

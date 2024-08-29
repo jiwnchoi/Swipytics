@@ -1,14 +1,13 @@
-import { isURL } from "@shared/utils";
+import { getFileNameFromURL, isURL } from "@shared/utils";
 import { useDataStore, useSessionsStore } from "@stores";
-import { getPyodide } from "@workers";
 import { type ChangeEvent, useRef, useState } from "react";
 
 function useFileForm() {
-  const loadSession = useSessionsStore(state => state.loadSession);
   const loadingSession = useSessionsStore(state => state.loadingSession);
+  const loadSession = useSessionsStore(state => state.loadSession);
 
   const loadingData = useDataStore(state => state.loading);
-  const loadData = useDataStore(state => state.load);
+  const loadData = useDataStore(state => state.loadData);
 
   const [pathInput, setPathInput] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -33,21 +32,19 @@ function useFileForm() {
   };
 
   const handleSubmit = async () => {
-    const pyodide = await getPyodide();
     const source = fileInputRef.current?.files?.[0] || (isURL(pathInput) ? pathInput : null);
+    if (!source) return;
 
-    if (source) {
-      const [filename, fileBuffer] = await loadData(source);
-      if (filename && fileBuffer) {
-        await pyodide.writeFile(filename, fileBuffer);
-        await loadSession(filename);
-      }
-    }
+    const filename = fileInputRef.current?.files?.[0].name || getFileNameFromURL(pathInput);
+    await loadData(source);
+    await loadSession(filename);
   };
+
+  const inputDisabled = !pathInput && !fileInputRef.current?.files?.length;
 
   return {
     fileInputRef,
-    inputDisabled: !pathInput && !fileInputRef.current?.files?.length,
+    inputDisabled,
 
     loadData,
     loadingData,
