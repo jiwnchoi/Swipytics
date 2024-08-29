@@ -32,6 +32,7 @@ class Chart:
       "specs": self.specs,
       "attributes": self.attributes,
       "timestamp": self.timestamp,
+      "key": self.key,
     }
 
   def __asdict__(self) -> dict[str, Any]:

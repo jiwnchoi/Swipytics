@@ -1,4 +1,4 @@
-from .decorators import df_required
+from .decorators import df_required, exception_handler
 from .field_name import (
   get_clingo_field_name,
   get_original_field_name,
@@ -10,6 +10,7 @@ from .get_timestamp import get_timestamp
 
 __all__ = [
   "df_required",
+  "exception_handler",
   "get_file_extension",
   "get_timestamp",
   "find",

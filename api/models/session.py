@@ -55,9 +55,8 @@ class Session:
       ]
 
   def _get_base_field(self) -> str:
-    base_fields = [
-      field for field in self.clingo_field_name if field not in self.used_charts
-    ]
+    base_fields = self.clingo_field_name
+
     # 확률 처리 알고리즘
     p = np.full(len(base_fields), 1 / len(base_fields))
 
@@ -67,6 +66,10 @@ class Session:
     new_fields = [
       field for field in self.clingo_field_name if field not in fields
     ]
+
+    if len(new_fields) == 0:
+      raise ValueError("No new fields")
+
     p = np.full(len(new_fields), 1 / len(new_fields))
 
     return [*choice(new_fields, n, p=p).tolist()]
@@ -74,6 +77,10 @@ class Session:
   @df_required
   def get_fields(self) -> list[str]:
     if self.base_field is None:
+      self.base_field = self._get_base_field()
+      return [self.base_field]
+
+    if len(self.used_charts[self.base_field]) == self.clingo_field_name:
       self.base_field = self._get_base_field()
       return [self.base_field]
 
