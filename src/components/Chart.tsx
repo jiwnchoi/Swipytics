@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import type { TChart } from "@shared/models";
 import { useDataStore } from "@stores";
-import { memo } from "react";
 import { VegaLite, type VisualizationSpec } from "react-vega";
 
 interface ChartProps extends CenterProps {
@@ -28,6 +27,7 @@ function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
         w="full"
         h="full"
         alignItems={"center"}
+        justify={"center"}
         rounded={{ base: "none", md: "md" }}
         p={4}
         gap={4}>
@@ -40,6 +40,14 @@ function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
               height,
               background: "transparent",
               data: { name: "table" },
+              config: {
+                ...chart.specs[0].config,
+                axis: {
+                  labelFontSize: 14,
+                  titleFontSize: 16,
+                  titlePadding: 16,
+                },
+              },
             } as VisualizationSpec
           }
           data={{ table: data }}
@@ -47,9 +55,10 @@ function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
           actions={false}
           renderer="canvas"
         />
+        <Flex minH={{ base: "200px", lg: "0px" }} />
       </Card>
     </Flex>
   );
 }
 
-export default memo(Chart);
+export default Chart;

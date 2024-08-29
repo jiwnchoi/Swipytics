@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  type FlexProps,
   FormControl,
   Icon,
   IconButton,
@@ -11,7 +12,9 @@ import {
 import { useFileForm, usePyodide } from "@hooks";
 import { FileUploadIcon } from "hugeicons-react";
 
-export default function FileForm() {
+interface FileFormProps extends FlexProps {}
+
+export default function FileForm(props: FileFormProps) {
   const { loadingPyodide } = usePyodide();
   const {
     loadingData,
@@ -25,7 +28,7 @@ export default function FileForm() {
   } = useFileForm();
 
   return (
-    <Flex as={FormControl} flexDir={"column"} gap={0}>
+    <Flex as={FormControl} {...props}>
       <InputGroup>
         <Input placeholder="URL 또는 파일 선택" onChange={handleInputChange} value={pathInput} />
         <InputRightElement>

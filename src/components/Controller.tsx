@@ -1,12 +1,5 @@
-import { Flex } from "@chakra-ui/react";
-import {
-  ArrowDown01Icon,
-  ArrowUp01Icon,
-  BookmarkAdd01Icon,
-  Exchange01Icon,
-  LinkForwardIcon,
-} from "hugeicons-react";
-import ResponsiveButton from "./ResponsiveButton";
+import { Flex, Icon, IconButton } from "@chakra-ui/react";
+import { ArrowDown01Icon, ArrowUp01Icon, BookmarkAdd01Icon, Exchange01Icon } from "hugeicons-react";
 
 interface ControllerProps {
   scrollToChart: (direction: "up" | "down") => void;
@@ -19,29 +12,34 @@ const Controller = (props: ControllerProps) => {
   const { scrollToChart, renewCurrentChart, currentChartIndex, disabled } = props;
   return (
     <Flex w="full" gap={2}>
-      <ResponsiveButton
+      <IconButton
         w="full"
-        label="이전 시각화"
-        icon={ArrowUp01Icon}
+        aria-label="Previous chart"
+        icon={<Icon as={ArrowUp01Icon} />}
         onClick={() => scrollToChart("up")}
         isDisabled={currentChartIndex === 0 || disabled}
       />
-      <ResponsiveButton
+      <IconButton
         w="full"
-        label="다음 시각화"
-        icon={ArrowDown01Icon}
+        aria-label="Next chart"
+        icon={<Icon as={ArrowDown01Icon} />}
         onClick={() => scrollToChart("down")}
         isDisabled={disabled}
       />
-      <ResponsiveButton w="full" label="다른 속성" icon={LinkForwardIcon} isDisabled={disabled} />
-      <ResponsiveButton
+      {/* <IconButton w="full" label="다른 속성" icon={LinkForwardIcon} isDisabled={disabled} /> */}
+      <IconButton
         w="full"
-        label="다른 시각화"
-        icon={Exchange01Icon}
+        aria-label="Renew current chart"
+        icon={<Icon as={Exchange01Icon} />}
         onClick={renewCurrentChart}
         isDisabled={disabled}
       />
-      <ResponsiveButton w="full" label="저장 하기" icon={BookmarkAdd01Icon} isDisabled={disabled} />
+      <IconButton
+        w="full"
+        aria-label="Bookmark current chart"
+        icon={<Icon as={BookmarkAdd01Icon} />}
+        isDisabled={disabled}
+      />
     </Flex>
   );
 };
