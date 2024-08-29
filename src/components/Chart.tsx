@@ -12,13 +12,11 @@ import { VegaLite, type VisualizationSpec } from "react-vega";
 
 interface ChartProps extends CenterProps {
   chart: TChart;
-  chartWidth: Partial<Record<string, number>> | (number | null)[];
-  chartHeight: Partial<Record<string, number>> | (number | null)[];
+  chartSize: Partial<Record<string, number>> | (number | null)[];
 }
 
-function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
-  const width = useBreakpointValue(chartWidth);
-  const height = useBreakpointValue(chartHeight);
+function Chart({ chart, chartSize, ...props }: ChartProps) {
+  const size = useBreakpointValue(chartSize);
   const { colorMode } = useColorMode();
   const data = useDataStore(state => state.data);
   return (
@@ -36,8 +34,8 @@ function Chart({ chart, chartWidth, chartHeight, ...props }: ChartProps) {
           spec={
             {
               ...chart.specs[0],
-              width,
-              height,
+              width: size,
+              height: size,
               background: "transparent",
               data: { name: "table" },
               config: {

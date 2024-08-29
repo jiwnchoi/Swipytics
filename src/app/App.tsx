@@ -34,13 +34,9 @@ export default function App() {
             p={cardPadding}
             chart={chart}
             minH={cardHeight}
-            chartWidth={{
+            chartSize={{
               base: 300,
               lg: 550,
-            }}
-            chartHeight={{
-              base: 300,
-              lg: 500,
             }}
           />
         ))}
