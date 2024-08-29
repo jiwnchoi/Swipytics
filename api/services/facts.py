@@ -13,6 +13,8 @@ def get_base_facts() -> list[str]:
     "entity(mark,v0,m0).",
     ":- {entity(encoding,_,_)} > 3.",
     ":- {entity(mark,_,_)} != 1.",
+    # Exclude tick mark
+    ":- attribute((mark,type),m0, tick).",
   ]
 
 
