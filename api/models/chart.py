@@ -6,7 +6,7 @@ from api.utils import get_timestamp
 
 @dataclass
 class Chart:
-  facts: list[str]
+  facts: list[str] = field(default_factory=list)
 
   title: str = field(default="")
   description: str = field(default="")
@@ -24,3 +24,15 @@ class Chart:
 
   def __hash__(self):
     return hash(self.key)
+
+  def to_dict(self) -> dict[str, Any]:
+    return {
+      "title": self.title,
+      "description": self.description,
+      "specs": self.specs,
+      "attributes": self.attributes,
+      "timestamp": self.timestamp,
+    }
+
+  def __asdict__(self) -> dict[str, Any]:
+    return self.to_dict()

@@ -1,12 +1,14 @@
-from typing import Iterable
+from typing import TYPE_CHECKING, Iterable
 
 import altair as alt
 import draco
 import pandas as pd
-from api.state import state
 from api.utils import replace_clingo_field_name
 from clingo import Symbol
 from draco.renderer import AltairRenderer
+
+if TYPE_CHECKING:
+  from api.models import Session
 
 drc = draco.Draco()
 renderer = AltairRenderer()
@@ -34,11 +36,12 @@ def answer_set_to_spec(answer_set: Iterable[Symbol], df: pd.DataFrame) -> dict:
 
 
 def get_specs_from_facts(
+  session: "Session",
   facts: list[str],
   num: int = 5,
 ) -> dict[str, tuple[list[str], dict]]:
   return [
-    answer_set_to_spec(model.answer_set, state.df)
+    answer_set_to_spec(model.answer_set, session.df)
     for model in drc.complete_spec(facts, num)
   ]
 
