@@ -33,7 +33,21 @@ export default defineConfig({
       devOptions: {
         enabled: false,
       },
-      manifest: false,
+      manifest: {
+        name: "Swipytics",
+        short_name: "Swipytics",
+        display: "standalone",
+        theme_color: "#1A202C",
+        background_color: "#1A202C",
+        icons: [
+          {
+            src: "/Swipytics/icon.svg",
+            sizes: "any",
+            type: "image/svg+xml",
+            purpose: "any",
+          },
+        ],
+      },
     }),
   ],
 });

@@ -22,6 +22,9 @@ export default function ControlPanel({ mobile, children }: ControlPanelProps) {
               width: "100%",
               maxHeight: "90vh",
             }}>
+            <Drawer.Title />
+            <Drawer.Description />
+
             <Flex
               w="full"
               h="full"
