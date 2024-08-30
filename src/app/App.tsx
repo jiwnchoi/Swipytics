@@ -23,7 +23,7 @@ export default function App() {
       gap={4}
       flexDir={{ base: "column", lg: "row" }}>
       <ChartPanel ref={scrollContainerRef} flexDir={"column"} gap={{ base: 0, lg: 4 }}>
-        <PlaceHolder as={Card} flexDir={"column"} minW="full" gap={4} h={cardHeight} />
+        <PlaceHolder as={Card} flexDir={"column"} minW="full" p={4} h={cardHeight} />
         {charts.map(chart => (
           <Chart key={chart.key} chart={chart} minH={cardHeight} />
         ))}
