@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import type { TChart } from "@shared/models";
 import { useDataStore } from "@stores";
+import useMeasure from "react-use-measure";
 import { VegaLite, type VisualizationSpec } from "react-vega";
 
 interface ChartProps extends CenterProps {
@@ -15,21 +16,24 @@ interface ChartProps extends CenterProps {
 }
 
 function Chart({ chart, ...props }: ChartProps) {
-  const size = useBreakpointValue({
-    base: 300,
-    lg: 550,
-  });
+  const [boxRef, boxBounds] = useMeasure();
   const { colorMode } = useColorMode();
   const data = useDataStore(state => state.data);
+  const deviceSize = Math.min(window.innerWidth, window.innerHeight);
+
+  const [width, height] = useBreakpointValue({
+    base: [deviceSize - 32, deviceSize - 32],
+    lg: [boxBounds.width - 100, boxBounds.height - 100],
+  }) ?? [0, 0];
   return (
-    <Center minW="full" scrollSnapAlign={"start"} {...props}>
+    <Center minW="full" scrollSnapAlign={"start"} ref={boxRef} {...props}>
       <Heading>{chart.title}</Heading>
       <VegaLite
         spec={
           {
             ...chart.specs[0],
-            width: size,
-            height: size,
+            width,
+            height,
             background: "transparent",
             data: { name: "table" },
             config: {
@@ -39,6 +43,9 @@ function Chart({ chart, ...props }: ChartProps) {
                 titleFontSize: 16,
                 titlePadding: 16,
               },
+              autosize: {
+                type: "fit",
+              },
             },
           } as VisualizationSpec
         }
@@ -47,7 +54,7 @@ function Chart({ chart, ...props }: ChartProps) {
         actions={false}
         renderer="canvas"
       />
-      <Flex minH={{ base: "200px", lg: "0px" }} />
+      <Flex minH={{ base: "85px", lg: "0px" }} />
     </Center>
   );
 }

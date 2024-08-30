@@ -35,6 +35,7 @@ function Settings(props: StackProps) {
             w="full"
             as={Button}
             variant={"outline"}
+            borderRightRadius={0}
             rightIcon={<Icon as={ArrowDown01Icon} />}>
             {selectedDemo ? DEMO_LIST.find(demo => demo === selectedDemo)?.name : "Select Demo"}
           </MenuButton>

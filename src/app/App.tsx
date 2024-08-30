@@ -27,6 +27,7 @@ export default function App() {
           flexDir={"column"}
           minW="full"
           p={4}
+          w={"4xl"}
           h={cardHeight}
           bgColor={cardColor}
           borderRadius={"lg"}
@@ -34,6 +35,7 @@ export default function App() {
         />
         {charts.map(chart => (
           <Chart
+            maxW={{ base: window.innerWidth, lg: "4xl" }}
             key={chart.key}
             chart={chart}
             minH={cardHeight}
