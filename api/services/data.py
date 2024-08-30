@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 import pandas as pd
 from api.utils import get_file_extension
-from api.utils.field_name import get_clingo_field_name
+from api.utils.field_name import get_clingo_field_name, id_to_name, name_to_id
 from vega_datasets import data
 
 if TYPE_CHECKING:
@@ -17,6 +17,8 @@ def is_name_attribute(series: pd.Series) -> bool:
 
 
 def load_data(session: "Session", filename: str | None = None) -> None:
+  id_to_name.clear()
+  name_to_id.clear()
   df: pd.DataFrame
   if filename is None:
     session.filename = "Cars"
@@ -33,6 +35,8 @@ def load_data(session: "Session", filename: str | None = None) -> None:
   # Filter out name attributes from field_name
   session.field_name = [col for col in df.columns if col not in name_attributes]
   session.clingo_field_name = get_clingo_field_name(session.field_name)
+  print(f"field_name: {session.field_name}")
+  print(f"clingo_field_name: {session.clingo_field_name}")
 
   # Rename columns for the dataframe
   rename_dict = {

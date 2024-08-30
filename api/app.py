@@ -9,6 +9,8 @@ state = Session()
 
 @exception_handler(default_return=Session().asdict())
 def loadData(filename: str):
+  global state
+  state = Session()
   load_data(state, filename if filename != "" else None)
   append_chart(state)
   return state.asdict()
