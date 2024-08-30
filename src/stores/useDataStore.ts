@@ -30,7 +30,7 @@ const useDataStore = create<DataState>(set => ({
   loading: false,
 
   loadData: async (file: File | string) => {
-    set({ loading: true });
+    set({ loading: true, filename: null, fileBuffer: null, data: undefined, schema: null });
 
     try {
       const pyodide = await getPyodide();

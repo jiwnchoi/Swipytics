@@ -1,5 +1,5 @@
 import {
-  Card,
+  Center,
   type CenterProps,
   Flex,
   Heading,
@@ -22,42 +22,33 @@ function Chart({ chart, ...props }: ChartProps) {
   const { colorMode } = useColorMode();
   const data = useDataStore(state => state.data);
   return (
-    <Flex minW="full" scrollSnapAlign={"start"} {...props}>
-      <Card
-        w="full"
-        h="full"
-        alignItems={"center"}
-        justify={"center"}
-        rounded={{ base: "none", md: "md" }}
-        p={4}
-        gap={4}>
-        <Heading>{chart.title}</Heading>
-        <VegaLite
-          spec={
-            {
-              ...chart.specs[0],
-              width: size,
-              height: size,
-              background: "transparent",
-              data: { name: "table" },
-              config: {
-                ...chart.specs[0].config,
-                axis: {
-                  labelFontSize: 14,
-                  titleFontSize: 16,
-                  titlePadding: 16,
-                },
+    <Center minW="full" scrollSnapAlign={"start"} {...props}>
+      <Heading>{chart.title}</Heading>
+      <VegaLite
+        spec={
+          {
+            ...chart.specs[0],
+            width: size,
+            height: size,
+            background: "transparent",
+            data: { name: "table" },
+            config: {
+              ...chart.specs[0].config,
+              axis: {
+                labelFontSize: 14,
+                titleFontSize: 16,
+                titlePadding: 16,
               },
-            } as VisualizationSpec
-          }
-          data={{ table: data }}
-          theme={colorMode === "dark" ? "dark" : undefined}
-          actions={false}
-          renderer="canvas"
-        />
-        <Flex minH={{ base: "200px", lg: "0px" }} />
-      </Card>
-    </Flex>
+            },
+          } as VisualizationSpec
+        }
+        data={{ table: data }}
+        theme={colorMode === "dark" ? "dark" : undefined}
+        actions={false}
+        renderer="canvas"
+      />
+      <Flex minH={{ base: "200px", lg: "0px" }} />
+    </Center>
   );
 }
 

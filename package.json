@@ -31,6 +31,7 @@
     "pyodide": "0.25.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-use-measure": "^2.1.1",
     "react-vega": "^7.6.0",
     "vaul": "^0.9.1",
     "vega": "^5.30.0",
