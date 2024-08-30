@@ -259,6 +259,7 @@ def load_data(session: "Session", filename: str | None = None) -> None:
     session.filename = filename
     extension = get_file_extension(filename)
     df = getattr(pd, f"read_{extension}")(Path("./", filename))
+    df = df if len(df) <= 5000 else df.sample(5000)
 
   # Identify name attributes
   name_attributes = [col for col in df.columns if is_name_attribute(df[col])]
