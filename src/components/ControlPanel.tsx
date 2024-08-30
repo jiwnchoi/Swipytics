@@ -15,8 +15,8 @@ export default function ControlPanel({ children, ...props }: PropsWithChildren<F
 
   const variants = useMemo(
     () => ({
-      expanded: { top: `calc(100vh - ${bodyBounds.bottom - handleBounds.top + 8}px)` },
-      collapsed: { top: "calc(100vh - 85px)" },
+      expanded: { top: `calc(100dvh - ${bodyBounds.bottom - handleBounds.top + 8}px)` },
+      collapsed: { top: "calc(100dvh - 85px)" },
     }),
     [bodyBounds, handleBounds],
   );
