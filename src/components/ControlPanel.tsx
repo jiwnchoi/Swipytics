@@ -108,7 +108,7 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
             flexDir={"column"}
             gap={0}
             borderRadius={"xl"}
-            boxShadow={"md"}
+            boxShadow={"0px -4px 10px rgba(0, 0, 0, 0.1)"}
             bgColor={drawerBgColor}>
             <Flex bgColor={"gray"} minH={1} mt={2} borderRadius={4} minW={10} ref={handleRef} />
             <Flex w={"full"} ref={bodyRef} p={4} flexDir={"column"}>
