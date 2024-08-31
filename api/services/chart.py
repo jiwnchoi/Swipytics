@@ -19,7 +19,7 @@ def append_chart(session: "Session") -> Chart:
     fields = session.get_fields()
     facts = get_facts(session, fields)
     specs = get_specs_from_facts(session, facts)
-    new_chart = (
+    chart = (
       Chart(
         specs=specs,
         facts=facts,
@@ -28,11 +28,6 @@ def append_chart(session: "Session") -> Chart:
       if len(specs) > 0
       else None
     )
-
-    if new_chart is None or new_chart in session.used_charts[fields[0]]:
-      continue
-    chart = new_chart
-
     print(f"fields: {fields}")
 
   session.charts.append(chart)

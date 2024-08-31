@@ -11,7 +11,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useDemo, useSettings } from "@hooks";
+import { useDemo, usePyodide, useSettings } from "@hooks";
 import { DEMO_LIST, PRIMARY_COLOR } from "@shared/constants";
 import { ArrowDown01Icon, Moon01Icon, StartUp02Icon, Sun03Icon } from "hugeicons-react";
 import FileForm from "./FileForm";
@@ -32,6 +32,7 @@ function SettingRow({ label, children, ...props }: SettingRowProps) {
 
 function DemoSelector() {
   const { handleSubmit, loading, selectedDemo, handleDemoSelect } = useDemo();
+  const { loadingPyodide } = usePyodide();
   return (
     <>
       <Select
@@ -54,8 +55,8 @@ function DemoSelector() {
         borderLeftRadius={0}
         colorScheme={PRIMARY_COLOR}
         type="submit"
-        isLoading={loading}
-        isDisabled={!selectedDemo}
+        isLoading={loading || loadingPyodide}
+        isDisabled={!selectedDemo || loadingPyodide}
         icon={<Icon as={StartUp02Icon} />}
         aria-label="Load Data"
         onClick={handleSubmit}
