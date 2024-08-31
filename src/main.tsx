@@ -1,7 +1,8 @@
 import { App } from "@app";
 import { Center, ChakraProvider } from "@chakra-ui/react";
+import { theme } from "@shared/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { theme } from "@theme";
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 const queryClient = new QueryClient();

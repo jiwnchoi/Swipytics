@@ -1,14 +1,6 @@
-import {
-  Center,
-  type CenterProps,
-  Flex,
-  Heading,
-  useBreakpointValue,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Center, type CenterProps, Flex, Heading } from "@chakra-ui/react";
+import useChart from "@hooks/useChart";
 import type { TChart } from "@shared/models";
-import { useDataStore } from "@stores";
-import useMeasure from "react-use-measure";
 import { VegaLite, type VisualizationSpec } from "react-vega";
 
 interface ChartProps extends CenterProps {
@@ -16,15 +8,7 @@ interface ChartProps extends CenterProps {
 }
 
 function Chart({ chart, ...props }: ChartProps) {
-  const [boxRef, boxBounds] = useMeasure();
-  const { colorMode } = useColorMode();
-  const data = useDataStore(state => state.data);
-  const deviceSize = Math.min(window.innerWidth, window.innerHeight);
-
-  const [width, height] = useBreakpointValue({
-    base: [deviceSize - 32, deviceSize - 32],
-    lg: [boxBounds.width - 100, boxBounds.height - 100],
-  }) ?? [0, 0];
+  const { boxRef, data, width, height, chartTheme } = useChart();
   return (
     <Center minW="full" scrollSnapAlign={"start"} ref={boxRef} {...props}>
       <Heading>{chart.title}</Heading>
@@ -33,7 +17,7 @@ function Chart({ chart, ...props }: ChartProps) {
           {
             ...chart.specs[0],
             width,
-            height,
+            height: height,
             background: "transparent",
             data: { name: "table" },
             config: {
@@ -50,7 +34,7 @@ function Chart({ chart, ...props }: ChartProps) {
           } as VisualizationSpec
         }
         data={{ table: data }}
-        theme={colorMode === "dark" ? "dark" : undefined}
+        theme={chartTheme}
         actions={false}
         renderer="canvas"
       />

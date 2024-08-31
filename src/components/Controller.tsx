@@ -8,45 +8,46 @@ interface ControllerProps extends FlexProps {
   disabled: boolean;
 }
 
-function Controller({
+const Controller = ({
   scrollToChart,
   renewCurrentChart,
   currentChartIndex,
   disabled,
   ...props
-}: ControllerProps) {
-  return (
-    <Flex {...props}>
+}: ControllerProps) => (
+  <Flex {...props}>
+    {[
+      {
+        label: "Previous chart",
+        icon: ArrowUp01Icon,
+        onClick: () => scrollToChart("up"),
+        isDisabled: currentChartIndex === 0 || disabled,
+      },
+      {
+        label: "Next chart",
+        icon: ArrowDown01Icon,
+        onClick: () => scrollToChart("down"),
+        isDisabled: disabled,
+      },
+      {
+        label: "Renew current chart",
+        icon: Exchange01Icon,
+        onClick: renewCurrentChart,
+        isDisabled: disabled,
+      },
+      { label: "Bookmark current chart", icon: BookmarkAdd01Icon, isDisabled: disabled },
+    ].map(({ label, icon, onClick, isDisabled }, index) => (
       <IconButton
+        key={index}
+        size="lg"
         w="full"
-        aria-label="Previous chart"
-        icon={<Icon as={ArrowUp01Icon} />}
-        onClick={() => scrollToChart("up")}
-        isDisabled={currentChartIndex === 0 || disabled}
+        aria-label={label}
+        icon={<Icon as={icon} />}
+        onClick={onClick}
+        isDisabled={isDisabled}
       />
-      <IconButton
-        w="full"
-        aria-label="Next chart"
-        icon={<Icon as={ArrowDown01Icon} />}
-        onClick={() => scrollToChart("down")}
-        isDisabled={disabled}
-      />
-      {/* <IconButton w="full" label="다른 속성" icon={LinkForwardIcon} isDisabled={disabled} /> */}
-      <IconButton
-        w="full"
-        aria-label="Renew current chart"
-        icon={<Icon as={Exchange01Icon} />}
-        onClick={renewCurrentChart}
-        isDisabled={disabled}
-      />
-      <IconButton
-        w="full"
-        aria-label="Bookmark current chart"
-        icon={<Icon as={BookmarkAdd01Icon} />}
-        isDisabled={disabled}
-      />
-    </Flex>
-  );
-}
+    ))}
+  </Flex>
+);
 
 export default Controller;

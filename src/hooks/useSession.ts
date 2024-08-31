@@ -1,9 +1,7 @@
+import { CHART_PREFETCH_DELAY, DEBOUNCE_DELAY } from "@shared/constants";
 import { useInteractionStore, useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
 import { useCallback, useEffect, useRef, useState } from "react";
-
-const DEBOUNCE_DELAY = 100;
-const CHART_PREFETCH_DELAY = 1;
 
 export default function useSession() {
   const charts = useSessionsStore(state => state.charts);

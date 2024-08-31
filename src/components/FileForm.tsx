@@ -9,7 +9,8 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { useFileForm, usePyodide } from "@hooks";
-import { PRIMARY, PRIMARY_COLOR } from "@theme";
+import { PRIMARY_COLOR } from "@shared/constants";
+
 import { FileAttachmentIcon, StartUp02Icon } from "hugeicons-react";
 
 interface FileFormProps extends FlexProps {}
@@ -31,11 +32,11 @@ export default function FileForm(props: FileFormProps) {
     <Flex as={FormControl} {...props}>
       <InputGroup>
         <Input
-          placeholder="Input .csv/.json Link or File"
+          placeholder="https://..."
           onChange={handleInputChange}
           value={pathInput}
           borderRightRadius={0}
-          _focusVisible={{ borderColor: PRIMARY[200] }}
+          _focusVisible={{ borderColor: PRIMARY_COLOR }}
         />
         <InputRightElement>
           <Input

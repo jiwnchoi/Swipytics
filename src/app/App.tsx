@@ -1,13 +1,4 @@
-import {
-  Flex,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  useBreakpointValue,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import {
   Chart,
   ChartPanel,
@@ -18,14 +9,13 @@ import {
   PlaceHolder,
   Settings,
 } from "@components";
-import { useSession } from "@hooks";
-import { PRIMARY_COLOR } from "@theme";
+import { useLayout, useSession } from "@hooks";
+import { PRIMARY_COLOR } from "@shared/constants";
 
 export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
     useSession();
-  const cardHeight = useBreakpointValue({ base: "100vh", lg: "80vh" });
-  const cardColor = useColorModeValue("gray.50", "gray.900");
+  const { cardHeight, cardColor, cardWidth } = useLayout();
 
   return (
     <Flex
@@ -37,31 +27,24 @@ export default function App() {
         <PlaceHolder
           flexDir={"column"}
           minW="full"
-          p={4}
-          w={"3xl"}
+          w={cardWidth}
           minH={cardHeight}
           bgColor={cardColor}
           borderRadius={"lg"}
-          boxShadow={"xl"}
         />
         {charts.map(chart => (
           <Chart
-            maxW={{ base: window.innerWidth, lg: "3xl" }}
+            w={cardWidth}
             key={chart.key}
             chart={chart}
             minH={cardHeight}
             bgColor={cardColor}
             flexDirection={"column"}
             borderRadius={"lg"}
-            boxShadow={"xl"}
           />
         ))}
       </ChartPanel>
-      <ControlPanel
-        bgColor={cardColor}
-        borderRadius={"lg"}
-        w={{ base: "full", lg: "sm" }}
-        boxShadow={"xl"}>
+      <ControlPanel bgColor={cardColor} borderRadius={"lg"} minW={{ base: "full", lg: "sm" }}>
         <ControlPanelNavigator>
           <Controller
             gap={2}
@@ -74,17 +57,16 @@ export default function App() {
         </ControlPanelNavigator>
         <ControlPanelContent>
           <Tabs
+            w={"full"}
             defaultIndex={charts.length ? 1 : 2}
             isLazy
             isFitted
-            size={"md"}
             colorScheme={PRIMARY_COLOR}>
             <TabList>
               <Tab>Bookmarks</Tab>
               <Tab>Information</Tab>
               <Tab>Settings</Tab>
             </TabList>
-
             <TabPanels mt={4}>
               <TabPanel>Bookmarks at Here</TabPanel>
               <TabPanel>Chart Description and Explanation at Here</TabPanel>

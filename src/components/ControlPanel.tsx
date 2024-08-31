@@ -1,4 +1,5 @@
-import { Center, Flex, type FlexProps, Portal, VStack, useBreakpointValue } from "@chakra-ui/react";
+import { Center, Flex, type FlexProps, VStack } from "@chakra-ui/react";
+import { useLayout } from "@hooks";
 import { useInteractionStore } from "@stores";
 import { type PanInfo, motion, useDragControls } from "framer-motion";
 import { Children, type ReactNode, createContext, isValidElement, useMemo } from "react";
@@ -18,15 +19,11 @@ export function ControlPanelContent({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-export function ControlPanel({ children, ...props }: ControlPanelProps) {
+function useControlPanel() {
   const expanded = useInteractionStore(state => state.drawerExpanded);
   const setExpanded = useInteractionStore(state => state.setDrawerExpanded);
-  const mobile = useBreakpointValue({ base: true, lg: false });
+  const { mobile } = useLayout();
   const dragControls = useDragControls();
-  const handleDragEnd = (_: never, info: PanInfo) => {
-    setExpanded(info.offset.y > 100 ? false : info.offset.y < -100 ? true : expanded);
-  };
-
   const [bodyRef, bodyBounds] = useMeasure();
   const [handleRef, handleBounds] = useMeasure();
   const [navigatorRef, navigatorBounds] = useMeasure();
@@ -42,6 +39,37 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
     }),
     [bodyBounds, handleBounds],
   );
+
+  const handleDragEnd = (_: never, info: PanInfo) => {
+    setExpanded(info.offset.y > 100 ? false : info.offset.y < -100 ? true : expanded);
+  };
+
+  return {
+    expanded,
+    dragControls,
+    handleDragEnd,
+    bodyRef,
+    handleRef,
+    navigatorRef,
+    navigatorBounds,
+    variants,
+    navigator,
+    mobile,
+  };
+}
+
+export function ControlPanel({ children, ...props }: ControlPanelProps) {
+  const {
+    expanded,
+    dragControls,
+    handleDragEnd,
+    bodyRef,
+    handleRef,
+    navigatorRef,
+    navigatorBounds,
+    variants,
+    mobile,
+  } = useControlPanel();
 
   const [navigator, content] = useMemo(() => {
     const childrenArray = Children.toArray(children);
@@ -61,9 +89,8 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
           dragControls={dragControls}
           style={{
             width: "100%",
-            top: `calc(100dvh - ${navigatorBounds.height + handleBounds.height + 16}px)`,
             left: 0,
-            position: "absolute",
+            position: "fixed",
           }}
           variants={variants}
           initial="collapsed"
@@ -87,20 +114,18 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
             </Flex>
             <Flex minH={"100dvh"} />
           </Center>
-          <Portal>
-            <Flex
-              ref={navigatorRef}
-              position={"absolute"}
-              top={`calc(100dvh - ${navigatorBounds.height}px)`}
-              bgColor={"gray.800"}
-              p={4}
-              pb={8}
-              left={0}
-              zIndex={500}
-              w={"full"}>
-              {navigator}
-            </Flex>
-          </Portal>
+          <Flex
+            ref={navigatorRef}
+            position={"fixed"}
+            top={`calc(100dvh - ${navigatorBounds.height}px)`}
+            bgColor={"gray.800"}
+            p={4}
+            pb={8}
+            left={0}
+            zIndex={500}
+            w={"full"}>
+            {navigator}
+          </Flex>
         </motion.div>
       ) : (
         <Flex {...props}>
