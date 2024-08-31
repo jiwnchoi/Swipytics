@@ -115,8 +115,7 @@ function Settings(props: StackProps) {
           leftIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
           onClick={toggleColorMode}
           size="sm"
-          w={"full"}
-          color="gray">
+          w={"full"}>
           {colorMode === "light" ? "Light" : "Dark"}
         </Button>
       </SettingRow>
@@ -125,8 +124,7 @@ function Settings(props: StackProps) {
           leftIcon={<Icon as={python === "server" ? CloudIcon : SmartPhone01Icon} />}
           onClick={togglePython}
           size="sm"
-          w={"full"}
-          color="gray">
+          w={"full"}>
           {python[0].toUpperCase() + python.slice(1)}
         </Button>
       </SettingRow>
