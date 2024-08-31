@@ -11,7 +11,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
-        <Center flexDir={"column"} w="full" minH={"100lvh"} p={0} m={0} maxH={"100lvh"}>
+        <Center flexDir={"column"} minH={"100lvh"} p={0} m={0} maxH={"100lvh"}>
           <App />
         </Center>
       </ChakraProvider>

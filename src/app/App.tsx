@@ -15,7 +15,6 @@ import {
   ControlPanelContent,
   ControlPanelNavigator,
   Controller,
-  FileForm,
   PlaceHolder,
   Settings,
 } from "@components";
@@ -64,30 +63,33 @@ export default function App() {
         w={{ base: "full", lg: "sm" }}
         boxShadow={"xl"}>
         <ControlPanelNavigator>
-          {charts.length === 0 ? (
-            <FileForm />
-          ) : (
-            <Controller
-              w="full"
-              gap={2}
-              scrollToChart={scrollToChart}
-              renewCurrentChart={renewCurrentChart}
-              currentChartIndex={currentChartIndex}
-              disabled={charts.length === 0}
-            />
-          )}
+          <Controller
+            gap={2}
+            w={"full"}
+            scrollToChart={scrollToChart}
+            renewCurrentChart={renewCurrentChart}
+            currentChartIndex={currentChartIndex}
+            disabled={charts.length === 0}
+          />
         </ControlPanelNavigator>
         <ControlPanelContent>
-          <Tabs isLazy isFitted w="full" size={"md"} colorScheme={PRIMARY_COLOR}>
+          <Tabs
+            defaultIndex={charts.length ? 1 : 2}
+            isLazy
+            isFitted
+            size={"md"}
+            colorScheme={PRIMARY_COLOR}>
             <TabList>
+              <Tab>Bookmarks</Tab>
               <Tab>Information</Tab>
               <Tab>Settings</Tab>
             </TabList>
 
             <TabPanels mt={4}>
-              <TabPanel p={0}>Chart Description and Explanation at Here</TabPanel>
-              <TabPanel p={0}>
-                <Settings w="full" align={"start"} />
+              <TabPanel>Bookmarks at Here</TabPanel>
+              <TabPanel>Chart Description and Explanation at Here</TabPanel>
+              <TabPanel>
+                <Settings align={"start"} />
               </TabPanel>
             </TabPanels>
           </Tabs>

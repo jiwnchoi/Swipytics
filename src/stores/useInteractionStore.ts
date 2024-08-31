@@ -6,7 +6,7 @@ interface SettingsState {
 }
 
 const useInteractionStore = create<SettingsState>()(set => ({
-  drawerExpanded: false,
+  drawerExpanded: true,
   setDrawerExpanded: expanded => set({ drawerExpanded: expanded }),
 }));
 

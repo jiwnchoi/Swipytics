@@ -22,6 +22,14 @@ const config: ThemeConfig = {
 export const theme = extendTheme({
   config,
   components: {
+    Tabs: {
+      parts: ["tabpanel"],
+      baseStyle: {
+        tabpanel: {
+          p: 0,
+        },
+      },
+    },
     Card: {
       baseStyle: (props: StyleFunctionProps) => ({
         container: {
