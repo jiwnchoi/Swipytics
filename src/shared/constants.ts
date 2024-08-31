@@ -13,6 +13,7 @@ export const DEMO_LIST: TDemo[] = [
   },
   { name: "Burtin", href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/burtin.json" },
 ];
+export const EXPANDING_THRESHOLD = 50;
 export const DEBOUNCE_DELAY = 100;
 export const CHART_PREFETCH_DELAY = 1;
 export const PRIMARY_COLOR = "orange";

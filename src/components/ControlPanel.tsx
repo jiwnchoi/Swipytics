@@ -1,5 +1,6 @@
 import { Center, Flex, type FlexProps, Portal, VStack } from "@chakra-ui/react";
 import { useLayout } from "@hooks";
+import { EXPANDING_THRESHOLD } from "@shared/constants";
 import { useInteractionStore } from "@stores";
 import { type PanInfo, motion, useDragControls } from "framer-motion";
 import { Children, type ReactNode, createContext, isValidElement, useMemo } from "react";
@@ -41,7 +42,13 @@ function useControlPanel() {
   );
 
   const handleDragEnd = (_: never, info: PanInfo) => {
-    setExpanded(info.offset.y > 100 ? false : info.offset.y < -100 ? true : expanded);
+    setExpanded(
+      info.offset.y > EXPANDING_THRESHOLD
+        ? false
+        : info.offset.y < -EXPANDING_THRESHOLD
+          ? true
+          : expanded,
+    );
   };
 
   return {
@@ -118,6 +125,7 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
           </Center>
           <Portal>
             <Flex
+              onPointerDown={e => dragControls.start(e)}
               bgColor={drawerBgColor}
               ref={navigatorRef}
               position={"absolute"}
