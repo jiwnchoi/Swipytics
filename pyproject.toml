@@ -21,7 +21,14 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["pandas", "draco", "altair[all]", "scikit-learn"]
+dependencies = [
+  "pandas",
+  "draco",
+  "altair[all]",
+  "scikit-learn",
+  "python-multipart",
+  "fastapi[standard]",
+]
 [project.optional-dependencies]
 dev = ["ruff", "pyright", "pytest", "pytest-cov", "vega-datasets"]
 [tool.hatch.build.targets.wheel]
