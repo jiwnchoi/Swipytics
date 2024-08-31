@@ -13,7 +13,14 @@ import {
 } from "@chakra-ui/react";
 import { useDemo, usePyodide, useSettings } from "@hooks";
 import { DEMO_LIST, PRIMARY_COLOR } from "@shared/constants";
-import { ArrowDown01Icon, Moon01Icon, StartUp02Icon, Sun03Icon } from "hugeicons-react";
+import {
+  ArrowDown01Icon,
+  CloudIcon,
+  Moon01Icon,
+  SmartPhone01Icon,
+  StartUp02Icon,
+  Sun03Icon,
+} from "hugeicons-react";
 import FileForm from "./FileForm";
 
 interface SettingRowProps extends FlexProps {
@@ -67,6 +74,8 @@ function DemoSelector() {
 
 function Settings(props: StackProps) {
   const {
+    python,
+    togglePython,
     apiKey,
     handleApiKeyChange,
     handleDownloadLogs,
@@ -103,12 +112,22 @@ function Settings(props: StackProps) {
       </SettingRow>
       <SettingRow label={"Color Mode"}>
         <Button
-          rightIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
+          leftIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
           onClick={toggleColorMode}
           size="sm"
           w={"full"}
           color="gray">
           {colorMode === "light" ? "Light" : "Dark"}
+        </Button>
+      </SettingRow>
+      <SettingRow label={"Backend"}>
+        <Button
+          leftIcon={<Icon as={python === "server" ? CloudIcon : SmartPhone01Icon} />}
+          onClick={togglePython}
+          size="sm"
+          w={"full"}
+          color="gray">
+          {python[0].toUpperCase() + python.slice(1)}
         </Button>
       </SettingRow>
       <SettingRow label={"System Logs"}>

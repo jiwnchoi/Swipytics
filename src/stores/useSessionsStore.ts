@@ -3,10 +3,12 @@ import { getPyodide } from "@workers";
 import { type Draft, produce } from "immer";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import useDataStore from "./useDataStore";
+import useSettingsStore from "./useSettingsStore";
 
 interface SessionState extends TSession {
   loadingSession: boolean;
-  loadSession: (filename: string) => Promise<void>;
+  loadSession: () => Promise<void>;
   appendingChart: boolean;
   appendChart: () => Promise<void>;
 }
@@ -19,10 +21,13 @@ const useSessionsStore = create(
       charts: [],
 
       loadingSession: false,
-      loadSession: async (filename: string) => {
+      loadSession: async () => {
         set({ loadingSession: true });
-        const pyodide = await getPyodide();
-        const session = await pyodide.callPythonFunction("loadData", { filename });
+        const filename = useDataStore.getState().filename;
+        const fileBuffer = useDataStore.getState().fileBuffer;
+        if (!(filename && fileBuffer)) throw new Error("No file buffer found");
+        const session = await loadData(filename, fileBuffer);
+
         set(
           produce((draft: Draft<SessionState>) => {
             draft.filename = session.filename;
@@ -36,8 +41,7 @@ const useSessionsStore = create(
       appendingChart: false,
       appendChart: async () => {
         set({ appendingChart: true });
-        const pyodide = await getPyodide();
-        const chart = await pyodide.callPythonFunction("appendChart", {});
+        const chart = await appendChart();
         set(
           produce((draft: Draft<SessionState>) => {
             draft.charts.push(chart);
@@ -53,3 +57,38 @@ const useSessionsStore = create(
 );
 
 export default useSessionsStore;
+
+async function loadDataPyodide(filename: string, fileBuffer: Uint8Array) {
+  const pyodide = await getPyodide();
+  await pyodide.writeFile(filename, fileBuffer);
+  const data = await pyodide.callPythonFunction("loadData", { filename });
+  return data;
+}
+
+async function loadDataFetch(filename: string, fileBuffer: Uint8Array) {
+  const blob = new Blob([fileBuffer]);
+  const formData = new FormData();
+  formData.append("file", blob, filename);
+  const response = await fetch("/api/loadData", {
+    method: "POST",
+    body: formData,
+  });
+  const data = (await response.json()) as TSession;
+  return data;
+}
+
+async function appendChartPyodide() {
+  const pyodide = await getPyodide();
+  const chart = await pyodide.callPythonFunction("appendChart", {});
+  return chart;
+}
+
+async function appendChartFetch() {
+  const response = await fetch("/api/appendChart");
+  const chart = await response.json();
+  return chart;
+}
+
+const loadData = useSettingsStore.getState().python === "pyodide" ? loadDataPyodide : loadDataFetch;
+const appendChart =
+  useSettingsStore.getState().python === "pyodide" ? appendChartPyodide : appendChartFetch;

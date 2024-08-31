@@ -3,7 +3,7 @@ import { useState } from "react";
 import useLoadData from "./useLoadData";
 
 export default function useDemo() {
-  const { loading, initializeSessionWithURL } = useLoadData();
+  const { loading, initializeSession } = useLoadData();
   const [selectedDemo, setSelectedDemo] = useState<TDemo | null>(null);
 
   const handleDemoSelect = (demo: TDemo | null) => {
@@ -12,7 +12,7 @@ export default function useDemo() {
 
   const handleSubmit = async () => {
     if (selectedDemo?.href) {
-      initializeSessionWithURL(selectedDemo.href);
+      initializeSession(selectedDemo.href);
     }
   };
 

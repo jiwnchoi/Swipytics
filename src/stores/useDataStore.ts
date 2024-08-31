@@ -3,7 +3,6 @@ import { CSVLoader } from "@loaders.gl/csv";
 import type { Schema } from "@loaders.gl/schema";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
-import { getPyodide } from "@workers";
 import { create } from "zustand";
 
 interface DataState {
@@ -33,7 +32,6 @@ const useDataStore = create<DataState>(set => ({
     set({ loading: true, filename: null, fileBuffer: null, data: undefined, schema: null });
 
     try {
-      const pyodide = await getPyodide();
       const filename = file instanceof File ? file.name : getFileNameFromURL(file);
       const fileExtension = filename.split(".").pop();
 
@@ -48,10 +46,6 @@ const useDataStore = create<DataState>(set => ({
         fetch: { mode: "no-cors" },
       })) as TSupportedDataType;
 
-      // biome-ignore lint/nursery/noConsole: <explanation>
-      console.log(data);
-
-      await pyodide.writeFile(filename, fileBuffer);
       set({
         filename,
         fileBuffer,

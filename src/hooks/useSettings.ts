@@ -4,7 +4,7 @@ import { useState } from "react";
 import usePyodide from "./usePyodide";
 
 export default function useSettings() {
-  const { apiKey, setApiKey } = useSettingsStore();
+  const { apiKey, setApiKey, python, setPython } = useSettingsStore();
   const { loadingPyodide } = usePyodide();
 
   const { colorMode, toggleColorMode } = useColorMode();
@@ -20,7 +20,13 @@ export default function useSettings() {
 
   const [locale, setLocale] = useState<"en" | "ko">("en");
 
+  const togglePython = () => {
+    setPython(python === "pyodide" ? "server" : "pyodide");
+  };
+
   return {
+    python,
+    togglePython,
     apiKey,
     loadingPyodide,
     handleApiKeyChange,

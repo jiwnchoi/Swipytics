@@ -1,4 +1,3 @@
-import { getFileNameFromURL } from "@shared/utils";
 import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 
 function useLoadData() {
@@ -8,24 +7,15 @@ function useLoadData() {
   const loadSession = useSessionsStore(state => state.loadSession);
   const setExpanded = useInteractionStore(state => state.setDrawerExpanded);
 
-  const initializeSessionWithFile = async (file: File) => {
-    const filename = file.name;
+  const initializeSession = async (file: File | string) => {
     await loadData(file);
-    await loadSession(filename);
-    setExpanded(false);
-  };
-
-  const initializeSessionWithURL = async (url: string) => {
-    const filename = getFileNameFromURL(url);
-    await loadData(url);
-    await loadSession(filename);
+    await loadSession();
     setExpanded(false);
   };
 
   return {
     loading: loadingData || loadingSession,
-    initializeSessionWithFile,
-    initializeSessionWithURL,
+    initializeSession,
   };
 }
 

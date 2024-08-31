@@ -3,11 +3,7 @@ import { type ChangeEvent, useRef, useState } from "react";
 import useLoadData from "./useLoadData";
 
 function useFileForm() {
-  const {
-    loading: loadingData,
-    initializeSessionWithFile,
-    initializeSessionWithURL,
-  } = useLoadData();
+  const { loading: loadingData, initializeSession } = useLoadData();
 
   const [pathInput, setPathInput] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -34,9 +30,9 @@ function useFileForm() {
   const handleSubmit = async () => {
     if (fileInputRef.current?.files?.length) {
       const file = fileInputRef.current.files[0];
-      await initializeSessionWithFile(file);
+      await initializeSession(file);
     } else if (isURL(pathInput)) {
-      await initializeSessionWithURL(pathInput);
+      await initializeSession(pathInput);
     }
   };
 

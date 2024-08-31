@@ -1,12 +1,12 @@
 from pathlib import Path
 
 from api.app import appendChart, loadData
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, status
 
 server = FastAPI()
 
 
-@server.post("/loadData")
+@server.post("/api/loadData")
 async def load_data(file: UploadFile):
   Path("data").mkdir(parents=True, exist_ok=True)
   with open(f"data/{file.filename}", "wb") as buffer:
@@ -14,6 +14,11 @@ async def load_data(file: UploadFile):
   return loadData(f"data/{file.filename}")
 
 
-@server.get("/appendChart")
+@server.get("/api/appendChart")
 async def append_chart():
   return appendChart()
+
+
+@server.get("/api", status_code=status.HTTP_200_OK)
+async def root():
+  return {}
