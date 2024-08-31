@@ -1,4 +1,4 @@
-import { Flex, Spacer, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import {
   Chart,
   ChartPanel,
@@ -6,7 +6,6 @@ import {
   ControlPanelContent,
   ControlPanelNavigator,
   Controller,
-  CopyRight,
   PlaceHolder,
   Settings,
 } from "@components";
@@ -36,6 +35,7 @@ export default function App() {
         {charts.map(chart => (
           <Chart
             w={cardWidth}
+            maxW={cardWidth}
             key={chart.key}
             chart={chart}
             minH={cardHeight}
@@ -73,8 +73,6 @@ export default function App() {
               <TabPanel>Chart Description and Explanation at Here</TabPanel>
               <TabPanel>
                 <Settings align={"start"} />
-                <Spacer />
-                <CopyRight />
               </TabPanel>
             </TabPanels>
           </Tabs>

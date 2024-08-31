@@ -8,16 +8,17 @@ interface ChartProps extends CenterProps {
 }
 
 function Chart({ chart, ...props }: ChartProps) {
-  const { boxRef, data, width, height, chartTheme } = useChart();
+  const { data, width, height, chartTheme } = useChart();
+
   return (
-    <Center minW="full" scrollSnapAlign={"start"} ref={boxRef} {...props}>
+    <Center maxW={"800px"} scrollSnapAlign={"start"} {...props}>
       <Heading>{chart.title}</Heading>
       <VegaLite
         spec={
           {
             ...chart.specs[0],
             width,
-            height: height,
+            height,
             background: "transparent",
             data: { name: "table" },
             config: {

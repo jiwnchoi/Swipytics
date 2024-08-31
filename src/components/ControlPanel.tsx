@@ -1,4 +1,4 @@
-import { Center, Flex, type FlexProps, VStack } from "@chakra-ui/react";
+import { Center, Flex, type FlexProps, Portal, VStack } from "@chakra-ui/react";
 import { useLayout } from "@hooks";
 import { useInteractionStore } from "@stores";
 import { type PanInfo, motion, useDragControls } from "framer-motion";
@@ -116,18 +116,20 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
             </Flex>
             <Flex minH={"100dvh"} />
           </Center>
-          <Flex
-            bgColor={drawerBgColor}
-            ref={navigatorRef}
-            position={"fixed"}
-            top={`calc(100dvh - ${navigatorBounds.height}px)`}
-            p={4}
-            pb={8}
-            left={0}
-            zIndex={500}
-            w={"full"}>
-            {navigator}
-          </Flex>
+          <Portal>
+            <Flex
+              bgColor={drawerBgColor}
+              ref={navigatorRef}
+              position={"absolute"}
+              top={`calc(100dvh - ${navigatorBounds.height}px)`}
+              p={4}
+              pb={8}
+              left={0}
+              zIndex={500}
+              w={"full"}>
+              {navigator}
+            </Flex>
+          </Portal>
         </motion.div>
       ) : (
         <Flex {...props}>

@@ -1,6 +1,7 @@
 import { Center, type CenterProps, Flex, Heading, Icon, Text } from "@chakra-ui/react";
 import { useLayout } from "@hooks";
 import { SwipeUp02Icon } from "hugeicons-react";
+import CopyRight from "./CopyRight";
 
 export default function PlaceHolder(props: CenterProps) {
   const { mobile } = useLayout();
@@ -15,6 +16,7 @@ export default function PlaceHolder(props: CenterProps) {
           The Simplest On-the-fly Exploratory Analytics
         </Text>
       </Center>
+      <CopyRight />
     </Flex>
   );
 }
