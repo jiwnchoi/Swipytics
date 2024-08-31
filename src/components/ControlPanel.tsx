@@ -71,6 +71,8 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
     mobile,
   } = useControlPanel();
 
+  const { drawerBgColor } = useLayout();
+
   const [navigator, content] = useMemo(() => {
     const childrenArray = Children.toArray(children);
     const navigator = childrenArray.find(
@@ -103,22 +105,22 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
           whileTap={{ cursor: "grabbing" }}>
           <Center
             h="fit-content"
-            bgColor={"gray.800"}
             flexDir={"column"}
             gap={0}
             borderRadius={"xl"}
-            boxShadow={"md"}>
+            boxShadow={"md"}
+            bgColor={drawerBgColor}>
             <Flex bgColor={"gray"} minH={1} mt={2} borderRadius={4} minW={10} ref={handleRef} />
-            <Flex w={"full"} ref={bodyRef} p={4}>
+            <Flex w={"full"} ref={bodyRef} p={4} flexDir={"column"}>
               {content}
             </Flex>
             <Flex minH={"100dvh"} />
           </Center>
           <Flex
+            bgColor={drawerBgColor}
             ref={navigatorRef}
             position={"fixed"}
             top={`calc(100dvh - ${navigatorBounds.height}px)`}
-            bgColor={"gray.800"}
             p={4}
             pb={8}
             left={0}
@@ -129,7 +131,14 @@ export function ControlPanel({ children, ...props }: ControlPanelProps) {
         </motion.div>
       ) : (
         <Flex {...props}>
-          <VStack w={"full"} h={"fit-content"} gap={4} rounded="lg" p={4} align={"start"}>
+          <VStack
+            w={"full"}
+            h={"fit-content"}
+            gap={4}
+            rounded="lg"
+            p={4}
+            align={"start"}
+            minH="full">
             {navigator}
             {content}
           </VStack>

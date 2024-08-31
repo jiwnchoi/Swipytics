@@ -17,6 +17,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.13.0
         version: 11.13.0(@emotion/react@11.13.3(@types/react@18.3.4)(react@18.3.1))(@types/react@18.3.4)(react@18.3.1)
+      '@fontsource/rajdhani':
+        specifier: ^5.0.14
+        version: 5.0.14
       '@loaders.gl/core':
         specifier: ^4.2.2
         version: 4.2.2
@@ -1410,6 +1413,9 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/rajdhani@5.0.14':
+    resolution: {integrity: sha512-pwxSCFeqgzm+aANXTaez8lziKMxFAdxkzr+i6bqClwjieFytdCtdN4wvTXjWYsNO2iT+wL9ZK2l7HSWOiB+MZA==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -5482,6 +5488,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@fontsource/rajdhani@5.0.14': {}
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:

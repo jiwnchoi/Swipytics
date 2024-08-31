@@ -19,6 +19,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@fontsource/rajdhani": "^5.0.14",
     "@loaders.gl/core": "^4.2.2",
     "@loaders.gl/csv": "^4.2.2",
     "@loaders.gl/schema": "^4.2.2",

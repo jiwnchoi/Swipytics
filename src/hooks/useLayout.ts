@@ -6,6 +6,7 @@ export default function useColors() {
   const cardHeight = useBreakpointValue({ base: "100vh", lg: "calc(80vh - 18px)" });
   const cardColor = useColorModeValue("white", "gray.900");
   const mobile = useBreakpointValue({ base: true, lg: false });
+  const drawerBgColor = useColorModeValue("gray.50", "gray.800");
 
-  return { cardPadding, cardWidth, cardHeight, cardColor, mobile };
+  return { cardPadding, cardWidth, cardHeight, cardColor, mobile, drawerBgColor };
 }

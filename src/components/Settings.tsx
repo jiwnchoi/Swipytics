@@ -82,7 +82,12 @@ function Settings(props: StackProps) {
       <SettingRow label={"Load Demo"}>
         <DemoSelector />
       </SettingRow>
-      <Divider />
+      <SettingRow label={"OpenAI Key"}>
+        <Input w="full" placeholder="sk-..." value={apiKey} onChange={handleApiKeyChange} />
+      </SettingRow>
+
+      <Divider my={4} />
+
       <SettingRow label={"Locale"}>
         <Select
           size="sm"
@@ -105,11 +110,6 @@ function Settings(props: StackProps) {
           {colorMode === "light" ? "Light" : "Dark"}
         </Button>
       </SettingRow>
-
-      <SettingRow label={"OpenAI API Key"}>
-        <Input w="full" placeholder="sk-..." value={apiKey} onChange={handleApiKeyChange} />
-      </SettingRow>
-
       <SettingRow label={"System Logs"}>
         <Flex gap={2} w={"full"}>
           <Button w="full" onClick={handleDownloadLogs}>
