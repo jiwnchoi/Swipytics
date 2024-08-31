@@ -22,7 +22,7 @@ const useSessionsStore = create(
 
       loadingSession: false,
       loadSession: async () => {
-        set({ loadingSession: true });
+        set({ loadingSession: true, charts: [], filename: "", timestamp: 0 });
         const filename = useDataStore.getState().filename;
         const fileBuffer = useDataStore.getState().fileBuffer;
         if (!(filename && fileBuffer)) throw new Error("No file buffer found");

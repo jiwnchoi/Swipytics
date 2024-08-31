@@ -1,6 +1,7 @@
 import { Center, type CenterProps, Flex, Heading } from "@chakra-ui/react";
 import useChart from "@hooks/useChart";
 import type { TChart } from "@shared/models";
+import { memo } from "react";
 import { VegaLite, type VisualizationSpec } from "react-vega";
 
 interface ChartProps extends CenterProps {
@@ -9,7 +10,6 @@ interface ChartProps extends CenterProps {
 
 function Chart({ chart, ...props }: ChartProps) {
   const { data, width, height, chartTheme } = useChart();
-
   return (
     <Center maxW={"800px"} scrollSnapAlign={"start"} {...props}>
       <Heading>{chart.title}</Heading>
@@ -44,4 +44,4 @@ function Chart({ chart, ...props }: ChartProps) {
   );
 }
 
-export default Chart;
+export default memo(Chart);
