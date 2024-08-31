@@ -1,4 +1,4 @@
-import { useSessionsStore } from "@stores";
+import { useInteractionStore, useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -8,12 +8,13 @@ const CHART_PREFETCH_DELAY = 1;
 export default function useSession() {
   const charts = useSessionsStore(state => state.charts);
   const appendChart = useSessionsStore(state => state.appendChart);
-
+  const setExpanded = useInteractionStore(state => state.setDrawerExpanded);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentChartIndex, setCurrentChartIndex] = useState(0);
 
   const scrollEndCallback = useCallback(
     async (newIndex: number) => {
+      setExpanded(false);
       setCurrentChartIndex(newIndex);
       if (newIndex < charts.length - CHART_PREFETCH_DELAY) return;
       await appendChart();

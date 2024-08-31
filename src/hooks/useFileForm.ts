@@ -1,13 +1,13 @@
-import { getFileNameFromURL, isURL } from "@shared/utils";
-import { useDataStore, useSessionsStore } from "@stores";
+import { isURL } from "@shared/utils";
 import { type ChangeEvent, useRef, useState } from "react";
+import useLoadData from "./useLoadData";
 
 function useFileForm() {
-  const loadingSession = useSessionsStore(state => state.loadingSession);
-  const loadSession = useSessionsStore(state => state.loadSession);
-
-  const loadingData = useDataStore(state => state.loading);
-  const loadData = useDataStore(state => state.loadData);
+  const {
+    loading: loadingData,
+    initializeSessionWithFile,
+    initializeSessionWithURL,
+  } = useLoadData();
 
   const [pathInput, setPathInput] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -32,12 +32,12 @@ function useFileForm() {
   };
 
   const handleSubmit = async () => {
-    const source = fileInputRef.current?.files?.[0] || (isURL(pathInput) ? pathInput : null);
-    if (!source) return;
-
-    const filename = fileInputRef.current?.files?.[0].name || getFileNameFromURL(pathInput);
-    await loadData(source);
-    await loadSession(filename);
+    if (fileInputRef.current?.files?.length) {
+      const file = fileInputRef.current.files[0];
+      await initializeSessionWithFile(file);
+    } else if (isURL(pathInput)) {
+      await initializeSessionWithURL(pathInput);
+    }
   };
 
   const inputDisabled = !pathInput && !fileInputRef.current?.files?.length;
@@ -46,9 +46,7 @@ function useFileForm() {
     fileInputRef,
     inputDisabled,
 
-    loadData,
     loadingData,
-    loadingSession,
 
     pathInput,
     handleInputChange,

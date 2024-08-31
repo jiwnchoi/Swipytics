@@ -14,12 +14,14 @@ import {
 } from "@chakra-ui/react";
 import { useSettings } from "@hooks";
 import type { TDemo } from "@shared/models";
+import { PRIMARY_COLOR } from "@theme";
 import { ArrowDown01Icon, StartUp02Icon } from "hugeicons-react";
+import FileForm from "./FileForm";
 
 function Settings(props: StackProps) {
   const {
-    loadDemo,
-    loadingDemo,
+    handleSubmit,
+    loading,
     selectedDemo,
     apiKey,
     handleApiKeyChange,
@@ -28,9 +30,11 @@ function Settings(props: StackProps) {
   } = useSettings();
   return (
     <VStack {...props}>
+      <Text>Load File (.csv, .json, ...)</Text>
+      <FileForm />
       <Text>Load Demo</Text>
       <Flex w="full">
-        <Menu>
+        <Menu colorScheme={PRIMARY_COLOR}>
           <MenuButton
             w="full"
             as={Button}
@@ -49,12 +53,13 @@ function Settings(props: StackProps) {
         </Menu>
         <IconButton
           borderLeftRadius={0}
-          colorScheme="blue"
+          colorScheme={PRIMARY_COLOR}
           type="submit"
-          isLoading={loadingDemo}
+          isLoading={loading}
+          isDisabled={!selectedDemo}
           icon={<Icon as={StartUp02Icon} />}
           aria-label="Load Data"
-          onClick={loadDemo}
+          onClick={handleSubmit}
         />
       </Flex>
 

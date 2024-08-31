@@ -1,14 +1,26 @@
-import { Flex, VStack, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
+import {
+  Flex,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import {
   Chart,
   ChartPanel,
   ControlPanel,
+  ControlPanelContent,
+  ControlPanelNavigator,
   Controller,
   FileForm,
   PlaceHolder,
   Settings,
 } from "@components";
 import { useSession } from "@hooks";
+import { PRIMARY_COLOR } from "@theme";
 
 export default function App() {
   const { scrollContainerRef, currentChartIndex, charts, scrollToChart, renewCurrentChart } =
@@ -27,15 +39,15 @@ export default function App() {
           flexDir={"column"}
           minW="full"
           p={4}
-          w={"4xl"}
-          h={cardHeight}
+          w={"3xl"}
+          minH={cardHeight}
           bgColor={cardColor}
           borderRadius={"lg"}
           boxShadow={"xl"}
         />
         {charts.map(chart => (
           <Chart
-            maxW={{ base: window.innerWidth, lg: "4xl" }}
+            maxW={{ base: window.innerWidth, lg: "3xl" }}
             key={chart.key}
             chart={chart}
             minH={cardHeight}
@@ -51,8 +63,10 @@ export default function App() {
         borderRadius={"lg"}
         w={{ base: "full", lg: "sm" }}
         boxShadow={"xl"}>
-        <VStack w={"full"} h={"fit-content"} gap={4} rounded="lg" p={4} align={"start"}>
-          {charts.length > 0 ? (
+        <ControlPanelNavigator>
+          {charts.length === 0 ? (
+            <FileForm />
+          ) : (
             <Controller
               w="full"
               gap={2}
@@ -61,11 +75,23 @@ export default function App() {
               currentChartIndex={currentChartIndex}
               disabled={charts.length === 0}
             />
-          ) : (
-            <FileForm />
           )}
-          <Settings w="full" align={"start"} />
-        </VStack>
+        </ControlPanelNavigator>
+        <ControlPanelContent>
+          <Tabs isLazy isFitted w="full" size={"md"} colorScheme={PRIMARY_COLOR}>
+            <TabList>
+              <Tab>Information</Tab>
+              <Tab>Settings</Tab>
+            </TabList>
+
+            <TabPanels mt={4}>
+              <TabPanel p={0}>Chart Description and Explanation at Here</TabPanel>
+              <TabPanel p={0}>
+                <Settings w="full" align={"start"} />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </ControlPanelContent>
       </ControlPanel>
     </Flex>
   );

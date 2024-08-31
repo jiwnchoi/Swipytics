@@ -1,22 +1,14 @@
 import type { TDemo } from "@shared/models";
-import { getFileNameFromURL } from "@shared/utils";
-import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
+import { useSettingsStore } from "@stores";
 import { useState } from "react";
+import useLoadData from "./useLoadData";
+import usePyodide from "./usePyodide";
 
 export default function useSettings() {
   const { apiKey, setApiKey } = useSettingsStore();
-
-  const loadData = useDataStore(state => state.loadData);
-  const loadSession = useSessionsStore(state => state.loadSession);
-
-  const loadingDemo = useDataStore(state => state.loading);
-  const loadDemo = async () => {
-    const href = selectedDemo?.href;
-    if (!href) return;
-    const filename = getFileNameFromURL(href);
-    await loadData(href);
-    await loadSession(filename);
-  };
+  const { loadingPyodide } = usePyodide();
+  const { loading, initializeSessionWithURL } = useLoadData();
+  const [selectedDemo, _setSelectedDemo] = useState<TDemo | null>(null);
 
   const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApiKey(e.target.value);
@@ -27,18 +19,23 @@ export default function useSettings() {
     console.log("Downloading logs...");
   };
 
-  const [selectedDemo, _setSelectedDemo] = useState<TDemo | null>(null);
   const handleDemoSelect = (demo: TDemo) => {
     _setSelectedDemo(demo);
   };
 
+  const handleSubmit = async () => {
+    if (selectedDemo?.href) {
+      initializeSessionWithURL(selectedDemo.href);
+    }
+  };
+
   return {
-    loadDemo,
-    loadingDemo,
     apiKey,
+    loading: loading || loadingPyodide,
+    selectedDemo,
+    handleSubmit,
     handleApiKeyChange,
     handleDownloadLogs,
-    selectedDemo,
     handleDemoSelect,
   };
 }
