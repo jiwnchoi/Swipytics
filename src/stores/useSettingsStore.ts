@@ -6,7 +6,7 @@ interface SettingsState {
   setApiKey: (key: string) => void;
 
   python: "pyodide" | "server";
-  setPython: (python: "pyodide" | "server") => void;
+  setPython: (python: "pyodide" | "server") => Promise<boolean>;
 }
 
 const useSettingsStore = create<SettingsState>()(
@@ -19,10 +19,11 @@ const useSettingsStore = create<SettingsState>()(
         setPython: async (python: "pyodide" | "server") => {
           if (python === "server") {
             const response = await fetch("/api");
-            if (!response.ok) return;
+            if (!response.ok) return false;
           }
 
           set({ python });
+          return true;
         },
       }),
       {
