@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 interface SettingsState {
   apiKey: string;
@@ -10,23 +10,25 @@ interface SettingsState {
 }
 
 const useSettingsStore = create<SettingsState>()(
-  persist(
-    set => ({
-      apiKey: "sk-...",
-      setApiKey: (key: string) => set({ apiKey: key }),
-      python: "pyodide",
-      setPython: async (python: "pyodide" | "server") => {
-        if (python === "server") {
-          const response = await fetch("/api");
-          if (!response.ok) return;
-        }
+  devtools(
+    persist(
+      set => ({
+        apiKey: "sk-...",
+        setApiKey: (key: string) => set({ apiKey: key }),
+        python: "pyodide",
+        setPython: async (python: "pyodide" | "server") => {
+          if (python === "server") {
+            const response = await fetch("/api");
+            if (!response.ok) return;
+          }
 
-        set({ python });
+          set({ python });
+        },
+      }),
+      {
+        name: "settings-storage",
       },
-    }),
-    {
-      name: "settings-storage",
-    },
+    ),
   ),
 );
 
