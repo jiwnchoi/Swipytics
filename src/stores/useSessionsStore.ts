@@ -19,64 +19,72 @@ interface SessionState extends TSession {
   loadSession: () => Promise<void>;
   appendingChart: boolean;
   appendChart: () => Promise<void>;
+
+  renewCurrentChart: () => void;
 }
 
 const useSessionsStore = create(
-  devtools<SessionState>(
-      (set, get) => ({
-        filename: "",
-        timestamp: 0,
-        charts: [],
+  devtools<SessionState>((set, get) => ({
+    filename: "",
+    timestamp: 0,
+    charts: [],
 
-        currentChartIndex: 0,
-        increaseCurrentChartIndex: () => {
-          get().setCurrentChartIndex(get().currentChartIndex + 1);
-        },
-        decreaseCurrentChartIndex: () => {
-          get().setCurrentChartIndex(get().currentChartIndex - 1);
-        },
-        setCurrentChartIndex: async index => {
-          useInteractionStore.getState().setDrawerExpanded(false);
-          const state = get();
-          if (index < 0) return;
+    currentChartIndex: -1,
+    increaseCurrentChartIndex: () => {
+      get().setCurrentChartIndex(get().currentChartIndex + 1);
+    },
+    decreaseCurrentChartIndex: () => {
+      get().setCurrentChartIndex(get().currentChartIndex - 1);
+    },
+    setCurrentChartIndex: async index => {
+      useInteractionStore.getState().setDrawerExpanded(false);
+      const state = get();
+      if (index < -1) return;
 
-          if (index > state.charts.length - CHART_PREFETCH_DELAY) {
-            await get().appendChart();
-          }
-          set({ currentChartIndex: index });
-        },
+      if (index > state.charts.length - CHART_PREFETCH_DELAY - 1) {
+        await get().appendChart();
+      }
+      set({ currentChartIndex: index });
+    },
 
-        loadingSession: false,
-        loadSession: async () => {
-          set({ loadingSession: true, charts: [], filename: "", timestamp: 0 });
-          const filename = useDataStore.getState().filename;
-          const fileBuffer = useDataStore.getState().fileBuffer;
-          if (!(filename && fileBuffer)) throw new Error("No file buffer found");
-          const session = await loadData(filename, fileBuffer);
+    loadingSession: false,
+    loadSession: async () => {
+      set({ loadingSession: true, charts: [], filename: "", timestamp: 0 });
+      const filename = useDataStore.getState().filename;
+      const fileBuffer = useDataStore.getState().fileBuffer;
+      if (!(filename && fileBuffer)) throw new Error("No file buffer found");
+      const session = await loadData(filename, fileBuffer);
 
-          set(
-            produce((draft: Draft<SessionState>) => {
-              draft.filename = session.filename;
-              draft.timestamp = session.timestamp;
-              draft.charts = session.charts;
-              draft.loadingSession = false;
-            }),
-          );
-        },
+      set(
+        produce((draft: Draft<SessionState>) => {
+          draft.filename = session.filename;
+          draft.timestamp = session.timestamp;
+          draft.charts = session.charts;
+          draft.loadingSession = false;
+        }),
+      );
+    },
 
-        appendingChart: false,
-        appendChart: async () => {
-          set({ appendingChart: true });
-          const chart = await appendChart();
-          set(
-            produce((draft: Draft<SessionState>) => {
-              draft.charts.push(chart);
-              draft.appendingChart = false;
-            }),
-          );
-        },
-      }),
-    ),
+    appendingChart: false,
+    appendChart: async () => {
+      set({ appendingChart: true });
+      const chart = await appendChart();
+      set(
+        produce((draft: Draft<SessionState>) => {
+          draft.charts.push(chart);
+          draft.appendingChart = false;
+        }),
+      );
+    },
+
+    renewCurrentChart: () =>
+      set(
+        produce((draft: Draft<SessionState>) => {
+          const currentChart = draft.charts[draft.currentChartIndex];
+          currentChart.specIndex = (currentChart.specIndex + 1) % currentChart.specs.length;
+        }),
+      ),
+  })),
 );
 
 export default useSessionsStore;

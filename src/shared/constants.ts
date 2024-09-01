@@ -29,3 +29,4 @@ export const PRIMARY = {
   800: `${PRIMARY_COLOR}.800`,
   900: `${PRIMARY_COLOR}.900`,
 };
+export const DATA_NAME = "table";

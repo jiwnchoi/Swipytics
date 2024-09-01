@@ -19,7 +19,7 @@ export default function useChartContainer() {
       const scrollTop = container.scrollTop;
       const chartHeight = container.clientHeight;
       const newIndex = Math.floor(scrollTop / chartHeight);
-      setCurrentChartIndex(newIndex);
+      setCurrentChartIndex(newIndex - 1);
     }, DEBOUNCE_DELAY);
 
     container.addEventListener("scroll", handleScroll);
@@ -31,7 +31,7 @@ export default function useChartContainer() {
     if (!container) return;
 
     const chartHeight = container.clientHeight;
-    container.scrollTo({ top: currentChartIndex * chartHeight, behavior: "smooth" });
+    container.scrollTo({ top: (currentChartIndex + 1) * chartHeight, behavior: "smooth" });
   }, [currentChartIndex]);
 
   useEffect(() => {

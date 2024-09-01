@@ -1,13 +1,13 @@
 import { useSessionsStore } from "@stores";
-import { useCallback } from "react";
 
 export default function useController() {
   const charts = useSessionsStore(state => state.charts);
   const currentChartIndex = useSessionsStore(state => state.currentChartIndex);
   const increaseCurrentChartIndex = useSessionsStore(state => state.increaseCurrentChartIndex);
   const decreaseCurrentChartIndex = useSessionsStore(state => state.decreaseCurrentChartIndex);
+  const renewCurrentChart = useSessionsStore(state => state.renewCurrentChart);
 
-  const handleRenewChart = useCallback(() => {}, []);
+  const handleRenewChart = renewCurrentChart;
   const handleNextChart = increaseCurrentChartIndex;
   const handlePrevChart = decreaseCurrentChartIndex;
 

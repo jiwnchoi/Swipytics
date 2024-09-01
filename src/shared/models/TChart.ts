@@ -5,6 +5,7 @@ type TChart = {
   title: string | undefined;
   description: string;
   specs: VisualizationSpec[];
+  specIndex: number;
   timestamp: number;
 };
 

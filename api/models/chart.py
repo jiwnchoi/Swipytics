@@ -12,6 +12,8 @@ class Chart:
   description: str = field(default="")
 
   specs: list[dict[str, Any]] = field(default_factory=list)
+  spec_index: int = field(default=0)
+
   attributes: list[str] = field(default_factory=list)
 
   timestamp: int = field(
@@ -30,6 +32,7 @@ class Chart:
       "title": self.title,
       "description": self.description,
       "specs": self.specs,
+      "specIndex": self.spec_index,
       "attributes": self.attributes,
       "timestamp": self.timestamp,
       "key": self.key,
