@@ -1,3 +1,4 @@
+export { default as useChart } from "./useChart";
 export { default as useDemo } from "./useDemo";
 export { default as useFileForm } from "./useFileForm";
 export { default as useLayout } from "./useLayout";

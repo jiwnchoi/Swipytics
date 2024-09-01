@@ -1,5 +1,5 @@
 import { Center, type CenterProps, Flex, Heading } from "@chakra-ui/react";
-import useChart from "@hooks/useChart";
+import { useChart } from "@hooks";
 import type { TChart } from "@shared/models";
 import { memo } from "react";
 import { VegaLite, type VisualizationSpec } from "react-vega";
