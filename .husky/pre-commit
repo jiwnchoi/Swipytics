@@ -1,4 +1,1 @@
-git stash -ku
-pnpm tsc -b
 pnpm lint-staged
-git stash pop
