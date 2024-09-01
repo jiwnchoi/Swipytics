@@ -21,6 +21,8 @@ interface SessionState extends TSession {
   appendChart: () => Promise<void>;
 
   renewCurrentChart: () => void;
+
+  setCurrentChartPreferred: (preferred: boolean) => void;
 }
 
 const useSessionsStore = create(
@@ -82,6 +84,13 @@ const useSessionsStore = create(
         produce((draft: Draft<SessionState>) => {
           const currentChart = draft.charts[draft.currentChartIndex];
           currentChart.specIndex = (currentChart.specIndex + 1) % currentChart.specs.length;
+        }),
+      ),
+
+    setCurrentChartPreferred: preferred =>
+      set(
+        produce((draft: Draft<SessionState>) => {
+          draft.charts[draft.currentChartIndex].preferred = preferred;
         }),
       ),
   })),

@@ -16,6 +16,8 @@ class Chart:
 
   attributes: list[str] = field(default_factory=list)
 
+  preferred: bool = field(default=False)
+
   timestamp: int = field(
     default_factory=get_timestamp, init=False, repr=False, compare=False
   )
@@ -33,7 +35,7 @@ class Chart:
       "description": self.description,
       "specs": self.specs,
       "specIndex": self.spec_index,
-      "attributes": self.attributes,
+      "preferred": self.preferred,
       "timestamp": self.timestamp,
       "key": self.key,
     }

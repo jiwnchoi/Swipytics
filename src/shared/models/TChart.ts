@@ -7,6 +7,7 @@ type TChart = {
   specs: VisualizationSpec[];
   specIndex: number;
   timestamp: number;
+  preferred: boolean;
 };
 
 export default TChart;
