@@ -43,6 +43,7 @@ const useSessionsStore = create(
         if (index > state.charts.length - CHART_PREFETCH_DELAY) {
           await get().appendChart();
         }
+        console.log(index);
         set({ currentChartIndex: index });
       },
 
