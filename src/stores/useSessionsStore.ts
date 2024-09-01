@@ -7,6 +7,10 @@ import useDataStore from "./useDataStore";
 import useSettingsStore from "./useSettingsStore";
 
 interface SessionState extends TSession {
+  currentChartIndex: number;
+
+  setCurrentChartIndex: (index: number) => void;
+
   loadingSession: boolean;
   loadSession: () => Promise<void>;
   appendingChart: boolean;
@@ -19,6 +23,11 @@ const useSessionsStore = create(
       filename: "",
       timestamp: 0,
       charts: [],
+
+      currentChartIndex: 0,
+      setCurrentChartIndex: index => {
+        set({ currentChartIndex: index });
+      },
 
       loadingSession: false,
       loadSession: async () => {
