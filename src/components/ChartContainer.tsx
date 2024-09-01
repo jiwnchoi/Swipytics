@@ -28,6 +28,7 @@ export default function ChartContainer(props: FlexProps) {
         minH={cardHeight}
         bgColor={cardColor}
         borderRadius={"lg"}
+        scrollSnapAlign={"start"}
       />
       {charts.map(chart => (
         <Chart

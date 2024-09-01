@@ -18,13 +18,13 @@ export default function useChartContainer() {
     const handleScroll = debounce(() => {
       const scrollTop = container.scrollTop;
       const chartHeight = container.clientHeight;
-      const newIndex = Math.round(scrollTop / chartHeight);
+      const newIndex = Math.floor(scrollTop / chartHeight);
       setCurrentChartIndex(newIndex);
     }, DEBOUNCE_DELAY);
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [ref]);
+  }, [setCurrentChartIndex]);
 
   useEffect(() => {
     const container = ref.current;
