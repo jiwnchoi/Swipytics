@@ -1,15 +1,19 @@
+import { CHART_PREFETCH_DELAY } from "@shared/constants";
 import type { TSession } from "@shared/models";
 import { getPyodide } from "@workers";
 import { type Draft, produce } from "immer";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
 import useDataStore from "./useDataStore";
+import useInteractionStore from "./useInteractionStore";
 import useSettingsStore from "./useSettingsStore";
 
 interface SessionState extends TSession {
   currentChartIndex: number;
-
-  setCurrentChartIndex: (index: number) => void;
+  setCurrentChartIndex: (index: number) => Promise<void>;
+  increaseCurrentChartIndex: () => void;
+  decreaseCurrentChartIndex: () => void;
 
   loadingSession: boolean;
   loadSession: () => Promise<void>;
@@ -19,13 +23,26 @@ interface SessionState extends TSession {
 
 const useSessionsStore = create(
   persist<SessionState>(
-    set => ({
+    (set, get) => ({
       filename: "",
       timestamp: 0,
       charts: [],
 
       currentChartIndex: 0,
-      setCurrentChartIndex: index => {
+      increaseCurrentChartIndex: () => {
+        get().setCurrentChartIndex(get().currentChartIndex + 1);
+      },
+      decreaseCurrentChartIndex: () => {
+        get().setCurrentChartIndex(get().currentChartIndex - 1);
+      },
+      setCurrentChartIndex: async index => {
+        useInteractionStore.getState().setDrawerExpanded(false);
+        const state = get();
+        if (index < 0) return;
+
+        if (index > state.charts.length - CHART_PREFETCH_DELAY) {
+          await get().appendChart();
+        }
         set({ currentChartIndex: index });
       },
 
