@@ -65,6 +65,9 @@ importers:
       vega:
         specifier: ^5.30.0
         version: 5.30.0
+      vega-embed:
+        specifier: ^6.26.0
+        version: 6.26.0(vega-lite@5.21.0(vega@5.30.0))(vega@5.30.0)
       vega-lite:
         specifier: ^5.21.0
         version: 5.21.0(vega@5.30.0)

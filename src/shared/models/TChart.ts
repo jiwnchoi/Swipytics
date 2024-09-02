@@ -8,6 +8,7 @@ type TChart = {
   specIndex: number;
   timestamp: number;
   preferred: boolean;
+  attributes: string[];
 };
 
 export default TChart;

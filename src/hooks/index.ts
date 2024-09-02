@@ -1,3 +1,4 @@
+export { default as useBookmarks } from "./useBookmarks";
 export { default as useChart } from "./useChart";
 export { default as useChartContainer } from "./useChartContainer";
 export { default as useController } from "./useController";

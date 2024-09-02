@@ -38,6 +38,7 @@ class Chart:
       "preferred": self.preferred,
       "timestamp": self.timestamp,
       "key": self.key,
+      "attributes": self.attributes,
     }
 
   def __asdict__(self) -> dict[str, Any]:

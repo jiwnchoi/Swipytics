@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   type StackProps,
+  TabPanel,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -85,7 +86,7 @@ function Settings(props: StackProps) {
     setLocale,
   } = useSettings();
   return (
-    <VStack {...props}>
+    <TabPanel as={VStack} {...props}>
       <SettingRow label={"Load Data"}>
         <FileForm w="full" />
       </SettingRow>
@@ -138,7 +139,7 @@ function Settings(props: StackProps) {
           </Button>
         </Flex>
       </SettingRow>
-    </VStack>
+    </TabPanel>
   );
 }
 
