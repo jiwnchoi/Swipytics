@@ -9,6 +9,8 @@ type TChart = {
   timestamp: number;
   preferred: boolean;
   attributes: string[];
+
+  thumbnail?: string;
 };
 
 export default TChart;

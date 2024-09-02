@@ -5,8 +5,8 @@ import { type Draft, produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
+import { getThumbnailFromSpec } from "@shared/utils";
 import useDataStore from "./useDataStore";
-import useInteractionStore from "./useInteractionStore";
 import useSettingsStore from "./useSettingsStore";
 
 interface SessionState extends TSession {
@@ -22,7 +22,7 @@ interface SessionState extends TSession {
 
   renewCurrentChart: () => void;
 
-  setCurrentChartPreferred: (preferred: boolean) => void;
+  setCurrentChartPreferred: (preferred: boolean) => Promise<void>;
 }
 
 const useSessionsStore = create(
@@ -39,7 +39,6 @@ const useSessionsStore = create(
       get().setCurrentChartIndex(get().currentChartIndex - 1);
     },
     setCurrentChartIndex: async index => {
-      useInteractionStore.getState().setDrawerExpanded(false);
       const state = get();
       if (index < -1) return;
 
@@ -87,12 +86,29 @@ const useSessionsStore = create(
         }),
       ),
 
-    setCurrentChartPreferred: preferred =>
-      set(
-        produce((draft: Draft<SessionState>) => {
-          draft.charts[draft.currentChartIndex].preferred = preferred;
-        }),
-      ),
+    setCurrentChartPreferred: async preferred => {
+      const currentChart = get().charts[get().currentChartIndex];
+      const data = useDataStore.getState().data;
+      if (!data) return;
+
+      if (!currentChart.thumbnail) {
+        const spec = currentChart.specs[currentChart.specIndex];
+        const thumbnail = await getThumbnailFromSpec(spec, data);
+
+        set(
+          produce((draft: Draft<SessionState>) => {
+            draft.charts[draft.currentChartIndex].thumbnail = thumbnail;
+            draft.charts[draft.currentChartIndex].preferred = preferred;
+          }),
+        );
+      } else {
+        set(
+          produce((draft: Draft<SessionState>) => {
+            draft.charts[draft.currentChartIndex].preferred = preferred;
+          }),
+        );
+      }
+    },
   })),
 );
 

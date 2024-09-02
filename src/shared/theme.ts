@@ -1,13 +1,24 @@
-import { type StyleFunctionProps, type ThemeConfig, extendTheme } from "@chakra-ui/react";
+import { type StyleFunctionProps, extendTheme } from "@chakra-ui/react";
 import { PRIMARY } from "./constants";
-
-const config: ThemeConfig = {
-  initialColorMode: "dark",
-  useSystemColorMode: true,
+export const scrollbarStyle = {
+  "&::-webkit-scrollbar": {
+    width: "5px",
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "darkorange",
+    borderRadius: "5px",
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    background: "orange",
+  },
 };
 
 export const theme = extendTheme({
-  config,
+  initialColorMode: "dark",
+  useSystemColorMode: true,
   components: {
     Button: {
       defaultProps: {

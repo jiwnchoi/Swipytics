@@ -6,19 +6,21 @@ import type { Encoding } from "vega-lite/build/src/encoding";
 export async function getThumbnailFromSpec(
   spec: VisualizationSpec,
   data: TSupportedDataType,
-): Promise<string | null> {
-  if (!("mark" in spec)) return null;
-  if (!spec || !data) return null;
+): Promise<string | undefined> {
+  if (!("mark" in spec)) return undefined;
+  if (!spec || !data) return undefined;
 
   const thumbnailAxis = { disable: true, title: "", grid: false, ticks: false, labels: false };
   const newSpec = {
     ...spec,
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
     config: {
       ...spec.config,
       mark: { strokeWidth: spec.mark === "line" ? 4 : 0 },
       legend: { disable: true },
+      axis: { disable: true },
+      style: { view: { stroke: "transparent" }, cell: { stroke: "transparent" } },
     },
     data: { values: data },
     background: "transparent",

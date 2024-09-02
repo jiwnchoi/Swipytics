@@ -1,61 +1,48 @@
 import {
+  Divider,
   Flex,
   Heading,
   Image,
   ListItem,
   OrderedList,
   TabPanel,
-  type TabPanelProps,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
-import { useBookmarks } from "@hooks";
+import { useBookmarks, useLayout } from "@hooks";
+import { scrollbarStyle } from "@shared/theme";
 
-export default function Bookmarks(props: TabPanelProps) {
-  const { thumbnails, preferredCharts } = useBookmarks();
-  const bgColor = useColorModeValue("gray.100", "gray.700");
+export default function Bookmarks({ ...props }) {
+  const { preferredCharts, handleClickBookmark } = useBookmarks();
+  const { drawerBgColor, thumbnailSize } = useLayout();
 
   return (
-    <TabPanel {...props} display="flex" flexDirection="column" height="100%">
-      <Flex
-        flex={1}
-        overflowY="auto"
-        sx={{
-          "&::-webkit-scrollbar": {
-            width: "5px",
-          },
-          "&::-webkit-scrollbar-track": {
-            background: "transparent",
-          },
-          "&::-webkit-scrollbar-thumb": {
-            background: "darkorange",
-            borderRadius: "5px",
-          },
-          "&::-webkit-scrollbar-thumb:hover": {
-            background: "orange",
-          },
-        }}>
-        <OrderedList m={0} p={0} width="100%">
-          {thumbnails?.map((thumbnail, index) => (
-            <ListItem
-              as={Flex}
-              key={preferredCharts[index].key}
-              bgColor={bgColor}
+    <TabPanel {...props} display="flex" flexDirection="column" height="full">
+      <OrderedList m={0} p={0} width="full" overflowY="auto" sx={scrollbarStyle}>
+        {preferredCharts.map(chart => (
+          <ListItem key={`bookmark-${chart.key}`} as={Flex} flexDir="column">
+            <Flex
+              p={1}
+              gap={2}
               borderRadius="md"
-              mb={2}
-              gap={4}
-              p={2}>
-              {thumbnail && (
-                <Image src={thumbnail} alt={preferredCharts[index].key} w="50px" h="50px" />
+              onClick={() => handleClickBookmark(chart)}
+              _hover={{ cursor: "pointer", bg: drawerBgColor }}>
+              {!!chart.thumbnail && (
+                <Image
+                  src={chart.thumbnail}
+                  alt={`Chart thumbnail ${chart.title}`}
+                  w={thumbnailSize}
+                  h={thumbnailSize}
+                />
               )}
-              <Flex flexDir="column" gap={1}>
-                <Heading size="sm">{preferredCharts[index].attributes.join(" & ")}</Heading>
+              <Flex flexDir="column">
+                <Heading size="sm">{chart.attributes.join(" & ")}</Heading>
                 <Text size="xs">This chart is very good</Text>
               </Flex>
-            </ListItem>
-          ))}
-        </OrderedList>
-      </Flex>
+            </Flex>
+            <Divider my={1} />
+          </ListItem>
+        ))}
+      </OrderedList>
     </TabPanel>
   );
 }
