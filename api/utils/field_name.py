@@ -50,3 +50,8 @@ def replace_clingo_field_name(clingo_field_name: Any) -> Any:
     return [replace_clingo_field_name(v) for v in clingo_field_name]
   else:
     return get_original_field_name(clingo_field_name)
+
+
+def clear_field_name_cache() -> None:
+  id_to_name.clear()
+  name_to_id.clear()

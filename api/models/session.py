@@ -1,93 +1,43 @@
 from __future__ import annotations
 
-from collections import defaultdict
-from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, cast
+from typing import Self
 
-import numpy as np
 import pandas as pd
-from api.utils import df_required, find_index, get_timestamp
-from numpy.random import choice
+from anyio import Path
+from api.utils import (
+  clear_field_name_cache,
+  get_clingo_field_name,
+  get_file_extension,
+  get_timestamp,
+)
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-if TYPE_CHECKING:
-  from .chart import Chart
+from .chart import Chart
+from .data_field import DataField
 
 NEW_FIELD_P = 0.2
 
 
-@dataclass
-class Session:
-  df: pd.DataFrame | None = field(default=None)
-  filename: str | None = field(default=None)
-  charts: list["Chart"] = field(default_factory=list)
+class Session(BaseModel):
+  df: pd.DataFrame = Field(default=None, repr=False)
+  filename: str = Field(default="")
+  timestamp: int = Field(default_factory=get_timestamp, init=False)
+  charts: list["Chart"] = Field(default_factory=list, init=False)
+  fields: list["DataField"] = Field(default_factory=list, init=False)
 
-  timestamp: int = field(default_factory=get_timestamp, init=False)
-  used_charts: defaultdict[str, set] = cast(
-    defaultdict[str, set],
-    field(default_factory=lambda: defaultdict(set), init=False, repr=False),
-  )
-  field_name: list[str] = field(default_factory=list, init=False, repr=False)
-  clingo_field_name: list[str] = field(
-    default_factory=list, init=False, repr=False
-  )
+  model_config = ConfigDict(arbitrary_types_allowed=True)
 
-  base_field: str | None = field(default=None, init=False, repr=False)
+  base_field: "DataField" | None = Field(default=None, init=False, repr=False)
 
-  def asdict(self) -> dict[str, Any]:
-    return {
-      "filename": self.filename,
-      "timestamp": self.timestamp,
-      "charts": [chart.to_dict() for chart in self.charts],
-    }
-
-  def __asdict__(self) -> dict[str, Any]:
-    return self.asdict()
-
-  @df_required
-  def convert_name(self, name: str) -> str:
-    if name.startswith("field_"):
-      return self.field_name[
-        find_index(self.clingo_field_name, lambda x: x == name)
-      ]
-    else:
-      return self.clingo_field_name[
-        find_index(self.field_name, lambda x: x == name)
-      ]
-
-  def _get_base_field(self) -> str:
-    base_fields = self.clingo_field_name
-
-    # 확률 처리 알고리즘
-    p = np.full(len(base_fields), 1 / len(base_fields))
-
-    return choice(base_fields, 1, p=p).tolist()[0]
-
-  def _get_rest_fields(self, fields: list[str], n: int = 1) -> list[str]:
-    new_fields = [
-      field for field in self.clingo_field_name if field not in fields
+  @model_validator(mode="after")
+  def prosess_df(self) -> Self:
+    clear_field_name_cache()
+    if self.df is None:
+      extension = get_file_extension(self.filename)
+      self.df = getattr(pd, f"read_{extension}")(Path("./", self.filename))
+      self.df = self.df if len(self.df) <= 5000 else self.df.sample(5000)
+    self.fields = [
+      DataField.from_dataframe(self.df, name) for name in self.df.columns
     ]
-
-    if len(new_fields) == 0:
-      raise ValueError("No new fields")
-
-    p = np.full(len(new_fields), 1 / len(new_fields))
-
-    return [*choice(new_fields, n, p=p).tolist()]
-
-  @df_required
-  def get_fields(self) -> list[str]:
-    if self.base_field is None:
-      self.base_field = self._get_base_field()
-      return [self.base_field]
-
-    if len(self.used_charts[self.base_field]) == self.clingo_field_name:
-      self.base_field = self._get_base_field()
-      return [self.base_field]
-
-    # Routing to the new base field
-    if choice([True, False], 1, p=[NEW_FIELD_P, 1 - NEW_FIELD_P])[0]:
-      print("New base field")
-      self.base_field = self._get_base_field()
-      return [self.base_field]
-
-    return [self.base_field, *self._get_rest_fields([self.base_field])]
+    self.df.rename(columns=get_clingo_field_name, inplace=True)
+    return self

@@ -36,3 +36,5 @@ public/artifacts
 
 *.ipynb
 data
+
+movies.json

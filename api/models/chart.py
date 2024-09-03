@@ -1,45 +1,27 @@
-from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any, Dict, List, Self
 
 from api.utils import get_timestamp
+from pydantic import BaseModel, Field, model_validator
+
+if TYPE_CHECKING:
+  from api.models.data_field import DataField
 
 
-@dataclass
-class Chart:
-  facts: list[str] = field(default_factory=list)
+class Chart(BaseModel):
+  facts: List[str] = Field(default_factory=list)
+  title: str = ""
+  description: str = ""
+  specs: List[Dict[str, Any]] = Field(default_factory=list)
+  spec_index: int = Field(default=0, alias="specIndex")
+  preferred: bool = False
+  timestamp: int = Field(default_factory=get_timestamp)
+  fields: list["DataField"] = Field(default_factory=list)
+  key: str = Field(default="", init=False, repr=False)
 
-  title: str = field(default="")
-  description: str = field(default="")
-
-  specs: list[dict[str, Any]] = field(default_factory=list)
-  spec_index: int = field(default=0)
-
-  attributes: list[str] = field(default_factory=list)
-
-  preferred: bool = field(default=False)
-
-  timestamp: int = field(
-    default_factory=get_timestamp, init=False, repr=False, compare=False
-  )
-  key: str = field(init=False, repr=False, compare=False)
-
-  def __post_init__(self):
-    self.key = f"chart-{str(self.attributes)}"
+  @model_validator(mode="after")
+  def set_key(self) -> Self:
+    self.key = f"chart-{str([field.name for field in self.fields])}"
+    return self
 
   def __hash__(self):
     return hash(self.key)
-
-  def to_dict(self) -> dict[str, Any]:
-    return {
-      "title": self.title,
-      "description": self.description,
-      "specs": self.specs,
-      "specIndex": self.spec_index,
-      "preferred": self.preferred,
-      "timestamp": self.timestamp,
-      "key": self.key,
-      "attributes": self.attributes,
-    }
-
-  def __asdict__(self) -> dict[str, Any]:
-    return self.to_dict()

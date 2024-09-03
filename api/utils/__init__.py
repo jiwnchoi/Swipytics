@@ -1,5 +1,6 @@
 from .decorators import df_required, exception_handler
 from .field_name import (
+  clear_field_name_cache,
   get_clingo_field_name,
   get_original_field_name,
   replace_clingo_field_name,
@@ -18,4 +19,5 @@ __all__ = [
   "get_clingo_field_name",
   "get_original_field_name",
   "replace_clingo_field_name",
+  "clear_field_name_cache",
 ]
