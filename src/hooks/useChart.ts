@@ -22,7 +22,7 @@ export default function useChart(chart: TChart) {
     background: "transparent",
     data: { name: DATA_NAME },
     config: {
-      ..._spec.config,
+      ...("config" in _spec ? _spec.config : {}),
       axis: {
         labelFontSize: 14,
         titleFontSize: 16,

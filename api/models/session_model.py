@@ -42,3 +42,7 @@ class SessionModel(BaseModel):
 
   def get_attributes(self) -> list[tuple]:
     return [chart.attributes for chart in self.charts]
+
+  @property
+  def visualizable_fields(self) -> list[DataFieldModel]:
+    return [field for field in self.fields if field.type != "name"]

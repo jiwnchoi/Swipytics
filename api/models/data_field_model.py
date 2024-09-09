@@ -22,7 +22,7 @@ def get_field_type(df: pd.DataFrame, name: str) -> FieldType:
   if pd.api.types.is_numeric_dtype(dtype):
     return "numeric"
 
-  if df[name].nunique() > 100:
+  if df[name].nunique() > 10:
     return "name"
 
   return "categorical"
