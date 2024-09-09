@@ -10,7 +10,13 @@ export async function getThumbnailFromSpec(
   if (!("mark" in spec)) return undefined;
   if (!spec || !data) return undefined;
 
-  const thumbnailAxis = { disable: true, title: "", grid: false, ticks: false, labels: false };
+  const thumbnailAxis = {
+    disable: true,
+    title: "",
+    grid: false,
+    ticks: false,
+    labels: false,
+  };
   const newSpec = {
     ...spec,
     width: 100,
@@ -20,13 +26,16 @@ export async function getThumbnailFromSpec(
       mark: { strokeWidth: spec.mark === "line" ? 4 : 0 },
       legend: { disable: true },
       axis: { disable: true },
-      style: { view: { stroke: "transparent" }, cell: { stroke: "transparent" } },
+      style: {
+        view: { stroke: "transparent" },
+        cell: { stroke: "transparent" },
+      },
     },
     data: { values: data },
     background: "transparent",
     title: undefined,
     encoding: Object.fromEntries(
-      Object.entries(spec.encoding || {}).map(([key, value]: [string, Encoding<Field>]) => [
+      Object.entries(spec.encoding ?? {}).map(([key, value]: [string, Encoding<Field>]) => [
         key,
         {
           ...value,
@@ -37,8 +46,8 @@ export async function getThumbnailFromSpec(
     ),
   };
 
-  const view = await embed(document.createElement("div"), newSpec, { actions: false }).then(
-    result => result.view,
-  );
+  const view = await embed(document.createElement("div"), newSpec, {
+    actions: false,
+  }).then((result) => result.view);
   return (await view.toCanvas()).toDataURL();
 }

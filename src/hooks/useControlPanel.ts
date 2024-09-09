@@ -5,8 +5,8 @@ import { useMemo, useState } from "react";
 import useMeasure from "react-use-measure";
 
 export default function useControlPanel() {
-  const expanded = useInteractionStore(state => state.drawerExpanded);
-  const setExpanded = useInteractionStore(state => state.setDrawerExpanded);
+  const expanded = useInteractionStore((state) => state.drawerExpanded);
+  const setExpanded = useInteractionStore((state) => state.setDrawerExpanded);
   const dragControls = useDragControls();
   const [bodyRef, bodyBounds] = useMeasure();
   const [handleRef, handleBounds] = useMeasure();
@@ -25,7 +25,7 @@ export default function useControlPanel() {
         top: `calc(100dvh - ${navigatorBounds.height + handleBounds.height + bodyBounds.height - 200}px)`,
       },
     }),
-    [bodyBounds, handleBounds],
+    [navigatorBounds, bodyBounds, handleBounds],
   );
 
   const handleDragEnd = (_: never, info: PanInfo) => {

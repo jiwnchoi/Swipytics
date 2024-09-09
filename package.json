@@ -7,9 +7,9 @@
     "dev": "vite",
     "dev:server": "concurrently \"vite\" \"hatch run fastapi dev server.py\"",
     "build": "tsc -b && vite build",
-    "lint": "biome lint --write . &&& hatch run ruff check .",
-    "format": "biome format --write . && hatch run ruff format .",
-    "check": "biome check --write . && hatch run ruff check . && hatch run ruff format .",
+    "lint": "eslint . && hatch run ruff check .",
+    "format": "prettier . --write --log-level error  && hatch run ruff format .",
+    "check": "pnpm lint && pnpm format",
     "preview": "vite preview",
     "prepare": "husky && ./install-draco.sh",
     "test": "vitest --globals --run",
@@ -41,22 +41,38 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
+    "@eslint/js": "^9.9.0",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "concurrently": "^8.2.2",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
     "gh-pages": "^6.1.1",
+    "globals": "^15.9.0",
     "husky": "^9.1.5",
     "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1",
     "vite": "^5.4.2",
     "vite-plugin-pwa": "^0.20.1",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.0.5"
   },
   "lint-staged": {
-    "*.{js,ts,tsx,css,html,json}": ["vitest --globals --run related", "biome check --write"],
-    "*.{py}": ["hatch run ruff check", "hatch run ruff format"]
+    "*.{js,ts,tsx,css,html,json}": [
+      "vitest --globals --run related",
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{py}": [
+      "hatch run ruff check",
+      "hatch run ruff format"
+    ]
   }
 }

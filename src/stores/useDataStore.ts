@@ -22,7 +22,7 @@ const loaderMap = {
 };
 
 const useDataStore = create(
-  devtools<DataState>(set => ({
+  devtools<DataState>((set) => ({
     filename: null,
     fileBuffer: null,
 
@@ -31,7 +31,13 @@ const useDataStore = create(
     loading: false,
 
     loadData: async (file: File | string) => {
-      set({ loading: true, filename: null, fileBuffer: null, data: undefined, schema: null });
+      set({
+        loading: true,
+        filename: null,
+        fileBuffer: null,
+        data: undefined,
+        schema: null,
+      });
 
       const filename = file instanceof File ? file.name : getFileNameFromURL(file);
       const fileExtension = filename.split(".").pop();

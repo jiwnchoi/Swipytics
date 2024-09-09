@@ -2,7 +2,7 @@ export function isURL(string: string) {
   try {
     new URL(string);
     return true;
-  } catch (_) {
+  } catch {
     return false;
   }
 }
@@ -16,7 +16,7 @@ export function getFileNameFromURL(url: string): string {
     const decodedFilename = decodeURIComponent(lastSegment);
 
     return decodedFilename;
-  } catch (error) {
+  } catch {
     throw new Error("Invalid URL");
   }
 }

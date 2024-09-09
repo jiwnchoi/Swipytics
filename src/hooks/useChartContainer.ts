@@ -4,11 +4,11 @@ import { debounce } from "es-toolkit";
 import { useEffect, useRef } from "react";
 
 export default function useChartContainer() {
-  const charts = useSessionsStore(state => state.charts);
-  const currentChartIndex = useSessionsStore(state => state.currentChartIndex);
-  const setCurrentChartIndex = useSessionsStore(state => state.setCurrentChartIndex);
-  const increaseCurrentChartIndex = useSessionsStore(state => state.increaseCurrentChartIndex);
-  const decreaseCurrentChartIndex = useSessionsStore(state => state.decreaseCurrentChartIndex);
+  const charts = useSessionsStore((state) => state.charts);
+  const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
+  const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
+  const increaseCurrentChartIndex = useSessionsStore((state) => state.increaseCurrentChartIndex);
+  const decreaseCurrentChartIndex = useSessionsStore((state) => state.decreaseCurrentChartIndex);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function useChartContainer() {
       const scrollTop = container.scrollTop;
       const chartHeight = container.clientHeight;
       const newIndex = Math.floor(scrollTop / chartHeight);
-      setCurrentChartIndex(newIndex - 1);
+      void setCurrentChartIndex(newIndex - 1);
     }, DEBOUNCE_DELAY);
 
     container.addEventListener("scroll", handleScroll);
@@ -31,7 +31,10 @@ export default function useChartContainer() {
     if (!container) return;
 
     const chartHeight = container.clientHeight;
-    container.scrollTo({ top: (currentChartIndex + 1) * chartHeight, behavior: "smooth" });
+    container.scrollTo({
+      top: (currentChartIndex + 1) * chartHeight,
+      behavior: "smooth",
+    });
   }, [currentChartIndex]);
 
   useEffect(() => {
@@ -47,7 +50,7 @@ export default function useChartContainer() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [increaseCurrentChartIndex, decreaseCurrentChartIndex]);
 
   return {
     charts,

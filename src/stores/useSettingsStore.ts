@@ -12,7 +12,7 @@ interface SettingsState {
 const useSettingsStore = create<SettingsState>()(
   devtools(
     persist(
-      set => ({
+      (set) => ({
         apiKey: "sk-...",
         setApiKey: (key: string) => set({ apiKey: key }),
         python: "pyodide",

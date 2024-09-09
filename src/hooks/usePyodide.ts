@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPyodide } from "@workers";
 
 export default function usePyodide() {
-  const python = useSettingsStore(state => state.python);
+  const python = useSettingsStore((state) => state.python);
 
   const { isLoading: loadingPyodide, data: pyodide } = useQuery({
     queryKey: ["loadPyodide", python],

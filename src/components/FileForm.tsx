@@ -13,9 +13,7 @@ import { PRIMARY_COLOR } from "@shared/constants";
 
 import { FileAttachmentIcon, StartUp02Icon } from "hugeicons-react";
 
-interface FileFormProps extends FlexProps {}
-
-export default function FileForm(props: FileFormProps) {
+export default function FileForm(props: FlexProps) {
   const { loadingPyodide } = usePyodide();
   const {
     loadingData,

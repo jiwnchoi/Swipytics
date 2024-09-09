@@ -6,7 +6,7 @@ import type { VisualizationSpec } from "react-vega";
 
 export default function useChart(chart: TChart) {
   const { colorMode } = useColorMode();
-  const _data = useDataStore(state => state.data);
+  const _data = useDataStore((state) => state.data);
   const _spec = chart.specs[chart.specIndex];
 
   const chartTheme: "dark" | undefined = colorMode === "dark" ? "dark" : undefined;

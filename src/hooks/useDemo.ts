@@ -10,9 +10,9 @@ export default function useDemo() {
     setSelectedDemo(demo);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (selectedDemo?.href) {
-      initializeSession(selectedDemo.href);
+      void initializeSession(selectedDemo.href);
     }
   };
 

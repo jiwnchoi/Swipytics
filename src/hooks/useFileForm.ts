@@ -27,12 +27,12 @@ function useFileForm() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (fileInputRef.current?.files?.length) {
       const file = fileInputRef.current.files[0];
-      await initializeSession(file);
+      void initializeSession(file);
     } else if (isURL(pathInput)) {
-      await initializeSession(pathInput);
+      void initializeSession(pathInput);
     }
   };
 

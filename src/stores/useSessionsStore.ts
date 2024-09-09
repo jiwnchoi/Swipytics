@@ -1,5 +1,5 @@
 import { CHART_PREFETCH_DELAY } from "@shared/constants";
-import type { TSession } from "@shared/models";
+import type { TChart, TSession } from "@shared/models";
 import { getPyodide } from "@workers";
 import { type Draft, produce } from "immer";
 import { create } from "zustand";
@@ -34,12 +34,12 @@ const useSessionsStore = create(
 
     currentChartIndex: -1,
     increaseCurrentChartIndex: () => {
-      get().setCurrentChartIndex(get().currentChartIndex + 1);
+      void get().setCurrentChartIndex(get().currentChartIndex + 1);
     },
     decreaseCurrentChartIndex: () => {
-      get().setCurrentChartIndex(get().currentChartIndex - 1);
+      void get().setCurrentChartIndex(get().currentChartIndex - 1);
     },
-    setCurrentChartIndex: async index => {
+    setCurrentChartIndex: async (index) => {
       const state = get();
       if (index < -1) return;
 
@@ -88,7 +88,7 @@ const useSessionsStore = create(
         }),
       ),
 
-    setCurrentChartPreferred: async preferred => {
+    setCurrentChartPreferred: async (preferred) => {
       const currentChart = get().charts[get().currentChartIndex];
       const data = useDataStore.getState().data;
       if (!data) return;
@@ -143,7 +143,7 @@ async function appendNextChartPyodide() {
 
 async function appendNextChartFetch() {
   const response = await fetch("/api/appendNextChart");
-  const chart = await response.json();
+  const chart = (await response.json()) as TChart;
   return chart;
 }
 

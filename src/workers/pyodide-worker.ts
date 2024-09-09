@@ -12,7 +12,10 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
   async writeFile(fileName: string, data: Uint8Array): Promise<void> {
     try {
       if (!this.pyodide) throw new Error("Pyodide is not initialized");
-      this.pyodide.FS.writeFile(fileName, data, { encoding: "binary", flags: "w" });
+      this.pyodide.FS.writeFile(fileName, data, {
+        encoding: "binary",
+        flags: "w",
+      });
     } catch (error) {
       // biome-ignore lint/nursery/noConsole: <explanation>
       console.error(error);
@@ -32,7 +35,9 @@ export const PyodideWorker: PyodideRunner<PythonManifest> = {
   },
 
   async initialize(packages: string[] = []): Promise<void> {
-    this.pyodide = await loadPyodide({ indexURL: `${import.meta.env.BASE_URL}/artifacts` });
+    this.pyodide = await loadPyodide({
+      indexURL: `${import.meta.env.BASE_URL}/artifacts`,
+    });
     for (const p of packages) {
       await this.pyodide.loadPackage(p);
     }

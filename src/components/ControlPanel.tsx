@@ -55,7 +55,7 @@ function MobilePanel({ children, controller, ...props }: ControlPanelProps) {
       </Center>
       <Portal>
         <Flex
-          onPointerDown={e => dragControls.start(e)}
+          onPointerDown={(e) => dragControls.start(e)}
           bgColor={drawerBgColor}
           ref={navigatorRef}
           position={"absolute"}

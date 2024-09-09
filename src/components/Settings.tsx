@@ -45,15 +45,15 @@ function DemoSelector() {
     <>
       <Select
         size="sm"
-        onChange={e =>
-          handleDemoSelect(DEMO_LIST.find(demo => demo.name === e.target.value) || null)
+        onChange={(e) =>
+          handleDemoSelect(DEMO_LIST.find((demo) => demo.name === e.target.value) ?? null)
         }
         placeholder="Select Demo"
         variant="outline"
         colorScheme={PRIMARY_COLOR}
         icon={<Icon as={ArrowDown01Icon} />}
         borderRightRadius={0}>
-        {DEMO_LIST.map(demo => (
+        {DEMO_LIST.map((demo) => (
           <option key={demo.name} value={demo.name}>
             {demo.name}
           </option>
@@ -104,7 +104,7 @@ function Settings(props: StackProps) {
           size="sm"
           variant="outline"
           value={locale}
-          onChange={e => {
+          onChange={(e) => {
             setLocale(e.target.value as "en" | "ko");
           }}>
           <option value="en">English</option>
@@ -123,7 +123,7 @@ function Settings(props: StackProps) {
       <SettingRow label={"Backend"}>
         <Button
           leftIcon={<Icon as={python === "server" ? CloudIcon : SmartPhone01Icon} />}
-          onClick={togglePython}
+          onClick={void togglePython}
           size="sm"
           w={"full"}>
           {python[0].toUpperCase() + python.slice(1)}

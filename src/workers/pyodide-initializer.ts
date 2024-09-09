@@ -10,9 +10,7 @@ let pyodide: Pyodide | undefined = undefined;
  *
  * @param packages Additional python package names to load.
  */
-export async function initializePyodide(options?: {
-  packages?: string[];
-}): Promise<Pyodide> {
+export async function initializePyodide(options?: { packages?: string[] }): Promise<Pyodide> {
   const { packages } = options || {};
 
   if (pyodide === undefined) {

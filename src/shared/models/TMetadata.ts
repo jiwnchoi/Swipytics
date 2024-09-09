@@ -1,11 +1,11 @@
 import type TFieldType from "./TFieldType";
 
-type TMetadataBase = {
+interface TMetadataBase {
   type: TFieldType;
   count: number;
   unique: number;
   missing: number;
-};
+}
 
 type TMetadataNumeric = TMetadataBase & {
   type: "numeric";

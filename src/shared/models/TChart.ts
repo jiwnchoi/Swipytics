@@ -1,7 +1,7 @@
 import type { VisualizationSpec } from "react-vega";
 import type TDataField from "./TDataField";
 
-type TChart = {
+interface TChart {
   key: string;
   fields: TDataField[];
   specs: VisualizationSpec[];
@@ -14,6 +14,6 @@ type TChart = {
 
   // Client-side only properties
   thumbnail?: string;
-};
+}
 
 export default TChart;

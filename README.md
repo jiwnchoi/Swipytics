@@ -2,7 +2,6 @@
 
 ![swipytics_teaser](https://github.com/user-attachments/assets/de4b6261-6c01-42f8-a3aa-be808c5a072a)
 
-
 ## Demo
 
 [Live Web Demo](https://jiwnchoi.github.io/Swipytics)
@@ -13,8 +12,7 @@ Install [pnpm](https://pnpm.io/installation) and [Hatch](https://hatch.pypa.io/l
 
 You can manage both TypeScript and Python environments with **_pnpm_**. Check the [`package.json`](https://github.com/jiwnchoi/Sequilt/blob/main/package.json).
 
-Linter and formatter are configured with [Biome](https://biomejs.dev) and [Ruff](https://docs.astral.sh/ruff/). We highly recommend installing editor plugins. 
-
+Linter and formatter are configured with [Biome](https://biomejs.dev) and [Ruff](https://docs.astral.sh/ruff/). We highly recommend installing editor plugins.
 
 ```bash
 git clone https://github.com/jiwnchoi/Swipytics.git
@@ -34,4 +32,3 @@ pnpm check # Lint and Format both .py and .ts files
 # Test
 pnpm test # Test TypeScript with Vitest and Python with pytest
 ```
-

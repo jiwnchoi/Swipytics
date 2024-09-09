@@ -30,7 +30,7 @@ export default function ChartContainer(props: FlexProps) {
         borderRadius={"lg"}
         scrollSnapAlign={"start"}
       />
-      {charts.map(chart => (
+      {charts.map((chart) => (
         <Chart
           w={cardWidth}
           maxW={cardWidth}

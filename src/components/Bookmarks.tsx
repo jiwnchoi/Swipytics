@@ -36,7 +36,7 @@ function BookmarkItem({ chart, handleClickBookmark }: BookmarkItemProps) {
           />
         )}
         <Flex flexDir="column">
-          <Heading size="sm">{chart.fields.map(field => field.name).join(" & ")}</Heading>
+          <Heading size="sm">{chart.fields.map((field) => field.name).join(" & ")}</Heading>
           <Text size="xs">This chart is very good</Text>
         </Flex>
       </Flex>
@@ -51,7 +51,7 @@ export default function Bookmarks({ ...props }) {
   return (
     <TabPanel {...props} display="flex" flexDirection="column" height="full">
       <OrderedList m={0} p={0} width="full" overflowY="auto" sx={scrollbarStyle}>
-        {preferredCharts.map(chart => (
+        {preferredCharts.map((chart) => (
           <BookmarkItem
             key={`bookmark-${chart.key}`}
             chart={chart}
