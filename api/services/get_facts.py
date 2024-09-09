@@ -1,5 +1,3 @@
-import pprint
-
 import draco
 import pandas as pd
 from api.models import DataFieldModel
@@ -40,6 +38,4 @@ def get_facts_from_fields(df: pd.DataFrame, fields: list["DataFieldModel"]) -> l
   facts = (
     _get_base_facts() + _get_attribute_facts(df, clingo_names) + _get_encoding_facts(clingo_names)
   )
-
-  pprint.pprint(facts)
   return facts
