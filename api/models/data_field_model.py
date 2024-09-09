@@ -1,42 +1,15 @@
-from typing import Literal
-
 import pandas as pd
+from api.models.model_config import DefaultConfig
 from api.utils.field_name import get_clingo_field_name
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 
-FieldType = Literal["categorical", "datetime", "numeric", "name"]
-
-
-class MetadataBase(BaseModel):
-  type: Literal["categorical", "datetime", "numeric", "name"]
-  count: int
-  unique: int
-  missing: int
-
-
-class MetadataNumeric(MetadataBase):
-  type: Literal["numeric"]
-  min: float
-  max: float
-  mean: float
-  median: float
-  std: float
-
-
-class MetadataCategorical(MetadataBase):
-  type: Literal["categorical"]
-  top: str
-  freq: int
-
-
-class MetadataDatetime(MetadataBase):
-  type: Literal["datetime"]
-  min: str
-  max: str
-
-
-Metadata = (
-  MetadataBase | MetadataNumeric | MetadataCategorical | MetadataDatetime
+from .metadata_model import (
+  FieldType,
+  MetadataBase,
+  MetadataCategorical,
+  MetadataDatetime,
+  MetadataModel,
+  MetadataNumeric,
 )
 
 
@@ -55,7 +28,7 @@ def get_field_type(df: pd.DataFrame, name: str) -> FieldType:
   return "categorical"
 
 
-def get_field_metadata(df: pd.DataFrame, name: str) -> Metadata:
+def get_field_metadata(df: pd.DataFrame, name: str) -> MetadataModel:
   type = get_field_type(df, name)
 
   if type == "numeric":
@@ -99,16 +72,13 @@ def get_field_metadata(df: pd.DataFrame, name: str) -> Metadata:
   )
 
 
-class DataField(BaseModel):
+class DataFieldModel(BaseModel):
   name: str
   type: FieldType
   clingo_name: str
-  metadata: Metadata
+  metadata: MetadataModel
 
-  def __hash__(self) -> int:
-    return hash(self.name)
-
-  model_config = ConfigDict(arbitrary_types_allowed=True)
+  model_config = DefaultConfig
 
   @classmethod
   def from_dataframe(cls, df: pd.DataFrame, name: str):
@@ -120,10 +90,5 @@ class DataField(BaseModel):
       metadata=metadata,
     )
 
-
-if __name__ == "__main__":
-  from vega_datasets import data
-
-  df = data.movies()
-  field = DataField.from_dataframe(df, "Title")
-  print(field)
+  def __hash__(self) -> int:
+    return hash(self.name)

@@ -1,4 +1,3 @@
-import { useLayout } from "@hooks";
 import { EXPANDING_THRESHOLD } from "@shared/constants";
 import { useInteractionStore } from "@stores";
 import { type PanInfo, useDragControls } from "framer-motion";
@@ -8,7 +7,6 @@ import useMeasure from "react-use-measure";
 export default function useControlPanel() {
   const expanded = useInteractionStore(state => state.drawerExpanded);
   const setExpanded = useInteractionStore(state => state.setDrawerExpanded);
-  const { mobile } = useLayout();
   const dragControls = useDragControls();
   const [bodyRef, bodyBounds] = useMeasure();
   const [handleRef, handleBounds] = useMeasure();
@@ -52,6 +50,5 @@ export default function useControlPanel() {
     navigatorRef,
     navigatorBounds,
     variants,
-    mobile,
   };
 }

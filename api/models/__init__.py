@@ -1,10 +1,12 @@
-from .chart import Chart
-from .data_field import DataField
-from .session import Session
+from .chart_model import ChartModel
+from .data_field_model import DataFieldModel
+from .metadata_model import FieldType, MetadataModel
+from .session_model import SessionModel
 
 __all__ = [
-  "Session",
-  "Chart",
-  "dataclass",
-  "DataField",
+  "ChartModel",
+  "DataFieldModel",
+  "FieldType",
+  "MetadataModel",
+  "SessionModel",
 ]

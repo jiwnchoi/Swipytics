@@ -43,9 +43,7 @@ def get_original_field_name(clingo_field_name: Any) -> Any:
 
 def replace_clingo_field_name(clingo_field_name: Any) -> Any:
   if isinstance(clingo_field_name, dict):
-    return {
-      k: replace_clingo_field_name(v) for k, v in clingo_field_name.items()
-    }
+    return {k: replace_clingo_field_name(v) for k, v in clingo_field_name.items()}
   elif isinstance(clingo_field_name, list):
     return [replace_clingo_field_name(v) for v in clingo_field_name]
   else:

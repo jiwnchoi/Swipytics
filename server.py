@@ -1,9 +1,13 @@
 from pathlib import Path
 
-from api.app import appendChart, loadData
+from api.app import appendChart, browseCharts, loadData
+from api.models import ChartModel
 from fastapi import FastAPI, UploadFile, status
+from pydantic import BaseModel
 
 server = FastAPI()
+
+# Keep endpoints to camelCase for consistent api with Pyodide environment
 
 
 @server.post("/api/loadData")
@@ -14,9 +18,27 @@ async def load_data(file: UploadFile):
   return loadData(f"data/{file.filename}")
 
 
-@server.get("/api/appendChart")
-async def append_chart():
-  return appendChart()
+class BrowseChartRequest(BaseModel):
+  field_names: list[str]
+
+
+@server.post("/api/browseCharts")
+async def get_chart(req: BrowseChartRequest):
+  return browseCharts(req.field_names)
+
+
+class AppendChartRequest(BaseModel):
+  chart: ChartModel
+
+
+@server.post("/api/appendChart")
+async def append_chart(req: AppendChartRequest):
+  return appendChart(req.chart)
+
+
+@server.get("/api/getNextChart")
+async def get_next_chart():
+  return {}
 
 
 @server.get("/api", status_code=status.HTTP_200_OK)

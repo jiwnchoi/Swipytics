@@ -30,6 +30,7 @@ const useSessionsStore = create(
     filename: "",
     timestamp: 0,
     charts: [],
+    fields: [],
 
     currentChartIndex: -1,
     increaseCurrentChartIndex: () => {
