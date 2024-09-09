@@ -14,7 +14,7 @@ session = SessionModel(df=default_df, filename="movies.json")
 def loadData(filename: str):
   global session
   session = SessionModel(filename=filename)
-  return session.model_dump(by_alias=True)
+  return session.model_dump(by_alias=True, mode="json")
 
 
 def appendChart(chart: dict[str | Any] | ChartModel):
@@ -22,13 +22,13 @@ def appendChart(chart: dict[str | Any] | ChartModel):
   if isinstance(chart, dict):
     chart = ChartModel.model_validate(chart)
   session.charts.append(chart)
-  return session.model_dump(by_alias=True)
+  return session.model_dump(by_alias=True, mode="json")
 
 
 def appendNextChart():
   global session
   chart = get_next_chart(session)
-  return chart.model_dump(by_alias=True)
+  return chart.model_dump(by_alias=True, mode="json")
 
 
 def restoreSession(new_state: dict[str, Any] | SessionModel):
@@ -36,10 +36,10 @@ def restoreSession(new_state: dict[str, Any] | SessionModel):
   if isinstance(new_state, dict):
     new_state = SessionModel.model_validate(new_state)
   session = new_state
-  return session.model_dump(by_alias=True)
+  return session.model_dump(by_alias=True, mode="json")
 
 
 def browseCharts(field_names: list[str]):
   global session
   browsed_chart = browse_charts(session, field_names)
-  return [chart.model_dump(by_alias=True) for chart in browsed_chart]
+  return [chart.model_dump(by_alias=True, mode="json") for chart in browsed_chart]

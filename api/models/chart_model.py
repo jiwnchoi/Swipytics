@@ -17,7 +17,7 @@ class ChartModel(BaseModel):
   preferred: bool = Field(default=False, init=False)
   timestamp: int = Field(default_factory=get_timestamp, init=False)
 
-  attributes: tuple[str] = Field(default_factory=tuple, init=False)
+  attributes: tuple[str, ...] = Field(default_factory=tuple, init=False)
   key: str = Field(default="", init=False, repr=False)
 
   model_config = DefaultConfig

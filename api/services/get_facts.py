@@ -1,3 +1,5 @@
+import pprint
+
 import draco
 import pandas as pd
 from api.models import DataFieldModel
@@ -16,7 +18,8 @@ def _get_base_facts() -> list[str]:
 
 def _get_attribute_facts(df: pd.DataFrame, fields: list[str]) -> list[str]:
   base_scheme = draco.schema_from_dataframe(df[fields])
-  return draco.dict_to_facts(base_scheme)
+  facts = draco.dict_to_facts(base_scheme)
+  return facts
 
 
 def _get_encoding_facts(fields: list[str]) -> list[str]:
@@ -34,6 +37,9 @@ def _get_encoding_facts(fields: list[str]) -> list[str]:
 
 def get_facts_from_fields(df: pd.DataFrame, fields: list["DataFieldModel"]) -> list[str]:
   clingo_names = [field.clingo_name for field in fields]
-  return (
+  facts = (
     _get_base_facts() + _get_attribute_facts(df, clingo_names) + _get_encoding_facts(clingo_names)
   )
+
+  pprint.pprint(facts)
+  return facts
