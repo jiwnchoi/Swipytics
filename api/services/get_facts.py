@@ -1,5 +1,3 @@
-from functools import cache
-
 import draco
 import pandas as pd
 from api.models import DataFieldModel
@@ -21,9 +19,6 @@ def _get_attribute_facts(df: pd.DataFrame, fields: list[str]) -> list[str]:
   return draco.dict_to_facts(base_scheme)
 
 
-_get_attribute_facts = cache(_get_attribute_facts)
-
-
 def _get_encoding_facts(fields: list[str]) -> list[str]:
   return sum(
     [
@@ -37,14 +32,8 @@ def _get_encoding_facts(fields: list[str]) -> list[str]:
   )
 
 
-_get_encoding_facts = cache(_get_encoding_facts)
-
-
 def get_facts_from_fields(df: pd.DataFrame, fields: list["DataFieldModel"]) -> list[str]:
   clingo_names = [field.clingo_name for field in fields]
   return (
     _get_base_facts() + _get_attribute_facts(df, clingo_names) + _get_encoding_facts(clingo_names)
   )
-
-
-get_facts_from_fields = cache(get_facts_from_fields)

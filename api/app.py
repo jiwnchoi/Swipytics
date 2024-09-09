@@ -4,41 +4,42 @@ from typing import Any
 
 from api.models import SessionModel
 from api.models.chart_model import ChartModel
-from api.services import browse_charts
+from api.services import browse_charts, get_next_chart
 from vega_datasets import data
 
 default_df = data.movies()
-state = SessionModel(df=default_df, filename="movies.json")
+session = SessionModel(df=default_df, filename="movies.json")
 
 
 def loadData(filename: str):
-  global state
-  state = SessionModel(filename=filename)
-  return state.model_dump(by_alias=True)
+  global session
+  session = SessionModel(filename=filename)
+  return session.model_dump(by_alias=True)
 
 
 def appendChart(chart: dict[str | Any] | ChartModel):
-  global state
+  global session
   if isinstance(chart, dict):
     chart = ChartModel.model_validate(chart)
-  state.charts.append(chart)
-  return state.model_dump(by_alias=True)
+  session.charts.append(chart)
+  return session.model_dump(by_alias=True)
 
 
-def getNextChart():
-  pass
-  # return get_next_chart(state).model_dump(by_alias=True)
+def appendNextChart():
+  global session
+  chart = get_next_chart(session)
+  return chart.model_dump(by_alias=True)
 
 
-def loadState(new_state: dict[str, Any] | SessionModel):
-  global state
+def restoreSession(new_state: dict[str, Any] | SessionModel):
+  global session
   if isinstance(new_state, dict):
     new_state = SessionModel.model_validate(new_state)
-  state = new_state
-  return state.model_dump(by_alias=True)
+  session = new_state
+  return session.model_dump(by_alias=True)
 
 
 def browseCharts(field_names: list[str]):
-  global state
-  browsed_chart = browse_charts(state, field_names)
+  global session
+  browsed_chart = browse_charts(session, field_names)
   return [chart.model_dump(by_alias=True) for chart in browsed_chart]

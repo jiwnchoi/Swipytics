@@ -18,7 +18,7 @@ interface SessionState extends TSession {
   loadingSession: boolean;
   loadSession: () => Promise<void>;
   appendingChart: boolean;
-  appendChart: () => Promise<void>;
+  appendNextChart: () => Promise<void>;
 
   renewCurrentChart: () => void;
 
@@ -44,7 +44,7 @@ const useSessionsStore = create(
       if (index < -1) return;
 
       if (index > state.charts.length - CHART_PREFETCH_DELAY - 1) {
-        await get().appendChart();
+        await get().appendNextChart();
       }
       set({ currentChartIndex: index });
     },
@@ -61,6 +61,7 @@ const useSessionsStore = create(
         produce((draft: Draft<SessionState>) => {
           draft.filename = session.filename;
           draft.timestamp = session.timestamp;
+          draft.fields = session.fields;
           draft.charts = session.charts;
           draft.loadingSession = false;
         }),
@@ -68,9 +69,9 @@ const useSessionsStore = create(
     },
 
     appendingChart: false,
-    appendChart: async () => {
+    appendNextChart: async () => {
       set({ appendingChart: true });
-      const chart = await appendChart();
+      const chart = await appendNextChart();
       set(
         produce((draft: Draft<SessionState>) => {
           draft.charts.push(chart);
@@ -134,18 +135,18 @@ async function loadDataFetch(filename: string, fileBuffer: Uint8Array) {
   return data;
 }
 
-async function appendChartPyodide() {
+async function appendNextChartPyodide() {
   const pyodide = await getPyodide();
-  const chart = await pyodide.callPythonFunction("appendChart", {});
+  const chart = await pyodide.callPythonFunction("appendNextChart", {});
   return chart;
 }
 
-async function appendChartFetch() {
-  const response = await fetch("/api/appendChart");
+async function appendNextChartFetch() {
+  const response = await fetch("/api/appendNextChart");
   const chart = await response.json();
   return chart;
 }
 
 const loadData = useSettingsStore.getState().python === "pyodide" ? loadDataPyodide : loadDataFetch;
-const appendChart =
-  useSettingsStore.getState().python === "pyodide" ? appendChartPyodide : appendChartFetch;
+const appendNextChart =
+  useSettingsStore.getState().python === "pyodide" ? appendNextChartPyodide : appendNextChartFetch;

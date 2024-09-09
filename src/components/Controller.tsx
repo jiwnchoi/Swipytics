@@ -4,49 +4,50 @@ import { ArrowDown01Icon, ArrowUp01Icon, Exchange01Icon, FavouriteIcon } from "h
 
 function Controller(props: FlexProps) {
   const {
-    disabled,
+    sessionInitialized,
+    chartDisplaying,
     currentChartPreferred,
     handleNextChart,
     handlePrevChart,
     handleRenewChart,
     handlePreferChart,
   } = useController();
+
   return (
     <Flex {...props}>
-      {[
-        {
-          label: "Previous chart",
-          icon: ArrowUp01Icon,
-          onClick: handlePrevChart,
-        },
-        {
-          label: "Next chart",
-          icon: ArrowDown01Icon,
-          onClick: handleNextChart,
-        },
-        {
-          label: "Renew current chart",
-          icon: Exchange01Icon,
-          onClick: handleRenewChart,
-        },
-        {
-          label: "Bookmark current chart",
-          icon: FavouriteIcon,
-          onClick: handlePreferChart,
-          color: currentChartPreferred ? "red" : "gray",
-        },
-      ].map(({ label, icon, onClick, color: colorScheme }, index) => (
-        <IconButton
-          key={index}
-          size="lg"
-          w="full"
-          aria-label={label}
-          icon={<Icon as={icon} />}
-          onClick={onClick}
-          isDisabled={disabled}
-          colorScheme={colorScheme}
-        />
-      ))}
+      <IconButton
+        size="lg"
+        w="full"
+        aria-label="Previous chart"
+        icon={<Icon as={ArrowUp01Icon} />}
+        onClick={handlePrevChart}
+        isDisabled={!sessionInitialized || !chartDisplaying}
+      />
+      <IconButton
+        size="lg"
+        w="full"
+        aria-label="Next chart"
+        icon={<Icon as={ArrowDown01Icon} />}
+        onClick={handleNextChart}
+        isDisabled={!sessionInitialized}
+      />
+      <IconButton
+        size="lg"
+        w="full"
+        aria-label="Renew current chart"
+        icon={<Icon as={Exchange01Icon} />}
+        onClick={handleRenewChart}
+        isDisabled={!sessionInitialized || !chartDisplaying}
+      />
+      <IconButton
+        size="lg"
+        w="full"
+        aria-label="Bookmark current chart"
+        icon={<Icon as={FavouriteIcon} />}
+        onClick={handlePreferChart}
+        colorScheme={currentChartPreferred ? "red" : "gray"}
+        isDisabled={!sessionInitialized || !chartDisplaying}
+      />
     </Flex>
   );
 }

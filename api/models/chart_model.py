@@ -25,7 +25,7 @@ class ChartModel(BaseModel):
   @model_validator(mode="after")
   def after(self) -> Self:
     self.attributes = tuple([field.name for field in self.fields])
-    self.key = f"chart-{str([field for field in self.attributes])}"
+    self.key = f"chart-{str([field for field in self.attributes])}-{self.timestamp}"
     return self
 
   def __hash__(self):

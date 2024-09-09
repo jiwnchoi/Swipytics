@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from api.app import appendChart, browseCharts, loadData
+from api.app import appendChart, appendNextChart, browseCharts, loadData
 from api.models import ChartModel
 from fastapi import FastAPI, UploadFile, status
 from pydantic import BaseModel
@@ -36,9 +36,9 @@ async def append_chart(req: AppendChartRequest):
   return appendChart(req.chart)
 
 
-@server.get("/api/getNextChart")
-async def get_next_chart():
-  return {}
+@server.get("/api/appendNextChart")
+async def append_next_chart():
+  return appendNextChart()
 
 
 @server.get("/api", status_code=status.HTTP_200_OK)

@@ -9,7 +9,7 @@ export interface PythonManifest extends WorkerManifest {
     };
   };
 
-  appendChart: {
+  appendNextChart: {
     returns: TChart;
     // biome-ignore lint/complexity/noBannedTypes: <explanation>
     args: {};

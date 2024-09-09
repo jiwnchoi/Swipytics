@@ -36,7 +36,7 @@ function BookmarkItem({ chart, handleClickBookmark }: BookmarkItemProps) {
           />
         )}
         <Flex flexDir="column">
-          <Heading size="sm">{chart.attributes.join(" & ")}</Heading>
+          <Heading size="sm">{chart.fields.map(field => field.name).join(" & ")}</Heading>
           <Text size="xs">This chart is very good</Text>
         </Flex>
       </Flex>
