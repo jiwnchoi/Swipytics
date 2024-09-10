@@ -2,6 +2,7 @@ import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
 import { Bookmarks, ChartPanel, ControlPanel, Controller, Settings } from "@components";
 import { useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
+import MetadataFields from "../components/MetadataFields";
 
 export default function App() {
   const { cardHeight, cardColor, tabPanelHeight } = useLayout();
@@ -27,11 +28,13 @@ export default function App() {
             <Tab>Bookmarks</Tab>
             <Tab>Information</Tab>
             <Tab>Settings</Tab>
+            <Tab>Fields</Tab>
           </TabList>
           <TabPanels mt={4} flex={1} overflow={"auto"} h={tabPanelHeight}>
             <Bookmarks p={0} m={0} gap={2} w="full" />
             <TabPanel>Chart Description and Explanation at Here</TabPanel>
             <Settings align={"start"} />
+            <MetadataFields />
           </TabPanels>
         </Tabs>
       </ControlPanel>
