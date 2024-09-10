@@ -38,17 +38,17 @@ export default function App() {
               <Icon boxSize={tabIconSize} as={PresentationBarChart01Icon} />
             </Tab>
             <Tab>
-              <Icon boxSize={tabIconSize} as={Settings01Icon} />
+              <Icon boxSize={tabIconSize} as={ProfileIcon} />
             </Tab>
             <Tab>
-              <Icon boxSize={tabIconSize} as={ProfileIcon} />
+              <Icon boxSize={tabIconSize} as={Settings01Icon} />
             </Tab>
           </TabList>
           <TabPanels mt={4} flex={1} overflow={"auto"} h={tabPanelHeight}>
             <Bookmarks p={0} m={0} gap={2} w="full" />
             <TabPanel>Chart Description and Explanation at Here</TabPanel>
-            <Settings align={"start"} />
             <MetadataFields />
+            <Settings align={"start"} />
           </TabPanels>
         </Tabs>
       </ControlPanel>
