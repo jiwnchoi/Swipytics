@@ -7,3 +7,5 @@ export { default as CopyRight } from "./CopyRight";
 export { default as FileForm } from "./FileForm";
 export { default as PlaceHolder } from "./PlaceHolder";
 export { default as Settings } from "./Settings";
+export { default as TabsContainer } from "./TabsContainer";
+export { default as MetadataFields } from "./MetadataFields";
