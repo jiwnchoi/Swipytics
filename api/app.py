@@ -8,12 +8,13 @@ from api.services import browse_charts, get_next_chart
 from vega_datasets import data
 
 default_df = data.movies()
-session = SessionModel(df=default_df, filename="movies.json")
+session: SessionModel = SessionModel(df=default_df, filename="movies.json")
 
 
 def loadData(filename: str):
   global session
   session = SessionModel(filename=filename)
+  appendNextChart()
   return session.model_dump(by_alias=True, mode="json")
 
 
