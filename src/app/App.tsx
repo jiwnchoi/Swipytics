@@ -1,17 +1,24 @@
-import { Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { Bookmarks, ChartPanel, ControlPanel, Controller, Settings } from "@components";
-import { useLayout } from "@hooks";
-import { PRIMARY_COLOR } from "@shared/constants";
-import MetadataFields from "../components/MetadataFields";
+import { Flex, TabPanel } from "@chakra-ui/react";
 import {
+  Bookmarks,
+  ChartPanel,
+  ControlPanel,
+  Controller,
+  MetadataFields,
+  Settings,
+  TabsContainer,
+} from "@components";
+import { useLayout } from "@hooks";
+import {
+  DiscoverCircleIcon,
   HeartCheckIcon,
+  PresentationBarChart01Icon,
   ProfileIcon,
   Settings01Icon,
-  PresentationBarChart01Icon,
 } from "hugeicons-react";
 
 export default function App() {
-  const { cardHeight, cardColor, tabPanelHeight, tabIconSize } = useLayout();
+  const { cardHeight, cardColor } = useLayout();
 
   return (
     <Flex
@@ -29,28 +36,40 @@ export default function App() {
         minW={{ base: "full", lg: "sm" }}
         maxW={{ base: "full", lg: "sm" }}
         controller={<Controller gap={2} w={"full"} />}>
-        <Tabs w={"full"} defaultIndex={2} isFitted colorScheme={PRIMARY_COLOR}>
-          <TabList>
-            <Tab>
-              <Icon boxSize={tabIconSize} as={HeartCheckIcon} />
-            </Tab>
-            <Tab>
-              <Icon boxSize={tabIconSize} as={PresentationBarChart01Icon} />
-            </Tab>
-            <Tab>
-              <Icon boxSize={tabIconSize} as={ProfileIcon} />
-            </Tab>
-            <Tab>
-              <Icon boxSize={tabIconSize} as={Settings01Icon} />
-            </Tab>
-          </TabList>
-          <TabPanels mt={4} flex={1} overflow={"auto"} h={tabPanelHeight}>
-            <Bookmarks p={0} m={0} gap={2} w="full" />
-            <TabPanel>Chart Description and Explanation at Here</TabPanel>
-            <MetadataFields />
-            <Settings align={"start"} />
-          </TabPanels>
-        </Tabs>
+        <TabsContainer
+          tabs={[
+            {
+              type: "bookmarks",
+              icon: HeartCheckIcon,
+              panel: <Bookmarks p={0} m={0} gap={2} w="full" />,
+              displayingBeforeInit: false,
+            },
+            {
+              type: "browseChart",
+              icon: DiscoverCircleIcon,
+              panel: <TabPanel>Chart Browser for Manual Chart query at here</TabPanel>,
+              displayingBeforeInit: false,
+            },
+            {
+              type: "chart-info",
+              icon: PresentationBarChart01Icon,
+              panel: <TabPanel>Chart Description and Explanation at Here</TabPanel>,
+              displayingBeforeInit: false,
+            },
+            {
+              type: "metadata",
+              icon: ProfileIcon,
+              panel: <MetadataFields />,
+              displayingBeforeInit: false,
+            },
+            {
+              type: "settings",
+              icon: Settings01Icon,
+              panel: <Settings align={"start"} />,
+              displayingBeforeInit: true,
+            },
+          ]}
+        />
       </ControlPanel>
     </Flex>
   );

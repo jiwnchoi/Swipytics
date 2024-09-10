@@ -1,6 +1,12 @@
 import { Flex, type FlexProps, Icon, IconButton } from "@chakra-ui/react";
 import { useController } from "@hooks";
-import { ArrowDown01Icon, ArrowUp01Icon, Exchange01Icon, FavouriteIcon } from "hugeicons-react";
+import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  Exchange01Icon,
+  HeartAddIcon,
+  HeartCheckIcon,
+} from "hugeicons-react";
 
 function Controller(props: FlexProps) {
   const {
@@ -43,7 +49,7 @@ function Controller(props: FlexProps) {
         size="lg"
         w="full"
         aria-label="Bookmark current chart"
-        icon={<Icon as={FavouriteIcon} />}
+        icon={<Icon as={currentChartPreferred ? HeartCheckIcon : HeartAddIcon} />}
         onClick={handlePreferChart}
         colorScheme={currentChartPreferred ? "red" : "gray"}
         isDisabled={!sessionInitialized || !chartDisplaying}

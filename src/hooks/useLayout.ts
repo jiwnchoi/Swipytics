@@ -41,6 +41,7 @@ export default function useColors() {
     cardPadding,
     tabIconSize,
     scrollbarStyle,
+    accentHoverColor,
     buttonColor,
     cardWidth,
     cardHeight,
