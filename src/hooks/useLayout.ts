@@ -12,9 +12,11 @@ export default function useColors() {
   const drawerBgColor = useColorModeValue("gray.100", "gray.800");
 
   const tabPanelHeight = useBreakpointValue({ base: 320, lg: 600 });
+  const tabIconSize = 5;
   const thumbnailSize = 50;
   return {
     cardPadding,
+    tabIconSize,
     cardWidth,
     cardHeight,
     cardColor,
