@@ -20,4 +20,5 @@ def browse_charts(state: SessionModel, field_names: list[str]) -> list[ChartMode
     *[(*input_fields, field) for field in additional_fields],
   ]
 
-  return [get_chart(state.df, fields) for fields in browse_fields]
+  charts = [get_chart(state.df, fields) for fields in browse_fields]
+  return [chart for chart in charts if chart]

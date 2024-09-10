@@ -29,15 +29,7 @@ def appendChart(chart: dict[str, Any] | ChartModel):
 def appendNextChart():
   global session
   chart = get_next_chart(session)
-
-  while (limit := 0) < 5 and chart is None:
-    chart = get_next_chart(session)
-    limit += 1
-
-  if chart is None:
-    return {}
-
-  return chart.model_dump(by_alias=True, mode="json")
+  return chart.model_dump(by_alias=True, mode="json") if chart else None
 
 
 def restoreSession(new_state: dict[str, Any] | SessionModel):

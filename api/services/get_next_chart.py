@@ -65,13 +65,7 @@ def get_next_chart(session: SessionModel) -> ChartModel | None:
     neighbor_fields = [(field,) for field in session.visualizable_fields]
 
   p = get_distribution(session, neighbor_fields)
-
   next_fields = sample(neighbor_fields, p)
-  p = get_distribution(session, neighbor_fields)
   chart = get_chart(session.df, next_fields)
 
-  if len(chart.specs) > 0:
-    session.charts.append(chart)
-    return chart
-
-  return None
+  return chart

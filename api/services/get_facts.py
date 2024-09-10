@@ -1,6 +1,7 @@
 import draco
 import pandas as pd
 from api.models import DataFieldModel
+from api.utils import rescale_to_32bit
 
 
 def _get_base_facts() -> list[str]:
@@ -8,14 +9,19 @@ def _get_base_facts() -> list[str]:
     "entity(view,root,v0).",
     "entity(mark,v0,m0).",
     ":- {entity(encoding,_,_)} > 3.",
-    ":- {entity(mark,_,_)} != 1.",
     # Exclude tick mark
     ":- attribute((mark,type),m0, tick).",
+    # Exclude Faceted Chart
+    ":- {entity(facet,_,_)} > 0.",
   ]
 
 
 def _get_attribute_facts(df: pd.DataFrame, fields: list[str]) -> list[str]:
   base_scheme = draco.schema_from_dataframe(df[fields])
+  base_scheme = {
+    **base_scheme,
+    "field": [rescale_to_32bit(f) for f in base_scheme["field"]],
+  }
   facts = draco.dict_to_facts(base_scheme)
   return facts
 

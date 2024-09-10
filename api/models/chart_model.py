@@ -8,7 +8,7 @@ from .model_config import DefaultConfig
 
 
 class ChartModel(BaseModel):
-  fields: tuple[DataFieldModel, ...] = Field(default_factory=tuple, exclude=True)
+  fields: tuple[DataFieldModel, ...] = Field(default_factory=tuple)
   specs: List[Dict[str, Any]] = Field(default_factory=list)
   title: str = Field(default="")
   description: str = Field(default="")

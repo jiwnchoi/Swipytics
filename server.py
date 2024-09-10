@@ -2,7 +2,7 @@ from pathlib import Path
 
 from api.app import appendChart, appendNextChart, browseCharts, loadData
 from api.models import ChartModel
-from fastapi import FastAPI, UploadFile, status
+from fastapi import FastAPI, HTTPException, UploadFile, status
 from pydantic import BaseModel
 
 server = FastAPI()
@@ -38,7 +38,8 @@ async def append_chart(req: AppendChartRequest):
 
 @server.get("/api/appendNextChart")
 async def append_next_chart():
-  return appendNextChart()
+  chart = appendNextChart()
+  return HTTPException(status_code=404, detail="No more charts") if not chart else chart
 
 
 @server.get("/api", status_code=status.HTTP_200_OK)
