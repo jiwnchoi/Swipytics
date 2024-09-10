@@ -8,7 +8,6 @@ function getChartHeight(container: HTMLDivElement | null) {
 
   const style = window.getComputedStyle(container);
   const gap = parseFloat(style.gap);
-  console.log(container.clientHeight + gap);
   return container.clientHeight + gap;
 }
 
@@ -27,8 +26,7 @@ export default function useChartContainer() {
     const handleScroll = debounce(() => {
       const scrollTop = container.scrollTop;
       const chartHeight = getChartHeight(container);
-      const newIndex = Math.round(scrollTop / chartHeight);
-      console.log(scrollTop, chartHeight, newIndex);
+      const newIndex = Math.floor(scrollTop / chartHeight);
       void setCurrentChartIndex(newIndex - 1);
     }, DEBOUNCE_DELAY);
 
@@ -41,7 +39,6 @@ export default function useChartContainer() {
     if (!container) return;
 
     const chartHeight = getChartHeight(container);
-    console.log("scrolling to", (currentChartIndex + 1) * chartHeight);
     container.scrollTo({
       top: (currentChartIndex + 1) * chartHeight,
       behavior: "smooth",
