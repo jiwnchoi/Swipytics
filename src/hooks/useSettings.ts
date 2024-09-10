@@ -15,7 +15,7 @@ export default function useSettings() {
   };
 
   const handleDownloadLogs = () => {
-    // biome-ignore lint/nursery/noConsole: <explanation>
+    // eslint-disable-next-line no-console
     console.log("Downloading logs...");
   };
 
