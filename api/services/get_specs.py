@@ -19,12 +19,7 @@ def _clean_spec(spec: SpecModel) -> SpecModel:
 
 def _answer_set_to_spec(answer_set: Iterable[Symbol], df: pd.DataFrame) -> dict:
   answer_dict = draco.answer_set_to_dict(answer_set)
-  chart: alt.Chart = renderer.render(spec=answer_dict, data=df)
-
-  # Multiview Chart logic 처리 필요
-  if isinstance(chart, alt.FacetChart) and chart.facet.column is not alt.Undefined:
-    chart = chart.configure_view(continuousWidth=130, continuousHeight=130)
-
+  chart: alt.Chart = renderer.render(spec=dict(answer_dict), data=df)
   vega = chart.to_dict()
   return _clean_spec(vega)
 

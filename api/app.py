@@ -17,7 +17,7 @@ def loadData(filename: str):
   return session.model_dump(by_alias=True, mode="json")
 
 
-def appendChart(chart: dict[str | Any] | ChartModel):
+def appendChart(chart: dict[str, Any] | ChartModel):
   global session
   if isinstance(chart, dict):
     chart = ChartModel.model_validate(chart)
@@ -28,6 +28,14 @@ def appendChart(chart: dict[str | Any] | ChartModel):
 def appendNextChart():
   global session
   chart = get_next_chart(session)
+
+  while (limit := 0) < 5 and chart is None:
+    chart = get_next_chart(session)
+    limit += 1
+
+  if chart is None:
+    return {}
+
   return chart.model_dump(by_alias=True, mode="json")
 
 

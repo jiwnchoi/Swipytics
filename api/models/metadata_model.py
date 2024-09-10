@@ -3,11 +3,17 @@ from typing import Literal
 from api.models.model_config import DefaultConfig
 from pydantic import BaseModel
 
-FieldType = Literal["categorical", "datetime", "numeric", "name"]
+FieldType = (
+  Literal["categorical"]
+  | Literal["categorical"]
+  | Literal["datetime"]
+  | Literal["numeric"]
+  | Literal["name"]
+)
 
 
 class MetadataBase(BaseModel):
-  type: Literal["categorical", "datetime", "numeric", "name"]
+  type: FieldType
   count: int
   unique: int
   missing: int
@@ -16,7 +22,7 @@ class MetadataBase(BaseModel):
 
 
 class MetadataNumeric(MetadataBase):
-  type: Literal["numeric"]
+  type: FieldType = "numeric"
   min: float
   max: float
   mean: float
@@ -25,15 +31,21 @@ class MetadataNumeric(MetadataBase):
 
 
 class MetadataCategorical(MetadataBase):
-  type: Literal["categorical"]
+  type: FieldType = "categorical"
   top: str
   freq: int
 
 
 class MetadataDatetime(MetadataBase):
-  type: Literal["datetime"]
+  type: FieldType = "datetime"
   min: str
   max: str
 
 
-MetadataModel = MetadataBase | MetadataNumeric | MetadataCategorical | MetadataDatetime
+class MetadataName(MetadataBase):
+  type: FieldType = "name"
+
+
+MetadataModel = (
+  MetadataBase | MetadataNumeric | MetadataCategorical | MetadataDatetime | MetadataName
+)

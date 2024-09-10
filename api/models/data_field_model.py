@@ -14,12 +14,10 @@ from .metadata_model import (
 
 
 def get_field_type(df: pd.DataFrame, name: str) -> FieldType:
-  dtype = df[name].dtype
-
-  if "date" in str(dtype):
+  if pd.api.types.is_datetime64_any_dtype(df[name]):
     return "datetime"
 
-  if pd.api.types.is_numeric_dtype(dtype):
+  if pd.api.types.is_numeric_dtype(df[name]):
     return "numeric"
 
   if df[name].nunique() > 10:

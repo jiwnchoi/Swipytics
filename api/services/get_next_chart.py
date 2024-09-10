@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable, TypeVar
+from typing import Callable, Sequence, TypeVar
 
 from api.models import ChartModel, DataFieldModel, SessionModel
 from numpy.random import choice
@@ -32,7 +32,7 @@ operations_map: dict[int, list[Operation]] = {
 }
 
 
-def sample(targets: list[T], p: list[float]) -> T:
+def sample(targets: Sequence[T], p: Sequence[float]) -> T:
   idx = choice(len(targets), 1, p=p)[0]
   return targets[idx]
 
@@ -43,7 +43,7 @@ def get_distribution(session: SessionModel, space: list[tuple[DataFieldModel, ..
   return [1 / len(space) for _ in space]
 
 
-def get_next_chart(session: SessionModel) -> ChartModel:
+def get_next_chart(session: SessionModel) -> ChartModel | None:
   current_chart = session.charts[-1] if session.charts else None
   target_fields = set(session.visualizable_fields) - set(
     current_chart.fields if current_chart else []
@@ -66,10 +66,12 @@ def get_next_chart(session: SessionModel) -> ChartModel:
 
   p = get_distribution(session, neighbor_fields)
 
-  while next_fields := sample(neighbor_fields, p):
-    p = get_distribution(session, neighbor_fields)
-    chart = get_chart(session.df, next_fields)
+  next_fields = sample(neighbor_fields, p)
+  p = get_distribution(session, neighbor_fields)
+  chart = get_chart(session.df, next_fields)
 
-    if len(chart.specs) > 0:
-      session.charts.append(chart)
-      return chart
+  if len(chart.specs) > 0:
+    session.charts.append(chart)
+    return chart
+
+  return None
