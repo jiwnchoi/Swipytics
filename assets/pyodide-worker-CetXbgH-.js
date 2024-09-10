@@ -1,0 +1,687 @@
+var Ee=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports);var rn=Ee((on,j)=>{/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */const W=Symbol("Comlink.proxy"),Se=Symbol("Comlink.endpoint"),xe=Symbol("Comlink.releaseProxy"),P=Symbol("Comlink.finalizer"),E=Symbol("Comlink.thrown"),V=e=>typeof e=="object"&&e!==null||typeof e=="function",ke={canHandle:e=>V(e)&&e[W],serialize(e){const{port1:n,port2:r}=new MessageChannel;return $(e,n),[r,[r]]},deserialize(e){return e.start(),Ne(e)}},Te={canHandle:e=>V(e)&&E in e,serialize({value:e}){let n;return e instanceof Error?n={isError:!0,value:{message:e.message,name:e.name,stack:e.stack}}:n={isError:!1,value:e},[n,[]]},deserialize(e){throw e.isError?Object.assign(new Error(e.value.message),e.value):e.value}},G=new Map([["proxy",ke],["throw",Te]]);function Oe(e,n){for(const r of e)if(n===r||r==="*"||r instanceof RegExp&&r.test(n))return!0;return!1}function $(e,n=globalThis,r=["*"]){n.addEventListener("message",function a(s){if(!s||!s.data)return;if(!Oe(r,s.origin)){console.warn(`Invalid origin '${s.origin}' for comlink proxy`);return}const{id:i,type:t,path:l}=Object.assign({path:[]},s.data),o=(s.data.argumentList||[]).map(b);let f;try{const d=l.slice(0,-1).reduce((m,_)=>m[_],e),c=l.reduce((m,_)=>m[_],e);switch(t){case"GET":f=c;break;case"SET":d[l.slice(-1)[0]]=b(s.data.value),f=!0;break;case"APPLY":f=c.apply(d,o);break;case"CONSTRUCT":{const m=new c(...o);f=Ae(m)}break;case"ENDPOINT":{const{port1:m,port2:_}=new MessageChannel;$(e,_),f=Re(m,[m])}break;case"RELEASE":f=void 0;break;default:return}}catch(d){f={value:d,[E]:0}}Promise.resolve(f).catch(d=>({value:d,[E]:0})).then(d=>{const[c,m]=T(d);n.postMessage(Object.assign(Object.assign({},c),{id:i}),m),t==="RELEASE"&&(n.removeEventListener("message",a),J(n),P in e&&typeof e[P]=="function"&&e[P]())}).catch(d=>{const[c,m]=T({value:new TypeError("Unserializable return value"),[E]:0});n.postMessage(Object.assign(Object.assign({},c),{id:i}),m)})}),n.start&&n.start()}function De(e){return e.constructor.name==="MessagePort"}function J(e){De(e)&&e.close()}function Ne(e,n){return L(e,[],n)}function M(e){if(e)throw new Error("Proxy has been released and is not useable")}function Y(e){return v(e,{type:"RELEASE"}).then(()=>{J(e)})}const x=new WeakMap,k="FinalizationRegistry"in globalThis&&new FinalizationRegistry(e=>{const n=(x.get(e)||0)-1;x.set(e,n),n===0&&Y(e)});function Pe(e,n){const r=(x.get(n)||0)+1;x.set(n,r),k&&k.register(e,n,e)}function Ce(e){k&&k.unregister(e)}function L(e,n=[],r=function(){}){let a=!1;const s=new Proxy(r,{get(i,t){if(M(a),t===xe)return()=>{Ce(s),Y(e),a=!0};if(t==="then"){if(n.length===0)return{then:()=>s};const l=v(e,{type:"GET",path:n.map(o=>o.toString())}).then(b);return l.then.bind(l)}return L(e,[...n,t])},set(i,t,l){M(a);const[o,f]=T(l);return v(e,{type:"SET",path:[...n,t].map(d=>d.toString()),value:o},f).then(b)},apply(i,t,l){M(a);const o=n[n.length-1];if(o===Se)return v(e,{type:"ENDPOINT"}).then(b);if(o==="bind")return L(e,n.slice(0,-1));const[f,d]=H(l);return v(e,{type:"APPLY",path:n.map(c=>c.toString()),argumentList:f},d).then(b)},construct(i,t){M(a);const[l,o]=H(t);return v(e,{type:"CONSTRUCT",path:n.map(f=>f.toString()),argumentList:l},o).then(b)}});return Pe(s,e),s}function Le(e){return Array.prototype.concat.apply([],e)}function H(e){const n=e.map(T);return[n.map(r=>r[0]),Le(n.map(r=>r[1]))]}const K=new WeakMap;function Re(e,n){return K.set(e,n),e}function Ae(e){return Object.assign(e,{[W]:!0})}function T(e){for(const[n,r]of G)if(r.canHandle(e)){const[a,s]=r.serialize(e);return[{type:"HANDLER",name:n,value:a},s]}return[{type:"RAW",value:e},K.get(e)||[]]}function b(e){switch(e.type){case"HANDLER":return G.get(e.name).deserialize(e.value);case"RAW":return e.value}}function v(e,n,r){return new Promise(a=>{const s=je();e.addEventListener("message",function i(t){!t.data||!t.data.id||t.data.id!==s||(e.removeEventListener("message",i),a(t.data))}),e.start&&e.start(),e.postMessage(Object.assign({id:s},n),r)})}function je(){return new Array(4).fill(0).map(()=>Math.floor(Math.random()*Number.MAX_SAFE_INTEGER).toString(16)).join("-")}var $e=Object.create,q=Object.defineProperty,qe=Object.getOwnPropertyDescriptor,Ie=Object.getOwnPropertyNames,ze=Object.getPrototypeOf,Ue=Object.prototype.hasOwnProperty,u=(e,n)=>q(e,"name",{value:n,configurable:!0}),X=(e=>typeof require<"u"?require:typeof Proxy<"u"?new Proxy(e,{get:(n,r)=>(typeof require<"u"?require:n)[r]}):e)(function(e){if(typeof require<"u")return require.apply(this,arguments);throw new Error('Dynamic require of "'+e+'" is not supported')}),Q=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports),Be=(e,n,r,a)=>{if(n&&typeof n=="object"||typeof n=="function")for(let s of Ie(n))!Ue.call(e,s)&&s!==r&&q(e,s,{get:()=>n[s],enumerable:!(a=qe(n,s))||a.enumerable});return e},He=(e,n,r)=>(r=e!=null?$e(ze(e)):{},Be(!e||!e.__esModule?q(r,"default",{value:e,enumerable:!0}):r,e)),We=Q((e,n)=>{(function(r,a){typeof define=="function"&&define.amd?define("stackframe",[],a):typeof e=="object"?n.exports=a():r.StackFrame=a()})(e,function(){function r(p){return!isNaN(parseFloat(p))&&isFinite(p)}u(r,"_isNumber");function a(p){return p.charAt(0).toUpperCase()+p.substring(1)}u(a,"_capitalize");function s(p){return function(){return this[p]}}u(s,"_getter");var i=["isConstructor","isEval","isNative","isToplevel"],t=["columnNumber","lineNumber"],l=["fileName","functionName","source"],o=["args"],f=["evalOrigin"],d=i.concat(t,l,o,f);function c(p){if(p)for(var g=0;g<d.length;g++)p[d[g]]!==void 0&&this["set"+a(d[g])](p[d[g]])}u(c,"StackFrame"),c.prototype={getArgs:function(){return this.args},setArgs:function(p){if(Object.prototype.toString.call(p)!=="[object Array]")throw new TypeError("Args must be an Array");this.args=p},getEvalOrigin:function(){return this.evalOrigin},setEvalOrigin:function(p){if(p instanceof c)this.evalOrigin=p;else if(p instanceof Object)this.evalOrigin=new c(p);else throw new TypeError("Eval Origin must be an Object or StackFrame")},toString:function(){var p=this.getFileName()||"",g=this.getLineNumber()||"",w=this.getColumnNumber()||"",F=this.getFunctionName()||"";return this.getIsEval()?p?"[eval] ("+p+":"+g+":"+w+")":"[eval]:"+g+":"+w:F?F+" ("+p+":"+g+":"+w+")":p+":"+g+":"+w}},c.fromString=u(function(p){var g=p.indexOf("("),w=p.lastIndexOf(")"),F=p.substring(0,g),be=p.substring(g+1,w).split(","),B=p.substring(w+1);if(B.indexOf("@")===0)var N=/@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(B,""),ve=N[1],Fe=N[2],Me=N[3];return new c({functionName:F,args:be||void 0,fileName:ve,lineNumber:Fe||void 0,columnNumber:Me||void 0})},"StackFrame$$fromString");for(var m=0;m<i.length;m++)c.prototype["get"+a(i[m])]=s(i[m]),c.prototype["set"+a(i[m])]=function(p){return function(g){this[p]=!!g}}(i[m]);for(var _=0;_<t.length;_++)c.prototype["get"+a(t[_])]=s(t[_]),c.prototype["set"+a(t[_])]=function(p){return function(g){if(!r(g))throw new TypeError(p+" must be a Number");this[p]=Number(g)}}(t[_]);for(var y=0;y<l.length;y++)c.prototype["get"+a(l[y])]=s(l[y]),c.prototype["set"+a(l[y])]=function(p){return function(g){this[p]=String(g)}}(l[y]);return c})}),Ve=Q((e,n)=>{(function(r,a){typeof define=="function"&&define.amd?define("error-stack-parser",["stackframe"],a):typeof e=="object"?n.exports=a(We()):r.ErrorStackParser=a(r.StackFrame)})(e,u(function(r){var a=/(^|@)\S+:\d+/,s=/^\s*at .*(\S+:\d+|\(native\))/m,i=/^(eval@)?(\[native code])?$/;return{parse:u(function(t){if(typeof t.stacktrace<"u"||typeof t["opera#sourceloc"]<"u")return this.parseOpera(t);if(t.stack&&t.stack.match(s))return this.parseV8OrIE(t);if(t.stack)return this.parseFFOrSafari(t);throw new Error("Cannot parse given Error object")},"ErrorStackParser$$parse"),extractLocation:u(function(t){if(t.indexOf(":")===-1)return[t];var l=/(.+?)(?::(\d+))?(?::(\d+))?$/,o=l.exec(t.replace(/[()]/g,""));return[o[1],o[2]||void 0,o[3]||void 0]},"ErrorStackParser$$extractLocation"),parseV8OrIE:u(function(t){var l=t.stack.split(`
+`).filter(function(o){return!!o.match(s)},this);return l.map(function(o){o.indexOf("(eval ")>-1&&(o=o.replace(/eval code/g,"eval").replace(/(\(eval at [^()]*)|(,.*$)/g,""));var f=o.replace(/^\s+/,"").replace(/\(eval code/g,"(").replace(/^.*?\s+/,""),d=f.match(/ (\(.+\)$)/);f=d?f.replace(d[0],""):f;var c=this.extractLocation(d?d[1]:f),m=d&&f||void 0,_=["eval","<anonymous>"].indexOf(c[0])>-1?void 0:c[0];return new r({functionName:m,fileName:_,lineNumber:c[1],columnNumber:c[2],source:o})},this)},"ErrorStackParser$$parseV8OrIE"),parseFFOrSafari:u(function(t){var l=t.stack.split(`
+`).filter(function(o){return!o.match(i)},this);return l.map(function(o){if(o.indexOf(" > eval")>-1&&(o=o.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g,":$1")),o.indexOf("@")===-1&&o.indexOf(":")===-1)return new r({functionName:o});var f=/((.*".+"[^@]*)?[^@]*)(?:@)/,d=o.match(f),c=d&&d[1]?d[1]:void 0,m=this.extractLocation(o.replace(f,""));return new r({functionName:c,fileName:m[0],lineNumber:m[1],columnNumber:m[2],source:o})},this)},"ErrorStackParser$$parseFFOrSafari"),parseOpera:u(function(t){return!t.stacktrace||t.message.indexOf(`
+`)>-1&&t.message.split(`
+`).length>t.stacktrace.split(`
+`).length?this.parseOpera9(t):t.stack?this.parseOpera11(t):this.parseOpera10(t)},"ErrorStackParser$$parseOpera"),parseOpera9:u(function(t){for(var l=/Line (\d+).*script (?:in )?(\S+)/i,o=t.message.split(`
+`),f=[],d=2,c=o.length;d<c;d+=2){var m=l.exec(o[d]);m&&f.push(new r({fileName:m[2],lineNumber:m[1],source:o[d]}))}return f},"ErrorStackParser$$parseOpera9"),parseOpera10:u(function(t){for(var l=/Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i,o=t.stacktrace.split(`
+`),f=[],d=0,c=o.length;d<c;d+=2){var m=l.exec(o[d]);m&&f.push(new r({functionName:m[3]||void 0,fileName:m[2],lineNumber:m[1],source:o[d]}))}return f},"ErrorStackParser$$parseOpera10"),parseOpera11:u(function(t){var l=t.stack.split(`
+`).filter(function(o){return!!o.match(a)&&!o.match(/^Error created at/)},this);return l.map(function(o){var f=o.split("@"),d=this.extractLocation(f.pop()),c=f.shift()||"",m=c.replace(/<anonymous function(: (\w+))?>/,"$2").replace(/\([^)]*\)/g,"")||void 0,_;c.match(/\(([^)]*)\)/)&&(_=c.replace(/^[^(]+\(([^)]*)\)$/,"$1"));var y=_===void 0||_==="[arguments not available]"?void 0:_.split(",");return new r({functionName:m,args:y,fileName:d[0],lineNumber:d[1],columnNumber:d[2],source:o})},this)},"ErrorStackParser$$parseOpera11")}},"ErrorStackParser"))}),Ge=He(Ve()),h=typeof process=="object"&&typeof process.versions=="object"&&typeof process.versions.node=="string"&&typeof process.browser>"u",Z=h&&typeof j<"u"&&typeof j.exports<"u"&&typeof X<"u"&&typeof __dirname<"u",Je=h&&!Z,Ye=typeof Deno<"u",ee=!h&&!Ye,Ke=ee&&typeof window<"u"&&typeof document<"u"&&typeof document.createElement<"u"&&typeof sessionStorage<"u",Xe=ee&&typeof importScripts<"u"&&typeof self<"u",ne,O,R,te,I,Qe=`"fetch" is not defined, maybe you're using node < 18? From Pyodide >= 0.25.0, node >= 18 is required. Older versions of Node.js may work, but it is not guaranteed or supported. Falling back to "node-fetch".`;async function z(){if(!h||(ne=(await import("./__vite-browser-external-CIEyP2s7.js")).default,I=await import("./__vite-browser-external-CIEyP2s7.js"),globalThis.fetch?O=fetch:(console.warn(Qe),O=(await import("./index-B489Fav_.js")).default),te=(await import("./__vite-browser-external-CIEyP2s7.js")).default,R=await import("./__vite-browser-external-CIEyP2s7.js"),U=R.sep,typeof X<"u"))return;let e=await import("./__vite-browser-external-CIEyP2s7.js"),n=await import("./__vite-browser-external-CIEyP2s7.js"),r=await import("./__vite-browser-external-CIEyP2s7.js"),a=await import("./__vite-browser-external-CIEyP2s7.js"),s={fs:e,crypto:n,ws:r,child_process:a};globalThis.require=function(i){return s[i]}}u(z,"initNodeModules");function re(e,n){return R.resolve(n||".",e)}u(re,"node_resolvePath");function ie(e,n){return n===void 0&&(n=location),new URL(e,n).toString()}u(ie,"browser_resolvePath");var A;h?A=re:A=ie;var U;h||(U="/");function ae(e,n){return e.startsWith("file://")&&(e=e.slice(7)),e.includes("://")?{response:O(e)}:{binary:I.readFile(e).then(r=>new Uint8Array(r.buffer,r.byteOffset,r.byteLength))}}u(ae,"node_getBinaryResponse");function oe(e,n){let r=new URL(e,location);return{response:fetch(r,n?{integrity:n}:{})}}u(oe,"browser_getBinaryResponse");var D;h?D=ae:D=oe;async function se(e,n){let{response:r,binary:a}=D(e,n);if(a)return a;let s=await r;if(!s.ok)throw new Error(`Failed to load '${e}': request failed.`);return new Uint8Array(await s.arrayBuffer())}u(se,"loadBinaryFile");var S;if(Ke)S=u(async e=>await import(e),"loadScript");else if(Xe)S=u(async e=>{try{globalThis.importScripts(e)}catch(n){if(n instanceof TypeError)await import(e);else throw n}},"loadScript");else if(h)S=le;else throw new Error("Cannot determine runtime environment");async function le(e){e.startsWith("file://")&&(e=e.slice(7)),e.includes("://")?te.runInThisContext(await(await O(e)).text()):await import(ne.pathToFileURL(e).href)}u(le,"nodeLoadScript");async function de(e){if(h){await z();let n=await I.readFile(e);return JSON.parse(n)}else return await(await fetch(e)).json()}u(de,"loadLockFile");async function fe(){if(Z)return __dirname;let e;try{throw new Error}catch(a){e=a}let n=Ge.default.parse(e)[0].fileName;if(Je){let a=await import("./__vite-browser-external-CIEyP2s7.js");return(await import("./__vite-browser-external-CIEyP2s7.js")).fileURLToPath(a.dirname(n))}let r=n.lastIndexOf(U);if(r===-1)throw new Error("Could not extract indexURL path from pyodide module location");return n.slice(0,r)}u(fe,"calculateDirname");function ce(e){let n=e.FS,r=e.FS.filesystems.MEMFS,a=e.PATH,s={DIR_MODE:16895,FILE_MODE:33279,mount:function(i){if(!i.opts.fileSystemHandle)throw new Error("opts.fileSystemHandle is required");return r.mount.apply(null,arguments)},syncfs:async(i,t,l)=>{try{let o=s.getLocalSet(i),f=await s.getRemoteSet(i),d=t?f:o,c=t?o:f;await s.reconcile(i,d,c),l(null)}catch(o){l(o)}},getLocalSet:i=>{let t=Object.create(null);function l(d){return d!=="."&&d!==".."}u(l,"isRealDir");function o(d){return c=>a.join2(d,c)}u(o,"toAbsolute");let f=n.readdir(i.mountpoint).filter(l).map(o(i.mountpoint));for(;f.length;){let d=f.pop(),c=n.stat(d);n.isDir(c.mode)&&f.push.apply(f,n.readdir(d).filter(l).map(o(d))),t[d]={timestamp:c.mtime,mode:c.mode}}return{type:"local",entries:t}},getRemoteSet:async i=>{let t=Object.create(null),l=await Ze(i.opts.fileSystemHandle);for(let[o,f]of l)o!=="."&&(t[a.join2(i.mountpoint,o)]={timestamp:f.kind==="file"?(await f.getFile()).lastModifiedDate:new Date,mode:f.kind==="file"?s.FILE_MODE:s.DIR_MODE});return{type:"remote",entries:t,handles:l}},loadLocalEntry:i=>{let t=n.lookupPath(i).node,l=n.stat(i);if(n.isDir(l.mode))return{timestamp:l.mtime,mode:l.mode};if(n.isFile(l.mode))return t.contents=r.getFileDataAsTypedArray(t),{timestamp:l.mtime,mode:l.mode,contents:t.contents};throw new Error("node type not supported")},storeLocalEntry:(i,t)=>{if(n.isDir(t.mode))n.mkdirTree(i,t.mode);else if(n.isFile(t.mode))n.writeFile(i,t.contents,{canOwn:!0});else throw new Error("node type not supported");n.chmod(i,t.mode),n.utime(i,t.timestamp,t.timestamp)},removeLocalEntry:i=>{var t=n.stat(i);n.isDir(t.mode)?n.rmdir(i):n.isFile(t.mode)&&n.unlink(i)},loadRemoteEntry:async i=>{if(i.kind==="file"){let t=await i.getFile();return{contents:new Uint8Array(await t.arrayBuffer()),mode:s.FILE_MODE,timestamp:t.lastModifiedDate}}else{if(i.kind==="directory")return{mode:s.DIR_MODE,timestamp:new Date};throw new Error("unknown kind: "+i.kind)}},storeRemoteEntry:async(i,t,l)=>{let o=i.get(a.dirname(t)),f=n.isFile(l.mode)?await o.getFileHandle(a.basename(t),{create:!0}):await o.getDirectoryHandle(a.basename(t),{create:!0});if(f.kind==="file"){let d=await f.createWritable();await d.write(l.contents),await d.close()}i.set(t,f)},removeRemoteEntry:async(i,t)=>{await i.get(a.dirname(t)).removeEntry(a.basename(t)),i.delete(t)},reconcile:async(i,t,l)=>{let o=0,f=[];Object.keys(t.entries).forEach(function(m){let _=t.entries[m],y=l.entries[m];(!y||n.isFile(_.mode)&&_.timestamp.getTime()>y.timestamp.getTime())&&(f.push(m),o++)}),f.sort();let d=[];if(Object.keys(l.entries).forEach(function(m){t.entries[m]||(d.push(m),o++)}),d.sort().reverse(),!o)return;let c=t.type==="remote"?t.handles:l.handles;for(let m of f){let _=a.normalize(m.replace(i.mountpoint,"/")).substring(1);if(l.type==="local"){let y=c.get(_),p=await s.loadRemoteEntry(y);s.storeLocalEntry(m,p)}else{let y=s.loadLocalEntry(m);await s.storeRemoteEntry(c,_,y)}}for(let m of d)if(l.type==="local")s.removeLocalEntry(m);else{let _=a.normalize(m.replace(i.mountpoint,"/")).substring(1);await s.removeRemoteEntry(c,_)}}};e.FS.filesystems.NATIVEFS_ASYNC=s}u(ce,"initializeNativeFS");var Ze=u(async e=>{let n=[];async function r(s){for await(let i of s.values())n.push(i),i.kind==="directory"&&await r(i)}u(r,"collect"),await r(e);let a=new Map;a.set(".",e);for(let s of n){let i=(await e.resolve(s)).join("/");a.set(i,s)}return a},"getFsHandles");function me(){let e={};return e.noImageDecoding=!0,e.noAudioDecoding=!0,e.noWasmDecoding=!1,e.preRun=[],e.quit=(n,r)=>{throw e.exited={status:n,toThrow:r},r},e}u(me,"createModule");function pe(e,n){e.preRun.push(function(){let r="/";try{e.FS.mkdirTree(n)}catch(a){console.error(`Error occurred while making a home directory '${n}':`),console.error(a),console.error(`Using '${r}' for a home directory instead`),n=r}e.FS.chdir(n)})}u(pe,"createHomeDirectory");function ue(e,n){e.preRun.push(function(){Object.assign(e.ENV,n)})}u(ue,"setEnvironment");function _e(e,n){e.preRun.push(()=>{for(let r of n)e.FS.mkdirTree(r),e.FS.mount(e.FS.filesystems.NODEFS,{root:r},r)})}u(_e,"mountLocalDirectories");function ge(e,n){let r=se(n);e.preRun.push(()=>{let a=e._py_version_major(),s=e._py_version_minor();e.FS.mkdirTree("/lib"),e.FS.mkdirTree(`/lib/python${a}.${s}/site-packages`),e.addRunDependency("install-stdlib"),r.then(i=>{e.FS.writeFile(`/lib/python${a}${s}.zip`,i)}).catch(i=>{console.error("Error occurred while installing the standard library:"),console.error(i)}).finally(()=>{e.removeRunDependency("install-stdlib")})})}u(ge,"installStdlib");function ye(e,n){let r;n.stdLibURL!=null?r=n.stdLibURL:r=n.indexURL+"python_stdlib.zip",ge(e,r),pe(e,n.env.HOME),ue(e,n.env),_e(e,n._node_mounts),e.preRun.push(()=>ce(e))}u(ye,"initializeFileSystem");function he(e,n){let{binary:r,response:a}=D(n+"pyodide.asm.wasm");e.instantiateWasm=function(s,i){return async function(){try{let t;a?t=await WebAssembly.instantiateStreaming(a,s):t=await WebAssembly.instantiate(await r,s);let{instance:l,module:o}=t;typeof WasmOffsetConverter<"u"&&(wasmOffsetConverter=new WasmOffsetConverter(wasmBinary,o)),i(l,o)}catch(t){console.warn("wasm instantiation failed!"),console.warn(t)}}(),{}}}u(he,"preloadWasm");var C="0.25.0";async function we(e={}){await z();let n=e.indexURL||await fe();n=A(n),n.endsWith("/")||(n+="/"),e.indexURL=n;let r={fullStdLib:!1,jsglobals:globalThis,stdin:globalThis.prompt?globalThis.prompt:void 0,lockFileURL:n+"pyodide-lock.json",args:[],_node_mounts:[],env:{},packageCacheDir:n,packages:[]},a=Object.assign(r,e);a.env.HOME||(a.env.HOME="/home/pyodide");let s=me();s.print=a.stdout,s.printErr=a.stderr,s.arguments=a.args;let i={config:a};s.API=i,i.lockFilePromise=de(a.lockFileURL),he(s,n),ye(s,a);let t=new Promise(o=>s.postRun=o);if(s.locateFile=o=>a.indexURL+o,typeof _createPyodideModule!="function"){let o=`${a.indexURL}pyodide.asm.js`;await S(o)}if(await _createPyodideModule(s),await t,s.exited)throw s.exited.toThrow;if(e.pyproxyToStringRepr&&i.setPyProxyToStringMethod(!0),i.version!==C)throw new Error(`Pyodide version does not match: '${C}' <==> '${i.version}'. If you updated the Pyodide version, make sure you also updated the 'indexURL' parameter passed to loadPyodide.`);s.locateFile=o=>{throw new Error("Didn't expect to load any more file_packager files!")};let l=i.finalizeBootstrap();if(l.version.includes("dev")||i.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${l.version}/full/`),await i.packageIndexReady,i._pyodide._importhook.register_module_not_found_hook(i._import_name_to_package_name,i.lockfile_unvendored_stdlibs_and_test),i.lockfile_info.version!==C)throw new Error("Lock file version doesn't match Pyodide version");return i.package_loader.init_loaded_packages(),a.fullStdLib&&await l.loadPackage(i.lockfile_unvendored_stdlibs),i.initializeStreams(a.stdin,a.stdout,a.stderr),l}u(we,"loadPyodide");async function en(e){const n={"api/app.py":`from __future__ import annotations
+
+from typing import Any
+
+from api.models import SessionModel
+from api.models.chart_model import ChartModel
+from api.services import browse_charts, get_next_chart
+from fastapi import HTTPException
+from vega_datasets import data
+
+default_df = data.movies()
+session = SessionModel(df=default_df, filename="movies.json")
+
+
+def loadData(filename: str):
+  global session
+  session = SessionModel(filename=filename)
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def appendChart(chart: dict[str, Any] | ChartModel):
+  global session
+  if isinstance(chart, dict):
+    chart = ChartModel.model_validate(chart)
+  session.charts.append(chart)
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def appendNextChart():
+  global session
+  chart = get_next_chart(session)
+
+  while (limit := 0) < 5 and chart is None:
+    chart = get_next_chart(session)
+    limit += 1
+
+  if chart is None:
+    return HTTPException(status_code=404, detail="No more charts available")
+
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def restoreSession(new_state: dict[str, Any] | SessionModel):
+  global session
+  if isinstance(new_state, dict):
+    new_state = SessionModel.model_validate(new_state)
+  session = new_state
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def browseCharts(field_names: list[str]):
+  global session
+  browsed_chart = browse_charts(session, field_names)
+  return [chart.model_dump(by_alias=True, mode="json") for chart in browsed_chart]
+`,"api/models/__init__.py":`from .chart_model import ChartModel
+from .data_field_model import DataFieldModel
+from .metadata_model import FieldType, MetadataModel
+from .session_model import SessionModel
+
+__all__ = [
+  "ChartModel",
+  "DataFieldModel",
+  "FieldType",
+  "MetadataModel",
+  "SessionModel",
+]
+`,"api/models/chart_model.py":`from typing import Any, Dict, List, Self
+
+from api.utils import get_timestamp
+from pydantic import BaseModel, Field, model_validator
+
+from .data_field_model import DataFieldModel
+from .model_config import DefaultConfig
+
+
+class ChartModel(BaseModel):
+  fields: tuple[DataFieldModel, ...] = Field(default_factory=tuple, exclude=True)
+  specs: List[Dict[str, Any]] = Field(default_factory=list)
+  title: str = Field(default="")
+  description: str = Field(default="")
+
+  spec_index: int = Field(default=0, init=False)
+  preferred: bool = Field(default=False, init=False)
+  timestamp: int = Field(default_factory=get_timestamp, init=False)
+
+  attributes: tuple[str, ...] = Field(default_factory=tuple, init=False)
+  key: str = Field(default="", init=False, repr=False)
+
+  model_config = DefaultConfig
+
+  @model_validator(mode="after")
+  def after(self) -> Self:
+    self.attributes = tuple([field.name for field in self.fields])
+    self.key = f"chart-{str([field for field in self.attributes])}-{self.timestamp}"
+    return self
+
+  def __hash__(self):
+    return hash(self.fields)
+`,"api/models/data_field_model.py":`import pandas as pd
+from api.models.model_config import DefaultConfig
+from api.utils.field_name import get_clingo_field_name
+from pydantic import BaseModel
+
+from .metadata_model import (
+  FieldType,
+  MetadataBase,
+  MetadataCategorical,
+  MetadataDatetime,
+  MetadataModel,
+  MetadataNumeric,
+)
+
+
+def get_field_type(df: pd.DataFrame, name: str) -> FieldType:
+  if pd.api.types.is_datetime64_any_dtype(df[name]):
+    return "datetime"
+
+  if pd.api.types.is_numeric_dtype(df[name]):
+    return "numeric"
+
+  if df[name].nunique() > 10:
+    return "name"
+
+  return "categorical"
+
+
+def get_field_metadata(df: pd.DataFrame, name: str) -> MetadataModel:
+  type = get_field_type(df, name)
+
+  if type == "numeric":
+    return MetadataNumeric(
+      type=type,
+      count=len(df),
+      unique=df[name].nunique(),
+      missing=df[name].isnull().sum(),
+      min=df[name].min(),
+      max=df[name].max(),
+      mean=df[name].mean(),
+      median=df[name].median(),
+      std=df[name].std(),
+    )
+
+  if type == "categorical":
+    return MetadataCategorical(
+      type=type,
+      count=len(df),
+      unique=df[name].nunique(),
+      missing=df[name].isnull().sum(),
+      top=str(df[name].mode().iloc[0]),
+      freq=int(df[name].value_counts().iloc[0]),
+    )
+
+  if type == "datetime":
+    return MetadataDatetime(
+      type=type,
+      count=len(df),
+      unique=df[name].nunique(),
+      missing=df[name].isnull().sum(),
+      min=str(df[name].min()),
+      max=str(df[name].max()),
+    )
+
+  return MetadataBase(
+    type=type,
+    count=len(df),
+    unique=df[name].nunique(),
+    missing=df[name].isnull().sum(),
+  )
+
+
+class DataFieldModel(BaseModel):
+  name: str
+  type: FieldType
+  clingo_name: str
+  metadata: MetadataModel
+
+  model_config = DefaultConfig
+
+  @classmethod
+  def from_dataframe(cls, df: pd.DataFrame, name: str):
+    metadata = get_field_metadata(df, name)
+    return cls(
+      name=name,
+      type=metadata.type,
+      clingo_name=get_clingo_field_name(name),
+      metadata=metadata,
+    )
+
+  def __hash__(self) -> int:
+    return hash(self.name)
+`,"api/models/metadata_model.py":`from typing import Literal
+
+from api.models.model_config import DefaultConfig
+from pydantic import BaseModel
+
+FieldType = (
+  Literal["categorical"]
+  | Literal["categorical"]
+  | Literal["datetime"]
+  | Literal["numeric"]
+  | Literal["name"]
+)
+
+
+class MetadataBase(BaseModel):
+  type: FieldType
+  count: int
+  unique: int
+  missing: int
+
+  model_config = DefaultConfig
+
+
+class MetadataNumeric(MetadataBase):
+  type: FieldType = "numeric"
+  min: float
+  max: float
+  mean: float
+  median: float
+  std: float
+
+
+class MetadataCategorical(MetadataBase):
+  type: FieldType = "categorical"
+  top: str
+  freq: int
+
+
+class MetadataDatetime(MetadataBase):
+  type: FieldType = "datetime"
+  min: str
+  max: str
+
+
+class MetadataName(MetadataBase):
+  type: FieldType = "name"
+
+
+MetadataModel = (
+  MetadataBase | MetadataNumeric | MetadataCategorical | MetadataDatetime | MetadataName
+)
+`,"api/models/model_config.py":`from pydantic import ConfigDict
+from pydantic.alias_generators import to_camel
+
+DefaultConfig = ConfigDict(
+  alias_generator=to_camel,
+  populate_by_name=True,
+  from_attributes=True,
+  arbitrary_types_allowed=True,
+)
+`,"api/models/session_model.py":`from __future__ import annotations
+
+from pathlib import Path
+from typing import Self
+
+import pandas as pd
+from api.utils import (
+  clear_field_name_cache,
+  get_clingo_field_name,
+  get_file_extension,
+  get_timestamp,
+)
+from pydantic import BaseModel, Field, model_validator
+
+from .chart_model import ChartModel
+from .data_field_model import DataFieldModel
+from .model_config import DefaultConfig
+
+NEW_FIELD_P = 0.2
+
+
+class SessionModel(BaseModel):
+  df: pd.DataFrame = Field(default=None, repr=False, exclude=True)
+  filename: str = Field(default="")
+  timestamp: int = Field(default_factory=get_timestamp, init=False)
+  charts: list["ChartModel"] = Field(default_factory=list, init=False)
+  fields: list["DataFieldModel"] = Field(default_factory=list, init=False)
+
+  model_config = DefaultConfig
+
+  @model_validator(mode="after")
+  def prosess_df(self) -> Self:
+    clear_field_name_cache()
+    if self.df is None:
+      extension = get_file_extension(self.filename)
+      self.df = getattr(pd, f"read_{extension}")(Path("./", self.filename))
+      self.df = self.df if len(self.df) <= 5000 else self.df.sample(5000)
+    self.fields = [DataFieldModel.from_dataframe(self.df, name) for name in self.df.columns]
+    self.df.rename(columns=get_clingo_field_name, inplace=True)
+
+    return self
+
+  def get_attributes(self) -> list[tuple]:
+    return [chart.attributes for chart in self.charts]
+
+  @property
+  def visualizable_fields(self) -> list[DataFieldModel]:
+    return [field for field in self.fields if field.type != "name"]
+`,"api/services/__init__.py":`from .browse_charts import browse_charts
+from .get_chart import get_chart
+from .get_next_chart import get_next_chart
+
+__all__ = ["get_chart", "browse_charts", "get_next_chart"]
+`,"api/services/browse_charts.py":`from api.models.chart_model import ChartModel
+from api.models.session_model import SessionModel
+from api.services import get_chart
+
+
+def browse_charts(state: SessionModel, field_names: list[str]) -> list[ChartModel]:
+  if not (field_names and (0 < len(field_names) <= 3)):
+    raise ValueError("Invalid number of fields to browse")
+
+  # Input fields
+  all_fields = state.fields
+
+  input_fields = (field for field in state.fields if field.name in field_names)
+
+  # Add one more fields
+  additional_fields = [field for field in all_fields if field not in input_fields]
+
+  browse_fields = [
+    input_fields,
+    *[(*input_fields, field) for field in additional_fields],
+  ]
+
+  return [get_chart(state.df, fields) for fields in browse_fields]
+`,"api/services/get_chart.py":`from __future__ import annotations
+
+import pandas as pd
+from api.models import ChartModel, DataFieldModel
+
+from .get_facts import get_facts_from_fields
+from .get_specs import get_specs_from_facts
+
+
+def get_chart(df: pd.DataFrame, fields: tuple[DataFieldModel, ...]) -> ChartModel:
+  facts = get_facts_from_fields(df, fields)
+  specs = get_specs_from_facts(df, facts)
+  return ChartModel(fields=fields, specs=specs)
+`,"api/services/get_facts.py":`import draco
+import pandas as pd
+from api.models import DataFieldModel
+
+
+def _get_base_facts() -> list[str]:
+  return [
+    "entity(view,root,v0).",
+    "entity(mark,v0,m0).",
+    ":- {entity(encoding,_,_)} > 3.",
+    ":- {entity(mark,_,_)} != 1.",
+    # Exclude tick mark
+    ":- attribute((mark,type),m0, tick).",
+  ]
+
+
+def _get_attribute_facts(df: pd.DataFrame, fields: list[str]) -> list[str]:
+  base_scheme = draco.schema_from_dataframe(df[fields])
+  facts = draco.dict_to_facts(base_scheme)
+  return facts
+
+
+def _get_encoding_facts(fields: list[str]) -> list[str]:
+  return sum(
+    [
+      [
+        f"entity(encoding,m0,e{code}).",
+        f"attribute((encoding,field),e{code},{field}).",
+      ]
+      for code, field in enumerate(fields)
+    ],
+    [],
+  )
+
+
+def get_facts_from_fields(df: pd.DataFrame, fields: tuple["DataFieldModel", ...]) -> list[str]:
+  clingo_names = [field.clingo_name for field in fields]
+  facts = (
+    _get_base_facts() + _get_attribute_facts(df, clingo_names) + _get_encoding_facts(clingo_names)
+  )
+  return facts
+`,"api/services/get_next_chart.py":`from __future__ import annotations
+
+from typing import Callable, Sequence, TypeVar
+
+from api.models import ChartModel, DataFieldModel, SessionModel
+from numpy.random import choice
+
+from .get_chart import get_chart
+
+T = TypeVar("T")
+
+
+Operation = Callable[[tuple[DataFieldModel, ...], DataFieldModel], tuple[DataFieldModel, ...]]
+
+operations_map: dict[int, list[Operation]] = {
+  0: [
+    lambda _, f: (f,),  # Create first field
+  ],
+  1: [
+    lambda _, f: (f,),  # 1. Replace Last field
+    lambda fields, f: fields + (f,),  # 2. Append New Field
+  ],
+  2: [
+    lambda fields, f: (fields[0], f),  # 1. Replace Last field
+    lambda fields, f: fields + (f,),  # 2. Append New Field
+    lambda fields, _: (fields[0],),  # 3. Remove second field
+  ],
+  3: [
+    lambda fields, f: (fields[0], fields[1], f),  # 1. Replace Last field
+    lambda fields, _: (fields[0], fields[2]),  # 3. Remove second field
+  ],
+}
+
+
+def sample(targets: Sequence[T], p: Sequence[float]) -> T:
+  idx = choice(len(targets), 1, p=p)[0]
+  return targets[idx]
+
+
+def get_distribution(session: SessionModel, space: list[tuple[DataFieldModel, ...]]) -> list[float]:
+  if not space:
+    return [1 / len(session.visualizable_fields) for _ in session.visualizable_fields]
+  return [1 / len(space) for _ in space]
+
+
+def get_next_chart(session: SessionModel) -> ChartModel | None:
+  current_chart = session.charts[-1] if session.charts else None
+  target_fields = set(session.visualizable_fields) - set(
+    current_chart.fields if current_chart else []
+  )
+  chart_hash = set(tuple(chart.fields) for chart in session.charts)
+
+  operations = operations_map[len(current_chart.fields) if current_chart else 0]
+
+  neighbor_fields = [
+    op(current_chart.fields if current_chart else (), field)
+    for op in operations
+    for field in target_fields
+  ]
+
+  ## Filter out fields that have been used
+  neighbor_fields = [fields for fields in neighbor_fields if fields not in chart_hash]
+
+  if not neighbor_fields:
+    neighbor_fields = [(field,) for field in session.visualizable_fields]
+
+  p = get_distribution(session, neighbor_fields)
+
+  next_fields = sample(neighbor_fields, p)
+  p = get_distribution(session, neighbor_fields)
+  chart = get_chart(session.df, next_fields)
+
+  if len(chart.specs) > 0:
+    session.charts.append(chart)
+    return chart
+
+  return None
+`,"api/services/get_specs.py":`from typing import Any, Iterable
+
+import altair as alt
+import draco
+import pandas as pd
+from api.utils import replace_clingo_field_name
+from clingo import Symbol
+from draco.renderer import AltairRenderer
+
+drc = draco.Draco()
+renderer = AltairRenderer()
+
+SpecModel = dict[str, Any]
+
+
+def _clean_spec(spec: SpecModel) -> SpecModel:
+  return {k: v for k, v in spec.items() if k not in ["data", "datasets", "$schema"]}
+
+
+def _answer_set_to_spec(answer_set: Iterable[Symbol], df: pd.DataFrame) -> dict:
+  answer_dict = draco.answer_set_to_dict(answer_set)
+  chart: alt.Chart = renderer.render(spec=dict(answer_dict), data=df)
+  vega = chart.to_dict()
+  return _clean_spec(vega)
+
+
+def get_specs_from_facts(
+  df: pd.DataFrame,
+  facts: list[str],
+  num: int = 5,
+):
+  specs = [_answer_set_to_spec(model.answer_set, df) for model in drc.complete_spec(facts, num)]
+  return [replace_clingo_field_name(spec) for spec in specs]
+`,"api/utils/__init__.py":`from .decorators import df_required, exception_handler
+from .field_name import (
+  clear_field_name_cache,
+  get_clingo_field_name,
+  get_original_field_name,
+  replace_clingo_field_name,
+)
+from .find import find, find_index
+from .get_file_extension import get_file_extension
+from .get_timestamp import get_timestamp
+
+__all__ = [
+  "df_required",
+  "exception_handler",
+  "get_file_extension",
+  "get_timestamp",
+  "find",
+  "find_index",
+  "get_clingo_field_name",
+  "get_original_field_name",
+  "replace_clingo_field_name",
+  "clear_field_name_cache",
+]
+`,"api/utils/decorators.py":`from functools import wraps
+
+
+def df_required(func):
+  @wraps(func)
+  def wrapper(self, *args, **kwargs):
+    if self.df is None:
+      raise ValueError("DataFrame (df) is required for this operation")
+    return func(self, *args, **kwargs)
+
+  return wrapper
+
+
+def exception_handler(default_return=None):
+  def decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+      try:
+        return func(*args, **kwargs)
+      except Exception as e:
+        print(e)
+        return default_return
+
+    return wrapper
+
+  return decorator
+`,"api/utils/field_name.py":`from __future__ import annotations
+
+from typing import Any, overload
+
+id_to_name: dict[str, str] = {}
+name_to_id: dict[str, str] = {}
+
+
+@overload
+def get_clingo_field_name(field_name: str) -> str: ...
+
+
+@overload
+def get_clingo_field_name(field_name: list[str]) -> list[str]: ...
+
+
+def get_clingo_field_name(field_name: str | list[str]) -> str | list[str]:
+  if isinstance(field_name, list):
+    return [get_clingo_field_name(f) for f in field_name]
+
+  if field_name in id_to_name:
+    return field_name
+
+  if field_name in name_to_id:
+    return name_to_id[field_name]
+
+  id = f"field_{len(id_to_name)}"
+
+  id_to_name[id] = field_name
+  name_to_id[field_name] = id
+  return id
+
+
+def get_original_field_name(clingo_field_name: Any) -> Any:
+  if not isinstance(clingo_field_name, str):
+    return clingo_field_name
+
+  if clingo_field_name in id_to_name:
+    return id_to_name[clingo_field_name]
+  else:
+    return clingo_field_name
+
+
+def replace_clingo_field_name(clingo_field_name: Any) -> Any:
+  if isinstance(clingo_field_name, dict):
+    return {k: replace_clingo_field_name(v) for k, v in clingo_field_name.items()}
+  elif isinstance(clingo_field_name, list):
+    return [replace_clingo_field_name(v) for v in clingo_field_name]
+  else:
+    return get_original_field_name(clingo_field_name)
+
+
+def clear_field_name_cache() -> None:
+  id_to_name.clear()
+  name_to_id.clear()
+`,"api/utils/find.py":`from __future__ import annotations
+
+from typing import Callable, TypeVar
+
+T = TypeVar("T")
+
+
+def find(lst: list[T], predicate: Callable[[T], bool]) -> T | None:
+  return next((x for x in lst if predicate(x)), None)
+
+
+def find_index(lst: list[T], predicate: Callable[[T], bool]) -> int:
+  return next((i for i, x in enumerate(lst) if predicate(x)), -1)
+
+
+__all__ = [
+  "find",
+  "find_index",
+]
+`,"api/utils/get_file_extension.py":`def get_file_extension(filename: str) -> str:
+  return filename.split(".")[-1]
+`,"api/utils/get_timestamp.py":`import time
+
+
+def get_timestamp():
+  return int(time.time() * 1000)
+`};for(const[r,a]of Object.entries(n)){const s=r.split("/").slice(0,-1);let i="";for(const t of s){i=i?`${i}/${t}`:t;try{e.FS.mkdir(i)}catch{}}e.FS.writeFile(r,a)}}async function nn(e){await e.runPythonAsync(`from __future__ import annotations
+
+from typing import Any
+
+from api.models import SessionModel
+from api.models.chart_model import ChartModel
+from api.services import browse_charts, get_next_chart
+from fastapi import HTTPException
+from vega_datasets import data
+
+default_df = data.movies()
+session = SessionModel(df=default_df, filename="movies.json")
+
+
+def loadData(filename: str):
+  global session
+  session = SessionModel(filename=filename)
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def appendChart(chart: dict[str, Any] | ChartModel):
+  global session
+  if isinstance(chart, dict):
+    chart = ChartModel.model_validate(chart)
+  session.charts.append(chart)
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def appendNextChart():
+  global session
+  chart = get_next_chart(session)
+
+  while (limit := 0) < 5 and chart is None:
+    chart = get_next_chart(session)
+    limit += 1
+
+  if chart is None:
+    return HTTPException(status_code=404, detail="No more charts available")
+
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def restoreSession(new_state: dict[str, Any] | SessionModel):
+  global session
+  if isinstance(new_state, dict):
+    new_state = SessionModel.model_validate(new_state)
+  session = new_state
+  return session.model_dump(by_alias=True, mode="json")
+
+
+def browseCharts(field_names: list[str]):
+  global session
+  browsed_chart = browse_charts(session, field_names)
+  return [chart.model_dump(by_alias=True, mode="json") for chart in browsed_chart]
+`)}const tn={pyodide:null,async writeFile(e,n){try{if(!this.pyodide)throw new Error("Pyodide is not initialized");this.pyodide.FS.writeFile(e,n,{encoding:"binary",flags:"w"})}catch(r){throw console.error(r),r}},async readFile(e){try{if(!this.pyodide)throw new Error("Pyodide is not initialized");return this.pyodide.FS.readFile(`${e}`,{encoding:"utf-8"})}catch(n){throw console.error(n),n}},async initialize(e=[]){this.pyodide=await we({indexURL:"/Swipytics/artifacts"});for(const n of e)await this.pyodide.loadPackage(n);await en(this.pyodide);try{await nn(this.pyodide)}catch(n){console.error(n)}},terminate(){if(this.pyodide){const e=new Uint8Array(new SharedArrayBuffer(1));e[0]=2,this.pyodide.setInterruptBuffer(e),this.pyodide=null}},async runPython(e,n={}){if(!this.pyodide)throw new Error("Pyodide is not initialized");const r=this.pyodide.globals.get("dict")();for(const[a,s]of Object.entries(n))r.set(a,s);return this.pyodide.runPython(e,{globals:r})},async callPythonFunction(e,n={}){if(!this.pyodide)throw new Error("Pyodide is not initialized");const r=this.pyodide.globals.get(e);if(!r)throw new Error(`Function ${e} is not defined in globals`);const a=r.callKwargs(n);return a!=null&&a.toJs?a.toJs({dict_converter:Object.fromEntries}):a}};$(tn)});export default rn();
