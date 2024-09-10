@@ -8,7 +8,7 @@ export default function useBookmarks() {
 
   const handleClickBookmark = (chart: TChart) => {
     const index = charts.findIndex((c) => c === chart);
-    void setCurrentChartIndex(index);
+    setCurrentChartIndex(index);
   };
 
   return {

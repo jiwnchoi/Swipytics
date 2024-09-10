@@ -35,6 +35,7 @@ export default tseslint.config(
       ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "no-console": "warn",
+      "@typescript-eslint/no-floating-promises": "off",
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/consistent-type-definitions": "off", // model은 type, props는 interface
       "@typescript-eslint/consistent-type-imports": [

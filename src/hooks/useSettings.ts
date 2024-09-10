@@ -40,9 +40,13 @@ export default function useSettings() {
     }
   };
 
+  const handleServerButtonClick = () => {
+    togglePython();
+  };
+
   return {
     python,
-    togglePython,
+    handleServerButtonClick,
     apiKey,
     loadingPyodide,
     handleApiKeyChange,

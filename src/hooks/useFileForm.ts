@@ -30,9 +30,9 @@ function useFileForm() {
   const handleSubmit = () => {
     if (fileInputRef.current?.files?.length) {
       const file = fileInputRef.current.files[0];
-      void initializeSession(file);
+      initializeSession(file);
     } else if (isURL(pathInput)) {
-      void initializeSession(pathInput);
+      initializeSession(pathInput);
     }
   };
 

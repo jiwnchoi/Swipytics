@@ -18,7 +18,9 @@ export default function useController() {
   const handleRenewChart = renewCurrentChart;
   const handleNextChart = increaseCurrentChartIndex;
   const handlePrevChart = decreaseCurrentChartIndex;
-  const handlePreferChart = () => setCurrentChartPreferred(!currentChartPreferred);
+  const handlePreferChart = () => {
+    setCurrentChartPreferred(!currentChartPreferred);
+  };
 
   const sessionInitialized = fields.length > 0;
 

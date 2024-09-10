@@ -27,7 +27,7 @@ export default function useChartContainer() {
       const scrollTop = container.scrollTop;
       const chartHeight = getChartHeight(container);
       const newIndex = Math.floor(scrollTop / chartHeight);
-      void setCurrentChartIndex(newIndex - 1);
+      setCurrentChartIndex(newIndex - 1);
     }, DEBOUNCE_DELAY);
 
     container.addEventListener("scroll", handleScroll);

@@ -76,7 +76,7 @@ function DemoSelector() {
 function Settings(props: StackProps) {
   const {
     python,
-    togglePython,
+    handleServerButtonClick,
     apiKey,
     handleApiKeyChange,
     handleDownloadLogs,
@@ -123,7 +123,7 @@ function Settings(props: StackProps) {
       <SettingRow label={"Backend"}>
         <Button
           leftIcon={<Icon as={python === "server" ? CloudIcon : SmartPhone01Icon} />}
-          onClick={void togglePython}
+          onClick={handleServerButtonClick}
           size="sm"
           w={"full"}>
           {python[0].toUpperCase() + python.slice(1)}

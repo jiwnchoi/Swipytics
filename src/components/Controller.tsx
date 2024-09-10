@@ -44,7 +44,7 @@ function Controller(props: FlexProps) {
         w="full"
         aria-label="Bookmark current chart"
         icon={<Icon as={FavouriteIcon} />}
-        onClick={void handlePreferChart}
+        onClick={handlePreferChart}
         colorScheme={currentChartPreferred ? "red" : "gray"}
         isDisabled={!sessionInitialized || !chartDisplaying}
       />
