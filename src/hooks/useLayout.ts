@@ -38,18 +38,18 @@ export default function useColors() {
     },
   };
   return {
-    cardPadding,
-    tabIconSize,
-    scrollbarStyle,
+    accentColor,
     accentHoverColor,
     buttonColor,
+    cardPadding,
     cardWidth,
     cardHeight,
-    accentColor,
     cardColor,
-    mobile,
     drawerBgColor,
     tabPanelHeight,
+    tabIconSize,
     thumbnailSize,
+    mobile,
+    scrollbarStyle,
   };
 }
