@@ -29,7 +29,7 @@ export default function App() {
         minW={{ base: "full", lg: "sm" }}
         maxW={{ base: "full", lg: "sm" }}
         controller={<Controller gap={2} w={"full"} />}>
-        <Tabs w={"full"} defaultIndex={2} isLazy isFitted colorScheme={PRIMARY_COLOR}>
+        <Tabs w={"full"} defaultIndex={2} isFitted colorScheme={PRIMARY_COLOR}>
           <TabList>
             <Tab>
               <Icon boxSize={tabIconSize} as={HeartCheckIcon} />
