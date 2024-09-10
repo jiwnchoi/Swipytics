@@ -28,6 +28,10 @@ type TMetadataDatetime = TMetadataBase & {
   max: string;
 };
 
-type TMetadata = TMetadataBase | TMetadataNumeric | TMetadataCategorical | TMetadataDatetime;
+type TMetadataName = TMetadataBase & {
+  type: "name";
+};
+
+type TMetadata = TMetadataName | TMetadataNumeric | TMetadataCategorical | TMetadataDatetime;
 
 export default TMetadata;
