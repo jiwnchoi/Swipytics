@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { useBookmarks, useLayout } from "@hooks";
 import type { TChart } from "@shared/models";
-import { scrollbarStyle } from "@shared/theme";
 
 interface BookmarkItemProps {
   chart: TChart;
@@ -47,7 +46,7 @@ function BookmarkItem({ chart, handleClickBookmark }: BookmarkItemProps) {
 
 export default function Bookmarks({ ...props }) {
   const { preferredCharts, handleClickBookmark } = useBookmarks();
-
+  const { scrollbarStyle } = useLayout();
   return (
     <TabPanel {...props} display="flex" flexDirection="column" height="full">
       <OrderedList m={0} p={0} width="full" overflowY="auto" sx={scrollbarStyle}>

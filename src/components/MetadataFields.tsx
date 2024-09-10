@@ -17,8 +17,8 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useLayout } from "@hooks";
 import type { TDataField, TFieldType, TMetadata } from "@shared/models";
-import { scrollbarStyle } from "@shared/theme";
 import { useSessionsStore } from "@stores";
 import { format } from "d3-format";
 import { Calendar03Icon, GridIcon, Tag01Icon, TextFontIcon } from "hugeicons-react";
@@ -116,6 +116,7 @@ function EachField({ field }: { field: TDataField }) {
 
 function MetadataFields(props: TabPanelProps & StackProps) {
   const fields = useSessionsStore((state) => state.fields);
+  const { scrollbarStyle } = useLayout();
 
   return (
     <TabPanel as={VStack} h="full" {...props}>

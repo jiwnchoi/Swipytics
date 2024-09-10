@@ -1,20 +1,5 @@
 import { type StyleFunctionProps, extendTheme } from "@chakra-ui/react";
 import { PRIMARY } from "./constants";
-export const scrollbarStyle = {
-  "&::-webkit-scrollbar": {
-    width: "5px",
-  },
-  "&::-webkit-scrollbar-track": {
-    background: "transparent",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    background: "darkorange",
-    borderRadius: "5px",
-  },
-  "&::-webkit-scrollbar-thumb:hover": {
-    background: "orange",
-  },
-};
 
 export const theme = extendTheme({
   initialColorMode: "dark",
@@ -28,6 +13,7 @@ export const theme = extendTheme({
     Input: {
       defaultProps: {
         size: "sm",
+        focusBorderColor: PRIMARY[200],
       },
       baseStyle: {
         field: {
@@ -40,6 +26,7 @@ export const theme = extendTheme({
     Select: {
       defaultProps: {
         size: "sm",
+        focusBorderColor: PRIMARY[200],
       },
     },
     Tabs: {
@@ -70,6 +57,7 @@ export const theme = extendTheme({
         height: "100lvh",
         overflow: "hidden",
         overscrollBehavior: "none",
+        focusBorderColor: PRIMARY[200],
       },
     }),
   },
