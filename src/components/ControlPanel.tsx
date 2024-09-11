@@ -1,4 +1,4 @@
-import { Center, Flex, type FlexProps, Portal, VStack } from "@chakra-ui/react";
+import { Center, Flex, type FlexProps, Portal, Spacer, VStack } from "@chakra-ui/react";
 import { useControlPanel, useLayout } from "@hooks";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
@@ -73,9 +73,10 @@ function MobilePanel({ children, controller, ...props }: ControlPanelProps) {
 }
 
 function DesktopPanel({ children, ...props }: FlexProps) {
+  const { tabPanelHeight } = useLayout();
   return (
     <Flex {...props}>
-      <VStack w={"full"} h={"fit-content"} gap={4} rounded="lg" p={4} align={"start"} minH="full">
+      <VStack w={"full"} h={tabPanelHeight} gap={4} rounded="lg" p={4} align={"start"} minH="full">
         {children}
       </VStack>
     </Flex>
@@ -91,8 +92,9 @@ export default function ControlPanel({ children, controller, ...props }: Control
     </MobilePanel>
   ) : (
     <DesktopPanel {...props}>
-      {controller}
       {children}
+      <Spacer />
+      {controller}
     </DesktopPanel>
   );
 }

@@ -5,6 +5,7 @@ import {
   ControlPanel,
   Controller,
   MetadataFields,
+  ScrollIndicator,
   Settings,
   TabsContainer,
 } from "@components";
@@ -24,9 +25,13 @@ export default function App() {
     <Flex
       minW={{ base: "full", lg: "container.xl" }}
       maxH={cardHeight}
+      position={"relative"}
       gap={4}
       flexDir={{ base: "column", lg: "row" }}>
-      <ChartPanel w={cardWidth} gap={{ base: 0, lg: 4 }} />
+      <Flex position="relative" w={cardWidth}>
+        <ScrollIndicator bottom={0} h={8} w="full" p={2} />
+        <ChartPanel w={"full"} gap={{ base: 0, lg: 4 }} />
+      </Flex>
       <ControlPanel
         bgColor={cardColor}
         borderRadius={"lg"}
