@@ -19,7 +19,7 @@ import {
 } from "hugeicons-react";
 
 export default function App() {
-  const { cardHeight, cardColor, cardWidth } = useLayout();
+  const { cardHeight, cardColor, cardWidth, mobile } = useLayout();
 
   return (
     <Flex
@@ -29,7 +29,13 @@ export default function App() {
       gap={4}
       flexDir={{ base: "column", lg: "row" }}>
       <Flex position="relative" w={cardWidth}>
-        <ScrollIndicator bottom={0} h={8} w="full" p={2} />
+        <ScrollIndicator
+          top={mobile ? 0 : undefined}
+          bottom={mobile ? undefined : 0}
+          h={8}
+          w="full"
+          p={2}
+        />
         <ChartPanel w={"full"} gap={{ base: 0, lg: 4 }} />
       </Flex>
       <ControlPanel
