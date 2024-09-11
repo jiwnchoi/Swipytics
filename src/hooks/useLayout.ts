@@ -1,5 +1,5 @@
 import { useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
-import { PRIMARY } from "@shared/constants";
+import { chakraColors, PRIMARY } from "@shared/constants";
 
 export default function useColors() {
   const cardPadding = useBreakpointValue({ base: 0, lg: "18px" });
@@ -8,19 +8,20 @@ export default function useColors() {
     base: "100vh",
     lg: "calc(80vh - 18px)",
   });
-  const cardColor = useColorModeValue("white", "gray.900");
+  const cardColor = useColorModeValue("#FFFFFF", "#171923");
   const mobile = useBreakpointValue({ base: true, lg: false });
-  const drawerBgColor = useColorModeValue("white", "gray.900");
+  const drawerBgColor = useColorModeValue("#FFFFFF", "#171923");
 
-  const tabPanelHeight = useBreakpointValue({ base: 320, lg: 600 });
+  const tabPanelHeight = useBreakpointValue({ base: 320, lg: 576 });
   const tabIconSize = 5;
 
   const thumbnailSize = 50;
 
-  const buttonColor = useColorModeValue("gray.100", "gray.800");
+  const buttonColor = useColorModeValue("#EDF2F7", "#1A202C");
 
   const accentColor = useColorModeValue(`${PRIMARY[500]}`, `${PRIMARY[400]}`);
   const accentHoverColor = useColorModeValue(`${PRIMARY[600]}`, `${PRIMARY[300]}`);
+  const preferredColor = useColorModeValue(chakraColors["red.500"], chakraColors["red.300"]);
 
   const scrollbarStyle = {
     "&::-webkit-scrollbar": {
@@ -40,6 +41,7 @@ export default function useColors() {
   return {
     accentColor,
     accentHoverColor,
+    preferredColor,
     buttonColor,
     cardPadding,
     cardWidth,

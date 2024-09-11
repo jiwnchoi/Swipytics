@@ -1,9 +1,10 @@
 import { Center, type CenterProps, Flex, Heading, Icon, Text } from "@chakra-ui/react";
 import { useLayout } from "@hooks";
 import { SwipeLeft02Icon } from "hugeicons-react";
+import { memo } from "react";
 import CopyRight from "./CopyRight";
 
-export default function PlaceHolder(props: CenterProps) {
+function PlaceHolderImpl(props: CenterProps) {
   const { mobile } = useLayout();
   return (
     <Flex justify={mobile ? "start" : "center"} {...props}>
@@ -20,3 +21,5 @@ export default function PlaceHolder(props: CenterProps) {
     </Flex>
   );
 }
+
+export default memo(PlaceHolderImpl);
