@@ -18,23 +18,20 @@ import {
 } from "hugeicons-react";
 
 export default function App() {
-  const { cardHeight, cardColor } = useLayout();
+  const { cardHeight, cardColor, cardWidth } = useLayout();
 
   return (
     <Flex
       minW={{ base: "full", lg: "container.xl" }}
       maxH={cardHeight}
-      h={cardHeight}
       gap={4}
-      flex={1}
       flexDir={{ base: "column", lg: "row" }}>
-      <ChartPanel w="full" flexDir={"column"} gap={{ base: 0, lg: 4 }} />
+      <ChartPanel w={cardWidth} gap={{ base: 0, lg: 4 }} />
       <ControlPanel
         bgColor={cardColor}
         borderRadius={"lg"}
         w={{ base: "full", lg: "sm" }}
         minW={{ base: "full", lg: "sm" }}
-        maxW={{ base: "full", lg: "sm" }}
         controller={<Controller gap={2} w={"full"} />}>
         <TabsContainer
           tabs={[

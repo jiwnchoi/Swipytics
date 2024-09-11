@@ -3,12 +3,12 @@ import { useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
 import { useEffect, useRef } from "react";
 
-function getChartHeight(container: HTMLDivElement | null) {
+function getChartWidth(container: HTMLDivElement | null) {
   if (!container) return 0;
 
   const style = window.getComputedStyle(container);
   const gap = parseFloat(style.gap);
-  return container.clientHeight + gap;
+  return container.clientWidth + gap;
 }
 
 export default function useChartContainer() {
@@ -24,9 +24,9 @@ export default function useChartContainer() {
     if (!container) return;
 
     const handleScroll = debounce(() => {
-      const scrollTop = container.scrollTop;
-      const chartHeight = getChartHeight(container);
-      const newIndex = Math.round(scrollTop / chartHeight);
+      const scrollLeft = container.scrollLeft;
+      const chartWidth = getChartWidth(container);
+      const newIndex = Math.round(scrollLeft / chartWidth);
       setCurrentChartIndex(newIndex - 1);
     }, DEBOUNCE_DELAY);
 
@@ -38,20 +38,20 @@ export default function useChartContainer() {
     const container = ref.current;
     if (!container) return;
 
-    const chartHeight = getChartHeight(container);
+    const chartWidth = getChartWidth(container);
     container.scrollTo({
-      top: (currentChartIndex + 1) * chartHeight,
+      left: (currentChartIndex + 1) * chartWidth,
       behavior: "smooth",
     });
   }, [currentChartIndex]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowUp") {
+      if (event.key === "ArrowLeft") {
         event.preventDefault();
         decreaseCurrentChartIndex();
       }
-      if (event.key === "ArrowDown") {
+      if (event.key === "ArrowRight") {
         event.preventDefault();
         increaseCurrentChartIndex();
       }

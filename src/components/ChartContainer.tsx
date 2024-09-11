@@ -8,11 +8,9 @@ export default function ChartContainer(props: FlexProps) {
   const { cardHeight, cardColor, cardWidth } = useLayout();
   return (
     <Flex
-      {...props}
       ref={ref}
-      w={"full"}
-      scrollSnapType={"y mandatory"}
-      overflowY={"auto"}
+      scrollSnapType={"x mandatory"}
+      overflowX={"auto"}
       style={{
         WebkitOverflowScrolling: "touch",
       }}
@@ -20,19 +18,21 @@ export default function ChartContainer(props: FlexProps) {
         "&::-webkit-scrollbar": {
           display: "none",
         },
-      }}>
+      }}
+      {...props}>
       <PlaceHolder
         flexDir={"column"}
         minW="full"
         w={cardWidth}
+        maxW={cardWidth}
         minH={cardHeight}
         bgColor={cardColor}
         borderRadius={"lg"}
-        scrollSnapAlign={"start"}
+        scrollSnapAlign={"center"}
       />
       {charts.map((chart) => (
         <Chart
-          w={cardWidth}
+          minW={cardWidth}
           maxW={cardWidth}
           key={chart.key}
           chart={chart}
