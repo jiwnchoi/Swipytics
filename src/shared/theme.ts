@@ -50,13 +50,13 @@ export const theme = extendTheme({
       body: {
         height: "100lvh",
         overflow: "hidden",
-        overscrollBehavior: "none",
+        overscrollBehavior: "smooth",
         bg: props.colorMode === "light" ? "gray.100" : "gray.800",
       },
       html: {
         height: "100lvh",
         overflow: "hidden",
-        overscrollBehavior: "none",
+        overscrollBehavior: "smooth",
         focusBorderColor: PRIMARY[200],
       },
     }),

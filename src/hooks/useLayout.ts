@@ -3,7 +3,7 @@ import { PRIMARY } from "@shared/constants";
 
 export default function useColors() {
   const cardPadding = useBreakpointValue({ base: 0, lg: "18px" });
-  const cardWidth = useBreakpointValue({ base: window.innerWidth, lg: "full" });
+  const cardWidth = useBreakpointValue({ base: window.innerWidth, lg: 880 });
   const cardHeight = useBreakpointValue({
     base: "100vh",
     lg: "calc(80vh - 18px)",

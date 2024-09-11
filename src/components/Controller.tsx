@@ -1,8 +1,8 @@
 import { Flex, type FlexProps, Icon, IconButton } from "@chakra-ui/react";
 import { useController } from "@hooks";
 import {
-  ArrowDown01Icon,
-  ArrowUp01Icon,
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
   Exchange01Icon,
   HeartAddIcon,
   HeartCheckIcon,
@@ -25,7 +25,7 @@ function Controller(props: FlexProps) {
         size="lg"
         w="full"
         aria-label="Previous chart"
-        icon={<Icon as={ArrowUp01Icon} />}
+        icon={<Icon as={ArrowLeft01Icon} />}
         onClick={handlePrevChart}
         isDisabled={!sessionInitialized || !chartDisplaying}
       />
@@ -33,7 +33,7 @@ function Controller(props: FlexProps) {
         size="lg"
         w="full"
         aria-label="Next chart"
-        icon={<Icon as={ArrowDown01Icon} />}
+        icon={<Icon as={ArrowRight01Icon} />}
         onClick={handleNextChart}
         isDisabled={!sessionInitialized}
       />
