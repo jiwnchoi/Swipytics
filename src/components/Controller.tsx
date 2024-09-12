@@ -1,4 +1,4 @@
-import { Flex, type FlexProps, Icon, IconButton } from "@chakra-ui/react";
+import { Button, ButtonGroup, type ButtonGroupProps, Icon, Text, VStack } from "@chakra-ui/react";
 import { useController } from "@hooks";
 import {
   ArrowLeft01Icon,
@@ -8,7 +8,7 @@ import {
   HeartCheckIcon,
 } from "hugeicons-react";
 
-function Controller(props: FlexProps) {
+function Controller(props: ButtonGroupProps) {
   const {
     sessionInitialized,
     chartDisplaying,
@@ -20,41 +20,61 @@ function Controller(props: FlexProps) {
   } = useController();
 
   return (
-    <Flex {...props}>
-      <IconButton
+    <ButtonGroup {...props}>
+      <Button
+        py={8}
         size="lg"
         w="full"
         aria-label="Previous chart"
-        icon={<Icon as={ArrowLeft01Icon} />}
         onClick={handlePrevChart}
         isDisabled={!sessionInitialized || !chartDisplaying}
-      />
-      <IconButton
+        variant="ghost">
+        <VStack spacing={2}>
+          <Icon as={ArrowLeft01Icon} boxSize={6} />
+          <Text fontSize="sm">Prev</Text>
+        </VStack>
+      </Button>
+      <Button
+        py={8}
         size="lg"
         w="full"
         aria-label="Next chart"
-        icon={<Icon as={ArrowRight01Icon} />}
         onClick={handleNextChart}
         isDisabled={!sessionInitialized}
-      />
-      <IconButton
+        variant="ghost">
+        <VStack spacing={2}>
+          <Icon as={ArrowRight01Icon} boxSize={6} />
+          <Text fontSize="sm">Next</Text>
+        </VStack>
+      </Button>
+      <Button
+        py={8}
         size="lg"
         w="full"
         aria-label="Renew current chart"
-        icon={<Icon as={Exchange01Icon} />}
         onClick={handleRenewChart}
         isDisabled={!sessionInitialized || !chartDisplaying}
-      />
-      <IconButton
+        variant="ghost">
+        <VStack spacing={2}>
+          <Icon as={Exchange01Icon} boxSize={6} />
+          <Text fontSize="sm">Redesign</Text>
+        </VStack>
+      </Button>
+      <Button
+        py={8}
         size="lg"
         w="full"
         aria-label="Bookmark current chart"
-        icon={<Icon as={currentChartPreferred ? HeartCheckIcon : HeartAddIcon} />}
         onClick={handlePreferChart}
         colorScheme={currentChartPreferred ? "red" : "gray"}
         isDisabled={!sessionInitialized || !chartDisplaying}
-      />
-    </Flex>
+        variant={currentChartPreferred ? "solid" : "ghost"}>
+        <VStack spacing={2}>
+          <Icon as={currentChartPreferred ? HeartCheckIcon : HeartAddIcon} boxSize={6} />
+          <Text fontSize="sm">Like</Text>
+        </VStack>
+      </Button>
+    </ButtonGroup>
   );
 }
 

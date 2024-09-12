@@ -8,20 +8,21 @@ export default function useColors() {
     base: "100vh",
     lg: "calc(80vh - 18px)",
   });
-  const cardColor = useColorModeValue("#FFFFFF", "#171923");
   const mobile = useBreakpointValue({ base: true, lg: false });
-  const drawerBgColor = useColorModeValue("#FFFFFF", "#171923");
+  const drawerBgColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);
+  const cardColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);
+  const borderColor = useColorModeValue(chakraColors["gray.200"], chakraColors["gray.700"]);
 
-  const tabPanelHeight = useBreakpointValue({ base: 320, lg: 576 });
+  const tabPanelHeight = useBreakpointValue({ base: 320, lg: 560 });
   const tabIconSize = 5;
 
   const thumbnailSize = 50;
 
-  const buttonColor = useColorModeValue("#EDF2F7", "#1A202C");
+  const buttonColor = useColorModeValue(chakraColors["gray.100"], chakraColors["gray.800"]);
 
-  const accentColor = useColorModeValue(`${PRIMARY[500]}`, `${PRIMARY[400]}`);
-  const accentHoverColor = useColorModeValue(`${PRIMARY[600]}`, `${PRIMARY[300]}`);
-  const preferredColor = useColorModeValue(chakraColors["red.500"], chakraColors["red.300"]);
+  const accentColor = useColorModeValue(PRIMARY[600], PRIMARY[300]);
+  const accentHoverColor = useColorModeValue(PRIMARY[500], PRIMARY[400]);
+  const preferredColor = useColorModeValue(chakraColors["red.500"], chakraColors["red.200"]);
 
   const scrollbarStyle = {
     "&::-webkit-scrollbar": {
@@ -41,6 +42,7 @@ export default function useColors() {
   return {
     accentColor,
     accentHoverColor,
+    borderColor,
     preferredColor,
     buttonColor,
     cardPadding,

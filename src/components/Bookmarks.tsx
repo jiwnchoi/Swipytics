@@ -46,10 +46,10 @@ function BookmarkItem({ chart, handleClickBookmark }: BookmarkItemProps) {
 
 export default function Bookmarks({ ...props }) {
   const { preferredCharts, handleClickBookmark } = useBookmarks();
-  const { scrollbarStyle } = useLayout();
+
   return (
-    <TabPanel {...props} display="flex" flexDirection="column" height="full">
-      <OrderedList m={0} p={0} width="full" overflowY="auto" sx={scrollbarStyle}>
+    <TabPanel display="flex" flexDirection="column" height="full" {...props}>
+      <OrderedList m={0} p={0} width="full" overflowY="auto">
         {preferredCharts.map((chart) => (
           <BookmarkItem
             key={`bookmark-${chart.key}`}

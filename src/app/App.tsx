@@ -43,35 +43,35 @@ export default function App() {
         borderRadius={"lg"}
         w={{ base: "full", lg: "sm" }}
         minW={{ base: "full", lg: "sm" }}
-        controller={<Controller gap={2} w={"full"} />}>
+        controller={<Controller spacing={2} w={"full"} />}>
         <TabsContainer
           tabs={[
             {
-              type: "bookmarks",
+              type: "Likes",
               icon: HeartCheckIcon,
               panel: <Bookmarks p={0} m={0} gap={2} w="full" />,
               displayingBeforeInit: false,
             },
             {
-              type: "browseChart",
+              type: "Explore",
               icon: DiscoverCircleIcon,
               panel: <TabPanel>Chart Browser for Manual Chart query at here</TabPanel>,
               displayingBeforeInit: false,
             },
             {
-              type: "chart-info",
+              type: "Chart",
               icon: PresentationBarChart01Icon,
               panel: <TabPanel>Chart Description and Explanation at Here</TabPanel>,
               displayingBeforeInit: false,
             },
             {
-              type: "metadata",
+              type: "Fields",
               icon: ProfileIcon,
               panel: <MetadataFields />,
               displayingBeforeInit: false,
             },
             {
-              type: "settings",
+              type: "Settings",
               icon: Settings01Icon,
               panel: <Settings align={"start"} />,
               displayingBeforeInit: true,

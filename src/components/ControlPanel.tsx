@@ -20,7 +20,7 @@ function MobilePanel({ children, controller, ...props }: ControlPanelProps) {
     variants,
   } = useControlPanel();
 
-  const { drawerBgColor } = useLayout();
+  const { drawerBgColor, borderColor } = useLayout();
 
   return (
     <motion.div
@@ -40,13 +40,15 @@ function MobilePanel({ children, controller, ...props }: ControlPanelProps) {
       onDragEnd={handleDragEnd}
       whileTap={{ cursor: "grabbing" }}>
       <Center
-        {...props}
         h="fit-content"
         flexDir={"column"}
         gap={0}
+        border={"1px solid"}
+        borderColor={borderColor}
         borderRadius={"xl"}
         boxShadow={"0px -4px 10px rgba(0, 0, 0, 0.1)"}
-        bgColor={drawerBgColor}>
+        bgColor={drawerBgColor}
+        {...props}>
         <Flex bgColor={"gray"} minH={1} mt={2} borderRadius={4} minW={10} ref={handleRef} />
         <Flex w={"full"} ref={bodyRef} p={4} flexDir={"column"}>
           {children}
@@ -55,6 +57,9 @@ function MobilePanel({ children, controller, ...props }: ControlPanelProps) {
       </Center>
       <Portal>
         <Flex
+          borderX={"1px solid"}
+          borderBottom={"1px solid"}
+          borderColor={borderColor}
           onPointerDown={(e) => dragControls.start(e)}
           bgColor={drawerBgColor}
           ref={navigatorRef}

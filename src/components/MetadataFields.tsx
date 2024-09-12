@@ -17,7 +17,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useLayout } from "@hooks";
 import type { TDataField, TFieldType, TMetadata } from "@shared/models";
 import { useSessionsStore } from "@stores";
 import { format } from "d3-format";
@@ -116,11 +115,10 @@ function EachField({ field }: { field: TDataField }) {
 
 function MetadataFields(props: TabPanelProps & StackProps) {
   const fields = useSessionsStore((state) => state.fields);
-  const { scrollbarStyle } = useLayout();
 
   return (
     <TabPanel as={VStack} h="full" {...props}>
-      <Flex h="full" w="full" sx={scrollbarStyle} overflowY="auto" flexDir="column">
+      <Flex h="full" w="full" overflowY="auto" flexDir="column">
         <Accordion allowMultiple>
           {fields.map((field) => (
             <EachField key={field.name} field={field} />

@@ -49,14 +49,15 @@ export const theme = extendTheme({
     global: (props: StyleFunctionProps) => ({
       body: {
         height: "100lvh",
-        overflow: "hidden",
-        overscrollBehavior: "smooth",
+        overflow: "smooth",
+        overscrollBehavior: "none",
         bg: props.colorMode === "light" ? "gray.100" : "gray.800",
       },
       html: {
         height: "100lvh",
-        overflow: "hidden",
-        overscrollBehavior: "smooth",
+        overflow: "smooth",
+        overscrollBehavior: "none",
+        overflowY: "overlay",
         focusBorderColor: PRIMARY[200],
       },
     }),
