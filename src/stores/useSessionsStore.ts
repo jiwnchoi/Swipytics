@@ -14,11 +14,14 @@ interface SessionState extends TSession {
   setCurrentChartIndex: (index: number) => Promise<void>;
   increaseCurrentChartIndex: () => void;
   decreaseCurrentChartIndex: () => void;
+  setCurrentChartToLast: () => void;
+  getChartIndexByKey: (key: string) => number | undefined;
 
   loadingSession: boolean;
   loadSession: () => Promise<void>;
   appendingChart: boolean;
   appendNextChart: () => Promise<void>;
+  appendChartToRear: (chart: TChart) => void;
 
   renewCurrentChart: () => void;
 
@@ -48,6 +51,11 @@ const useSessionsStore = create(
       }
       set({ currentChartIndex: index });
     },
+    setCurrentChartToLast: () => {
+      const state = get();
+      void get().setCurrentChartIndex(state.charts.length - 1);
+    },
+    getChartIndexByKey: (key: string) => get().charts.findIndex((chart) => chart.key === key),
 
     loadingSession: false,
     loadSession: async () => {
@@ -83,6 +91,14 @@ const useSessionsStore = create(
         produce((draft: Draft<SessionState>) => {
           draft.charts.push(chart);
           draft.appendingChart = false;
+        }),
+      );
+    },
+    appendChartToRear: (chart: TChart) => {
+      set(
+        produce((draft: Draft<SessionState>) => {
+          draft.charts.pop(); // should be removed after removing prefetching logic
+          draft.charts.push({ ...chart, timestamp: Date.now() });
         }),
       );
     },

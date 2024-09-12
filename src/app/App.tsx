@@ -15,8 +15,10 @@ import {
   HeartCheckIcon,
   PresentationBarChart01Icon,
   ProfileIcon,
+  Search01Icon,
   Settings01Icon,
 } from "hugeicons-react";
+import Browser from "../components/Browser";
 
 export default function App() {
   const { cardHeight, cardColor, cardWidth, mobile } = useLayout();
@@ -68,6 +70,12 @@ export default function App() {
               type: "Fields",
               icon: ProfileIcon,
               panel: <MetadataFields />,
+              displayingBeforeInit: false,
+            },
+            {
+              type: "Browser",
+              icon: Search01Icon,
+              panel: <Browser />,
               displayingBeforeInit: false,
             },
             {
