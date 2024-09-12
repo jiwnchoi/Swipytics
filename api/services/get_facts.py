@@ -1,7 +1,7 @@
 import draco
 import pandas as pd
 from api.models import DataFieldModel
-from api.utils import rescale_to_32bit
+from api.utils import rescale_field_to_32bit
 
 
 def _get_base_facts() -> list[str]:
@@ -20,23 +20,23 @@ def _get_attribute_facts(df: pd.DataFrame, fields: list[str]) -> list[str]:
   base_scheme = draco.schema_from_dataframe(df[fields])
   base_scheme = {
     **base_scheme,
-    "field": [rescale_to_32bit(f) for f in base_scheme["field"]],
+    "field": [rescale_field_to_32bit(f) for f in base_scheme["field"]],
   }
   facts = draco.dict_to_facts(base_scheme)
   return facts
 
 
 def _get_encoding_facts(fields: list[str]) -> list[str]:
-  return sum(
-    [
-      [
-        f"entity(encoding,m0,e{code}).",
-        f"attribute((encoding,field),e{code},{field}).",
-      ]
-      for code, field in enumerate(fields)
-    ],
-    [],
+  facts = [
+    f
+    for i, field in enumerate(fields)
+    for f in [f"entity(encoding,m0,e{i}).", f"attribute((encoding,field),e{i},{field})."]
+  ]
+  facts.extend(
+    f"attribute((encoding,channel),e{i},{'x' if i == 0 else 'y'})."
+    for i in range(min(2, len(fields)))
   )
+  return facts
 
 
 def get_facts_from_fields(df: pd.DataFrame, fields: tuple["DataFieldModel", ...]) -> list[str]:
