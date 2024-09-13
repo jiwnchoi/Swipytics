@@ -30,18 +30,42 @@ function Browser() {
   return (
     <TabPanel as={VStack}>
       <Box w="100%">
-        <Input
-          type="text"
-          placeholder="field names"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          disabled={inputDisabled}
-          onKeyDown={(e) => {
-            if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
-              e.stopPropagation();
-            }
-          }}
-        />
+        <HStack
+          spacing={1}
+          borderRadius={"md"}
+          alignItems="flex-start"
+          w="100%"
+          flexWrap="wrap"
+          border={"1px solid"}
+          borderColor={"gray.200"}
+          p={2}>
+          {selectedFields.map((field) => (
+            <Tag key={field} borderRadius="full" colorScheme="orange">
+              <TagLabel>{field}</TagLabel>
+              <TagCloseButton onClick={() => handleFieldSelection(field)} />
+            </Tag>
+          ))}
+
+          <Input
+            type="text"
+            w="fit-content"
+            h="fit-content"
+            px={2}
+            minW={48}
+            placeholder="Input field names to search..."
+            borderColor={"transparent"}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            disabled={inputDisabled}
+            _focusVisible={{ borderColor: "transparent" }}
+            _hover={{ borderColor: "transparent" }}
+            onKeyDown={(e) => {
+              if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+                e.stopPropagation();
+              }
+            }}
+          />
+        </HStack>
         {fieldNameMatches.length > 0 && (
           <VStack
             alignItems="flex-start"
@@ -68,14 +92,7 @@ function Browser() {
           </VStack>
         )}
       </Box>
-      <HStack spacing={1} alignItems="flex-start" w="100%" flexWrap="wrap">
-        {selectedFields.map((field) => (
-          <Tag key={field} borderRadius="full" colorScheme="orange">
-            <TagLabel>{field}</TagLabel>
-            <TagCloseButton onClick={() => handleFieldSelection(field)} />
-          </Tag>
-        ))}
-      </HStack>
+
       {loading && <Spinner size="md" color="orange.100" />}
       <OrderedList m={0} p={0} width="full" overflowY="auto" sx={scrollbarStyle}>
         {browsedCharts.map((chart) => (
