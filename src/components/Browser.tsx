@@ -13,15 +13,10 @@ import {
 import { useBrowser, useLayout } from "@hooks";
 import ChartItem from "./ChartItem";
 
-const getSuggestionItemBackgroundColor = (isSelected: boolean, isCurrentCursor: boolean) => {
-  if (isSelected && isCurrentCursor) return "red.50";
-  if (isSelected && !isCurrentCursor) return "orange.50";
-  if (!isSelected && isCurrentCursor) return "gray.100";
-  return "white";
-};
-
 function Browser() {
-  const { scrollbarStyle } = useLayout();
+  const { scrollbarStyle, buttonColor, borderColor, cardColor, orange50Color, orange100Color } =
+    useLayout();
+
   const {
     browsedCharts,
     inputDisabled,
@@ -46,7 +41,7 @@ function Browser() {
           w="100%"
           flexWrap="wrap"
           border={"1px solid"}
-          borderColor={"gray.200"}
+          borderColor={borderColor}
           p={2}>
           {selectedFields.map((field) => (
             <Tag key={field} borderRadius="full" colorScheme="orange">
@@ -77,7 +72,7 @@ function Browser() {
             overflow="hidden"
             gap={0}
             w="96%"
-            borderColor="gray.200"
+            borderColor={borderColor}
             borderWidth={1}
             position="absolute"
             zIndex={1}>
@@ -85,15 +80,17 @@ function Browser() {
               <Box
                 key={match.item}
                 onClick={() => handleFieldSelection(match.item)}
-                bgColor={getSuggestionItemBackgroundColor(
-                  selectedFields.includes(match.item),
-                  idx === suggestionCursorIndex,
-                )}
+                bgColor={(() => {
+                  const isSelected = selectedFields.includes(match.item);
+                  const isCurrentCursor = idx === suggestionCursorIndex;
+                  if (isSelected) return isCurrentCursor ? orange100Color : orange50Color;
+                  return isCurrentCursor ? buttonColor : cardColor;
+                })()}
                 w="100%"
                 pl={2}
                 cursor="pointer"
                 borderTopWidth={1}
-                borderTopColor="gray.200">
+                borderTopColor={borderColor}>
                 {match.item}
               </Box>
             ))}
@@ -101,7 +98,7 @@ function Browser() {
         )}
       </Box>
 
-      {loading && <Spinner size="md" color="orange.100" />}
+      {loading && <Spinner size="md" color={orange50Color} />}
       <OrderedList m={0} p={0} width="full" overflowY="scroll" sx={scrollbarStyle} flex={1}>
         {browsedCharts.map((chart) => (
           <ChartItem

@@ -24,6 +24,9 @@ export default function useColors() {
   const accentHoverColor = useColorModeValue(PRIMARY[500], PRIMARY[400]);
   const preferredColor = useColorModeValue(chakraColors["red.500"], chakraColors["red.200"]);
 
+  const orange50Color = useColorModeValue(chakraColors["orange.50"], chakraColors["orange.800"]);
+  const orange100Color = useColorModeValue(chakraColors["orange.100"], chakraColors["orange.700"]);
+
   const scrollbarStyle = {
     "&::-webkit-scrollbar": {
       width: "5px",
@@ -55,5 +58,7 @@ export default function useColors() {
     thumbnailSize,
     mobile,
     scrollbarStyle,
+    orange50Color,
+    orange100Color,
   };
 }
