@@ -22,6 +22,7 @@ interface SessionState extends TSession {
   appendingChart: boolean;
   appendNextChart: () => Promise<void>;
   appendChartToRear: (chart: TChart) => void;
+  callAppendChart: (chart: TChart) => Promise<void>;
 
   renewCurrentChart: () => void;
 
@@ -102,6 +103,11 @@ const useSessionsStore = create(
         }),
       );
     },
+    callAppendChart: async (chart: TChart) => {
+      set({ appendingChart: true });
+      await callAppendChart(chart);
+      set({ appendingChart: false });
+    },
 
     renewCurrentChart: () =>
       set(
@@ -173,3 +179,45 @@ async function appendNextChartFetch() {
 const loadData = useSettingsStore.getState().python === "pyodide" ? loadDataPyodide : loadDataFetch;
 const appendNextChart =
   useSettingsStore.getState().python === "pyodide" ? appendNextChartPyodide : appendNextChartFetch;
+
+async function callAppendChartFetch(chart: TChart) {
+  return fetch("/api/appendChart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ chart }),
+  });
+}
+
+async function callAppendChartPyodide(chart: TChart) {
+  const pyodide = await getPyodide();
+  await pyodide.callPythonFunction("callAppendChart", { chart });
+}
+
+export const callAppendChart =
+  useSettingsStore.getState().python === "pyodide" ? callAppendChartPyodide : callAppendChartFetch;
+
+async function browseChartsFetch(fieldNames: string[]) {
+  try {
+    const response = await fetch("/api/browseCharts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ field_names: fieldNames }),
+    });
+    const charts = (await response.json()) as TChart[];
+    return charts;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
+
+async function browseChartsPyodide(fieldNames: string[]) {
+  const pyodide = await getPyodide();
+  const charts = await pyodide.callPythonFunction("browseCharts", { field_names: fieldNames });
+  return charts;
+}
+
+export const browseCharts =
+  useSettingsStore.getState().python === "pyodide" ? browseChartsPyodide : browseChartsFetch;

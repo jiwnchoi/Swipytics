@@ -1,10 +1,10 @@
 import { useAppendChart, useFieldNameMatches } from "@hooks";
 import { MAX_N_SELECTED_FIELDS } from "@shared/constants";
-import { type TChart } from "@shared/models";
 import { getThumbnailFromSpec } from "@shared/utils";
 import { useDataStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { browseCharts } from "../stores/useSessionsStore";
 
 export default function useBrowser() {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
@@ -21,13 +21,7 @@ export default function useBrowser() {
     queryKey: ["browseCharts", filename, ...selectedFields.sort().join("&")],
     queryFn: async () => {
       if (selectedFields.length === 0) return [];
-      const response = await fetch("/api/browseCharts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ field_names: selectedFields }),
-      });
-      if (response.status !== 200) return [];
-      const charts = (await response.json()) as TChart[];
+      const charts = await browseCharts(selectedFields);
       if (!charts || !data) return charts;
       return Promise.all(
         charts.map(async (chart) => ({
