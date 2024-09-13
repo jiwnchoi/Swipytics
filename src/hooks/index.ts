@@ -1,6 +1,6 @@
 export { default as useAppendChart } from "./useAppendChart";
 export { default as useBookmarks } from "./useBookmarks";
-export { default as useBrowseCharts } from "./useBrowseCharts";
+export { default as useBrowser } from "./useBrowser";
 export { default as useChart } from "./useChart";
 export { default as useChartContainer } from "./useChartContainer";
 export { default as useController } from "./useController";

@@ -10,36 +10,22 @@ import {
   TagLabel,
   VStack,
 } from "@chakra-ui/react";
-import { useAppendChart, useBrowseCharts, useFieldNameMatches, useLayout } from "@hooks";
-import { useEffect, useState } from "react";
-import { useDataStore } from "../stores";
+import { useBrowser, useLayout } from "@hooks";
 import ChartItem from "./ChartItem";
 
-const MAX_SELECTED_FIELDS = 3;
-
 function Browser() {
-  const [inputValue, setInputValue] = useState<string>("");
-  const fieldNameMatches = useFieldNameMatches(inputValue);
-  const [selectedFields, setSelectedFields] = useState<string[]>([]);
-  const isDataLoading = useDataStore((state) => state.loading);
-  const { charts: browsedCharts, isLoading: isChartLoading } = useBrowseCharts(selectedFields);
   const { scrollbarStyle } = useLayout();
-  const { appendChart } = useAppendChart();
-
-  useEffect(() => {
-    if (isDataLoading) {
-      setInputValue("");
-      setSelectedFields([]);
-    }
-  }, [isDataLoading]);
-
-  useEffect(() => {
-    if (selectedFields.length >= MAX_SELECTED_FIELDS) {
-      setInputValue("");
-    }
-  }, [selectedFields]);
-
-  if (isDataLoading) return <TabPanel as={VStack} />;
+  const {
+    browsedCharts,
+    inputDisabled,
+    loading,
+    fieldNameMatches,
+    selectedFields,
+    inputValue,
+    setInputValue,
+    handleFieldSelection,
+    appendChart,
+  } = useBrowser();
 
   return (
     <TabPanel as={VStack}>
@@ -48,18 +34,10 @@ function Browser() {
           type="text"
           placeholder="field names"
           value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-          }}
-          disabled={selectedFields.length >= MAX_SELECTED_FIELDS}
+          onChange={(e) => setInputValue(e.target.value)}
+          disabled={inputDisabled}
           onKeyDown={(e) => {
-            // 키보드 상하좌우 키다운으로 트리거되는 차트 이동 이벤트를 막는다.
-            if (
-              e.key === "ArrowDown" ||
-              e.key === "ArrowUp" ||
-              e.key === "ArrowLeft" ||
-              e.key === "ArrowRight"
-            ) {
+            if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
               e.stopPropagation();
             }
           }}
@@ -76,14 +54,7 @@ function Browser() {
             {fieldNameMatches.map((match) => (
               <Box
                 key={match.item}
-                onClick={() => {
-                  if (selectedFields.includes(match.item)) {
-                    setSelectedFields((acc) => acc.filter((f) => f != match.item));
-                    // or other handling ..
-                  } else {
-                    setSelectedFields((acc) => [...acc, match.item]);
-                  }
-                }}
+                onClick={() => handleFieldSelection(match.item)}
                 bgColor={selectedFields.includes(match.item) ? "orange.50" : "white"}
                 _hover={{ bgColor: selectedFields.includes(match.item) ? "orange.50" : "gray.50" }}
                 w="100%"
@@ -101,21 +72,17 @@ function Browser() {
         {selectedFields.map((field) => (
           <Tag key={field} borderRadius="full" colorScheme="orange">
             <TagLabel>{field}</TagLabel>
-            <TagCloseButton
-              onClick={() => setSelectedFields((acc) => acc.filter((f) => f != field))}
-            />
+            <TagCloseButton onClick={() => handleFieldSelection(field)} />
           </Tag>
         ))}
       </HStack>
-      {isChartLoading && <Spinner size="md" color="orange.100" />}
+      {loading && <Spinner size="md" color="orange.100" />}
       <OrderedList m={0} p={0} width="full" overflowY="auto" sx={scrollbarStyle}>
         {browsedCharts.map((chart) => (
           <ChartItem
             key={`${chart.key}-${chart.timestamp}`}
             chart={chart}
-            handleClick={() => {
-              appendChart(chart);
-            }}
+            handleClick={() => void appendChart(chart)}
           />
         ))}
       </OrderedList>
