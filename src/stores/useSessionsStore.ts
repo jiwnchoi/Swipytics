@@ -5,7 +5,6 @@ import { type Draft, produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { getThumbnailFromSpec } from "@shared/utils";
 import useDataStore from "./useDataStore";
 import useSettingsStore from "./useSettingsStore";
 
@@ -26,7 +25,7 @@ interface SessionState extends TSession {
 
   renewCurrentChart: () => void;
 
-  setCurrentChartPreferred: (preferred: boolean) => Promise<void>;
+  setCurrentChartPreferred: (preferred: boolean) => void;
 }
 
 const useSessionsStore = create(
@@ -117,28 +116,15 @@ const useSessionsStore = create(
         }),
       ),
 
-    setCurrentChartPreferred: async (preferred) => {
-      const currentChart = get().charts[get().currentChartIndex];
+    setCurrentChartPreferred: (preferred) => {
       const data = useDataStore.getState().data;
       if (!data) return;
 
-      if (!currentChart.thumbnail) {
-        const spec = currentChart.specs[currentChart.specIndex];
-        const thumbnail = await getThumbnailFromSpec(spec, data);
-
-        set(
-          produce((draft: Draft<SessionState>) => {
-            draft.charts[draft.currentChartIndex].thumbnail = thumbnail;
-            draft.charts[draft.currentChartIndex].preferred = preferred;
-          }),
-        );
-      } else {
-        set(
-          produce((draft: Draft<SessionState>) => {
-            draft.charts[draft.currentChartIndex].preferred = preferred;
-          }),
-        );
-      }
+      set(
+        produce((draft: Draft<SessionState>) => {
+          draft.charts[draft.currentChartIndex].preferred = preferred;
+        }),
+      );
     },
   })),
 );
