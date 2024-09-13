@@ -1,6 +1,5 @@
 import { useAppendChart, useFieldNameMatches } from "@hooks";
 import { MAX_N_SELECTED_FIELDS } from "@shared/constants";
-import { getThumbnailFromSpec } from "@shared/utils";
 import { useDataStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -23,12 +22,7 @@ export default function useBrowser() {
       if (selectedFields.length === 0) return [];
       const charts = await browseCharts(selectedFields);
       if (!charts || !data) return charts;
-      return Promise.all(
-        charts.map(async (chart) => ({
-          ...chart,
-          thumbnail: await getThumbnailFromSpec(chart.specs[0], data),
-        })),
-      );
+      return charts;
     },
   });
 

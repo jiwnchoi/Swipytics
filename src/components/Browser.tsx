@@ -98,7 +98,7 @@ function Browser() {
         )}
       </Box>
 
-      {loading && <Spinner size="md" color={orange50Color} />}
+      {loading && <Spinner size="md" color={orange100Color} />}
       <OrderedList m={0} p={0} width="full" overflowY="scroll" sx={scrollbarStyle} flex={1}>
         {browsedCharts.map((chart) => (
           <ChartItem

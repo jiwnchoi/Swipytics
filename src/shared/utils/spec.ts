@@ -3,7 +3,23 @@ import embed, { type VisualizationSpec } from "vega-embed";
 import type { Field } from "vega-lite/build/src/channeldef";
 import type { Encoding } from "vega-lite/build/src/encoding";
 
-export async function getThumbnailFromSpec(
+function getKey(spec: VisualizationSpec) {
+  return `thumbnail@${JSON.stringify(spec)}`;
+}
+
+export async function getThumbnailFromSpec(spec: VisualizationSpec, data: TSupportedDataType) {
+  const thumbnailFromCache = getThumbnailFromCache(spec);
+  if (thumbnailFromCache) return thumbnailFromCache;
+  const thumbnail = await generateThumbnailFromSpec(spec, data);
+  if (thumbnail) sessionStorage.setItem(getKey(spec), thumbnail);
+  return thumbnail;
+}
+
+function getThumbnailFromCache(spec: VisualizationSpec) {
+  return sessionStorage.getItem(getKey(spec));
+}
+
+async function generateThumbnailFromSpec(
   spec: VisualizationSpec,
   data: TSupportedDataType,
 ): Promise<string | undefined> {

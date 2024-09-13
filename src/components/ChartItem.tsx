@@ -1,6 +1,9 @@
 import { Divider, Flex, Heading, Image, ListItem, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useLayout } from "../hooks";
 import { type TChart } from "../shared/models";
+import { getThumbnailFromSpec } from "../shared/utils";
+import { useDataStore } from "../stores";
 
 interface ChartItemProps {
   chart: TChart;
@@ -9,6 +12,19 @@ interface ChartItemProps {
 
 function ChartItem({ chart, handleClick }: ChartItemProps) {
   const { drawerBgColor, thumbnailSize } = useLayout();
+  const data = useDataStore((state) => state.data);
+  const [thumbnail, setThumbnail] = useState<string | undefined>(chart.thumbnail);
+
+  useEffect(() => {
+    if (!thumbnail && data) {
+      const fetchThumbnail = async () => {
+        const thumbnail = await getThumbnailFromSpec(chart.specs[0], data);
+        setThumbnail(thumbnail);
+      };
+      fetchThumbnail();
+    }
+  }, [chart.specs, data, thumbnail]);
+
   return (
     <ListItem key={`bookmark-${chart.key}`} as={Flex} flexDir="column">
       <Flex
@@ -17,9 +33,9 @@ function ChartItem({ chart, handleClick }: ChartItemProps) {
         borderRadius="md"
         onClick={() => handleClick(chart)}
         _hover={{ cursor: "pointer", bg: drawerBgColor }}>
-        {!!chart.thumbnail && (
+        {!!thumbnail && (
           <Image
-            src={chart.thumbnail}
+            src={thumbnail}
             alt={`Chart thumbnail ${chart.title}`}
             w={thumbnailSize}
             h={thumbnailSize}
