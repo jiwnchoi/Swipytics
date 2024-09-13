@@ -4,7 +4,7 @@ import { getThumbnailFromSpec } from "../shared/utils";
 import { useDataStore } from "../stores";
 
 export default function useBrowseCharts(fieldNames: string[]) {
-  const data = useDataStore.getState().data;
+  const data = useDataStore((state) => state.data);
   const { data: charts = [], isLoading } = useQuery({
     queryKey: ["browseCharts", ...fieldNames.sort().join("&")],
     queryFn: async () => {
