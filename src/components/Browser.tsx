@@ -11,11 +11,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useBrowser, useLayout } from "@hooks";
+import { PRIMARY_COLOR } from "@shared/constants";
 import ChartItem from "./ChartItem";
 
 function Browser() {
-  const { scrollbarStyle, buttonColor, borderColor, cardColor, orange50Color, orange100Color } =
-    useLayout();
+  const {
+    scrollbarStyle,
+    buttonColor,
+    borderColor,
+    cardColor,
+    accentSelected,
+    accentSelectedHover,
+    accentColor,
+  } = useLayout();
 
   const {
     browsedCharts,
@@ -32,7 +40,7 @@ function Browser() {
   } = useBrowser();
 
   return (
-    <TabPanel as={VStack} alignItems="stretch" h="100%">
+    <TabPanel as={VStack} w="full" alignItems="center" h="100%">
       <Box w="100%" position="relative">
         <HStack
           spacing={1}
@@ -44,7 +52,7 @@ function Browser() {
           borderColor={borderColor}
           p={2}>
           {selectedFields.map((field) => (
-            <Tag key={field} borderRadius="full" colorScheme="orange">
+            <Tag key={field} borderRadius="full" colorScheme={PRIMARY_COLOR}>
               <TagLabel>{field}</TagLabel>
               <TagCloseButton onClick={() => handleFieldSelection(field)} />
             </Tag>
@@ -71,7 +79,7 @@ function Browser() {
             borderRadius={6}
             overflow="hidden"
             gap={0}
-            w="96%"
+            w="full"
             borderColor={borderColor}
             borderWidth={1}
             position="absolute"
@@ -83,7 +91,7 @@ function Browser() {
                 bgColor={(() => {
                   const isSelected = selectedFields.includes(match.item);
                   const isCurrentCursor = idx === suggestionCursorIndex;
-                  if (isSelected) return isCurrentCursor ? orange100Color : orange50Color;
+                  if (isSelected) return isCurrentCursor ? accentSelectedHover : accentSelected;
                   return isCurrentCursor ? buttonColor : cardColor;
                 })()}
                 w="100%"
@@ -98,16 +106,19 @@ function Browser() {
         )}
       </Box>
 
-      {loading && <Spinner size="md" color={orange100Color} />}
-      <OrderedList m={0} p={0} width="full" overflowY="scroll" sx={scrollbarStyle} flex={1}>
-        {browsedCharts.map((chart) => (
-          <ChartItem
-            key={`${chart.key}-${chart.timestamp}`}
-            chart={chart}
-            handleClick={() => void appendChart(chart)}
-          />
-        ))}
-      </OrderedList>
+      {loading ? (
+        <Spinner size="md" my={8} color={accentColor} />
+      ) : (
+        <OrderedList m={0} p={0} width="full" overflowY="scroll" sx={scrollbarStyle} flex={1}>
+          {browsedCharts.map((chart) => (
+            <ChartItem
+              key={`${chart.key}-${chart.timestamp}`}
+              chart={chart}
+              handleClick={() => void appendChart(chart)}
+            />
+          ))}
+        </OrderedList>
+      )}
     </TabPanel>
   );
 }
