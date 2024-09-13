@@ -13,6 +13,13 @@ import {
 import { useBrowser, useLayout } from "@hooks";
 import ChartItem from "./ChartItem";
 
+const getSuggestionItemBackgroundColor = (isSelected: boolean, isCurrentCursor: boolean) => {
+  if (isSelected && isCurrentCursor) return "red.50";
+  if (isSelected && !isCurrentCursor) return "orange.50";
+  if (!isSelected && isCurrentCursor) return "gray.100";
+  return "white";
+};
+
 function Browser() {
   const { scrollbarStyle } = useLayout();
   const {
@@ -25,11 +32,13 @@ function Browser() {
     setInputValue,
     handleFieldSelection,
     appendChart,
+    handleKeydown,
+    suggestionCursorIndex,
   } = useBrowser();
 
   return (
-    <TabPanel as={VStack}>
-      <Box w="100%">
+    <TabPanel as={VStack} alignItems="stretch" h="100%">
+      <Box w="100%" position="relative">
         <HStack
           spacing={1}
           borderRadius={"md"}
@@ -45,7 +54,6 @@ function Browser() {
               <TagCloseButton onClick={() => handleFieldSelection(field)} />
             </Tag>
           ))}
-
           <Input
             type="text"
             w="fit-content"
@@ -59,28 +67,28 @@ function Browser() {
             disabled={inputDisabled}
             _focusVisible={{ borderColor: "transparent" }}
             _hover={{ borderColor: "transparent" }}
-            onKeyDown={(e) => {
-              if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
-                e.stopPropagation();
-              }
-            }}
+            onKeyDown={handleKeydown}
           />
         </HStack>
         {fieldNameMatches.length > 0 && (
           <VStack
             alignItems="flex-start"
-            w="100%"
-            borderBottomRadius={6}
+            borderRadius={6}
             overflow="hidden"
             gap={0}
+            w="96%"
             borderColor="gray.200"
-            borderWidth={1}>
-            {fieldNameMatches.map((match) => (
+            borderWidth={1}
+            position="absolute"
+            zIndex={1}>
+            {fieldNameMatches.map((match, idx) => (
               <Box
                 key={match.item}
                 onClick={() => handleFieldSelection(match.item)}
-                bgColor={selectedFields.includes(match.item) ? "orange.50" : "white"}
-                _hover={{ bgColor: selectedFields.includes(match.item) ? "orange.50" : "gray.50" }}
+                bgColor={getSuggestionItemBackgroundColor(
+                  selectedFields.includes(match.item),
+                  idx === suggestionCursorIndex,
+                )}
                 w="100%"
                 pl={2}
                 cursor="pointer"
@@ -94,7 +102,7 @@ function Browser() {
       </Box>
 
       {loading && <Spinner size="md" color="orange.100" />}
-      <OrderedList m={0} p={0} width="full" overflowY="auto" sx={scrollbarStyle}>
+      <OrderedList m={0} p={0} width="full" overflowY="scroll" sx={scrollbarStyle} flex={1}>
         {browsedCharts.map((chart) => (
           <ChartItem
             key={`${chart.key}-${chart.timestamp}`}
