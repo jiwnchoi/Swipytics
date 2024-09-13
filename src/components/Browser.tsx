@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useAppendChart, useBrowseCharts, useFieldNameMatches, useLayout } from "@hooks";
 import { useEffect, useState } from "react";
+import { useDataStore } from "../stores";
 import ChartItem from "./ChartItem";
 
 const MAX_SELECTED_FIELDS = 3;
@@ -20,15 +21,25 @@ function Browser() {
   const [inputValue, setInputValue] = useState<string>("");
   const fieldNameMatches = useFieldNameMatches(inputValue);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const isDataLoading = useDataStore((state) => state.loading);
   const { charts: browsedCharts, isLoading: isChartLoading } = useBrowseCharts(selectedFields);
   const { scrollbarStyle } = useLayout();
   const { appendChart } = useAppendChart();
+
+  useEffect(() => {
+    if (isDataLoading) {
+      setInputValue("");
+      setSelectedFields([]);
+    }
+  }, [isDataLoading]);
 
   useEffect(() => {
     if (selectedFields.length >= MAX_SELECTED_FIELDS) {
       setInputValue("");
     }
   }, [selectedFields]);
+
+  if (isDataLoading) return <TabPanel as={VStack} />;
 
   return (
     <TabPanel as={VStack}>
