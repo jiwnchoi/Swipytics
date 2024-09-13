@@ -10,8 +10,8 @@ import {
   TagLabel,
   VStack,
 } from "@chakra-ui/react";
+import { useAppendChart, useBrowseCharts, useFieldNameMatches, useLayout } from "@hooks";
 import { useEffect, useState } from "react";
-import { useAppendChart, useBrowseCharts, useFieldNameMatches, useLayout } from "../hooks";
 import ChartItem from "./ChartItem";
 
 const MAX_SELECTED_FIELDS = 3;

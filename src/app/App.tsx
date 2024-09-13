@@ -1,6 +1,7 @@
 import { Flex, TabPanel } from "@chakra-ui/react";
 import {
   Bookmarks,
+  Browser,
   ChartPanel,
   ControlPanel,
   Controller,
@@ -11,14 +12,12 @@ import {
 } from "@components";
 import { useLayout } from "@hooks";
 import {
-  DiscoverCircleIcon,
   HeartCheckIcon,
   PresentationBarChart01Icon,
   ProfileIcon,
   Search01Icon,
   Settings01Icon,
 } from "hugeicons-react";
-import Browser from "../components/Browser";
 
 export default function App() {
   const { cardHeight, cardColor, cardWidth, mobile } = useLayout();
@@ -55,9 +54,9 @@ export default function App() {
               displayingBeforeInit: false,
             },
             {
-              type: "Explore",
-              icon: DiscoverCircleIcon,
-              panel: <TabPanel>Chart Browser for Manual Chart query at here</TabPanel>,
+              type: "Browse",
+              icon: Search01Icon,
+              panel: <Browser />,
               displayingBeforeInit: false,
             },
             {
@@ -72,12 +71,7 @@ export default function App() {
               panel: <MetadataFields />,
               displayingBeforeInit: false,
             },
-            {
-              type: "Browser",
-              icon: Search01Icon,
-              panel: <Browser />,
-              displayingBeforeInit: false,
-            },
+
             {
               type: "Settings",
               icon: Settings01Icon,

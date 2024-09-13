@@ -25,7 +25,7 @@ export default function useBrowseCharts(fieldNames: string[]) {
       if (!data) return charts;
       const chartsWithThumbnails = await Promise.all(
         charts.map(async (chart) => {
-          const thumbnail = await getThumbnailFromSpec(chart.specs[0], data); // is this right?
+          const thumbnail = await getThumbnailFromSpec(chart.specs[0], data);
           return { ...chart, thumbnail };
         }),
       );

@@ -98,7 +98,7 @@ const useSessionsStore = create(
       set(
         produce((draft: Draft<SessionState>) => {
           draft.charts.pop(); // should be removed after removing prefetching logic
-          draft.charts.push({ ...chart, timestamp: Date.now() });
+          draft.charts.push(chart);
         }),
       );
     },

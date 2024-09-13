@@ -1,5 +1,6 @@
+import { useSessionsStore } from "@stores";
 import Fuse from "fuse.js";
-import { useSessionsStore } from "../stores";
+import { useMemo } from "react";
 
 const fuseOptions = {
   includeScore: false,
@@ -9,7 +10,8 @@ const fuseOptions = {
 const getFuse = (fieldNames: string[]) => new Fuse(fieldNames, fuseOptions);
 
 export default function useFieldNameMatches(query: string) {
-  const fieldNames = useSessionsStore((state) => state.fields.map((field) => field.name));
+  const fields = useSessionsStore((state) => state.fields);
+  const fieldNames = useMemo(() => fields.map((field) => field.name), [fields]);
   const fuse = getFuse(fieldNames);
 
   return fuse.search(query);
