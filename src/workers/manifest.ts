@@ -14,6 +14,20 @@ export interface PythonManifest extends WorkerManifest {
     // biome-ignore lint/complexity/noBannedTypes: <explanation>
     args: {};
   };
+
+  appendChart: {
+    returns: void;
+    args: {
+      chart: TChart;
+    };
+  };
+
+  browseCharts: {
+    returns: TChart[];
+    args: {
+      field_names: string[];
+    };
+  };
 }
 
 export default PythonManifest;

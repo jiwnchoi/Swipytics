@@ -176,3 +176,4 @@ export const PRIMARY = {
   900: chakraColors[`${PRIMARY_COLOR}.900`],
 };
 export const DATA_NAME = "table";
+export const MAX_N_SELECTED_FIELDS = 3;

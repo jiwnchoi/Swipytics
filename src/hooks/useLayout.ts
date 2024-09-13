@@ -22,7 +22,14 @@ export default function useColors() {
 
   const accentColor = useColorModeValue(PRIMARY[600], PRIMARY[300]);
   const accentHoverColor = useColorModeValue(PRIMARY[500], PRIMARY[400]);
+
   const preferredColor = useColorModeValue(chakraColors["red.500"], chakraColors["red.200"]);
+
+  const accentSelected = useColorModeValue(chakraColors["orange.50"], chakraColors["orange.800"]);
+  const accentSelectedHover = useColorModeValue(
+    chakraColors["orange.100"],
+    chakraColors["orange.700"],
+  );
 
   const scrollbarStyle = {
     "&::-webkit-scrollbar": {
@@ -55,5 +62,7 @@ export default function useColors() {
     thumbnailSize,
     mobile,
     scrollbarStyle,
+    accentSelected,
+    accentSelectedHover,
   };
 }

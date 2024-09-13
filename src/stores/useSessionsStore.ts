@@ -5,7 +5,6 @@ import { type Draft, produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { getThumbnailFromSpec } from "@shared/utils";
 import useDataStore from "./useDataStore";
 import useSettingsStore from "./useSettingsStore";
 
@@ -14,15 +13,18 @@ interface SessionState extends TSession {
   setCurrentChartIndex: (index: number) => Promise<void>;
   increaseCurrentChartIndex: () => void;
   decreaseCurrentChartIndex: () => void;
+  setCurrentChartToLast: () => void;
+  getChartIndexByKey: (key: string) => number | undefined;
 
   loadingSession: boolean;
   loadSession: () => Promise<void>;
   appendingChart: boolean;
   appendNextChart: () => Promise<void>;
+  appendChart: (chart: TChart) => Promise<void>;
 
   renewCurrentChart: () => void;
 
-  setCurrentChartPreferred: (preferred: boolean) => Promise<void>;
+  setCurrentChartPreferred: (preferred: boolean) => void;
 }
 
 const useSessionsStore = create(
@@ -48,6 +50,11 @@ const useSessionsStore = create(
       }
       set({ currentChartIndex: index });
     },
+    setCurrentChartToLast: () => {
+      const state = get();
+      void get().setCurrentChartIndex(state.charts.length - 1);
+    },
+    getChartIndexByKey: (key: string) => get().charts.findIndex((chart) => chart.key === key),
 
     loadingSession: false,
     loadSession: async () => {
@@ -86,6 +93,19 @@ const useSessionsStore = create(
         }),
       );
     },
+    appendChart: async (chart: TChart) => {
+      set({ appendingChart: true });
+      await callAppendChart(chart);
+      set(
+        produce((draft: Draft<SessionState>) => {
+          if (draft.charts.length > CHART_PREFETCH_DELAY) {
+            draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
+          }
+          draft.charts.push(chart);
+          draft.appendingChart = false;
+        }),
+      );
+    },
 
     renewCurrentChart: () =>
       set(
@@ -95,28 +115,15 @@ const useSessionsStore = create(
         }),
       ),
 
-    setCurrentChartPreferred: async (preferred) => {
-      const currentChart = get().charts[get().currentChartIndex];
+    setCurrentChartPreferred: (preferred) => {
       const data = useDataStore.getState().data;
       if (!data) return;
 
-      if (!currentChart.thumbnail) {
-        const spec = currentChart.specs[currentChart.specIndex];
-        const thumbnail = await getThumbnailFromSpec(spec, data);
-
-        set(
-          produce((draft: Draft<SessionState>) => {
-            draft.charts[draft.currentChartIndex].thumbnail = thumbnail;
-            draft.charts[draft.currentChartIndex].preferred = preferred;
-          }),
-        );
-      } else {
-        set(
-          produce((draft: Draft<SessionState>) => {
-            draft.charts[draft.currentChartIndex].preferred = preferred;
-          }),
-        );
-      }
+      set(
+        produce((draft: Draft<SessionState>) => {
+          draft.charts[draft.currentChartIndex].preferred = preferred;
+        }),
+      );
     },
   })),
 );
@@ -157,3 +164,46 @@ async function appendNextChartFetch() {
 const loadData = useSettingsStore.getState().python === "pyodide" ? loadDataPyodide : loadDataFetch;
 const appendNextChart =
   useSettingsStore.getState().python === "pyodide" ? appendNextChartPyodide : appendNextChartFetch;
+
+async function callAppendChartFetch(chart: TChart) {
+  return fetch("/api/appendChart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ chart }),
+  });
+}
+
+async function callAppendChartPyodide(chart: TChart) {
+  const pyodide = await getPyodide();
+  await pyodide.callPythonFunction("callAppendChart", { chart });
+}
+
+export const callAppendChart =
+  useSettingsStore.getState().python === "pyodide" ? callAppendChartPyodide : callAppendChartFetch;
+
+async function browseChartsFetch(fieldNames: string[]) {
+  try {
+    const response = await fetch("/api/browseCharts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ field_names: fieldNames }),
+    });
+    const charts = (await response.json()) as TChart[];
+    return charts;
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    return [];
+  }
+}
+
+async function browseChartsPyodide(fieldNames: string[]) {
+  const pyodide = await getPyodide();
+  const charts = await pyodide.callPythonFunction("browseCharts", { field_names: fieldNames });
+  return charts;
+}
+
+export const browseCharts =
+  useSettingsStore.getState().python === "pyodide" ? browseChartsPyodide : browseChartsFetch;
