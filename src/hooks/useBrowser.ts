@@ -1,9 +1,10 @@
-import { useAppendChart, useFieldNameMatches } from "@hooks";
+import { useFieldNameMatches } from "@hooks";
 import { MAX_N_SELECTED_FIELDS } from "@shared/constants";
+import type { TChart } from "@shared/models";
 import { useDataStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { browseCharts } from "../stores/useSessionsStore";
+import { useCallback, useEffect, useState } from "react";
+import useSessionsStore, { browseCharts } from "../stores/useSessionsStore";
 
 export default function useBrowser() {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
@@ -27,7 +28,16 @@ export default function useBrowser() {
   });
 
   const fieldNameMatches = useFieldNameMatches(inputValue);
-  const { appendChart } = useAppendChart();
+  const appendCharttoSession = useSessionsStore((state) => state.appendChart);
+  const setCurrentChartToLast = useSessionsStore((state) => state.setCurrentChartToLast);
+
+  const appendChart = useCallback(
+    async (chart: TChart) => {
+      await appendCharttoSession(chart);
+      setCurrentChartToLast();
+    },
+    [appendCharttoSession, setCurrentChartToLast],
+  );
 
   useEffect(() => {
     if (selectedFields.length >= MAX_N_SELECTED_FIELDS) {

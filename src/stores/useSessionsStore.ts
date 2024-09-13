@@ -20,8 +20,7 @@ interface SessionState extends TSession {
   loadSession: () => Promise<void>;
   appendingChart: boolean;
   appendNextChart: () => Promise<void>;
-  appendChartToRear: (chart: TChart) => void;
-  callAppendChart: (chart: TChart) => Promise<void>;
+  appendChart: (chart: TChart) => Promise<void>;
 
   renewCurrentChart: () => void;
 
@@ -94,18 +93,18 @@ const useSessionsStore = create(
         }),
       );
     },
-    appendChartToRear: (chart: TChart) => {
-      set(
-        produce((draft: Draft<SessionState>) => {
-          draft.charts.pop(); // should be removed after removing prefetching logic
-          draft.charts.push(chart);
-        }),
-      );
-    },
-    callAppendChart: async (chart: TChart) => {
+    appendChart: async (chart: TChart) => {
       set({ appendingChart: true });
       await callAppendChart(chart);
-      set({ appendingChart: false });
+      set(
+        produce((draft: Draft<SessionState>) => {
+          if (draft.charts.length > CHART_PREFETCH_DELAY) {
+            draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
+          }
+          draft.charts.push(chart);
+          draft.appendingChart = false;
+        }),
+      );
     },
 
     renewCurrentChart: () =>
@@ -194,6 +193,7 @@ async function browseChartsFetch(fieldNames: string[]) {
     const charts = (await response.json()) as TChart[];
     return charts;
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     return [];
   }

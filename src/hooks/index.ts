@@ -1,4 +1,3 @@
-export { default as useAppendChart } from "./useAppendChart";
 export { default as useBookmarks } from "./useBookmarks";
 export { default as useBrowser } from "./useBrowser";
 export { default as useChart } from "./useChart";

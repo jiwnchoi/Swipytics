@@ -114,7 +114,9 @@ function Browser() {
             <ChartItem
               key={`${chart.key}-${chart.timestamp}`}
               chart={chart}
-              handleClick={() => void appendChart(chart)}
+              handleClick={() => {
+                appendChart(chart);
+              }}
             />
           ))}
         </OrderedList>
