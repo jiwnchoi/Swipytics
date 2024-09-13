@@ -1,5 +1,5 @@
 import { OrderedList, TabPanel } from "@chakra-ui/react";
-import { useBookmarks, useLayout } from "@hooks";
+import { useBookmarks } from "@hooks";
 import ChartItem from "./ChartItem";
 
 export default function Bookmarks({ ...props }) {
