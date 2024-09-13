@@ -20,5 +20,9 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.ruff": "explicit"
     }
-  }
+  },
+  "javascript.preferences.importModuleSpecifier": "shortest",
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.experimental.updateImportsOnPaste": true,
+  "typescript.preferences.preferTypeOnlyAutoImports": true
 }

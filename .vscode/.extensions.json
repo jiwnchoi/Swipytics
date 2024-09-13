@@ -1,3 +1,3 @@
 {
-  "recommendations": ["esbenp.prettier-vscode", "charliermarsh.ruff"]
+  "recommendations": ["esbenp.prettier-vscode", "charliermarsh.ruff", "dbaeumer.vscode-eslint"]
 }
