@@ -48,6 +48,7 @@ export default function useBrowser() {
     setSelectedFields((prev) =>
       prev.includes(field) ? prev.filter((f) => f !== field) : [...prev, field],
     );
+    setInputValue("");
   };
 
   return {
