@@ -2,13 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from api.models import SessionModel
-from api.models.chart_model import ChartModel
+from api.models import ChartModel, SessionModel
 from api.services import browse_charts, get_next_chart
-from vega_datasets import data
-
-default_df = data.movies()
-session: SessionModel = SessionModel(df=default_df, filename="movies.json")
 
 
 def loadData(filename: str):

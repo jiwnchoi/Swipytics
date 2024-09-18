@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from functools import cached_property
 from pathlib import Path
 from typing import Self
 
@@ -43,6 +44,25 @@ class SessionModel(BaseModel):
   def get_attributes(self) -> list[tuple]:
     return [chart.attributes for chart in self.charts]
 
-  @property
+  @cached_property
+  def available_fields(self) -> list[tuple[DataFieldModel, ...]]:
+    len_1_fields = [(field,) for field in self.fields if field.type != "name"]
+
+    len_2_fields = [
+      (*field1, *field2)
+      for i, field1 in enumerate(len_1_fields)
+      for field2 in len_1_fields[i + 1 :]
+    ]
+
+    len_3_fields = [
+      (*positional_fields, *extra_field)
+      for positional_fields in len_2_fields
+      for extra_field in len_1_fields
+      if extra_field not in positional_fields
+    ]
+
+    return [*len_1_fields, *len_2_fields, *len_3_fields]
+
+  @cached_property
   def visualizable_fields(self) -> list[DataFieldModel]:
     return [field for field in self.fields if field.type != "name"]

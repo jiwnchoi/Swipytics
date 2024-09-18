@@ -1,4 +1,5 @@
 from .decorators import df_required, exception_handler
+from .field_hash import get_fields_hash
 from .field_name import (
   clear_field_name_cache,
   get_clingo_field_name,
@@ -23,4 +24,5 @@ __all__ = [
   "get_file_extension",
   "get_timestamp",
   "rescale_field_to_32bit",
+  "get_fields_hash",
 ]
