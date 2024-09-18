@@ -19,6 +19,14 @@ def loadData(filename: str):
   return session.model_dump(by_alias=True, mode="json")
 
 
+def loadSession(filename: str, new_session: SessionModel):
+  global session
+  session = SessionModel(filename=filename)
+  session.charts = new_session.charts
+  session.timestamp = new_session.timestamp
+  return session.model_dump(by_alias=True, mode="json")
+
+
 def appendChart(chart: dict[str, Any] | ChartModel):
   global session
   if isinstance(chart, dict):
