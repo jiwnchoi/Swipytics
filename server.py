@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from api.app import appendChart, appendNextChart, browseCharts, loadData, loadSession
+from api.app import appendChart, appendNextChart, browseCharts, loadData, loadSession, setPreferred
 from api.models import ChartModel, SessionModel
 from fastapi import FastAPI, HTTPException, UploadFile, status
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 server = FastAPI()
 
@@ -48,6 +48,17 @@ async def append_chart(req: AppendChartRequest):
 async def append_next_chart():
   chart = appendNextChart()
   return HTTPException(status_code=404, detail="No more charts") if not chart else chart
+
+
+class SetPreferredRequest(BaseModel):
+  key: str = Field(default="", alias="key")
+  preferred: bool = Field(default=False)
+
+
+@server.patch("/api/setPreferred")
+async def set_preferred(req: SetPreferredRequest):
+  chart = setPreferred(req.key, req.preferred)
+  return HTTPException(status_code=404, detail="Chart not found") if not chart else chart
 
 
 @server.get("/api", status_code=status.HTTP_200_OK)

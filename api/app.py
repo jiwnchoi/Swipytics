@@ -49,3 +49,13 @@ def browseCharts(field_names: list[str]):
   global session
   browsed_chart = browse_charts(session, field_names)
   return [chart.model_dump(by_alias=True, mode="json") for chart in browsed_chart]
+
+
+def setPreferred(key: str, preferred: bool):
+  global session
+  chart = next((chart for chart in session.charts if chart.key == key), None)
+  if chart:
+    chart.preferred = preferred
+    return chart.model_dump(by_alias=True, mode="json")
+  else:
+    return None
