@@ -1,12 +1,11 @@
 import { CHART_PREFETCH_DELAY } from "@shared/constants";
 import type { TChart, TSession } from "@shared/models";
-import { getPyodide } from "@workers";
 import { type Draft, produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
+import { getRouter } from "../router";
 import useDataStore from "./useDataStore";
-import useSettingsStore from "./useSettingsStore";
 
 interface SessionState extends TSession {
   currentChartIndex: number;
@@ -72,8 +71,12 @@ const useSessionsStore = create(
       const filename = useDataStore.getState().filename;
       const fileBuffer = useDataStore.getState().fileBuffer;
       if (!(filename && fileBuffer)) throw new Error("No file buffer found");
-      const session = await loadData(filename, fileBuffer);
+      const session = await getRouter()?.getAPI()?.loadData(filename, fileBuffer);
 
+      if (!session) {
+        set({ loadingSession: false });
+        return;
+      }
       set(
         produce((draft: Draft<SessionState>) => {
           draft.filename = session.filename;
@@ -89,7 +92,11 @@ const useSessionsStore = create(
     appendingChart: false,
     appendNextChart: async () => {
       set({ appendingChart: true });
-      const chart = await appendNextChart();
+      const chart = await getRouter()?.getAPI()?.appendNextChart();
+      if (!chart) {
+        set({ appendingChart: false });
+        return;
+      }
       set(
         produce((draft: Draft<SessionState>) => {
           draft.charts.push(chart);
@@ -99,7 +106,7 @@ const useSessionsStore = create(
     },
     appendChart: async (chart: TChart) => {
       set({ appendingChart: true });
-      await callAppendChart(chart);
+      await getRouter()?.getAPI().callAppendChart(chart);
       set(
         produce((draft: Draft<SessionState>) => {
           if (draft.charts.length > CHART_PREFETCH_DELAY) {
@@ -133,81 +140,3 @@ const useSessionsStore = create(
 );
 
 export default useSessionsStore;
-
-async function loadDataPyodide(filename: string, fileBuffer: Uint8Array) {
-  const pyodide = await getPyodide();
-  await pyodide.writeFile(filename, fileBuffer);
-  const data = await pyodide.callPythonFunction("loadData", { filename });
-  return data;
-}
-
-async function loadDataFetch(filename: string, fileBuffer: Uint8Array) {
-  const blob = new Blob([fileBuffer]);
-  const formData = new FormData();
-  formData.append("file", blob, filename);
-  const response = await fetch("/api/loadData", {
-    method: "POST",
-    body: formData,
-  });
-  const data = (await response.json()) as TSession;
-  return data;
-}
-
-async function appendNextChartPyodide() {
-  const pyodide = await getPyodide();
-  const chart = await pyodide.callPythonFunction("appendNextChart", {});
-  return chart;
-}
-
-async function appendNextChartFetch() {
-  const response = await fetch("/api/appendNextChart");
-  const chart = (await response.json()) as TChart;
-  return chart;
-}
-
-const loadData = useSettingsStore.getState().python === "pyodide" ? loadDataPyodide : loadDataFetch;
-const appendNextChart =
-  useSettingsStore.getState().python === "pyodide" ? appendNextChartPyodide : appendNextChartFetch;
-
-async function callAppendChartFetch(chart: TChart) {
-  return fetch("/api/appendChart", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ chart }),
-  });
-}
-
-async function callAppendChartPyodide(chart: TChart) {
-  const pyodide = await getPyodide();
-  await pyodide.callPythonFunction("callAppendChart", { chart });
-}
-
-export const callAppendChart =
-  useSettingsStore.getState().python === "pyodide" ? callAppendChartPyodide : callAppendChartFetch;
-
-async function browseChartsFetch(fieldNames: string[]) {
-  try {
-    const response = await fetch("/api/browseCharts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ field_names: fieldNames }),
-    });
-    const charts = (await response.json()) as TChart[];
-    return charts;
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    return [];
-  }
-}
-
-async function browseChartsPyodide(fieldNames: string[]) {
-  const pyodide = await getPyodide();
-  const charts = await pyodide.callPythonFunction("browseCharts", { field_names: fieldNames });
-  return charts;
-}
-
-export const browseCharts =
-  useSettingsStore.getState().python === "pyodide" ? browseChartsPyodide : browseChartsFetch;

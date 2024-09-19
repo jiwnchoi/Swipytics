@@ -4,7 +4,8 @@ import type { TChart } from "@shared/models";
 import { useDataStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
-import useSessionsStore, { browseCharts } from "../stores/useSessionsStore";
+import { getRouter } from "../router";
+import useSessionsStore from "../stores/useSessionsStore";
 
 export default function useBrowser() {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
@@ -21,7 +22,7 @@ export default function useBrowser() {
     queryKey: ["browseCharts", filename, ...selectedFields.sort().join("&")],
     queryFn: async () => {
       if (selectedFields.length === 0) return [];
-      const charts = await browseCharts(selectedFields);
+      const charts = await getRouter()?.getAPI().browseCharts(selectedFields);
       if (!charts || !data) return charts;
       return charts;
     },

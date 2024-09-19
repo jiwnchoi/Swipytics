@@ -10,5 +10,5 @@ export { default as useFileForm } from "./useFileForm";
 export { default as useIndicators } from "./useIndicators";
 export { default as useLayout } from "./useLayout";
 export { default as useLoadData } from "./useLoadData";
-export { default as usePyodide } from "./usePyodide";
+export { default as useLoadingStatus } from "./useLoadingStatus";
 export { default as useSettings } from "./useSettings";

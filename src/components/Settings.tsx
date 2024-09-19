@@ -12,7 +12,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useDemo, usePyodide, useSettings } from "@hooks";
+import { useDemo, useLoadingStatus, useSettings } from "@hooks";
 import { DEMO_LIST, PRIMARY_COLOR } from "@shared/constants";
 import {
   ArrowDown01Icon,
@@ -40,7 +40,7 @@ function SettingRow({ label, children, ...props }: SettingRowProps) {
 
 function DemoSelector() {
   const { handleSubmit, loading, selectedDemo, handleDemoSelect } = useDemo();
-  const { loadingPyodide } = usePyodide();
+  const { loading: loadingRouter } = useLoadingStatus();
   return (
     <>
       <Select
@@ -63,8 +63,8 @@ function DemoSelector() {
         borderLeftRadius={0}
         colorScheme={PRIMARY_COLOR}
         type="submit"
-        isLoading={loading || loadingPyodide}
-        isDisabled={!selectedDemo || loadingPyodide}
+        isLoading={loading || loadingRouter}
+        isDisabled={!selectedDemo || loadingRouter}
         icon={<Icon as={StartUp02Icon} />}
         aria-label="Load Data"
         onClick={handleSubmit}
@@ -126,7 +126,7 @@ function Settings(props: StackProps) {
           onClick={handleServerButtonClick}
           size="sm"
           w={"full"}>
-          {python[0].toUpperCase() + python.slice(1)}
+          {python && python[0].toUpperCase() + python?.slice(1)}
         </Button>
       </SettingRow>
       <SettingRow label={"System Logs"}>

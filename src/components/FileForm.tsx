@@ -8,13 +8,13 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { useFileForm, usePyodide } from "@hooks";
+import { useFileForm, useLoadingStatus } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
 
 import { FileAttachmentIcon, StartUp02Icon } from "hugeicons-react";
 
 export default function FileForm(props: FlexProps) {
-  const { loadingPyodide } = usePyodide();
+  const { loading } = useLoadingStatus();
   const {
     loadingData,
     fileInputRef,
@@ -56,7 +56,7 @@ export default function FileForm(props: FlexProps) {
         borderLeftRadius={0}
         colorScheme={PRIMARY_COLOR}
         type="submit"
-        isLoading={loadingData || loadingPyodide}
+        isLoading={loadingData || loading}
         icon={<Icon as={StartUp02Icon} />}
         aria-label="Load Data"
         isDisabled={inputDisabled}
