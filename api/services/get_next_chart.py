@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Sequence, TypeVar, cast
+from typing import TypeVar
 
 import numpy as np
 from api.models import ChartModel, FieldModel, SessionModel
@@ -12,24 +12,27 @@ from api.utils import (
   has_numeric_categorical_stat,
   has_numeric_datetime_stat,
   has_numeric_numeric_stat,
+  sample,
 )
-from numpy.random import choice
 
 T = TypeVar("T")
 
 
-def get_penelty(session: SessionModel, fields: tuple[FieldModel, ...]) -> float:
+def get_cognition_penalty(fields: tuple[FieldModel, ...]) -> float:
+  return len(fields) / 3
+
+
+def get_duplicate_penalty(session: SessionModel, fields: tuple[FieldModel, ...]) -> float:
   n_fields = len(session.fields)
   last_index = find_last_index(
     session.charts, lambda c: get_fields_hash(c.fields) == get_fields_hash(fields)
   )
-  if last_index == -1:
-    return 0.0
+  return (
+    max(1 - ((len(session.charts) - last_index - 1) / n_fields), 0) * 3 if last_index != -1 else 0.0
+  )
 
-  return max(1 - ((len(session.charts) - last_index - 1) / (n_fields * (n_fields - 1) / 2)), 0) * 3
 
-
-def calculate_vector(session: SessionModel, use_preference: bool = False) -> np.ndarray:
+def get_fields_vector(session: SessionModel, use_preference: bool = False) -> np.ndarray:
   matrix = np.array(
     [
       [f in chart.fields and (chart.preferred if use_preference else True) for f in session.fields]
@@ -37,12 +40,9 @@ def calculate_vector(session: SessionModel, use_preference: bool = False) -> np.
     ],
     dtype=np.float64,
   )
-  matrix *= np.arange(len(matrix))[:, None] + 1
-  vector = cast(np.ndarray, np.sum(matrix, axis=0))
-
-  vector_max = vector.max()
-
-  return vector / vector.max() if vector_max != 0 else vector
+  matrix *= np.arange(1, len(matrix) + 1)[:, None]
+  vector: np.ndarray = np.sum(matrix, axis=0)
+  return vector / vector.max() if vector.max() != 0 else vector
 
 
 def get_statistics_score(fields: tuple[FieldModel, ...]) -> float:
@@ -65,40 +65,28 @@ def get_score(vector: np.ndarray, field_vector: np.ndarray) -> float:
   return float(np.sum(vector * field_vector) / np.sum(field_vector))
 
 
-def sample_one(targets: Sequence[T], p: Sequence[float]) -> T:
-  return targets[choice(len(targets), 1, p=p)[0]]
-
-
 def get_next_chart(session: SessionModel) -> ChartModel | None:
-  if len(session.charts) == 0:
-    field = sample_one(
-      session.visualizable_fields,
-      [1 / len(session.visualizable_fields)] * len(session.visualizable_fields),
-    )
-    print(field.name)
+  if not session.charts:
+    field = sample(session.visualizable_fields)
     return get_chart(session.df, (field,))
+
   if not session.available_fields:
     return None
 
-  relevance_vector = calculate_vector(session)
-  preference_vector = calculate_vector(session, use_preference=True)
+  relevance_vector = get_fields_vector(session)
+  preference_vector = get_fields_vector(session, use_preference=True)
 
-  def total_score(fields):
+  def scores(fields):
     field_vector = np.array([f in fields for f in session.fields], dtype=np.float64)
     return [
       get_statistics_score(fields),
-      get_score(relevance_vector, field_vector),  # Relevance score
-      get_score(preference_vector, field_vector),  # Preference score
-      -get_penelty(session, fields),  # Penalty
+      get_score(relevance_vector, field_vector),
+      get_score(preference_vector, field_vector),
+      -get_duplicate_penalty(session, fields),
+      -get_cognition_penalty(fields),
     ]
 
-  total_scores = [total_score(fields) for fields in session.available_fields]
-  # pprint top five fields and its scores
-  fields_and_scores = list(zip(session.available_fields, total_scores))
-  fields_and_scores.sort(key=lambda x: sum(x[1]), reverse=True)
-  for i in range(5):
-    print([[f.name for f in fields_and_scores[i][0]], fields_and_scores[i][1]])
+  total_scores = [scores(fields) for fields in session.available_fields]
+  selected_fields, _ = max(zip(session.available_fields, total_scores), key=lambda x: sum(x[1]))
 
-  selected_fields = fields_and_scores[0][0]
-  chart = get_chart(session.df, selected_fields)
-  return chart
+  return get_chart(session.df, selected_fields)

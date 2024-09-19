@@ -9,6 +9,7 @@ from .field_name import (
 from .file_extension import get_file_extension
 from .find import find, find_index, find_last_index, find_right
 from .rescaler import rescale_field_to_32bit
+from .sample import sample
 from .statistics import (
   has_categorical_categorical_stat,
   has_numeric_categorical_stat,
@@ -37,4 +38,5 @@ __all__ = [
   "find_last_index",
   "find_right",
   "get_fields_hash",
+  "sample",
 ]

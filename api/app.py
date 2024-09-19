@@ -5,7 +5,12 @@ from typing import Any
 from api.models import ChartModel, SessionModel
 from api.services import browse_charts, get_next_chart
 
-session = SessionModel()
+session: SessionModel = SessionModel()
+
+
+def getSession():
+  global session
+  return session
 
 
 def loadData(filename: str):

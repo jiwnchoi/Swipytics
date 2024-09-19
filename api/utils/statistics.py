@@ -31,7 +31,7 @@ def has_numeric_numeric_stat(series1: pd.Series, series2: pd.Series) -> float:
   if len(valid_data) < 2:
     return 0
   res = cast(Result, pearsonr(valid_data.iloc[:, 0], valid_data.iloc[:, 1]))
-  return 1 if res.pvalue < 0.05 else 0
+  return 1.0 if res.pvalue < 0.05 else 0.0
 
 
 @cache
@@ -51,7 +51,7 @@ def has_numeric_categorical_stat(numeric_series: pd.Series, categorical_series: 
     return 0
 
   res = cast(Result, f_oneway(*groups))
-  return 1 if res.pvalue < 0.05 else 0
+  return 1.0 if res.pvalue < 0.05 else 0.0
 
 
 @cache
@@ -73,7 +73,7 @@ def has_numeric_datetime_stat(numeric_series: pd.Series, datetime_series: pd.Ser
 
   pvalue = 1.96 * (1 - t.cdf(abs(t_statistic), df=n - 2))
 
-  return 1 if pvalue < 0.05 else 0
+  return 1.0 if pvalue < 0.05 else 0.0
 
 
 @cache
@@ -89,4 +89,4 @@ def has_categorical_categorical_stat(series1: pd.Series, series2: pd.Series) -> 
     return 0
 
   res = cast(Result, chi2_contingency(contingency_table))
-  return 1 if res.pvalue < 0.05 else 0
+  return 1.0 if res.pvalue < 0.05 else 0.0
