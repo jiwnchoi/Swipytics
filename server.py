@@ -51,13 +51,13 @@ async def append_next_chart():
 
 
 class SetPreferredRequest(BaseModel):
-  chart_key: str = Field(default="", alias="chartKey")
+  key: str = Field(default="", alias="key")
   preferred: bool = Field(default=False)
 
 
 @server.patch("/api/setPreferred")
 async def set_preferred(req: SetPreferredRequest):
-  chart = setPreferred(req.chart_key, req.preferred)
+  chart = setPreferred(req.key, req.preferred)
   return HTTPException(status_code=404, detail="Chart not found") if not chart else chart
 
 
