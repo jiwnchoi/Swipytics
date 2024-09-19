@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from api.app import appendChart, appendNextChart, browseCharts, loadData
-from api.models import ChartModel
+from api.app import appendChart, appendNextChart, browseCharts, loadData, loadSession
+from api.models import ChartModel, SessionModel
 from fastapi import FastAPI, HTTPException, UploadFile, status
 from pydantic import BaseModel
 
@@ -16,6 +16,14 @@ async def load_data(file: UploadFile):
   with open(f"data/{file.filename}", "wb") as buffer:
     buffer.write(await file.read())
   return loadData(f"data/{file.filename}")
+
+
+@server.post("/api/loadSession")
+async def load_session(file: UploadFile, new_session: SessionModel):
+  Path("data").mkdir(parents=True, exist_ok=True)
+  with open(f"data/{file.filename}", "wb") as buffer:
+    buffer.write(await file.read())
+  return loadSession(f"data/{file.filename}", new_session)
 
 
 class BrowseChartRequest(BaseModel):
