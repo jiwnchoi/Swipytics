@@ -6,8 +6,8 @@ import { type Events, type LoadingStatus } from "./types";
 class Router {
   private static instance: Router;
   private python: "pyodide" | "server" = "pyodide";
-  private isServerConnectable = false;
-  private isPyodideLoaded = false;
+  private serverConnectable = false;
+  private pyodideLoaded = false;
   private emitter = mitt<Events>(); // mitt 인스턴스 생성
 
   private constructor() {
@@ -15,14 +15,14 @@ class Router {
   }
 
   private async loadPyodide() {
-    if (this.isPyodideLoaded) return;
+    if (this.pyodideLoaded) return;
     try {
       await getPyodide();
-      this.isPyodideLoaded = true;
+      this.pyodideLoaded = true;
       this.emitter.emit("loadingStatusChange", this.getLoadingStatus()); // 이벤트 발생
     } catch (error) {
       console.error("error while connecting pyodide:", error);
-      this.isPyodideLoaded = false;
+      this.pyodideLoaded = false;
       this.emitter.emit("loadingStatusChange", this.getLoadingStatus());
     }
   }
@@ -30,11 +30,11 @@ class Router {
   private async checkServerConnection() {
     try {
       const response = await fetch("/api");
-      this.isServerConnectable = response.ok;
-      if (this.isServerConnectable) this.python = "server";
+      this.serverConnectable = response.ok;
+      if (this.serverConnectable) this.python = "server";
       this.emitter.emit("loadingStatusChange", this.getLoadingStatus());
     } catch (error) {
-      this.isServerConnectable = false;
+      this.serverConnectable = false;
       console.error("error while connecting server:", error);
       this.emitter.emit("loadingStatusChange", this.getLoadingStatus());
     }
@@ -45,7 +45,7 @@ class Router {
   }
 
   public setPython(python: "pyodide" | "server") {
-    if (python === "server" && !this.isServerConnectable) {
+    if (python === "server" && !this.serverConnectable) {
       return false;
     }
     this.python = python;
@@ -67,11 +67,11 @@ class Router {
 
   public getLoadingStatus(): LoadingStatus {
     return {
-      loadingPyodide: this.python === "pyodide" && !this.isPyodideLoaded,
-      loadingServer: this.python === "server" && !this.isServerConnectable,
+      loadingPyodide: this.python === "pyodide" && !this.pyodideLoaded,
+      loadingServer: this.python === "server" && !this.serverConnectable,
       loading:
-        (this.python === "pyodide" && !this.isPyodideLoaded) ||
-        (this.python === "server" && !this.isServerConnectable),
+        (this.python === "pyodide" && !this.pyodideLoaded) ||
+        (this.python === "server" && !this.serverConnectable),
     };
   }
 

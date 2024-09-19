@@ -11,10 +11,10 @@ function useLoadingStatus() {
   });
 
   useEffect(() => {
-    let isMounted = true;
+    let mounted = true;
 
     const updateStatus = (newStatus: LoadingStatus) => {
-      if (isMounted) {
+      if (mounted) {
         setLoadingStatus(newStatus);
       }
     };
@@ -28,7 +28,7 @@ function useLoadingStatus() {
     subscribeToRouter();
 
     return () => {
-      isMounted = false;
+      mounted = false;
       const routerInstance = getRouter();
       if (routerInstance) {
         routerInstance.off("loadingStatusChange", updateStatus);
