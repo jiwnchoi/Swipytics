@@ -24,6 +24,7 @@ classifiers = [
 dependencies = [
   "pandas",
   "draco",
+  "scipy==1.11.2",
   "altair[all]",
   "scikit-learn",
   "python-multipart",

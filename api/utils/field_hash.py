@@ -1,14 +1,13 @@
-from typing import Sequence, TypeVar
+from typing import TYPE_CHECKING, Sequence
 
-T = TypeVar("T")
+if TYPE_CHECKING:
+  from api.models import FieldModel
 
 
-def get_fields_hash(fields: Sequence[T]) -> int:
-  if len(fields) == 1:
-    return hash(fields[0])
-  elif len(fields) == 2:
-    return hash(set(fields))
-  elif len(fields) == 3:
-    return hash(set(fields[:2])) + hash(fields[2])
-  else:
-    return 0
+def get_fields_hash(fields: Sequence["FieldModel"]) -> int:
+  names = tuple(field.name for field in fields)
+  if len(names) == 1:
+    return hash(names)
+  elif len(names) in (2, 3):
+    return hash(tuple(sorted(names[:2]))) + (hash(names[2]) if len(names) == 3 else 0)
+  return 0

@@ -5,11 +5,12 @@ from typing import Any
 from api.models import ChartModel, SessionModel
 from api.services import browse_charts, get_next_chart
 
+session = SessionModel()
+
 
 def loadData(filename: str):
   global session
   session = SessionModel(filename=filename)
-  appendNextChart()
   return session.model_dump(by_alias=True, mode="json")
 
 
@@ -24,6 +25,7 @@ def appendChart(chart: dict[str, Any] | ChartModel):
 def appendNextChart():
   global session
   chart = get_next_chart(session)
+  session.charts.append(chart) if chart else None
   return chart.model_dump(by_alias=True, mode="json") if chart else None
 
 

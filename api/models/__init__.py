@@ -1,12 +1,13 @@
-from .chart_model import ChartModel
-from .data_field_model import DataFieldModel
+from .chart_model import ChartModel, DefaultConfig
+from .field_model import FieldModel
 from .metadata_model import FieldType, MetadataModel
 from .session_model import SessionModel
 
 __all__ = [
   "ChartModel",
-  "DataFieldModel",
+  "FieldModel",
   "FieldType",
   "MetadataModel",
   "SessionModel",
+  "DefaultConfig",
 ]
