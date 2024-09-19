@@ -7,7 +7,7 @@ from draco.schema import FieldProps
 MAX_32BIT = 2**31 - 1
 
 
-def rescale_to_32bit(data: FieldProps):
+def rescale_field_to_32bit(data: FieldProps):
   new_data = data.copy()
 
   if (

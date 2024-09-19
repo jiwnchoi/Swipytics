@@ -18,6 +18,6 @@ def browse_charts(state: SessionModel, field_names: list[str]) -> list[ChartMode
   browse_fields = [
     input_fields,
     *[(*input_fields, field) for field in additional_fields],
-  ]
+  ][:10]
   charts = [get_chart(state.df, fields) for fields in browse_fields]
   return [chart for chart in charts if chart]

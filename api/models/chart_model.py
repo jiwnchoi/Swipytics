@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Self
 
-from api.utils import get_timestamp
+from api.utils import get_fields_hash, get_timestamp
 from pydantic import BaseModel, Field, model_validator
 
-from .data_field_model import DataFieldModel
+from .field_model import FieldModel
 from .model_config import DefaultConfig
 
 
 class ChartModel(BaseModel):
-  fields: tuple[DataFieldModel, ...] = Field(default_factory=tuple)
+  fields: tuple[FieldModel, ...] = Field(default_factory=tuple)
   specs: List[Dict[str, Any]] = Field(default_factory=list)
   title: str = Field(default="")
   description: str = Field(default="")
@@ -29,4 +29,4 @@ class ChartModel(BaseModel):
     return self
 
   def __hash__(self):
-    return hash(self.fields)
+    return get_fields_hash(self.fields)

@@ -2,19 +2,20 @@ from __future__ import annotations
 
 from typing import Any
 
-from api.models import SessionModel
-from api.models.chart_model import ChartModel
+from api.models import ChartModel, SessionModel
 from api.services import browse_charts, get_next_chart
-from vega_datasets import data
 
-default_df = data.movies()
-session: SessionModel = SessionModel(df=default_df, filename="movies.json")
+session: SessionModel = SessionModel()
+
+
+def getSession():
+  global session
+  return session
 
 
 def loadData(filename: str):
   global session
   session = SessionModel(filename=filename)
-  appendNextChart()
   return session.model_dump(by_alias=True, mode="json")
 
 
@@ -29,6 +30,7 @@ def appendChart(chart: dict[str, Any] | ChartModel):
 def appendNextChart():
   global session
   chart = get_next_chart(session)
+  session.charts.append(chart) if chart else None
   return chart.model_dump(by_alias=True, mode="json") if chart else None
 
 

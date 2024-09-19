@@ -1,71 +1,92 @@
 from __future__ import annotations
 
-from typing import Callable, Sequence, TypeVar
+from typing import TypeVar
 
-from api.models import ChartModel, DataFieldModel, SessionModel
-from numpy.random import choice
-
-from .get_chart import get_chart
+import numpy as np
+from api.models import ChartModel, FieldModel, SessionModel
+from api.services import get_chart
+from api.utils import (
+  find_last_index,
+  get_fields_hash,
+  has_categorical_categorical_stat,
+  has_numeric_categorical_stat,
+  has_numeric_datetime_stat,
+  has_numeric_numeric_stat,
+  sample,
+)
 
 T = TypeVar("T")
 
 
-Operation = Callable[[tuple[DataFieldModel, ...], DataFieldModel], tuple[DataFieldModel, ...]]
-
-operations_map: dict[int, list[Operation]] = {
-  0: [
-    lambda _, f: (f,),  # Create first field
-  ],
-  1: [
-    lambda _, f: (f,),  # 1. Replace Last field
-    lambda fields, f: fields + (f,),  # 2. Append New Field
-  ],
-  2: [
-    lambda fields, f: (fields[0], f),  # 1. Replace Last field
-    lambda fields, f: fields + (f,),  # 2. Append New Field
-    lambda fields, _: (fields[0],),  # 3. Remove second field
-  ],
-  3: [
-    lambda fields, f: (fields[0], fields[1], f),  # 1. Replace Last field
-    lambda fields, _: (fields[0], fields[2]),  # 3. Remove second field
-  ],
-}
+def get_cognition_penalty(fields: tuple[FieldModel, ...]) -> float:
+  return len(fields) / 3
 
 
-def sample(targets: Sequence[T], p: Sequence[float]) -> T:
-  idx = choice(len(targets), 1, p=p)[0]
-  return targets[idx]
+def get_duplicate_penalty(session: SessionModel, fields: tuple[FieldModel, ...]) -> float:
+  n_fields = len(session.fields)
+  last_index = find_last_index(
+    session.charts, lambda c: get_fields_hash(c.fields) == get_fields_hash(fields)
+  )
+  return (
+    max(1 - ((len(session.charts) - last_index - 1) / n_fields), 0) * 3 if last_index != -1 else 0.0
+  )
 
 
-def get_distribution(session: SessionModel, space: list[tuple[DataFieldModel, ...]]) -> list[float]:
-  if not space:
-    return [1 / len(session.visualizable_fields) for _ in session.visualizable_fields]
-  return [1 / len(space) for _ in space]
+def get_fields_vector(session: SessionModel, use_preference: bool = False) -> np.ndarray:
+  matrix = np.array(
+    [
+      [f in chart.fields and (chart.preferred if use_preference else True) for f in session.fields]
+      for chart in session.charts
+    ],
+    dtype=np.float64,
+  )
+  matrix *= np.arange(1, len(matrix) + 1)[:, None]
+  vector: np.ndarray = np.sum(matrix, axis=0)
+  return vector / vector.max() if vector.max() != 0 else vector
+
+
+def get_statistics_score(fields: tuple[FieldModel, ...]) -> float:
+  if len(fields) == 1:
+    return 1.0
+  types = tuple(field.type for field in fields[:2])
+  series = tuple(field.series for field in fields[:2])
+  type_combinations = {
+    ("numeric", "numeric"): has_numeric_numeric_stat,
+    ("categorical", "categorical"): has_categorical_categorical_stat,
+    ("numeric", "categorical"): has_numeric_categorical_stat,
+    ("categorical", "numeric"): lambda x, y: has_numeric_categorical_stat(y, x),
+    ("numeric", "datetime"): has_numeric_datetime_stat,
+    ("datetime", "numeric"): lambda x, y: has_numeric_datetime_stat(y, x),
+  }
+  return type_combinations[types](*series) if types in type_combinations else 0.0
+
+
+def get_score(vector: np.ndarray, field_vector: np.ndarray) -> float:
+  return float(np.sum(vector * field_vector) / np.sum(field_vector))
 
 
 def get_next_chart(session: SessionModel) -> ChartModel | None:
-  current_chart = session.charts[-1] if session.charts else None
-  target_fields = set(session.visualizable_fields) - set(
-    current_chart.fields if current_chart else []
-  )
-  chart_hash = set(tuple(chart.fields) for chart in session.charts)
+  if not session.charts:
+    field = sample(session.visualizable_fields)
+    return get_chart(session.df, (field,))
 
-  operations = operations_map[len(current_chart.fields) if current_chart else 0]
+  if not session.available_fields:
+    return None
 
-  neighbor_fields = [
-    op(current_chart.fields if current_chart else (), field)
-    for op in operations
-    for field in target_fields
-  ]
+  relevance_vector = get_fields_vector(session)
+  preference_vector = get_fields_vector(session, use_preference=True)
 
-  ## Filter out fields that have been used
-  neighbor_fields = [fields for fields in neighbor_fields if fields not in chart_hash]
+  def scores(fields):
+    field_vector = np.array([f in fields for f in session.fields], dtype=np.float64)
+    return [
+      get_statistics_score(fields),
+      get_score(relevance_vector, field_vector),
+      get_score(preference_vector, field_vector),
+      -get_duplicate_penalty(session, fields),
+      -get_cognition_penalty(fields),
+    ]
 
-  if not neighbor_fields:
-    neighbor_fields = [(field,) for field in session.visualizable_fields]
+  total_scores = [scores(fields) for fields in session.available_fields]
+  selected_fields, _ = max(zip(session.available_fields, total_scores), key=lambda x: sum(x[1]))
 
-  p = get_distribution(session, neighbor_fields)
-  next_fields = sample(neighbor_fields, p)
-  chart = get_chart(session.df, next_fields)
-
-  return chart
+  return get_chart(session.df, selected_fields)
