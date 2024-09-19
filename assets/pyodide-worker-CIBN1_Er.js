@@ -31,6 +31,17 @@ def loadData(filename: str):
   return session.model_dump(by_alias=True, mode="json")
 
 
+def loadSession(filename: str, new_session: dict[str, Any] | SessionModel):
+  global session
+  if isinstance(new_session, dict):
+    new_session = SessionModel.model_validate(new_session)
+
+  session = SessionModel(filename=filename)
+  session.charts = new_session.charts
+  session.timestamp = new_session.timestamp
+  return session.model_dump(by_alias=True, mode="json")
+
+
 def appendChart(chart: dict[str, Any] | ChartModel):
   global session
   if isinstance(chart, dict):
@@ -44,14 +55,6 @@ def appendNextChart():
   chart = get_next_chart(session)
   session.charts.append(chart) if chart else None
   return chart.model_dump(by_alias=True, mode="json") if chart else None
-
-
-def restoreSession(new_state: dict[str, Any] | SessionModel):
-  global session
-  if isinstance(new_state, dict):
-    new_state = SessionModel.model_validate(new_state)
-  session = new_state
-  return session.model_dump(by_alias=True, mode="json")
 
 
 def browseCharts(field_names: list[str]):
@@ -889,6 +892,17 @@ def loadData(filename: str):
   return session.model_dump(by_alias=True, mode="json")
 
 
+def loadSession(filename: str, new_session: dict[str, Any] | SessionModel):
+  global session
+  if isinstance(new_session, dict):
+    new_session = SessionModel.model_validate(new_session)
+
+  session = SessionModel(filename=filename)
+  session.charts = new_session.charts
+  session.timestamp = new_session.timestamp
+  return session.model_dump(by_alias=True, mode="json")
+
+
 def appendChart(chart: dict[str, Any] | ChartModel):
   global session
   if isinstance(chart, dict):
@@ -902,14 +916,6 @@ def appendNextChart():
   chart = get_next_chart(session)
   session.charts.append(chart) if chart else None
   return chart.model_dump(by_alias=True, mode="json") if chart else None
-
-
-def restoreSession(new_state: dict[str, Any] | SessionModel):
-  global session
-  if isinstance(new_state, dict):
-    new_state = SessionModel.model_validate(new_state)
-  session = new_state
-  return session.model_dump(by_alias=True, mode="json")
 
 
 def browseCharts(field_names: list[str]):
