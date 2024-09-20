@@ -1,6 +1,6 @@
-import { DEBOUNCE_DELAY } from "@shared/constants";
+import { THROTTLE_DELAY } from "@shared/constants";
 import { useSessionsStore } from "@stores";
-import { debounce } from "es-toolkit";
+import { throttle } from "es-toolkit";
 import { useEffect, useRef } from "react";
 
 function getChartWidth(container: HTMLDivElement | null) {
@@ -23,16 +23,17 @@ export default function useChartContainer() {
     const container = ref.current;
     if (!container) return;
 
-    const handleScroll = debounce(() => {
+    const handleScroll = throttle(() => {
       const scrollLeft = container.scrollLeft;
       const chartWidth = getChartWidth(container);
       const newIndex = Math.round(scrollLeft / chartWidth);
+      if (newIndex === currentChartIndex) return;
       setCurrentChartIndex(newIndex - 1);
-    }, DEBOUNCE_DELAY);
+    }, THROTTLE_DELAY);
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [setCurrentChartIndex]);
+  }, [setCurrentChartIndex, currentChartIndex]);
 
   useEffect(() => {
     const container = ref.current;

@@ -36,10 +36,10 @@ const useSessionsStore = create(
 
     currentChartIndex: -1,
     increaseCurrentChartIndex: () => {
-      void get().setCurrentChartIndex(get().currentChartIndex + 1);
+      get().setCurrentChartIndex(get().currentChartIndex + 1);
     },
     decreaseCurrentChartIndex: () => {
-      void get().setCurrentChartIndex(get().currentChartIndex - 1);
+      get().setCurrentChartIndex(get().currentChartIndex - 1);
     },
     setCurrentChartIndex: async (index) => {
       const state = get();
@@ -52,7 +52,7 @@ const useSessionsStore = create(
     },
     setCurrentChartToLast: () => {
       const state = get();
-      void get().setCurrentChartIndex(state.charts.length - 1);
+      get().setCurrentChartIndex(state.charts.length - 1);
     },
     getChartIndexByKey: (key: string) => get().charts.findIndex((chart) => chart.key === key),
 
