@@ -5,7 +5,6 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 import { router } from "@router";
-import useDataStore from "./useDataStore"; // 의존성 제거하기 언젠가...
 
 interface SessionState extends TSession {
   currentChartIndex: number;
@@ -16,12 +15,13 @@ interface SessionState extends TSession {
   getChartIndexByKey: (key: string) => number | undefined;
 
   loadingSession: boolean;
-  loadSession: () => Promise<void>;
+  loadSession: (filename: string) => Promise<void>;
   appendingChart: boolean;
   appendNextChart: () => Promise<void>;
   appendChart: (chart: TChart) => Promise<void>;
 
   renewCurrentChart: () => void;
+  resetSession: () => void;
 
   setCurrentChartPreferred: (preferred: boolean) => void;
 }
@@ -32,6 +32,15 @@ const useSessionsStore = create(
     timestamp: 0,
     charts: [],
     fields: [],
+
+    resetSession: () =>
+      set({
+        filename: "",
+        timestamp: 0,
+        charts: [],
+        fields: [],
+        currentChartIndex: -1,
+      }),
 
     currentChartIndex: -1,
     increaseCurrentChartIndex: () => {
@@ -59,26 +68,27 @@ const useSessionsStore = create(
     getChartIndexByKey: (key: string) => get().charts.findIndex((chart) => chart.key === key),
 
     loadingSession: false,
-    loadSession: async () => {
+    loadSession: async (filename: string) => {
       set({
         loadingSession: true,
-        charts: [],
-        filename: "",
-        timestamp: 0,
-        currentChartIndex: -1,
-        fields: [],
+        filename,
       });
-      const filename = useDataStore.getState().filename;
-      const fileBuffer = useDataStore.getState().fileBuffer;
-      if (!(filename && fileBuffer)) throw new Error("No file buffer found");
-      const session = await router.call("loadData", { filename, fileBuffer });
+      const { timestamp, charts, fields } = get();
+
+      const session = await router.call("loadSession", {
+        session: {
+          filename,
+          timestamp,
+          charts,
+          fields,
+        },
+      });
       if (!session) {
         set({ loadingSession: false });
         return;
       }
       set(
         produce((draft: Draft<SessionState>) => {
-          draft.filename = session.filename;
           draft.timestamp = session.timestamp;
           draft.fields = session.fields;
           draft.charts = session.charts;

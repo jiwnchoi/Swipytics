@@ -1,6 +1,7 @@
+import os
 from pathlib import Path
 
-from api.app import appendChart, appendNextChart, browseCharts, loadData, loadSession, setPreferred
+from api.app import appendChart, appendNextChart, browseCharts, loadSession, setPreferred
 from api.models import ChartModel, SessionModel
 from fastapi import FastAPI, HTTPException, UploadFile, status
 from pydantic import BaseModel, Field
@@ -10,20 +11,20 @@ server = FastAPI()
 # Keep endpoints to camelCase for consistent api with Pyodide environment
 
 
-@server.post("/api/loadData")
-async def load_data(file: UploadFile):
+@server.post("/api/writeFile")  # This endpoint is only for server backend (not pyodide)
+async def write_file(file: UploadFile):
   Path("data").mkdir(parents=True, exist_ok=True)
   with open(f"data/{file.filename}", "wb") as buffer:
     buffer.write(await file.read())
-  return loadData(f"data/{file.filename}")
+  return {"filename": file.filename}
 
 
 @server.post("/api/loadSession")
-async def load_session(file: UploadFile, new_session: SessionModel):
-  Path("data").mkdir(parents=True, exist_ok=True)
-  with open(f"data/{file.filename}", "wb") as buffer:
-    buffer.write(await file.read())
-  return loadSession(f"data/{file.filename}", new_session)
+async def load_session(session: SessionModel):
+  if os.path.isfile(f"data/{session.filename}"):
+    return loadSession(filename=session.filename, new_session=session)
+  else:
+    return HTTPException(status_code=404, detail="File not found")
 
 
 class BrowseChartRequest(BaseModel):

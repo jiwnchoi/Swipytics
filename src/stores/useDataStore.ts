@@ -1,6 +1,7 @@
 import { JSONLoader, fetchFile, parse } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
 import type { Schema } from "@loaders.gl/schema";
+import { router } from "@router";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
 import { create } from "zustand";
@@ -12,8 +13,8 @@ interface DataState {
   data: TSupportedDataType | undefined;
   schema: Schema | null;
 
-  loadData: (file: File | string) => Promise<void>;
-  loading: boolean;
+  writeFile: (file: File | string) => Promise<string>;
+  writingFile: boolean;
 }
 
 const loaderMap = {
@@ -25,14 +26,13 @@ const useDataStore = create(
   devtools<DataState>((set) => ({
     filename: null,
     fileBuffer: null,
-
     data: undefined,
     schema: null,
-    loading: false,
+    writingFile: false,
 
-    loadData: async (file: File | string) => {
+    writeFile: async (file: File | string) => {
       set({
-        loading: true,
+        writingFile: true,
         filename: null,
         fileBuffer: null,
         data: undefined,
@@ -53,13 +53,18 @@ const useDataStore = create(
         fetch: { mode: "no-cors" },
       })) as TSupportedDataType;
 
+      // Writing File
+      await router.lazyCall("writeFile", { filename, fileBuffer });
+
       set({
         filename,
         fileBuffer,
         data,
         schema: data.schema,
-        loading: false,
+        writingFile: false,
       });
+
+      return filename;
     },
   })),
 );
