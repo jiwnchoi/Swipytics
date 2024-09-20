@@ -1,15 +1,21 @@
 import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 
 function useLoadData() {
-  const loadingData = useDataStore((state) => state.loading);
-  const loadData = useDataStore((state) => state.loadData);
+  const loadingData = useDataStore((state) => state.writingFile);
+  const writeFile = useDataStore((state) => state.writeFile);
   const loadingSession = useSessionsStore((state) => state.loadingSession);
   const loadSession = useSessionsStore((state) => state.loadSession);
   const setExpanded = useInteractionStore((state) => state.setDrawerExpanded);
-
+  const resetSession = useSessionsStore((state) => state.resetSession);
+  const sessionFileName = useSessionsStore((state) => state.filename);
   const initializeSession = async (file: File | string) => {
-    await loadData(file);
-    await loadSession();
+    const filename = await writeFile(file);
+
+    if (filename !== sessionFileName) {
+      resetSession();
+    }
+
+    await loadSession(filename);
     setExpanded(false);
   };
 

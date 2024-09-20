@@ -5,7 +5,6 @@ import { useState } from "react";
 
 export default function useSettings() {
   const { apiKey, setApiKey } = useSettingsStore();
-
   const { colorMode, toggleColorMode } = useColorMode();
   const [python, setPython] = useState<"pyodide" | "server">(() => router.getPythonType());
   const toast = useToast();

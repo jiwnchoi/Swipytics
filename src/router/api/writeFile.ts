@@ -1,16 +1,15 @@
-import { type TSession } from "@shared/models";
 import { getPyodide } from "@workers";
 import type { TEndpoint } from "./TEndpoint";
 
-type FLoadData = ({
+type FWriteFile = ({
   filename,
   fileBuffer,
 }: {
   filename: string;
   fileBuffer: Uint8Array;
-}) => Promise<TSession>;
+}) => Promise<void>;
 
-async function loadDataPyodide({
+async function writeFilePyodide({
   filename,
   fileBuffer,
 }: {
@@ -19,11 +18,9 @@ async function loadDataPyodide({
 }) {
   const pyodide = await getPyodide();
   await pyodide.writeFile(filename, fileBuffer);
-  const data = await pyodide.callPythonFunction("loadData", { filename });
-  return data;
 }
 
-async function loadDataFetch({
+async function writeFileFetch({
   filename,
   fileBuffer,
 }: {
@@ -33,15 +30,13 @@ async function loadDataFetch({
   const blob = new Blob([fileBuffer]);
   const formData = new FormData();
   formData.append("file", blob, filename);
-  const response = await fetch("/api/loadData", {
+  await fetch("/api/writeFile", {
     method: "POST",
     body: formData,
   });
-  const data = (await response.json()) as TSession;
-  return data;
 }
 
 export default {
-  pyodide: loadDataPyodide,
-  server: loadDataFetch,
-} as TEndpoint<FLoadData>;
+  pyodide: writeFilePyodide,
+  server: writeFileFetch,
+} as TEndpoint<FWriteFile>;

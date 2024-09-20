@@ -96,6 +96,22 @@ class Router {
       return null;
     }
   }
+
+  public async lazyCall<E extends TEndpointKey>(
+    endpoint: E,
+    args?: TEndpointArgs<E, typeof this.python>,
+  ) {
+    return new Promise((resolve) => {
+      const check = () => {
+        if (!this.getLoadingStatus().loading) {
+          this.off("loadingStatusChange", check);
+          resolve(this.call(endpoint, args));
+        }
+      };
+      this.on("loadingStatusChange", check);
+      check();
+    });
+  }
 }
 
 export default new Router();

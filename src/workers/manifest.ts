@@ -2,10 +2,10 @@ import type { TChart, TSession } from "@shared/models";
 import type { WorkerManifest } from "./types";
 
 export interface PythonManifest extends WorkerManifest {
-  loadData: {
+  loadSession: {
     returns: TSession;
     args: {
-      filename: string;
+      session: TSession;
     };
   };
 

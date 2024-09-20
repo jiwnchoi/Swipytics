@@ -37,7 +37,7 @@ class SessionModel(BaseModel):
     clear_field_name_cache()
     if self.df is None:
       extension = get_file_extension(self.filename)
-      self.df = getattr(pd, f"read_{extension}")(Path("./", self.filename))
+      self.df = getattr(pd, f"read_{extension}")(Path("data", self.filename))
       self.df = self.df if len(self.df) <= 5000 else self.df.sample(5000)
     self.fields = [FieldModel.from_dataframe(self.df, name) for name in self.df.columns]
     self.df.rename(columns=get_clingo_field_name, inplace=True)
