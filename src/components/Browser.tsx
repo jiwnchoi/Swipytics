@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useBrowser, useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
+import useColors from "../hooks/useLayout";
 import ChartItem from "./ChartItem";
 
 function Browser() {
@@ -39,8 +40,10 @@ function Browser() {
     suggestionCursorIndex,
   } = useBrowser();
 
+  const { tabPanelHeight } = useColors();
+
   return (
-    <TabPanel as={VStack} w="full" alignItems="center" h="100%">
+    <TabPanel as={VStack} w="full" alignItems="center" h={tabPanelHeight}>
       <Box w="100%" position="relative">
         <HStack
           spacing={1}
