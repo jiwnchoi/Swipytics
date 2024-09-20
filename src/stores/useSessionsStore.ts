@@ -126,8 +126,9 @@ const useSessionsStore = create(
       ),
 
     setCurrentChartPreferred: (preferred) => {
-      const data = useDataStore.getState().data;
-      if (!data) return;
+      const { charts, currentChartIndex } = get();
+      const currentChart = charts[currentChartIndex];
+      router.call("setPreferred", { key: currentChart.key, preferred });
 
       set(
         produce((draft: Draft<SessionState>) => {
