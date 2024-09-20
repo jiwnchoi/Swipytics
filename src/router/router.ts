@@ -1,17 +1,26 @@
+/* eslint-disable no-console */
 import mitt from "mitt";
 import { getPyodide } from "../workers";
-import api from "./api";
-import { type Events, type LoadingStatus } from "./types";
+import call from "./call";
+import {
+  type TEndpointArgs,
+  type TEndpointKey,
+  type TRouterEvent,
+  type TRouterLoadingStatus,
+} from "./types";
 
 class Router {
-  private static instance: Router;
   private python: "pyodide" | "server" = "pyodide";
   private serverConnectable = false;
   private pyodideLoaded = false;
-  private emitter = mitt<Events>(); // mitt 인스턴스 생성
+  private emitter = mitt<TRouterEvent>();
 
-  private constructor() {
-    // 생성자에서는 초기화 로직만 수행
+  constructor() {
+    this.initializeRouter();
+  }
+
+  private async initializeRouter() {
+    await Promise.all([this.loadPyodide(), this.checkServerConnection()]);
   }
 
   private async loadPyodide() {
@@ -19,7 +28,7 @@ class Router {
     try {
       await getPyodide();
       this.pyodideLoaded = true;
-      this.emitter.emit("loadingStatusChange", this.getLoadingStatus()); // 이벤트 발생
+      this.emitter.emit("loadingStatusChange", this.getLoadingStatus());
     } catch (error) {
       console.error("error while connecting pyodide:", error);
       this.pyodideLoaded = false;
@@ -40,7 +49,7 @@ class Router {
     }
   }
 
-  public getPython() {
+  public getPythonType() {
     return this.python;
   }
 
@@ -53,19 +62,7 @@ class Router {
     return true;
   }
 
-  public static async init(): Promise<Router> {
-    if (!Router.instance) {
-      Router.instance = new Router();
-      await Promise.all([Router.instance.loadPyodide(), Router.instance.checkServerConnection()]);
-    }
-    return Router.instance;
-  }
-
-  public static getInstance(): Router | undefined {
-    return this.instance;
-  }
-
-  public getLoadingStatus(): LoadingStatus {
+  public getLoadingStatus(): TRouterLoadingStatus {
     return {
       loadingPyodide: this.python === "pyodide" && !this.pyodideLoaded,
       loadingServer: this.python === "server" && !this.serverConnectable,
@@ -75,28 +72,25 @@ class Router {
     };
   }
 
-  // mitt 이벤트 등록
-  public on(event: keyof Events, handler: (event: LoadingStatus) => void) {
+  public on(event: keyof TRouterEvent, handler: (event: TRouterLoadingStatus) => void) {
     this.emitter.on(event, handler);
   }
 
-  // mitt 이벤트 해제
-  public off(event: keyof Events, handler: (event: LoadingStatus) => void) {
+  public off(event: keyof TRouterEvent, handler: (event: TRouterLoadingStatus) => void) {
     this.emitter.off(event, handler);
   }
 
-  public getAPI() {
-    return api[this.python];
+  public async call<E extends TEndpointKey>(
+    endpoint: E,
+    args?: TEndpointArgs<E, typeof this.python>,
+  ) {
+    try {
+      return await call(this.getPythonType(), endpoint, args);
+    } catch (error) {
+      console.error("error while calling endpoint:", error);
+      return null;
+    }
   }
 }
 
-export async function initRouter(): Promise<Router> {
-  return Router.init();
-}
-
-export function getRouter(): Router | undefined {
-  if (!Router.getInstance()) {
-    Router.init();
-  }
-  return Router.getInstance();
-}
+export default new Router();

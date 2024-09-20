@@ -1,7 +1,11 @@
-import pyodide from "./pyodide";
-import server from "./server";
-import { type API } from "./types";
+import appendChart from "./appendChart";
+import appendNextChart from "./appendNextChart";
+import browseCharts from "./browseCharts";
+import loadData from "./loadData";
 
-const api: Record<"server" | "pyodide", API> = { server: server, pyodide: pyodide };
-
-export default api;
+export default {
+  appendChart,
+  appendNextChart,
+  browseCharts,
+  loadData,
+} as const;

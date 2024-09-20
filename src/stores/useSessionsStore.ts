@@ -4,8 +4,8 @@ import { type Draft, produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { getRouter } from "../router";
-import useDataStore from "./useDataStore";
+import { router } from "@router";
+import useDataStore from "./useDataStore"; // 의존성 제거하기 언젠가...
 
 interface SessionState extends TSession {
   currentChartIndex: number;
@@ -71,8 +71,7 @@ const useSessionsStore = create(
       const filename = useDataStore.getState().filename;
       const fileBuffer = useDataStore.getState().fileBuffer;
       if (!(filename && fileBuffer)) throw new Error("No file buffer found");
-      const session = await getRouter()?.getAPI()?.loadData(filename, fileBuffer);
-
+      const session = await router.call("loadData", { filename, fileBuffer });
       if (!session) {
         set({ loadingSession: false });
         return;
@@ -92,7 +91,7 @@ const useSessionsStore = create(
     appendingChart: false,
     appendNextChart: async () => {
       set({ appendingChart: true });
-      const chart = await getRouter()?.getAPI()?.appendNextChart();
+      const chart = await router.call("appendNextChart");
       if (!chart) {
         set({ appendingChart: false });
         return;
@@ -106,7 +105,7 @@ const useSessionsStore = create(
     },
     appendChart: async (chart: TChart) => {
       set({ appendingChart: true });
-      await getRouter()?.getAPI().callAppendChart(chart);
+      await router.call("appendChart", { chart });
       set(
         produce((draft: Draft<SessionState>) => {
           if (draft.charts.length > CHART_PREFETCH_DELAY) {

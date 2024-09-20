@@ -1,38 +1,26 @@
+import { router } from "@router";
+import { type TRouterLoadingStatus } from "@router/types";
 import { useEffect, useState } from "react";
-import { getRouter, initRouter } from "../router";
-import { type LoadingStatus } from "../router/types";
 
 function useLoadingStatus() {
-  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(() => {
-    const routerInstance = getRouter();
-    return routerInstance
-      ? routerInstance.getLoadingStatus()
-      : { loading: true, loadingPyodide: true, loadingServer: true };
-  });
+  const [loadingStatus, setLoadingStatus] = useState<TRouterLoadingStatus>(
+    () => router.getLoadingStatus() ?? { loading: true, loadingPyodide: true, loadingServer: true },
+  );
 
   useEffect(() => {
     let mounted = true;
 
-    const updateStatus = (newStatus: LoadingStatus) => {
+    const updateStatus = (newStatus: TRouterLoadingStatus) => {
       if (mounted) {
         setLoadingStatus(newStatus);
       }
     };
 
-    async function subscribeToRouter() {
-      const routerInstance = await initRouter();
-      updateStatus(routerInstance.getLoadingStatus());
-      routerInstance.on("loadingStatusChange", updateStatus);
-    }
-
-    subscribeToRouter();
+    router.on("loadingStatusChange", updateStatus);
 
     return () => {
       mounted = false;
-      const routerInstance = getRouter();
-      if (routerInstance) {
-        routerInstance.off("loadingStatusChange", updateStatus);
-      }
+      router.off("loadingStatusChange", updateStatus);
     };
   }, []);
 

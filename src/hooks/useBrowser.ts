@@ -1,10 +1,10 @@
 import { useFieldNameMatches } from "@hooks";
+import { router } from "@router";
 import { MAX_N_SELECTED_FIELDS } from "@shared/constants";
 import type { TChart } from "@shared/models";
 import { useDataStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
-import { getRouter } from "../router";
 import useSessionsStore from "../stores/useSessionsStore";
 
 export default function useBrowser() {
@@ -18,12 +18,12 @@ export default function useBrowser() {
     setSuggestionCursorIndex(0);
   }, [inputValue]);
 
-  const { data: browsedCharts = [], isLoading: loading } = useQuery({
+  const { data: browsedCharts, isLoading: loading } = useQuery({
     queryKey: ["browseCharts", filename, ...selectedFields.sort().join("&")],
     queryFn: async () => {
-      if (selectedFields.length === 0) return [];
-      const charts = await getRouter()?.getAPI().browseCharts(selectedFields);
-      if (!charts || !data) return charts;
+      if (selectedFields.length === 0 || !data) return [];
+      const charts = await router.call("browseCharts", { fieldNames: selectedFields });
+      if (!charts) return [];
       return charts;
     },
   });

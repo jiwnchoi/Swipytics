@@ -1,2 +1,2 @@
-export { getRouter, initRouter } from "./router";
-export { type Events, type LoadingStatus } from "./types";
+export { default as router } from "./router";
+export { type TRouterEvent as Events, type TRouterLoadingStatus as LoadingStatus } from "./types";
