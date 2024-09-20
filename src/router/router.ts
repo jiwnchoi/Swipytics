@@ -84,6 +84,11 @@ class Router {
     endpoint: E,
     args?: TEndpointArgs<E, typeof this.python>,
   ) {
+    if (this.getLoadingStatus().loading) {
+      console.error("Router is not loaded yet");
+      return null;
+    }
+
     try {
       return await call(this.getPythonType(), endpoint, args);
     } catch (error) {
