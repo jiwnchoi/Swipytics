@@ -36,23 +36,26 @@ const useSessionsStore = create(
 
     currentChartIndex: -1,
     increaseCurrentChartIndex: () => {
-      void get().setCurrentChartIndex(get().currentChartIndex + 1);
+      const { setCurrentChartIndex, currentChartIndex } = get();
+      setCurrentChartIndex(currentChartIndex + 1);
     },
     decreaseCurrentChartIndex: () => {
-      void get().setCurrentChartIndex(get().currentChartIndex - 1);
+      const { setCurrentChartIndex, currentChartIndex } = get();
+      setCurrentChartIndex(currentChartIndex - 1);
     },
     setCurrentChartIndex: async (index) => {
-      const state = get();
-      if (index < -1) return;
+      const { charts, appendingChart, appendNextChart } = get();
+      if (index < -1 || appendingChart) return;
 
-      if (index > state.charts.length - CHART_PREFETCH_DELAY - 1) {
-        await get().appendNextChart();
-      }
       set({ currentChartIndex: index });
+
+      if (index > charts.length - CHART_PREFETCH_DELAY - 1) {
+        await appendNextChart();
+      }
     },
     setCurrentChartToLast: () => {
-      const state = get();
-      void get().setCurrentChartIndex(state.charts.length - 1);
+      const { charts, setCurrentChartIndex } = get();
+      setCurrentChartIndex(charts.length - 1);
     },
     getChartIndexByKey: (key: string) => get().charts.findIndex((chart) => chart.key === key),
 
@@ -78,6 +81,7 @@ const useSessionsStore = create(
           draft.fields = session.fields;
           draft.charts = session.charts;
           draft.loadingSession = false;
+          draft.currentChartIndex = 0;
         }),
       );
     },
