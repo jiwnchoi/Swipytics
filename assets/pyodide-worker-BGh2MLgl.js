@@ -28,6 +28,8 @@ def getSession():
 def loadData(filename: str):
   global session
   session = SessionModel(filename=filename)
+  chart = get_next_chart(session)
+  session.charts.append(chart) if chart else None
   return session.model_dump(by_alias=True, mode="json")
 
 
@@ -899,6 +901,8 @@ def getSession():
 def loadData(filename: str):
   global session
   session = SessionModel(filename=filename)
+  chart = get_next_chart(session)
+  session.charts.append(chart) if chart else None
   return session.model_dump(by_alias=True, mode="json")
 
 
