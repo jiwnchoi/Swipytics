@@ -11,12 +11,11 @@ export interface PythonManifest extends WorkerManifest {
 
   appendNextChart: {
     returns: TChart;
-    // biome-ignore lint/complexity/noBannedTypes: <explanation>
     args: {};
   };
 
   appendChart: {
-    returns: void;
+    returns: TSession;
     args: {
       chart: TChart;
     };

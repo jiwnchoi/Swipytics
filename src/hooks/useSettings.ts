@@ -1,13 +1,13 @@
 import { useColorMode, useToast } from "@chakra-ui/react";
+import { router } from "@router";
 import { useSettingsStore } from "@stores";
 import { useState } from "react";
-import usePyodide from "./usePyodide";
 
 export default function useSettings() {
-  const { apiKey, setApiKey, python, setPython } = useSettingsStore();
-  const { loadingPyodide } = usePyodide();
+  const { apiKey, setApiKey } = useSettingsStore();
 
   const { colorMode, toggleColorMode } = useColorMode();
+  const [python, setPython] = useState<"pyodide" | "server">(() => router.getPythonType());
   const toast = useToast();
 
   const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,8 +21,12 @@ export default function useSettings() {
 
   const [locale, setLocale] = useState<"en" | "ko">("en");
 
-  const togglePython = async () => {
-    const res = await setPython(python === "pyodide" ? "server" : "pyodide");
+  const togglePython = () => {
+    if (!router) return;
+    const res = router.setPython(router.getPythonType() === "pyodide" ? "server" : "pyodide");
+    if (res) {
+      setPython(router.getPythonType());
+    }
     if (!res && !toast.isActive("server-not-available")) {
       toast({
         id: "server-not-available",
@@ -48,7 +52,6 @@ export default function useSettings() {
     python,
     handleServerButtonClick,
     apiKey,
-    loadingPyodide,
     handleApiKeyChange,
     handleDownloadLogs,
     colorMode,
