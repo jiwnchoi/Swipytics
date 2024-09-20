@@ -18,7 +18,7 @@ export default function useBrowser() {
     setSuggestionCursorIndex(0);
   }, [inputValue]);
 
-  const { data: browsedCharts, isLoading: loading } = useQuery({
+  const { data: browsedCharts = [], isLoading: loading } = useQuery({
     queryKey: ["browseCharts", filename, ...selectedFields.sort().join("&")],
     queryFn: async () => {
       if (selectedFields.length === 0 || !data) return [];
