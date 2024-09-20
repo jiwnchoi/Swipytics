@@ -8,18 +8,13 @@ function useLoadingStatus() {
   );
 
   useEffect(() => {
-    let mounted = true;
-
     const updateStatus = (newStatus: TRouterLoadingStatus) => {
-      if (mounted) {
-        setLoadingStatus(newStatus);
-      }
+      setLoadingStatus(newStatus);
     };
 
     router.on("loadingStatusChange", updateStatus);
 
     return () => {
-      mounted = false;
       router.off("loadingStatusChange", updateStatus);
     };
   }, []);
