@@ -17,7 +17,7 @@ export default function useBrowser() {
 
   const charts = useSessionsStore((state) => state.charts);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
-  const appendCharttoSession = useSessionsStore((state) => state.appendChart);
+  const appendChart = useSessionsStore((state) => state.appendChart);
 
   const { data: browsedCharts = [], isLoading: loading } = useQuery({
     queryKey: ["browseCharts", filename, ...selectedFields.sort()],
@@ -30,12 +30,12 @@ export default function useBrowser() {
   const fieldNameMatches = useFieldNameMatches(inputValue);
   const inputDisabled = selectedFields.length >= MAX_N_SELECTED_FIELDS;
 
-  const appendChart = useCallback(
+  const appendBrowsedChart = useCallback(
     async (chart: TChart) => {
-      await appendCharttoSession(chart);
+      await appendChart(chart);
       setCurrentChartIndex(charts.length - 1);
     },
-    [appendCharttoSession, charts.length, setCurrentChartIndex],
+    [appendChart, charts.length, setCurrentChartIndex],
   );
 
   useEffect(() => setSuggestionCursorIndex(0), [inputValue]);
@@ -45,7 +45,7 @@ export default function useBrowser() {
     setInputValue("");
   }, [selectedFields]);
 
-  const handleFieldSelection = (field: string) => {
+  const appendBrowseField = (field: string) => {
     setSelectedFields((prev) =>
       prev.includes(field) ? prev.filter((f) => f !== field) : [...prev, field],
     );
@@ -56,21 +56,16 @@ export default function useBrowser() {
     if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
       e.stopPropagation();
     }
-    if (["ArrowDown", "ArrowUp"].includes(e.key)) {
+    if (["ArrowDown", "ArrowUp"].includes(e.key) && fieldNameMatches.length > 0) {
       e.preventDefault();
-      if (fieldNameMatches.length > 0)
-        setSuggestionCursorIndex((prev) =>
-          e.key === "ArrowDown"
-            ? Math.min(prev + 1, fieldNameMatches.length - 1)
-            : Math.max(prev - 1, 0),
-        );
-    } else if (e.key === "Enter") {
-      if (
-        selectedFields.length <= MAX_N_SELECTED_FIELDS &&
-        fieldNameMatches.length > suggestionCursorIndex
-      ) {
-        handleFieldSelection(fieldNameMatches[suggestionCursorIndex].item);
-      }
+      setSuggestionCursorIndex((prev) =>
+        e.key === "ArrowDown"
+          ? Math.min(prev + 1, fieldNameMatches.length - 1)
+          : Math.max(prev - 1, 0),
+      );
+    }
+    if (e.key === "Enter" && fieldNameMatches.length > suggestionCursorIndex) {
+      appendBrowseField(fieldNameMatches[suggestionCursorIndex].item);
     }
   };
 
@@ -82,8 +77,8 @@ export default function useBrowser() {
     inputValue,
     setInputValue,
     selectedFields,
-    handleFieldSelection,
-    appendChart,
+    appendBrowseField,
+    appendBrowsedChart,
     suggestionCursorIndex,
     handleKeydown,
   };

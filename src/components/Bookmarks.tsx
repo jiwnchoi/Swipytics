@@ -9,11 +9,7 @@ export default function Bookmarks({ ...props }) {
     <TabPanel display="flex" flexDirection="column" height="full" {...props}>
       <OrderedList m={0} p={0} width="full" overflowY="auto">
         {preferredCharts.map((chart) => (
-          <ChartItem
-            key={`bookmark-${chart.key}`}
-            chart={chart}
-            handleClick={handleClickBookmark}
-          />
+          <ChartItem key={`bookmark-${chart.key}`} chart={chart} onClick={handleClickBookmark} />
         ))}
       </OrderedList>
     </TabPanel>

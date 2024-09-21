@@ -67,7 +67,7 @@ const useSessionsStore = create(
         set(
           produce<SessionState>((draft) => {
             Object.assign(draft, session);
-            draft.currentChartIndex = currentChartIndex;
+            draft.currentChartIndex = currentChartIndex === -1 ? 0 : currentChartIndex;
             draft.loadingSession = false;
           }),
         );
