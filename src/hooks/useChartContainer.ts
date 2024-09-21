@@ -16,8 +16,6 @@ export default function useChartContainer() {
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
   const appendNextChart = useSessionsStore((state) => state.appendNextChart);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
-  const increaseCurrentChartIndex = useSessionsStore((state) => state.increaseCurrentChartIndex);
-  const decreaseCurrentChartIndex = useSessionsStore((state) => state.decreaseCurrentChartIndex);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,16 +52,16 @@ export default function useChartContainer() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
         event.preventDefault();
-        decreaseCurrentChartIndex();
+        setCurrentChartIndex(currentChartIndex - 1);
       }
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        increaseCurrentChartIndex();
+        setCurrentChartIndex(currentChartIndex + 1);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [increaseCurrentChartIndex, decreaseCurrentChartIndex]);
+  }, [currentChartIndex, setCurrentChartIndex]);
 
   return {
     charts,

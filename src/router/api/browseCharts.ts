@@ -6,7 +6,7 @@ type FBrowseCharts = ({ fieldNames }: { fieldNames: string[] }) => Promise<TChar
 
 async function browseChartsPyodide({ fieldNames }: { fieldNames: string[] }) {
   const pyodide = await getPyodide();
-  const charts = await pyodide.callPythonFunction("browseCharts", { field_names: fieldNames });
+  const charts = await pyodide.callPythonFunction<TChart[]>("browseCharts", [fieldNames]);
   return charts;
 }
 

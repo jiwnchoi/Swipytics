@@ -6,7 +6,7 @@ type FLoadSession = ({ session }: { session: TSession }) => Promise<TSession>;
 
 async function loadSessionPyodide({ session }: { session: TSession }) {
   const pyodide = await getPyodide();
-  return pyodide.callPythonFunction("loadSession", { session });
+  return await pyodide.callPythonFunction<TSession>("loadSession", [session]);
 }
 
 async function loadSessionFetch({ session }: { session: TSession }) {

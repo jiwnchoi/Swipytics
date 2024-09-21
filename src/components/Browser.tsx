@@ -34,8 +34,8 @@ function Browser() {
     selectedFields,
     inputValue,
     setInputValue,
-    handleFieldSelection,
-    appendChart,
+    appendBrowseField,
+    appendBrowsedChart,
     handleKeydown,
     suggestionCursorIndex,
   } = useBrowser();
@@ -57,7 +57,7 @@ function Browser() {
           {selectedFields.map((field) => (
             <Tag key={field} borderRadius="full" colorScheme={PRIMARY_COLOR}>
               <TagLabel>{field}</TagLabel>
-              <TagCloseButton onClick={() => handleFieldSelection(field)} />
+              <TagCloseButton onClick={() => appendBrowseField(field)} />
             </Tag>
           ))}
           <Input
@@ -90,7 +90,7 @@ function Browser() {
             {fieldNameMatches.map((match, idx) => (
               <Box
                 key={match.item}
-                onClick={() => handleFieldSelection(match.item)}
+                onClick={() => appendBrowseField(match.item)}
                 bgColor={(() => {
                   const isSelected = selectedFields.includes(match.item);
                   const isCurrentCursor = idx === suggestionCursorIndex;
@@ -117,8 +117,8 @@ function Browser() {
             <ChartItem
               key={`${chart.key}-${chart.timestamp}`}
               chart={chart}
-              handleClick={() => {
-                appendChart(chart);
+              onClick={() => {
+                appendBrowsedChart(chart);
               }}
             />
           ))}

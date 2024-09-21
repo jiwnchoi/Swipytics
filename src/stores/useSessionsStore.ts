@@ -1,6 +1,6 @@
 import { CHART_PREFETCH_DELAY } from "@shared/constants";
 import type { TChart, TSession } from "@shared/models";
-import { type Draft, produce } from "immer";
+import { produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -9,10 +9,7 @@ import { router } from "@router";
 interface SessionState extends TSession {
   currentChartIndex: number;
   setCurrentChartIndex: (index: number) => void;
-  increaseCurrentChartIndex: () => void;
-  decreaseCurrentChartIndex: () => void;
   setCurrentChartToLast: () => void;
-  getChartIndexByKey: (key: string) => number | undefined;
 
   loadingSession: boolean;
   loadSession: (filename: string) => Promise<void>;
@@ -27,121 +24,114 @@ interface SessionState extends TSession {
 }
 
 const useSessionsStore = create(
-  devtools<SessionState>((set, get) => ({
-    filename: "",
-    timestamp: 0,
-    charts: [],
-    fields: [],
+  devtools<SessionState>(
+    (set, get) => ({
+      filename: "",
+      timestamp: 0,
+      charts: [],
+      fields: [],
 
-    resetSession: () =>
-      set({
-        filename: "",
-        timestamp: 0,
-        charts: [],
-        fields: [],
-        currentChartIndex: -1,
-      }),
+      // Client-only state
+      currentChartIndex: -1,
+      loadingSession: false,
+      appendingChart: false,
 
-    currentChartIndex: -1,
-    increaseCurrentChartIndex: () => {
-      const { setCurrentChartIndex, currentChartIndex } = get();
-      setCurrentChartIndex(currentChartIndex + 1);
-    },
-    decreaseCurrentChartIndex: () => {
-      const { setCurrentChartIndex, currentChartIndex } = get();
-      setCurrentChartIndex(currentChartIndex - 1);
-    },
-    setCurrentChartIndex: (index) => {
-      const { appendingChart, charts } = get();
-      if (appendingChart || index < -1 || index > charts.length - 1) return;
-      set({ currentChartIndex: index });
-    },
-    setCurrentChartToLast: () => {
-      const { charts, setCurrentChartIndex } = get();
-      setCurrentChartIndex(charts.length - 1);
-    },
-    getChartIndexByKey: (key: string) => get().charts.findIndex((chart) => chart.key === key),
-
-    loadingSession: false,
-    loadSession: async (filename: string) => {
-      set({
-        loadingSession: true,
-        filename,
-      });
-      const { timestamp, charts, fields } = get();
-
-      const session = await router.call("loadSession", {
-        session: {
-          filename,
-          timestamp,
-          charts,
-          fields,
-        },
-      });
-      if (!session) {
-        set({ loadingSession: false });
-        return;
-      }
-      set(
-        produce((draft: Draft<SessionState>) => {
-          draft.timestamp = session.timestamp;
-          draft.fields = session.fields;
-          draft.charts = session.charts;
-          draft.loadingSession = false;
-          draft.currentChartIndex = 0;
+      resetSession: () =>
+        set({
+          filename: "",
+          timestamp: 0,
+          charts: [],
+          fields: [],
+          currentChartIndex: -1,
         }),
-      );
-    },
 
-    appendingChart: false,
-    appendNextChart: async () => {
-      set({ appendingChart: true });
-      const chart = await router.call("appendNextChart");
-      if (!chart) {
-        set({ appendingChart: false });
-        return;
-      }
-      set(
-        produce((draft: Draft<SessionState>) => {
-          draft.charts.push(chart);
-          draft.appendingChart = false;
-        }),
-      );
-    },
-    appendChart: async (chart: TChart) => {
-      set({ appendingChart: true });
-      await router.call("appendChart", { chart });
-      set(
-        produce((draft: Draft<SessionState>) => {
-          if (draft.charts.length > CHART_PREFETCH_DELAY) {
-            draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
-          }
-          draft.charts.push(chart);
-          draft.appendingChart = false;
-        }),
-      );
-    },
+      setCurrentChartIndex: (index) => {
+        const { appendingChart, charts } = get();
+        if (appendingChart || index < -1 || index > charts.length - 1) return;
+        set({ currentChartIndex: index });
+      },
 
-    renewCurrentChart: () =>
-      set(
-        produce((draft: Draft<SessionState>) => {
-          const currentChart = draft.charts[draft.currentChartIndex];
-          currentChart.specIndex = (currentChart.specIndex + 1) % currentChart.specs.length;
-        }),
-      ),
+      setCurrentChartToLast: () => {
+        const { charts, setCurrentChartIndex } = get();
+        setCurrentChartIndex(charts.length - 1);
+      },
 
-    setCurrentChartPreferred: (preferred) => {
-      const { charts, currentChartIndex } = get();
-      const currentChart = charts[currentChartIndex];
-      router.call("setPreferred", { key: currentChart.key, preferred });
+      loadSession: async (filename: string) => {
+        set({ loadingSession: true, filename });
+        const { timestamp, charts, fields, currentChartIndex } = get();
 
-      set(
-        produce((draft: Draft<SessionState>) => {
-          draft.charts[draft.currentChartIndex].preferred = preferred;
-        }),
-      );
+        const session = await router.call("loadSession", {
+          session: { filename, timestamp, charts, fields },
+        });
+
+        if (session) {
+          set(
+            produce<SessionState>((draft) => {
+              Object.assign(draft, session);
+              draft.currentChartIndex = currentChartIndex === -1 ? 0 : currentChartIndex;
+              draft.loadingSession = false;
+            }),
+          );
+        } else {
+          set({ loadingSession: false });
+        }
+      },
+
+      appendNextChart: async () => {
+        set({ appendingChart: true });
+        const chart = await router.call("appendNextChart");
+        if (chart) {
+          set(
+            produce<SessionState>((draft) => {
+              draft.charts.push(chart);
+              draft.appendingChart = false;
+            }),
+          );
+        } else {
+          set({ appendingChart: false });
+        }
+      },
+
+      appendChart: async (chart: TChart) => {
+        set({ appendingChart: true });
+        await router.call("appendChart", { chart });
+        set(
+          produce<SessionState>((draft) => {
+            if (draft.charts.length > CHART_PREFETCH_DELAY) {
+              draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
+            }
+            draft.charts.push(chart);
+            draft.appendingChart = false;
+          }),
+        );
+      },
+
+      renewCurrentChart: () =>
+        set(
+          produce<SessionState>((draft) => {
+            const currentChart = draft.charts[draft.currentChartIndex];
+            currentChart.specIndex = (currentChart.specIndex + 1) % currentChart.specs.length;
+          }),
+        ),
+
+      setCurrentChartPreferred: (preferred) => {
+        const { charts, currentChartIndex } = get();
+        const currentChart = charts[currentChartIndex];
+        router.call("setPreferred", { key: currentChart.key, preferred });
+
+        set(
+          produce<SessionState>((draft) => {
+            draft.charts[draft.currentChartIndex].preferred = preferred;
+          }),
+        );
+      },
+    }),
+    {
+      name: "SessionStore",
+      anonymousActionType: "SessionStore Action",
+      enabled: import.meta.env.MODE === "development",
     },
-  })),
+  ),
 );
 
 export default useSessionsStore;

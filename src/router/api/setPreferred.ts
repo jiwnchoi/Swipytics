@@ -5,7 +5,7 @@ type FSetPreferred = ({ key, preferred }: { key: string; preferred: boolean }) =
 
 async function setPreferredPyodide({ key, preferred }: { key: string; preferred: boolean }) {
   const pyodide = await getPyodide();
-  await pyodide.callPythonFunction("setPreferred", { key, preferred });
+  await pyodide.callPythonFunction("setPreferred", [key, preferred]);
 }
 
 async function setPreferredFetch({ key, preferred }: { key: string; preferred: boolean }) {

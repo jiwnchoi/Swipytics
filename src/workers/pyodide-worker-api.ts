@@ -7,12 +7,12 @@
 import * as Comlink from "comlink";
 
 import Worker from "./pyodide-worker?worker";
-import type { Pyodide, PyodideRunner, WorkerManifest } from "./types";
+import type { Pyodide, PyodideRunner } from "./types";
 
 let _worker: Worker | null = null;
 let _runner: Comlink.Remote<PyodideRunner> | null = null;
 
-const runPython = async (code: string, globals?: Record<string, unknown>): Promise<unknown> => {
+const runPython = async (code: string, globals?: Record<string, any>): Promise<any> => {
   if (!_worker || !_runner) {
     throw new Error("pyodide isn't loaded yet");
   }
@@ -21,15 +21,12 @@ const runPython = async (code: string, globals?: Record<string, unknown>): Promi
   return value;
 };
 
-const callPythonFunction = async <K extends keyof WorkerManifest>(
-  funcName: K,
-  args: WorkerManifest[K]["args"],
-): Promise<WorkerManifest[K]["returns"]> => {
+const callPythonFunction = async (funcName: string, args: any[]): Promise<any> => {
   if (!_worker || !_runner) {
     throw new Error("pyodide isn't loaded yet");
   }
 
-  return _runner.callPythonFunction(funcName, args) as Promise<WorkerManifest[K]["returns"]>;
+  return _runner.callPythonFunction(funcName, args);
 };
 
 const writeFile = async (fileName: string, data: Uint8Array): Promise<void> => {

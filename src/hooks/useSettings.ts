@@ -1,12 +1,15 @@
 import { useColorMode, useToast } from "@chakra-ui/react";
 import { router } from "@router";
-import { useSettingsStore } from "@stores";
+import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
 import { useState } from "react";
 
 export default function useSettings() {
+  const { fileCache, writeFile } = useDataStore();
+  const { loadSession, filename: currentFilename } = useSessionsStore();
   const { apiKey, setApiKey } = useSettingsStore();
   const { colorMode, toggleColorMode } = useColorMode();
   const [python, setPython] = useState<"pyodide" | "server">(() => router.getPythonType());
+  const [locale, setLocale] = useState<"en" | "ko">("en");
   const toast = useToast();
 
   const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,33 +21,30 @@ export default function useSettings() {
     console.log("Downloading logs...");
   };
 
-  const [locale, setLocale] = useState<"en" | "ko">("en");
-
-  const togglePython = () => {
+  const handleServerButtonClick = async () => {
     if (!router) return;
-    const res = router.setPython(router.getPythonType() === "pyodide" ? "server" : "pyodide");
-    if (res) {
-      setPython(router.getPythonType());
-    }
-    if (!res && !toast.isActive("server-not-available")) {
+    const newType = python === "pyodide" ? "server" : "pyodide";
+    const success = router.setPython(newType);
+    if (!success) {
       toast({
         id: "server-not-available",
-        position: "bottom",
         title: "Server is not available.",
-        description:
-          "Failed to access Python backend. Only local Pyodide is available. Please refer the GitHub README for more information.",
+        description: "Failed to access Python backend. Only local Pyodide is available.",
         status: "error",
         duration: 3000,
         isClosable: true,
-        containerStyle: {
-          margin: 10,
-        },
+        position: "bottom",
+        containerStyle: { margin: 10 },
       });
-    }
-  };
 
-  const handleServerButtonClick = () => {
-    togglePython();
+      return;
+    }
+
+    setPython(newType);
+
+    if (!fileCache) return;
+    await writeFile(fileCache);
+    await loadSession(currentFilename);
   };
 
   return {

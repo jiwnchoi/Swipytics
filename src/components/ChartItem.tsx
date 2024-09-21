@@ -7,11 +7,11 @@ import { useDataStore } from "../stores";
 
 interface ChartItemProps {
   chart: TChart;
-  handleClick: (chart: TChart) => void;
+  onClick: (chart: TChart) => void;
 }
 
-function ChartItem({ chart, handleClick }: ChartItemProps) {
-  const { drawerBgColor, thumbnailSize } = useLayout();
+function ChartItem({ chart, onClick }: ChartItemProps) {
+  const { buttonColor, thumbnailSize } = useLayout();
   const data = useDataStore((state) => state.data);
   const [thumbnail, setThumbnail] = useState<string | undefined>(chart.thumbnail);
 
@@ -31,8 +31,9 @@ function ChartItem({ chart, handleClick }: ChartItemProps) {
         p={1}
         gap={2}
         borderRadius="md"
-        onClick={() => handleClick(chart)}
-        _hover={{ cursor: "pointer", bg: drawerBgColor }}>
+        onClick={() => onClick(chart)}
+        transition="background-color 0.2s ease-in-out"
+        _hover={{ cursor: "pointer", bg: buttonColor }}>
         {!!thumbnail && (
           <Image
             src={thumbnail}

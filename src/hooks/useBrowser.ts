@@ -11,44 +11,41 @@ export default function useBrowser() {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [suggestionCursorIndex, setSuggestionCursorIndex] = useState<number>(0);
-  const filename = useDataStore((state) => state.filename);
-  const data = useDataStore((state) => state.data);
 
-  useEffect(() => {
-    setSuggestionCursorIndex(0);
-  }, [inputValue]);
+  const data = useDataStore((state) => state.data);
+  const filename = useDataStore((state) => state.filename);
+
+  const charts = useSessionsStore((state) => state.charts);
+  const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
+  const appendChart = useSessionsStore((state) => state.appendChart);
 
   const { data: browsedCharts = [], isLoading: loading } = useQuery({
-    queryKey: ["browseCharts", filename, ...selectedFields.sort().join("&")],
+    queryKey: ["browseCharts", filename, ...selectedFields],
     queryFn: async () => {
       if (selectedFields.length === 0 || !data) return [];
-      const charts = await router.call("browseCharts", { fieldNames: selectedFields });
-      if (!charts) return [];
-      return charts;
+      return (await router.call("browseCharts", { fieldNames: selectedFields })) ?? [];
     },
   });
 
   const fieldNameMatches = useFieldNameMatches(inputValue);
-  const appendCharttoSession = useSessionsStore((state) => state.appendChart);
-  const setCurrentChartToLast = useSessionsStore((state) => state.setCurrentChartToLast);
-
-  const appendChart = useCallback(
-    async (chart: TChart) => {
-      await appendCharttoSession(chart);
-      setCurrentChartToLast();
-    },
-    [appendCharttoSession, setCurrentChartToLast],
-  );
-
-  useEffect(() => {
-    if (selectedFields.length >= MAX_N_SELECTED_FIELDS) {
-      setInputValue("");
-    }
-  }, [selectedFields]);
-
   const inputDisabled = selectedFields.length >= MAX_N_SELECTED_FIELDS;
 
-  const handleFieldSelection = (field: string) => {
+  const appendBrowsedChart = useCallback(
+    async (chart: TChart) => {
+      await appendChart(chart);
+      setCurrentChartIndex(charts.length - 1);
+    },
+    [appendChart, charts.length, setCurrentChartIndex],
+  );
+
+  useEffect(() => setSuggestionCursorIndex(0), [inputValue]);
+
+  useEffect(() => {
+    if (selectedFields.length >= MAX_N_SELECTED_FIELDS) return;
+    setInputValue("");
+  }, [selectedFields]);
+
+  const appendBrowseField = (field: string) => {
     setSelectedFields((prev) =>
       prev.includes(field) ? prev.filter((f) => f !== field) : [...prev, field],
     );
@@ -59,21 +56,16 @@ export default function useBrowser() {
     if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
       e.stopPropagation();
     }
-    if (["ArrowDown", "ArrowUp"].includes(e.key)) {
+    if (["ArrowDown", "ArrowUp"].includes(e.key) && fieldNameMatches.length > 0) {
       e.preventDefault();
-      if (fieldNameMatches.length > 0)
-        setSuggestionCursorIndex((prev) =>
-          e.key === "ArrowDown"
-            ? Math.min(prev + 1, fieldNameMatches.length - 1)
-            : Math.max(prev - 1, 0),
-        );
-    } else if (e.key === "Enter") {
-      if (
-        selectedFields.length <= MAX_N_SELECTED_FIELDS &&
-        fieldNameMatches.length > suggestionCursorIndex
-      ) {
-        handleFieldSelection(fieldNameMatches[suggestionCursorIndex].item);
-      }
+      setSuggestionCursorIndex((prev) =>
+        e.key === "ArrowDown"
+          ? Math.min(prev + 1, fieldNameMatches.length - 1)
+          : Math.max(prev - 1, 0),
+      );
+    }
+    if (e.key === "Enter" && fieldNameMatches.length > suggestionCursorIndex) {
+      appendBrowseField(fieldNameMatches[suggestionCursorIndex].item);
     }
   };
 
@@ -85,8 +77,8 @@ export default function useBrowser() {
     inputValue,
     setInputValue,
     selectedFields,
-    handleFieldSelection,
-    appendChart,
+    appendBrowseField,
+    appendBrowsedChart,
     suggestionCursorIndex,
     handleKeydown,
   };
