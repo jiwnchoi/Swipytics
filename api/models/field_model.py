@@ -1,6 +1,6 @@
 import pandas as pd
 from api.utils import get_clingo_field_name
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from .metadata_model import (
   FieldType,
@@ -79,8 +79,6 @@ class FieldModel(BaseModel):
   clingo_name: str
   metadata: MetadataModel
 
-  series: pd.Series = Field(default=None, repr=False, exclude=True)
-
   model_config = DefaultConfig
 
   @classmethod
@@ -96,7 +94,6 @@ class FieldModel(BaseModel):
       type=series_type,
       clingo_name=clingo_name,
       metadata=metadata,
-      series=series,
     )
 
   def __hash__(self) -> int:

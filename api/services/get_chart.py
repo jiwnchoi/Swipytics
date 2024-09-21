@@ -8,6 +8,6 @@ from .get_specs import get_specs_from_facts
 
 
 def get_chart(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> ChartModel | None:
-  facts = get_facts_from_fields(fields)
+  facts = get_facts_from_fields(df, fields)
   specs = get_specs_from_facts(df, facts)
   return ChartModel(fields=fields, specs=specs) if specs else None
