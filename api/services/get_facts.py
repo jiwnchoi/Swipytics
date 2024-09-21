@@ -16,8 +16,8 @@ def _get_base_facts() -> list[str]:
   ]
 
 
-def _get_attribute_facts(fields: tuple["FieldModel", ...]) -> list[str]:
-  base_scheme = draco.schema_from_dataframe(pd.concat([f.series for f in fields], axis=1))
+def _get_attribute_facts(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> list[str]:
+  base_scheme = draco.schema_from_dataframe(df[[f.clingo_name for f in fields]])
   base_scheme = {
     **base_scheme,
     "field": [rescale_field_to_32bit(f) for f in base_scheme["field"]],
@@ -43,7 +43,7 @@ def _get_encoding_facts(fields: tuple["FieldModel", ...]) -> list[str]:
   return facts
 
 
-def get_facts_from_fields(fields: tuple["FieldModel", ...]) -> list[str]:
-  facts = _get_base_facts() + _get_attribute_facts(fields) + _get_encoding_facts(fields)
+def get_facts_from_fields(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> list[str]:
+  facts = _get_base_facts() + _get_attribute_facts(df, fields) + _get_encoding_facts(fields)
 
   return facts

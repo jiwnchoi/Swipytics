@@ -45,11 +45,11 @@ def get_fields_vector(session: SessionModel, use_preference: bool = False) -> np
   return vector / vector.max() if vector.max() != 0 else vector
 
 
-def get_statistics_score(fields: tuple[FieldModel, ...]) -> float:
+def get_statistics_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> float:
   if len(fields) == 1:
     return 1.0
   types = tuple(field.type for field in fields[:2])
-  series = tuple(field.series for field in fields[:2])
+  series = tuple(session.df[field.clingo_name] for field in fields[:2])
   type_combinations = {
     ("numeric", "numeric"): has_numeric_numeric_stat,
     ("categorical", "categorical"): has_categorical_categorical_stat,
@@ -79,7 +79,7 @@ def get_next_chart(session: SessionModel) -> ChartModel | None:
   def scores(fields):
     field_vector = np.array([f in fields for f in session.fields], dtype=np.float64)
     return [
-      get_statistics_score(fields),
+      get_statistics_score(session, fields),
       get_score(relevance_vector, field_vector),
       get_score(preference_vector, field_vector),
       -get_duplicate_penalty(session, fields),
