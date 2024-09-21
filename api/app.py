@@ -17,11 +17,15 @@ def loadSession(session: dict[str, Any] | SessionModel):
   global sessionState
   if isinstance(session, dict):
     session = SessionModel.model_validate(session)
+
   sessionState = SessionModel(filename=session.filename)
   sessionState.charts = session.charts
   sessionState.timestamp = session.timestamp
-  chart = get_next_chart(sessionState)
-  sessionState.charts.append(chart) if chart else None
+
+  if len(sessionState.charts) == 0:
+    chart = get_next_chart(sessionState)
+    sessionState.charts.append(chart) if chart else None
+
   return sessionState.model_dump(by_alias=True, mode="json")
 
 

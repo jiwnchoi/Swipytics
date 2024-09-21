@@ -11,42 +11,39 @@ export default function useBrowser() {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [suggestionCursorIndex, setSuggestionCursorIndex] = useState<number>(0);
-  const filename = useDataStore((state) => state.filename);
-  const data = useDataStore((state) => state.data);
 
-  useEffect(() => {
-    setSuggestionCursorIndex(0);
-  }, [inputValue]);
+  const data = useDataStore((state) => state.data);
+  const filename = useDataStore((state) => state.filename);
+
+  const charts = useSessionsStore((state) => state.charts);
+  const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
+  const appendCharttoSession = useSessionsStore((state) => state.appendChart);
 
   const { data: browsedCharts = [], isLoading: loading } = useQuery({
-    queryKey: ["browseCharts", filename, ...selectedFields.sort().join("&")],
+    queryKey: ["browseCharts", filename, ...selectedFields.sort()],
     queryFn: async () => {
       if (selectedFields.length === 0 || !data) return [];
-      const charts = await router.call("browseCharts", { fieldNames: selectedFields });
-      if (!charts) return [];
-      return charts;
+      return (await router.call("browseCharts", { fieldNames: selectedFields })) ?? [];
     },
   });
 
   const fieldNameMatches = useFieldNameMatches(inputValue);
-  const appendCharttoSession = useSessionsStore((state) => state.appendChart);
-  const setCurrentChartToLast = useSessionsStore((state) => state.setCurrentChartToLast);
+  const inputDisabled = selectedFields.length >= MAX_N_SELECTED_FIELDS;
 
   const appendChart = useCallback(
     async (chart: TChart) => {
       await appendCharttoSession(chart);
-      setCurrentChartToLast();
+      setCurrentChartIndex(charts.length - 1);
     },
-    [appendCharttoSession, setCurrentChartToLast],
+    [appendCharttoSession, charts.length, setCurrentChartIndex],
   );
 
-  useEffect(() => {
-    if (selectedFields.length >= MAX_N_SELECTED_FIELDS) {
-      setInputValue("");
-    }
-  }, [selectedFields]);
+  useEffect(() => setSuggestionCursorIndex(0), [inputValue]);
 
-  const inputDisabled = selectedFields.length >= MAX_N_SELECTED_FIELDS;
+  useEffect(() => {
+    if (selectedFields.length >= MAX_N_SELECTED_FIELDS) return;
+    setInputValue("");
+  }, [selectedFields]);
 
   const handleFieldSelection = (field: string) => {
     setSelectedFields((prev) =>
