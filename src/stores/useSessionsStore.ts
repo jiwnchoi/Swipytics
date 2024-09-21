@@ -8,7 +8,7 @@ import { router } from "@router";
 
 interface SessionState extends TSession {
   currentChartIndex: number;
-  setCurrentChartIndex: (index: number) => Promise<void>;
+  setCurrentChartIndex: (index: number) => void;
   increaseCurrentChartIndex: () => void;
   decreaseCurrentChartIndex: () => void;
   setCurrentChartToLast: () => void;
@@ -51,15 +51,10 @@ const useSessionsStore = create(
       const { setCurrentChartIndex, currentChartIndex } = get();
       setCurrentChartIndex(currentChartIndex - 1);
     },
-    setCurrentChartIndex: async (index) => {
-      const { charts, appendingChart, appendNextChart } = get();
-      if (index < -1 || appendingChart) return;
-
+    setCurrentChartIndex: (index) => {
+      const { appendingChart, charts } = get();
+      if (appendingChart || index < -1 || index > charts.length - 1) return;
       set({ currentChartIndex: index });
-
-      if (index > charts.length - CHART_PREFETCH_DELAY - 1) {
-        await appendNextChart();
-      }
     },
     setCurrentChartToLast: () => {
       const { charts, setCurrentChartIndex } = get();
