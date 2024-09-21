@@ -22,7 +22,7 @@ async def write_file(file: UploadFile):
 @server.post("/api/loadSession")
 async def load_session(session: SessionModel):
   if os.path.isfile(f"data/{session.filename}"):
-    return loadSession(filename=session.filename, new_session=session)
+    return loadSession(session=session)
   else:
     return HTTPException(status_code=404, detail="File not found")
 

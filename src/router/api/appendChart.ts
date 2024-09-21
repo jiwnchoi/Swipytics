@@ -6,7 +6,7 @@ type FAppendChart = ({ chart }: { chart: TChart }) => Promise<TSession>;
 
 async function appendChartPyodide({ chart }: { chart: TChart }) {
   const pyodide = await getPyodide();
-  return await pyodide.callPythonFunction("appendChart", { chart });
+  return await pyodide.callPythonFunction<TSession>("appendChart", [chart]);
 }
 async function appendChartFetch({ chart }: { chart: TChart }) {
   const res = await fetch("/api/appendChart", {
