@@ -5,8 +5,8 @@ export default function useColors() {
   const cardPadding = useBreakpointValue({ base: 0, lg: "18px" });
   const cardWidth = useBreakpointValue({ base: window.innerWidth, lg: 880 });
   const cardHeight = useBreakpointValue({
-    base: "100vh",
-    lg: "calc(80vh - 18px)",
+    base: "100dvh",
+    lg: "calc(80dvh - 18px)",
   });
   const mobile = useBreakpointValue({ base: true, lg: false });
   const drawerBgColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);

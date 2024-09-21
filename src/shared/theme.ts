@@ -48,13 +48,13 @@ export const theme = extendTheme({
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        height: "100lvh",
+        height: "100dvh",
         overflow: "smooth",
         overscrollBehavior: "none",
         bg: props.colorMode === "light" ? "gray.100" : "gray.800",
       },
       html: {
-        height: "100lvh",
+        height: "100dvh",
         overflow: "smooth",
         overscrollBehavior: "none",
         overflowY: "overlay",

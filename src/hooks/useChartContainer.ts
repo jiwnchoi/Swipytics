@@ -14,6 +14,7 @@ function getChartWidth(container: HTMLDivElement | null) {
 export default function useChartContainer() {
   const charts = useSessionsStore((state) => state.charts);
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
+  const appendNextChart = useSessionsStore((state) => state.appendNextChart);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const increaseCurrentChartIndex = useSessionsStore((state) => state.increaseCurrentChartIndex);
   const decreaseCurrentChartIndex = useSessionsStore((state) => state.decreaseCurrentChartIndex);
@@ -26,13 +27,17 @@ export default function useChartContainer() {
     const handleScroll = debounce(() => {
       const scrollLeft = container.scrollLeft;
       const chartWidth = getChartWidth(container);
-      const newIndex = Math.round(scrollLeft / chartWidth);
-      setCurrentChartIndex(newIndex - 1);
+      const newIndex = Math.round(scrollLeft / chartWidth) - 1;
+      setCurrentChartIndex(newIndex);
+
+      if (newIndex === charts.length - 1) {
+        appendNextChart();
+      }
     }, DEBOUNCE_DELAY);
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [setCurrentChartIndex]);
+  }, [appendNextChart, charts.length, setCurrentChartIndex]);
 
   useEffect(() => {
     const container = ref.current;
