@@ -4,7 +4,7 @@ import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
 import { useState } from "react";
 
 export default function useSettings() {
-  const { filename, fileBuffer } = useDataStore();
+  const { fileCache, writeFile } = useDataStore();
   const { loadSession, filename: currentFilename } = useSessionsStore();
   const { apiKey, setApiKey } = useSettingsStore();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -42,9 +42,8 @@ export default function useSettings() {
 
     setPython(newType);
 
-    if (!filename || !fileBuffer) return;
-
-    await router.lazyCall("writeFile", { filename, fileBuffer });
+    if (!fileCache) return;
+    await writeFile(fileCache);
     await loadSession(currentFilename);
   };
 

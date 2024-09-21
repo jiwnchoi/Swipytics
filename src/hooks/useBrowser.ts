@@ -20,7 +20,7 @@ export default function useBrowser() {
   const appendChart = useSessionsStore((state) => state.appendChart);
 
   const { data: browsedCharts = [], isLoading: loading } = useQuery({
-    queryKey: ["browseCharts", filename, ...selectedFields.sort()],
+    queryKey: ["browseCharts", filename, ...selectedFields],
     queryFn: async () => {
       if (selectedFields.length === 0 || !data) return [];
       return (await router.call("browseCharts", { fieldNames: selectedFields })) ?? [];
