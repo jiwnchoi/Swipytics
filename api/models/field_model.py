@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Literal
+
 import pandas as pd
 from api.utils import get_clingo_field_name
 from pydantic import BaseModel
@@ -25,7 +29,7 @@ def get_series_and_type(series: pd.Series) -> tuple[pd.Series, FieldType]:
   try:
     return pd.to_datetime(series, errors="raise", format="mixed"), "datetime"
   except Exception:
-    if series.nunique() > 20:
+    if series.nunique() > 10:
       return series, "name"
 
     return series, "categorical"
@@ -95,6 +99,15 @@ class FieldModel(BaseModel):
       clingo_name=clingo_name,
       metadata=metadata,
     )
+
+  @property
+  def scale(self) -> Literal["ordinal", "categorical"] | None:
+    if self.type == "numeric" and self.metadata.unique < 20:
+      return "ordinal"
+    if self.type == "categorical":
+      return "categorical"
+
+    return None
 
   def __hash__(self) -> int:
     return hash(self.name)

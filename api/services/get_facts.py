@@ -22,28 +22,26 @@ def _get_attribute_facts(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> 
     **base_scheme,
     "field": [rescale_field_to_32bit(f) for f in base_scheme["field"]],
   }
-  facts = draco.dict_to_facts(base_scheme)
-  return facts
+  return draco.dict_to_facts(base_scheme)
 
 
 def _get_encoding_facts(fields: tuple["FieldModel", ...]) -> list[str]:
-  facts = [
+  return [
     f
-    for i, field in enumerate(fields)
+    for i, (field, channel) in enumerate(zip(fields, ["x", "y", "color"]))
     for f in [
       f"entity(encoding,m0,e{i}).",
       f"attribute((encoding,field),e{i},{field.clingo_name}).",
+      f"attribute((encoding,channel),e{i},{channel}).",
+      f"entity(scale,v0,s{i})." if field.scale else None,
+      f"attribute((scale,channel),s{i},{channel})." if field.scale else None,
+      f"attribute((scale,type),s{i},{'ordinal' if channel in ['x', 'y'] else field.scale})."
+      if field.scale
+      else None,
     ]
+    if f is not None
   ]
-
-  if len(fields) == 3:
-    facts.append(":- attribute((encoding,channel),e2,x).")
-    facts.append(":- attribute((encoding,channel),e2,y).")
-
-  return facts
 
 
 def get_facts_from_fields(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> list[str]:
-  facts = _get_base_facts() + _get_attribute_facts(df, fields) + _get_encoding_facts(fields)
-
-  return facts
+  return _get_base_facts() + _get_attribute_facts(df, fields) + _get_encoding_facts(fields)
