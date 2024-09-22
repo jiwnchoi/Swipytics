@@ -32,7 +32,7 @@ function ChartItem({ chart, onClick }: ChartItemProps) {
         gap={2}
         borderRadius="md"
         onClick={() => onClick(chart)}
-        transition="background-color 0.2s ease-in-out"
+        transition={"background-color 0.2s"}
         _hover={{ cursor: "pointer", bg: buttonColor }}>
         {!!thumbnail && (
           <Image
