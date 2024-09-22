@@ -1,7 +1,7 @@
 import { type StyleFunctionProps, extendTheme } from "@chakra-ui/react";
-import { PRIMARY } from "./constants";
+import { PRIMARY } from "../constants";
 
-export const theme = extendTheme({
+const theme = extendTheme({
   initialColorMode: "dark",
   useSystemColorMode: true,
   components: {
@@ -63,3 +63,5 @@ export const theme = extendTheme({
     }),
   },
 });
+
+export default theme;

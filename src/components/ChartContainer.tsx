@@ -2,10 +2,11 @@ import { Flex, type FlexProps } from "@chakra-ui/react";
 import { useChartContainer, useLayout } from "@hooks";
 import Chart from "./Chart";
 import PlaceHolder from "./PlaceHolder";
+import ScrollIndicator from "./ScrollIndicator";
 
 export default function ChartContainer(props: FlexProps) {
   const { charts, ref } = useChartContainer();
-  const { cardHeight, cardColor, cardWidth } = useLayout();
+  const { mobile, cardHeight, cardColor, cardWidth } = useLayout();
   return (
     <Flex
       ref={ref}
@@ -20,6 +21,13 @@ export default function ChartContainer(props: FlexProps) {
         },
       }}
       {...props}>
+      <ScrollIndicator
+        top={mobile ? 0 : undefined}
+        bottom={mobile ? undefined : 0}
+        h={8}
+        p={2}
+        w="full"
+      />
       <PlaceHolder
         flexDir={"column"}
         minW="full"

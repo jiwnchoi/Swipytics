@@ -6,7 +6,6 @@ import {
   ControlPanel,
   Controller,
   MetadataFields,
-  ScrollIndicator,
   Settings,
   TabsContainer,
 } from "@components";
@@ -20,23 +19,15 @@ import {
 } from "hugeicons-react";
 
 export default function App() {
-  const { cardHeight, cardColor, cardWidth, mobile } = useLayout();
+  const { cardHeight, cardColor, cardWidth } = useLayout();
 
   return (
     <Flex
       minW={{ base: "full", lg: "container.xl" }}
       maxH={cardHeight}
-      position={"relative"}
       gap={4}
       flexDir={{ base: "column", lg: "row" }}>
       <Flex position="relative" w={cardWidth}>
-        <ScrollIndicator
-          top={mobile ? 0 : undefined}
-          bottom={mobile ? undefined : 0}
-          h={8}
-          w="full"
-          p={2}
-        />
         <ChartPanel w={"full"} gap={{ base: 0, lg: 4 }} />
       </Flex>
       <ControlPanel

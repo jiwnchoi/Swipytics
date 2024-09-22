@@ -2,7 +2,6 @@ import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 
 function useLoadData() {
   const loadingData = useDataStore((state) => state.writingFile);
-  const filename = useDataStore((state) => state.filename);
   const writeFile = useDataStore((state) => state.writeFile);
   const loadingSession = useSessionsStore((state) => state.loadingSession);
   const loadSession = useSessionsStore((state) => state.loadSession);
@@ -11,6 +10,7 @@ function useLoadData() {
   const sessionFileName = useSessionsStore((state) => state.filename);
   const initializeSession = async (file: File | string) => {
     await writeFile(file);
+    const filename = useDataStore.getState().filename;
 
     if (!filename) return;
     if (filename !== sessionFileName) resetSession();
