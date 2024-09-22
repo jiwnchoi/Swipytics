@@ -44,8 +44,11 @@ function ChartItem({ chart, onClick }: ChartItemProps) {
           />
         )}
         <Flex flexDir="column">
-          {chart.fields.map((field) => (
-            <Text key={`${chart.key}-field-name-${field.name}`} fontSize="sm">
+          {chart.fields.map((field, i) => (
+            <Text
+              key={`${chart.key}-field-name-${field.name}`}
+              fontSize={i !== 2 ? "md" : "sm"}
+              fontWeight={i !== 2 ? 800 : 500}>
               {field.name}
             </Text>
           ))}
