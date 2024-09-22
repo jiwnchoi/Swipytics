@@ -9,6 +9,7 @@ import {
   Grid,
   Heading,
   Icon,
+  IconButton,
   type IconProps,
   Spacer,
   type StackProps,
@@ -18,9 +19,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import type { TDataField, TFieldType, TMetadata } from "@shared/models";
-import { useSessionsStore } from "@stores";
+import { useInteractionStore, useSessionsStore } from "@stores";
 import { format } from "d3-format";
-import { Calendar03Icon, GridIcon, Tag01Icon, TextFontIcon } from "hugeicons-react";
+import { Calendar03Icon, GridIcon, Search01Icon, Tag01Icon, TextFontIcon } from "hugeicons-react";
 
 const FieldIcon = ({ metadataType, ...props }: IconProps & { metadataType: TFieldType }) => {
   switch (metadataType) {
@@ -90,6 +91,8 @@ function EachMetaData({ metadata }: { metadata: TMetadata }) {
 }
 
 function EachField({ field }: { field: TDataField }) {
+  const setTabByName = useInteractionStore((state) => state.setTabByName);
+  const appendSearchTarget = useInteractionStore((state) => state.appendSearchTarget);
   return (
     <AccordionItem>
       <AccordionButton borderRadius={"md"}>
@@ -97,6 +100,19 @@ function EachField({ field }: { field: TDataField }) {
           <FieldIcon metadataType={field.type} boxSize={4} />
           <Heading fontSize="md">{field.name}</Heading>
           <Spacer />
+          <IconButton
+            variant={"ghost"}
+            p={0}
+            m={0}
+            size={"xs"}
+            icon={<Icon as={Search01Icon} />}
+            aria-label={`Search ${field.name}`}
+            onClick={(e) => {
+              setTabByName("search");
+              appendSearchTarget(field.name);
+              e.stopPropagation();
+            }}
+          />
           <AccordionIcon />
         </Flex>
       </AccordionButton>
@@ -113,7 +129,7 @@ function EachField({ field }: { field: TDataField }) {
   );
 }
 
-function MetadataFields(props: TabPanelProps & StackProps) {
+function Fields(props: TabPanelProps & StackProps) {
   const fields = useSessionsStore((state) => state.fields);
 
   return (
@@ -129,4 +145,4 @@ function MetadataFields(props: TabPanelProps & StackProps) {
   );
 }
 
-export default MetadataFields;
+export default Fields;
