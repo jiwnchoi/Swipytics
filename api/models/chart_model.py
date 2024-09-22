@@ -26,6 +26,7 @@ class ChartModel(BaseModel):
   def after(self) -> Self:
     self.attributes = tuple([field.name for field in self.fields])
     self.key = f"chart-{str([field for field in self.attributes])}-{self.timestamp}"
+    self.title = " & ".join([field.name for field in self.fields])
     return self
 
   def __hash__(self):

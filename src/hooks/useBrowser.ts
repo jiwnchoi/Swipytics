@@ -67,6 +67,10 @@ export default function useBrowser() {
     if (e.key === "Enter" && fieldNameMatches.length > suggestionCursorIndex) {
       appendBrowseField(fieldNameMatches[suggestionCursorIndex].item);
     }
+
+    if (e.key === "Backspace" && inputValue === "") {
+      setSelectedFields((prev) => prev.slice(0, -1));
+    }
   };
 
   return {

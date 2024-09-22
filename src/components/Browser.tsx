@@ -52,6 +52,7 @@ function Browser() {
           w="100%"
           flexWrap="wrap"
           border={"1px solid"}
+          borderBottomRadius={fieldNameMatches.length > 0 ? 0 : "md"}
           borderColor={borderColor}
           p={2}>
           {selectedFields.map((field) => (
@@ -65,8 +66,8 @@ function Browser() {
             w="fit-content"
             h="fit-content"
             px={2}
-            minW={48}
-            placeholder="Input field names to search..."
+            minW={selectedFields.length > 0 ? 0 : 60}
+            placeholder={selectedFields.length > 0 ? "" : "Input field names to search..."}
             borderColor={"transparent"}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -83,6 +84,7 @@ function Browser() {
             overflow="hidden"
             gap={0}
             w="full"
+            borderTopRadius={0}
             borderColor={borderColor}
             borderWidth={1}
             position="absolute"

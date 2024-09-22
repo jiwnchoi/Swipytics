@@ -63,8 +63,8 @@ class SessionModel(BaseModel):
       for extra_field in len_1_fields
       if extra_field[0] not in positional_fields
     ]
-
-    return [*len_1_fields, *len_2_fields, *len_3_fields]
+    fields = [*len_1_fields, *len_2_fields, *len_3_fields]
+    return fields
 
   @cached_property
   def visualizable_fields(self) -> list[FieldModel]:

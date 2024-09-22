@@ -17,12 +17,21 @@ export default function useChart(chart: TChart) {
 
   const spec = {
     ..._spec,
+    title: chart.title,
     width,
+    mark: {
+      ...("mark" in _spec ? (_spec.mark as object) : {}),
+      tooltip: { content: "data" },
+    },
     height,
     background: "transparent",
     data: { name: DATA_NAME },
     config: {
       ...("config" in _spec ? _spec.config : {}),
+      title: {
+        fontSize: 18,
+        offset: 16,
+      },
       axis: {
         labelFontSize: 14,
         titleFontSize: 16,
@@ -31,6 +40,15 @@ export default function useChart(chart: TChart) {
       autosize: {
         type: "fit",
       },
+      legend: {
+        direction: "horizontal",
+        titleLimit: width,
+        gradientLength: width,
+        orient: "bottom",
+        labelFontSize: 14,
+        titleFontSize: 16,
+      },
+      numberFormat: ".3~s",
     },
   } as VisualizationSpec;
 
