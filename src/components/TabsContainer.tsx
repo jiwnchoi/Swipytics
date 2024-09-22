@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
-import { useSessionsStore } from "@stores";
+import { useInteractionStore, useSessionsStore } from "@stores";
 import { type FirstBracketIcon } from "hugeicons-react";
 import { type ReactNode } from "react";
 
 interface TabConfiguration {
-  type: string;
+  name: string;
   icon: typeof FirstBracketIcon;
   panel: ReactNode;
   displayingBeforeInit: boolean;
@@ -30,26 +30,35 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
   const { tabIconSize, tabPanelHeight, scrollbarStyle } = useLayout();
   const fields = useSessionsStore((state) => state.fields);
   const initialized = fields.length > 0;
-  const settingIndex = tabs.findIndex((config) => config.type === "Settings");
+
+  const tabIndex = useInteractionStore((state) => state.tabIndex);
+  const setTabByIndex = useInteractionStore((state) => state.setTabByIndex);
 
   return (
-    <Tabs w={"full"} defaultIndex={settingIndex} isFitted colorScheme={PRIMARY_COLOR} {...props}>
+    <Tabs
+      w={"full"}
+      defaultIndex={tabIndex}
+      index={tabIndex}
+      onChange={setTabByIndex}
+      isFitted
+      colorScheme={PRIMARY_COLOR}
+      {...props}>
       <TabList>
         {tabs.map((config) => (
           <Tab
             gap={1}
             as={Center}
             flexDir={"column"}
-            key={`tab-${config.type}`}
+            key={`tab-${config.name}`}
             isDisabled={!initialized && !config.displayingBeforeInit}>
             <Icon boxSize={tabIconSize} as={config.icon} />
-            <Text fontSize={12}>{config.type}</Text>
+            <Text fontSize={"sm"}>{config.name[0].toUpperCase() + config.name.slice(1)}</Text>
           </Tab>
         ))}
       </TabList>
       <TabPanels mt={4} flex={1} overflow={"auto"} h={tabPanelHeight} sx={scrollbarStyle}>
         {tabs.map((config) => (
-          <TabPanel key={`tabpanel-${config.type}`}>{config.panel}</TabPanel>
+          <TabPanel key={`tabpanel-${config.name}`}>{config.panel}</TabPanel>
         ))}
       </TabPanels>
     </Tabs>

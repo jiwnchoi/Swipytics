@@ -1,22 +1,16 @@
-import { Flex, TabPanel } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import {
   Bookmarks,
   Browser,
   ChartPanel,
   ControlPanel,
   Controller,
-  MetadataFields,
+  Fields,
   Settings,
   TabsContainer,
 } from "@components";
 import { useLayout } from "@hooks";
-import {
-  HeartCheckIcon,
-  PresentationBarChart01Icon,
-  ProfileIcon,
-  Search01Icon,
-  Settings01Icon,
-} from "hugeicons-react";
+import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
 
 export default function App() {
   const { cardHeight, cardColor, cardWidth } = useLayout();
@@ -36,35 +30,28 @@ export default function App() {
         w={{ base: "full", lg: "sm" }}
         minW={{ base: "full", lg: "sm" }}
         controller={<Controller spacing={2} w={"full"} />}>
-        <TabsContainer
+        <TabsContainer // tabs추가하면 src/stores/useInteractionStore.ts에도 반영해야함
           tabs={[
             {
-              type: "Likes",
+              name: "likes",
               icon: HeartCheckIcon,
               panel: <Bookmarks p={0} m={0} gap={2} w="full" />,
               displayingBeforeInit: false,
             },
             {
-              type: "Browse",
+              name: "search",
               icon: Search01Icon,
               panel: <Browser />,
               displayingBeforeInit: false,
             },
             {
-              type: "Chart",
-              icon: PresentationBarChart01Icon,
-              panel: <TabPanel>Chart Description and Explanation at Here</TabPanel>,
-              displayingBeforeInit: false,
-            },
-            {
-              type: "Fields",
+              name: "fields",
               icon: ProfileIcon,
-              panel: <MetadataFields />,
+              panel: <Fields />,
               displayingBeforeInit: false,
             },
-
             {
-              type: "Settings",
+              name: "settings",
               icon: Settings01Icon,
               panel: <Settings align={"start"} />,
               displayingBeforeInit: true,

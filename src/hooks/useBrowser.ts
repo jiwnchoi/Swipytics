@@ -2,13 +2,14 @@ import { useFieldNameMatches } from "@hooks";
 import { router } from "@router";
 import { MAX_N_SELECTED_FIELDS } from "@shared/constants";
 import type { TChart } from "@shared/models";
-import { useDataStore } from "@stores";
+import { useDataStore, useInteractionStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
 import useSessionsStore from "../stores/useSessionsStore";
 
 export default function useBrowser() {
-  const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const selectedFields = useInteractionStore((state) => state.searchTargetFieldNames);
+  const setSelectedFields = useInteractionStore((state) => state.setSearchTargetFieldNames);
   const [inputValue, setInputValue] = useState<string>("");
   const [suggestionCursorIndex, setSuggestionCursorIndex] = useState<number>(0);
 
