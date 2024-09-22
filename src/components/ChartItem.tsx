@@ -1,4 +1,4 @@
-import { Divider, Flex, Heading, Image, ListItem, Text } from "@chakra-ui/react";
+import { Divider, Flex, Image, ListItem, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLayout } from "../hooks";
 import { type TChart } from "../shared/models";
@@ -29,8 +29,9 @@ function ChartItem({ chart, onClick }: ChartItemProps) {
     <ListItem key={`bookmark-${chart.key}`} as={Flex} flexDir="column">
       <Flex
         p={1}
-        gap={2}
+        gap={4}
         borderRadius="md"
+        alignItems={"center"}
         onClick={() => onClick(chart)}
         transition={"background-color 0.2s"}
         _hover={{ cursor: "pointer", bg: buttonColor }}>
@@ -43,8 +44,11 @@ function ChartItem({ chart, onClick }: ChartItemProps) {
           />
         )}
         <Flex flexDir="column">
-          <Heading size="sm">{chart.title}</Heading>
-          <Text size="xs">This chart is very good</Text>
+          {chart.fields.map((field) => (
+            <Text key={`${chart.key}-field-name-${field.name}`} fontSize="sm">
+              {field.name}
+            </Text>
+          ))}
         </Flex>
       </Flex>
       <Divider my={1} />
