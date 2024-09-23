@@ -1,8 +1,8 @@
 # Swipytics
 
-**Swipytics** is the simplest on-the-fly exploratory data analysis (EDA) tools with sequential visualization recommendation.
+**Swipytics** is the simplest on-the-fly exploratory data analysis (EDA) tool using sequential visualization recommendations.
 
-All you need to do is swipe it! Swipytics will automatically shows visualizations that help you to understand the data for you.
+All you need to do is swipe! Swipytics automatically shows visualizations that help you understand your data.
 
 ![swipytics_teaser](/assets/README.png)
 
