@@ -5,7 +5,6 @@ import {
   type FlexProps,
   Icon,
   IconButton,
-  Input,
   Select,
   type StackProps,
   TabPanel,
@@ -77,8 +76,8 @@ function Settings(props: StackProps) {
   const {
     python,
     handleServerButtonClick,
-    apiKey,
-    handleApiKeyChange,
+    // apiKey,
+    // handleApiKeyChange,
     handleDownloadLogs,
     colorMode,
     toggleColorMode,
@@ -93,9 +92,9 @@ function Settings(props: StackProps) {
       <SettingRow label={"Load Demo"}>
         <DemoSelector />
       </SettingRow>
-      <SettingRow label={"OpenAI Key"}>
+      {/* <SettingRow label={"OpenAI Key"}>
         <Input w="full" placeholder="sk-..." value={apiKey} onChange={handleApiKeyChange} />
-      </SettingRow>
+      </SettingRow> */}
 
       <Divider my={4} />
 
@@ -123,7 +122,9 @@ function Settings(props: StackProps) {
       <SettingRow label={"Backend"}>
         <Button
           leftIcon={<Icon as={python === "server" ? CloudIcon : SmartPhone01Icon} />}
-          onClick={handleServerButtonClick}
+          onClick={() => {
+            handleServerButtonClick();
+          }}
           size="sm"
           w={"full"}>
           {python && python[0].toUpperCase() + python?.slice(1)}

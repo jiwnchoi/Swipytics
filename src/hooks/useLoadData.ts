@@ -1,3 +1,4 @@
+import { getFileNameFromURL } from "@shared/utils";
 import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 
 function useLoadData() {
@@ -8,15 +9,20 @@ function useLoadData() {
   const setExpanded = useInteractionStore((state) => state.setDrawerExpanded);
   const resetSession = useSessionsStore((state) => state.resetSession);
   const sessionFileName = useSessionsStore((state) => state.filename);
+  const setTabByName = useInteractionStore((state) => state.setTabByName);
+
   const initializeSession = async (file: File | string) => {
-    await writeFile(file);
-    const filename = useDataStore.getState().filename;
+    const filename = file instanceof File ? file.name : getFileNameFromURL(file);
 
     if (!filename) return;
-    if (filename !== sessionFileName) resetSession();
+    if (filename !== sessionFileName) {
+      resetSession();
+    }
+    await writeFile(file);
 
     await loadSession(filename);
     setExpanded(false);
+    setTabByName("fields");
   };
 
   return {

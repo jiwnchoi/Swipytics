@@ -16,7 +16,7 @@ export default function useColors() {
   const tabPanelHeight = useBreakpointValue({ base: 320, lg: 560 });
   const tabIconSize = 5;
 
-  const thumbnailSize = 50;
+  const thumbnailSize = "70px";
 
   const buttonColor = useColorModeValue(chakraColors["gray.100"], chakraColors["gray.800"]);
 

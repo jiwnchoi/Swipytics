@@ -11,7 +11,7 @@ def browse_charts(state: SessionModel, field_names: list[str]) -> list[ChartMode
   # Input fields
   all_fields = state.visualizable_fields
 
-  input_fields = tuple(field for field in state.fields if field.name in field_names)
+  input_fields = tuple(field for field in state.visualizable_fields if field.name in field_names)
   # Add one more fields
   additional_fields = [field for field in all_fields if field not in input_fields]
 
