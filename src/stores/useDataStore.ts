@@ -1,6 +1,6 @@
+import { router } from "@api";
 import { JSONLoader, fetchFile, parse } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
-import { router } from "@router";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
 import { create } from "zustand";

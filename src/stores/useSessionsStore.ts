@@ -4,7 +4,7 @@ import { produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { router } from "@router";
+import { router } from "@api";
 
 interface SessionState extends TSession {
   currentChartIndex: number;

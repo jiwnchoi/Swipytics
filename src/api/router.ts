@@ -2,12 +2,7 @@
 import mitt from "mitt";
 import { getPyodide } from "../workers";
 import call from "./call";
-import {
-  type TEndpointArgs,
-  type TEndpointKey,
-  type TRouterEvent,
-  type TRouterLoadingStatus,
-} from "./types";
+import type { TEndpointArgs, TEndpointKey, TRouterEvent, TRouterLoadingStatus } from "./types";
 
 class Router {
   private python: "pyodide" | "server" = "pyodide";

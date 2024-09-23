@@ -1,5 +1,4 @@
-import { router } from "@router";
-import { type TRouterLoadingStatus } from "@router/types";
+import { router, type TRouterLoadingStatus } from "@api";
 import { useEffect, useState } from "react";
 
 function useLoadingStatus() {
