@@ -22,6 +22,7 @@ import type { TDataField, TFieldType, TMetadata } from "@shared/models";
 import { useInteractionStore, useSessionsStore } from "@stores";
 import { format } from "d3-format";
 import { Calendar03Icon, GridIcon, Search01Icon, Tag01Icon, TextFontIcon } from "hugeicons-react";
+import { useMemo } from "react";
 
 const FieldIcon = ({ metadataType, ...props }: IconProps & { metadataType: TFieldType }) => {
   switch (metadataType) {
@@ -100,19 +101,21 @@ function EachField({ field }: { field: TDataField }) {
           <FieldIcon metadataType={field.type} boxSize={4} />
           <Heading fontSize="md">{field.name}</Heading>
           <Spacer />
-          <IconButton
-            variant={"ghost"}
-            p={0}
-            m={0}
-            size={"xs"}
-            icon={<Icon as={Search01Icon} />}
-            aria-label={`Search ${field.name}`}
-            onClick={(e) => {
-              setTabByName("search");
-              appendSearchTarget(field.name);
-              e.stopPropagation();
-            }}
-          />
+          {field.type !== "name" && (
+            <IconButton
+              variant={"ghost"}
+              p={0}
+              m={0}
+              size={"xs"}
+              icon={<Icon as={Search01Icon} />}
+              aria-label={`Search ${field.name}`}
+              onClick={(e) => {
+                setTabByName("search");
+                appendSearchTarget(field.name);
+                e.stopPropagation();
+              }}
+            />
+          )}
           <AccordionIcon />
         </Flex>
       </AccordionButton>
@@ -129,14 +132,25 @@ function EachField({ field }: { field: TDataField }) {
   );
 }
 
+function fieldSortCallback(a: TDataField, b: TDataField) {
+  const sortKey = {
+    numeric: 0,
+    categorical: 1,
+    datetime: 2,
+    name: 3,
+  };
+  return sortKey[a.type] - sortKey[b.type];
+}
+
 function Fields(props: TabPanelProps & StackProps) {
   const fields = useSessionsStore((state) => state.fields);
+  const sortedFields = useMemo(() => Array.from(fields).sort(fieldSortCallback), [fields]);
 
   return (
     <TabPanel as={VStack} h="full" {...props}>
       <Flex h="full" w="full" overflowY="auto" flexDir="column">
         <Accordion allowMultiple>
-          {fields.map((field) => (
+          {sortedFields.map((field) => (
             <EachField key={field.name} field={field} />
           ))}
         </Accordion>
