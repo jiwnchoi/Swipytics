@@ -1,5 +1,5 @@
+import { router } from "@api";
 import { useColorMode, useToast } from "@chakra-ui/react";
-import { router } from "@router";
 import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
 import { useState } from "react";
 

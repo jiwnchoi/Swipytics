@@ -1,4 +1,4 @@
-import type api from "./api";
+import type api from "./routes";
 
 export type TRouterLoadingStatus = {
   loadingPyodide: boolean;

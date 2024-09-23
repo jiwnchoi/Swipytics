@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./routes";
 import type { TEndpointArgs, TEndpointKey, TEndpointReturn, TMethodType } from "./types";
 
 async function call<E extends TEndpointKey>(

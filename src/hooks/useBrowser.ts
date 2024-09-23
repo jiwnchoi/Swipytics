@@ -1,5 +1,5 @@
+import { router } from "@api";
 import { useFieldNameMatches } from "@hooks";
-import { router } from "@router";
 import { MAX_N_SELECTED_FIELDS } from "@shared/constants";
 import type { TChart } from "@shared/models";
 import { useDataStore, useInteractionStore } from "@stores";
