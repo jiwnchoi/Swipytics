@@ -50,15 +50,44 @@ pnpm check # Lint and Format both .py and .ts files
 pnpm test # Test TypeScript with Vitest and Python with pytest
 ```
 
-### System Architecture 🚧
+### System Architecture
 
-TBA
+![system-architecture](/assets/architecture.svg)
+
+- `@hooks` call `@api` with Tanstack Query (with caching), and `@stores` call `@api` with Zustand (w.o. caching)
+- If Swipytics run as a Stanalone, `@api` routes async call to `@workers` which excutes python files with Pyodide and Web Worker. For Swipyytics-server, `@api` routes to FastAPI server.
+- Note that `useSessionStore` in `@stores` and `sessionState` in `app.py` are always the same
+- Event Logger captures the user-triggered Event object from window
 
 ### Coding Convention 🚧
 
-TBA
+<details>
+<summary>
+Common
+</summary>
 
-###
+- Avoid using verbs in boolean variables. (isLoading 🚫, loading ✅)
+
+</details>
+
+<details>
+<summary>
+Client (TypeScript)
+</summary>
+
+- Buisiness logic is placed in `@hooks`, not `@components`. Especially, try to avoid use primitive hooks (`useState`, `useEffect`, `useQuery`, `useStore`, ...) in `@component`.
+- You must reference modules in the direction of the dependency edge in figure above; you must not reference them backwards or skipping the edges.
+
+</details>
+
+<details>
+<summary>
+Engine (Python)
+</summary>
+
+- Objects' name in `app.py` are written in camelCase, but other python files are written in snake_case. This is a convention to ensure strong adherence to camelCase in JavaScript, but also flexibility to comply with PEP8 (snake_case) in Python.
+
+</details>
 
 ## Acknowledgements
 
