@@ -1,5 +1,4 @@
-from api.models.chart_model import ChartModel
-from api.models.session_model import SessionModel
+from api.models import ChartModel, SessionModel
 
 from .get_chart import get_chart
 
@@ -8,16 +7,13 @@ def browse_charts(state: SessionModel, field_names: list[str]) -> list[ChartMode
   if not (field_names and (0 < len(field_names) <= 3)):
     raise ValueError("Invalid number of fields to browse")
 
-  # Input fields
-  all_fields = state.visualizable_fields
+  browsed_fields = [
+    field_tuple
+    for field_tuple in state.available_fields
+    if len(field_tuple) <= (len(field_names) + 1)
+    if all(field_name in [f.name for f in field_tuple] for field_name in field_names)
+  ]
 
-  input_fields = tuple(field for field in state.visualizable_fields if field.name in field_names)
-  # Add one more fields
-  additional_fields = [field for field in all_fields if field not in input_fields]
-
-  browse_fields = [
-    input_fields,
-    *[(*input_fields, field) for field in additional_fields if len(input_fields) < 3],
-  ][:10]
-  charts = [get_chart(state.df, fields) for fields in browse_fields]
+  browsed_fields = sorted(browsed_fields, key=lambda field_tuple: len(field_tuple))
+  charts = [get_chart(state.df, fields) for fields in browsed_fields]
   return [chart for chart in charts if chart]

@@ -16,6 +16,7 @@ export default function useChartContainer() {
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
   const appendNextChart = useSessionsStore((state) => state.appendNextChart);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
+  const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,10 +59,18 @@ export default function useChartContainer() {
         event.preventDefault();
         setCurrentChartIndex(currentChartIndex + 1);
       }
+      if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+        event.preventDefault();
+        const currentChartPreferred = charts[currentChartIndex].preferred;
+        setCurrentChartPreferred(!currentChartPreferred);
+        if (!currentChartPreferred) {
+          setCurrentChartIndex(currentChartIndex + 1);
+        }
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentChartIndex, setCurrentChartIndex]);
+  }, [currentChartIndex, setCurrentChartIndex, charts, setCurrentChartPreferred]);
 
   return {
     charts,

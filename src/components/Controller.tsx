@@ -1,12 +1,6 @@
 import { Button, ButtonGroup, type ButtonGroupProps, Icon, Text, VStack } from "@chakra-ui/react";
 import { useController } from "@hooks";
-import {
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-  Exchange01Icon,
-  HeartAddIcon,
-  HeartCheckIcon,
-} from "hugeicons-react";
+import { ArrowLeft01Icon, ArrowRight01Icon, HeartAddIcon, HeartCheckIcon } from "hugeicons-react";
 
 function Controller(props: ButtonGroupProps) {
   const {
@@ -15,7 +9,7 @@ function Controller(props: ButtonGroupProps) {
     currentChartPreferred,
     handleNextChart,
     handlePrevChart,
-    handleRenewChart,
+    // handleRenewChart,
     handlePreferChart,
   } = useController();
 
@@ -47,7 +41,7 @@ function Controller(props: ButtonGroupProps) {
           <Text fontSize="sm">Next</Text>
         </VStack>
       </Button>
-      <Button
+      {/* <Button
         py={8}
         size="lg"
         w="full"
@@ -59,7 +53,7 @@ function Controller(props: ButtonGroupProps) {
           <Icon as={Exchange01Icon} boxSize={6} />
           <Text fontSize="sm">Redesign</Text>
         </VStack>
-      </Button>
+      </Button> */}
       <Button
         py={8}
         size="lg"
