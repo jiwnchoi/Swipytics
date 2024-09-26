@@ -1,0 +1,32 @@
+{
+  "bookmarks": {
+    "action": "Like",
+    "empty": "No Likes",
+    "title": "likes"
+  },
+  "fields": {
+    "title": "fields"
+  },
+  "home": {
+    "description": "The Simplest On-the-fly Exploratory Analytics"
+  },
+  "navigator": {
+    "next": "Next",
+    "prev": "Prev"
+  },
+  "search": {
+    "title": "search"
+  },
+  "settings": {
+    "download_logs": "Download",
+    "load_data": "Load Data",
+    "load_demo": "Load Demo",
+    "load_latest_logs": "Load Latest",
+    "monitor_logs": "System Logs",
+    "select_demo": "Select Demo",
+    "set_backend": "Backend",
+    "set_color": "Color Mode",
+    "set_locale": "Locale",
+    "title": "settings"
+  }
+}
