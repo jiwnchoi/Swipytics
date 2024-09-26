@@ -35,25 +35,29 @@ export default function App() {
         <TabsContainer // tabs추가하면 src/stores/useInteractionStore.ts에도 반영해야함
           tabs={[
             {
-              name: t("bookmarks.title"),
+              name: "likes",
+              displayName: t("bookmarks.title"),
               icon: HeartCheckIcon,
               panel: <Bookmarks p={0} m={0} gap={2} w="full" />,
               displayingBeforeInit: false,
             },
             {
-              name: t("search.title"),
+              name: "search",
+              displayName: t("search.title"),
               icon: Search01Icon,
               panel: <Browser />,
               displayingBeforeInit: false,
             },
             {
-              name: t("fields.title"),
+              name: "fields",
+              displayName: t("fields.title"),
               icon: ProfileIcon,
               panel: <Fields />,
               displayingBeforeInit: false,
             },
             {
-              name: t("settings.title"),
+              name: "settings",
+              displayName: t("settings.title"),
               icon: Settings01Icon,
               panel: <Settings align={"start"} />,
               displayingBeforeInit: true,
