@@ -28,5 +28,9 @@
     "set_color": "Color Mode",
     "set_locale": "Locale",
     "title": "settings"
+  },
+  "toast": {
+    "server_not_available_description": "Failed to access Python backend. Only local Pyodide is available.",
+    "server_not_available_title": "Server is not available"
   }
 }
