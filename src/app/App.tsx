@@ -11,9 +11,11 @@ import {
 } from "@components";
 import { useLayout } from "@hooks";
 import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
+import { useTranslation } from "react-i18next";
 
 export default function App() {
   const { cardHeight, cardColor, cardWidth } = useLayout();
+  const { t } = useTranslation();
 
   return (
     <Flex
@@ -33,25 +35,25 @@ export default function App() {
         <TabsContainer // tabs추가하면 src/stores/useInteractionStore.ts에도 반영해야함
           tabs={[
             {
-              name: "likes",
+              name: t("bookmarks.title"),
               icon: HeartCheckIcon,
               panel: <Bookmarks p={0} m={0} gap={2} w="full" />,
               displayingBeforeInit: false,
             },
             {
-              name: "search",
+              name: t("search.title"),
               icon: Search01Icon,
               panel: <Browser />,
               displayingBeforeInit: false,
             },
             {
-              name: "fields",
+              name: t("fields.title"),
               icon: ProfileIcon,
               panel: <Fields />,
               displayingBeforeInit: false,
             },
             {
-              name: "settings",
+              name: t("settings.title"),
               icon: Settings01Icon,
               panel: <Settings align={"start"} />,
               displayingBeforeInit: true,

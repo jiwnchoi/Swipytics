@@ -21,6 +21,8 @@ import {
   StartUp02Icon,
   Sun03Icon,
 } from "hugeicons-react";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import FileForm from "./FileForm";
 
 interface SettingRowProps extends FlexProps {
@@ -40,6 +42,7 @@ function SettingRow({ label, children, ...props }: SettingRowProps) {
 function DemoSelector() {
   const { handleSubmit, loading, selectedDemo, handleDemoSelect } = useDemo();
   const { loading: loadingRouter } = useLoadingStatus();
+  const { t } = useTranslation();
   return (
     <>
       <Select
@@ -47,7 +50,7 @@ function DemoSelector() {
         onChange={(e) =>
           handleDemoSelect(DEMO_LIST.find((demo) => demo.name === e.target.value) ?? null)
         }
-        placeholder="Select Demo"
+        placeholder={t("settings.select_demo")}
         variant="outline"
         colorScheme={PRIMARY_COLOR}
         icon={<Icon as={ArrowDown01Icon} />}
@@ -65,7 +68,7 @@ function DemoSelector() {
         isLoading={loading || loadingRouter}
         isDisabled={!selectedDemo || loadingRouter}
         icon={<Icon as={StartUp02Icon} />}
-        aria-label="Load Data"
+        aria-label={t("settings.load_data")}
         onClick={handleSubmit}
       />
     </>
@@ -86,10 +89,10 @@ function Settings(props: StackProps) {
   } = useSettings();
   return (
     <TabPanel as={VStack} {...props}>
-      <SettingRow label={"Load Data"}>
+      <SettingRow label={t("settings.load_data")}>
         <FileForm w="full" />
       </SettingRow>
-      <SettingRow label={"Load Demo"}>
+      <SettingRow label={t("settings.load_demo")}>
         <DemoSelector />
       </SettingRow>
       {/* <SettingRow label={"OpenAI Key"}>
@@ -98,7 +101,7 @@ function Settings(props: StackProps) {
 
       <Divider my={4} />
 
-      <SettingRow label={"Locale"}>
+      <SettingRow label={t("settings.set_locale")}>
         <Select
           size="sm"
           variant="outline"
@@ -110,7 +113,7 @@ function Settings(props: StackProps) {
           <option value="ko">한국어</option>
         </Select>
       </SettingRow>
-      <SettingRow label={"Color Mode"}>
+      <SettingRow label={t("settings.set_color")}>
         <Button
           leftIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
           onClick={toggleColorMode}
@@ -119,7 +122,7 @@ function Settings(props: StackProps) {
           {colorMode === "light" ? "Light" : "Dark"}
         </Button>
       </SettingRow>
-      <SettingRow label={"Backend"}>
+      <SettingRow label={t("settings.set_backend")}>
         <Button
           leftIcon={<Icon as={python === "server" ? CloudIcon : SmartPhone01Icon} />}
           onClick={() => {
@@ -130,13 +133,13 @@ function Settings(props: StackProps) {
           {python && python[0].toUpperCase() + python?.slice(1)}
         </Button>
       </SettingRow>
-      <SettingRow label={"System Logs"}>
+      <SettingRow label={t("settings.monitor_logs")}>
         <Flex gap={2} w={"full"}>
           <Button w="full" onClick={handleDownloadLogs}>
-            Load Latest
+            {t("settings.load_latest_logs")}
           </Button>
           <Button w="full" onClick={handleDownloadLogs}>
-            Download
+            {t("settings.download_logs")}
           </Button>
         </Flex>
       </SettingRow>
