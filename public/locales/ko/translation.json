@@ -1,0 +1,36 @@
+{
+  "bookmarks": {
+    "action": "좋아요",
+    "empty": "좋아요 없음",
+    "title": "좋아요"
+  },
+  "fields": {
+    "title": "필드"
+  },
+  "home": {
+    "description": "가장 간단한 실시간 탐색형 분석"
+  },
+  "navigator": {
+    "next": "다음",
+    "prev": "이전"
+  },
+  "search": {
+    "title": "검색"
+  },
+  "settings": {
+    "download_logs": "로그 다운로드",
+    "load_data": "데이터 불러오기",
+    "load_demo": "데모 불러오기",
+    "load_latest_logs": "로그 불러오기",
+    "monitor_logs": "시스템 로그",
+    "select_demo": "데모 선택",
+    "set_backend": "백엔드",
+    "set_color": "색상 모드",
+    "set_locale": "언어 설정",
+    "title": "설정"
+  },
+  "toast": {
+    "server_not_available_description": "파이썬 백엔드에 액세스하지 못했습니다. 로컬 Pyodide만 사용 가능합니다.",
+    "server_not_available_title": "서버를 사용할 수 없습니다"
+  }
+}

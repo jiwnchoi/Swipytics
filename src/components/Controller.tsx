@@ -1,6 +1,7 @@
 import { Button, ButtonGroup, type ButtonGroupProps, Icon, Text, VStack } from "@chakra-ui/react";
 import { useController } from "@hooks";
 import { ArrowLeft01Icon, ArrowRight01Icon, HeartAddIcon, HeartCheckIcon } from "hugeicons-react";
+import { useTranslation } from "react-i18next";
 
 function Controller(props: ButtonGroupProps) {
   const {
@@ -12,6 +13,7 @@ function Controller(props: ButtonGroupProps) {
     // handleRenewChart,
     handlePreferChart,
   } = useController();
+  const { t } = useTranslation();
 
   return (
     <ButtonGroup {...props}>
@@ -25,7 +27,7 @@ function Controller(props: ButtonGroupProps) {
         variant="ghost">
         <VStack spacing={2}>
           <Icon as={ArrowLeft01Icon} boxSize={6} />
-          <Text fontSize="sm">Prev</Text>
+          <Text fontSize="sm">{t("navigator.prev")}</Text>
         </VStack>
       </Button>
       <Button
@@ -38,7 +40,7 @@ function Controller(props: ButtonGroupProps) {
         variant="ghost">
         <VStack spacing={2}>
           <Icon as={ArrowRight01Icon} boxSize={6} />
-          <Text fontSize="sm">Next</Text>
+          <Text fontSize="sm">{t("navigator.next")}</Text>
         </VStack>
       </Button>
       {/* <Button
@@ -65,7 +67,7 @@ function Controller(props: ButtonGroupProps) {
         variant={currentChartPreferred ? "solid" : "ghost"}>
         <VStack spacing={2}>
           <Icon as={currentChartPreferred ? HeartCheckIcon : HeartAddIcon} boxSize={6} />
-          <Text fontSize="sm">Like</Text>
+          <Text fontSize="sm">{t("bookmarks.action")}</Text>
         </VStack>
       </Button>
     </ButtonGroup>

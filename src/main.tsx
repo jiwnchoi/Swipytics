@@ -8,6 +8,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 const queryClient = new QueryClient();
 
+import "./locales";
+
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

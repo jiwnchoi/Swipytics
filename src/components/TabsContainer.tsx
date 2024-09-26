@@ -17,6 +17,7 @@ import { type ReactNode } from "react";
 
 interface TabConfiguration {
   name: string;
+  displayName: string;
   icon: typeof FirstBracketIcon;
   panel: ReactNode;
   displayingBeforeInit: boolean;
@@ -52,7 +53,7 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
             key={`tab-${config.name}`}
             isDisabled={!initialized && !config.displayingBeforeInit}>
             <Icon boxSize={tabIconSize} as={config.icon} />
-            <Text fontSize={"sm"}>{config.name[0].toUpperCase() + config.name.slice(1)}</Text>
+            <Text fontSize={"sm"}>{config.displayName}</Text>
           </Tab>
         ))}
       </TabList>
