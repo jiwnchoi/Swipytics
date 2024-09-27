@@ -11,4 +11,5 @@ export { default as useIndicators } from "./useIndicators";
 export { default as useLayout } from "./useLayout";
 export { default as useLoadData } from "./useLoadData";
 export { default as useLoadingStatus } from "./useLoadingStatus";
+export { default as useLogger } from "./useLogger";
 export { default as useSettings } from "./useSettings";

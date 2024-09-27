@@ -12,7 +12,12 @@ export default function Bookmarks({ ...props }) {
       <OrderedList m={0} p={0} width="full" overflowY="auto">
         {preferredCharts.length ? (
           preferredCharts.map((chart) => (
-            <ChartItem key={`bookmark-${chart.key}`} chart={chart} onClick={handleClickBookmark} />
+            <ChartItem
+              key={`bookmark-${chart.key}`}
+              chart={chart}
+              onClick={handleClickBookmark}
+              data-tag={`bookmark-${chart.key}`}
+            />
           ))
         ) : (
           <ListItem>
