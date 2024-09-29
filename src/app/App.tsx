@@ -12,10 +12,12 @@ import {
 import { useLayout } from "@hooks";
 import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
+import { useLogger } from "../logger";
 
 export default function App() {
   const { cardHeight, cardColor, cardWidth } = useLayout();
   const { t } = useTranslation();
+  useLogger();
 
   return (
     <Flex

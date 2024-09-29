@@ -3,6 +3,7 @@ import { useColorMode, useToast } from "@chakra-ui/react";
 import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { downloadLogsAsJson } from "../logger";
 
 export default function useSettings() {
   const { fileCache, writeFile } = useDataStore();
@@ -18,8 +19,19 @@ export default function useSettings() {
   };
 
   const handleDownloadLogs = () => {
-    // eslint-disable-next-line no-console
-    console.log("Downloading logs...");
+    try {
+      downloadLogsAsJson();
+    } catch (e) {
+      toast({
+        title: "Oh No!",
+        description: JSON.stringify(e),
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+        containerStyle: { margin: 10 },
+      });
+    }
   };
 
   const handleServerButtonClick = async () => {

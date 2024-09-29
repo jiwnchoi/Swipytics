@@ -51,7 +51,8 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
             as={Center}
             flexDir={"column"}
             key={`tab-${config.name}`}
-            isDisabled={!initialized && !config.displayingBeforeInit}>
+            isDisabled={!initialized && !config.displayingBeforeInit}
+            data-log-click={{ key: `tab-${config.name}`, data: {} }}>
             <Icon boxSize={tabIconSize} as={config.icon} />
             <Text fontSize={"sm"}>{config.displayName}</Text>
           </Tab>
