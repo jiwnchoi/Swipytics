@@ -15,14 +15,12 @@ class Logger {
 
   private onEvent = (targetEventType: string) => (event: Event) => {
     const eventType = event.type;
-    console.log(1, { eventType, targetEventType });
     if (eventType !== targetEventType) return;
 
     const target = event.target as HTMLElement;
     const timestamp = Date.now();
     const closestEventElement = target.closest(`[data-log-${targetEventType}]`);
 
-    console.log(2, { target, closestEventElement });
     if (!closestEventElement) return;
 
     const key = closestEventElement.getAttribute(`data-log-${targetEventType}`);
