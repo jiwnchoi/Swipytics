@@ -1,3 +1,6 @@
+import { logger } from "@logger";
+import { getDifferences } from "@shared/utils";
+import { isEqual } from "es-toolkit";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -12,9 +15,9 @@ interface SettingsState {
   // setBackend: (backend: "pyodide" | "server") => void;
 }
 
-const useSettingsStore = create<SettingsState>()(
+const useSettingsStore = create(
   devtools(
-    persist(
+    persist<SettingsState>(
       (set) => ({
         apiKey: "sk-...",
         setApiKey: (key: string) => set({ apiKey: key }),
@@ -33,5 +36,10 @@ const useSettingsStore = create<SettingsState>()(
     },
   ),
 );
+
+useSettingsStore.subscribe((state, prevState) => {
+  if (isEqual(state, prevState)) return;
+  logger.log("settings-store", "state", getDifferences(state, prevState));
+});
 
 export default useSettingsStore;

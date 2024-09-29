@@ -1,3 +1,4 @@
+import { logger } from "@logger";
 import { DEBOUNCE_DELAY } from "@shared/constants";
 import { useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
@@ -19,24 +20,17 @@ export default function useChartContainer() {
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const container = ref.current;
+  const scrollContainerCallback = debounce((container: HTMLDivElement) => {
     if (!container) return;
+    const scrollLeft = container.scrollLeft;
+    const chartWidth = getChartWidth(container);
+    const newIndex = Math.round(scrollLeft / chartWidth) - 1;
+    setCurrentChartIndex(newIndex);
 
-    const handleScroll = debounce(() => {
-      const scrollLeft = container.scrollLeft;
-      const chartWidth = getChartWidth(container);
-      const newIndex = Math.round(scrollLeft / chartWidth) - 1;
-      setCurrentChartIndex(newIndex);
-
-      if (newIndex === charts.length - 1) {
-        appendNextChart();
-      }
-    }, DEBOUNCE_DELAY);
-
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [appendNextChart, charts.length, setCurrentChartIndex]);
+    if (newIndex === charts.length - 1) {
+      appendNextChart();
+    }
+  }, DEBOUNCE_DELAY);
 
   useEffect(() => {
     const container = ref.current;
@@ -53,28 +47,29 @@ export default function useChartContainer() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
         event.preventDefault();
+        logger.log("chart-container", "keydown", { key: "left" });
         setCurrentChartIndex(currentChartIndex - 1);
       }
       if (event.key === "ArrowRight") {
         event.preventDefault();
+        logger.log("chart-container", "keydown", { key: "right" });
         setCurrentChartIndex(currentChartIndex + 1);
       }
-      if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+      if (event.key === "ArrowUp") {
         event.preventDefault();
-        const currentChartPreferred = charts[currentChartIndex].preferred;
-        setCurrentChartPreferred(!currentChartPreferred);
-        if (!currentChartPreferred) {
-          setCurrentChartIndex(currentChartIndex + 1);
-        }
+        logger.log("chart-container", "keydown", { key: "up" });
+        setCurrentChartPreferred(!charts[currentChartIndex].preferred);
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentChartIndex, setCurrentChartIndex, charts, setCurrentChartPreferred]);
+  }, [currentChartIndex, charts, setCurrentChartIndex, setCurrentChartPreferred]);
 
   return {
     charts,
     currentChartIndex,
     ref,
+    scrollContainerCallback,
   };
 }

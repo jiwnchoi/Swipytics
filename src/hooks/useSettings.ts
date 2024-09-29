@@ -1,5 +1,6 @@
 import { router } from "@api";
 import { useColorMode, useToast } from "@chakra-ui/react";
+import { logger } from "@logger";
 import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -18,8 +19,19 @@ export default function useSettings() {
   };
 
   const handleDownloadLogs = () => {
-    // eslint-disable-next-line no-console
-    console.log("Downloading logs...");
+    try {
+      logger.export();
+    } catch (e) {
+      toast({
+        title: "Oh no!",
+        description: JSON.stringify(e),
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+        containerStyle: { margin: 10 },
+      });
+    }
   };
 
   const handleServerButtonClick = async () => {

@@ -10,12 +10,14 @@ import {
   TabsContainer,
 } from "@components";
 import { useLayout } from "@hooks";
+import { useLogger } from "@logger/react";
 import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
 
 export default function App() {
   const { cardHeight, cardColor, cardWidth } = useLayout();
   const { t } = useTranslation();
+  useLogger();
 
   return (
     <Flex

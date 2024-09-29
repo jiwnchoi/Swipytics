@@ -49,6 +49,7 @@ export default function FileForm(props: FlexProps) {
             icon={<Icon as={FileAttachmentIcon} />}
             variant={"link"}
             onClick={handleFileButtonClick}
+            data-log-click={"file-attachment"}
           />
         </InputRightElement>
       </InputGroup>
@@ -60,6 +61,7 @@ export default function FileForm(props: FlexProps) {
         icon={<Icon as={StartUp02Icon} />}
         aria-label="Load Data"
         isDisabled={inputDisabled}
+        data-log-click={"submit-data"}
         onClick={handleSubmit}>
         {inputDisabled ? "Please Input Data" : "Load Data"}
       </IconButton>

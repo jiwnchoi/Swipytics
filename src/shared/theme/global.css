@@ -5,3 +5,7 @@ body {
   overflow: smooth;
   overscroll-behavior: none;
 }
+
+svg {
+  pointer-events: none;
+}

@@ -50,6 +50,7 @@ function DemoSelector() {
         onChange={(e) =>
           handleDemoSelect(DEMO_LIST.find((demo) => demo.name === e.target.value) ?? null)
         }
+        data-log-change="select-demo"
         placeholder={t("settings.select_demo")}
         variant="outline"
         colorScheme={PRIMARY_COLOR}
@@ -70,6 +71,7 @@ function DemoSelector() {
         icon={<Icon as={StartUp02Icon} />}
         aria-label={t("settings.load_data")}
         onClick={handleSubmit}
+        data-log-click="load-demo"
       />
     </>
   );
@@ -106,6 +108,7 @@ function Settings(props: StackProps) {
           size="sm"
           variant="outline"
           value={locale}
+          data-log-change="select-locale"
           onChange={(e) => {
             setLocale(e.target.value as "en" | "ko");
           }}>
@@ -117,6 +120,7 @@ function Settings(props: StackProps) {
         <Button
           leftIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
           onClick={toggleColorMode}
+          data-log-click="toggle-color-mode"
           size="sm"
           w={"full"}>
           {colorMode === "light" ? "Light" : "Dark"}
@@ -128,6 +132,7 @@ function Settings(props: StackProps) {
           onClick={() => {
             handleServerButtonClick();
           }}
+          data-log-click="toggle-server"
           size="sm"
           w={"full"}>
           {python && python[0].toUpperCase() + python?.slice(1)}
@@ -135,10 +140,8 @@ function Settings(props: StackProps) {
       </SettingRow>
       <SettingRow label={t("settings.monitor_logs")}>
         <Flex gap={2} w={"full"}>
-          <Button w="full" onClick={handleDownloadLogs}>
-            {t("settings.load_latest_logs")}
-          </Button>
-          <Button w="full" onClick={handleDownloadLogs}>
+          <Button w="full">{t("settings.load_latest_logs")}</Button>
+          <Button w="full" onClick={handleDownloadLogs} data-log-click="download-logs">
             {t("settings.download_logs")}
           </Button>
         </Flex>
