@@ -48,7 +48,6 @@ loggerClient.log("hello", "world", { foo: "bar" });
 
 loggerClient.registerLogger(window, ["click", "scroll", "change"]);
 
-
 ...
 
 <div data-log-click="container">
@@ -66,7 +65,7 @@ logs will be download in `.json`
 loggerClient.export();
 ```
 
-### Register Custom Event
+### Register Custom Event 🚧
 
 ```typescript
 document.querySelector("#logged");
