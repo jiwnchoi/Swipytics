@@ -18,16 +18,14 @@ class Logger {
     if (eventType !== targetEventType) return;
 
     const target = event.target as HTMLElement;
-    const timestamp = Date.now();
     const closestEventElement = target.closest(`[data-log-${targetEventType}]`);
-
     if (!closestEventElement) return;
 
     const key = closestEventElement.getAttribute(`data-log-${targetEventType}`);
-
     if (typeof key !== "string") return;
+
     const data = getLogData(key);
-    saveLog(this.indexedDB, timestamp, { key, data });
+    saveLog(this.indexedDB, Date.now(), { key, data });
   };
 
   private onClickListener = this.onEvent("click");
