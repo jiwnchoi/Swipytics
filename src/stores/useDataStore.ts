@@ -4,7 +4,7 @@ import { CSVLoader } from "@loaders.gl/csv";
 import { logger } from "@logger";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
-import { isEqual, pickBy } from "es-toolkit";
+import { isEqual, pick } from "es-toolkit";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -78,13 +78,13 @@ const useDataStore = create(
   ),
 );
 
+function pickDataStore(state: Partial<DataState>) {
+  return pick(state, ["filename"]);
+}
+
 useDataStore.subscribe((state, prevState) => {
-  if (!isEqual(state, prevState)) return;
-  logger.log(
-    "Data Store",
-    "state",
-    pickBy(state, (value) => typeof value !== "function"),
-  );
+  if (!isEqual(state, prevState) && state.writingFile) return;
+  logger.log("Data Store", "state", pickDataStore(state));
 });
 
 export default useDataStore;

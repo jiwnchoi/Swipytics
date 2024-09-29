@@ -2,7 +2,7 @@ import { router } from "@api";
 import { logger } from "@logger";
 import { CHART_PREFETCH_DELAY } from "@shared/constants";
 import type { TChart, TSession } from "@shared/models";
-import { isEqual, pickBy } from "es-toolkit";
+import { isEqual, pick } from "es-toolkit";
 import { produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
@@ -135,12 +135,19 @@ const useSessionsStore = create(
   ),
 );
 
-useSessionsStore.subscribe((state, prevState) => {
-  if (!isEqual(state, prevState)) return;
-  logger.log(
-    "Session Store",
-    "state",
-    pickBy(state, (value) => typeof value !== "function"),
+const pickSessionStore = (state: SessionState) =>
+  pick(
+    {
+      ...state,
+      charts: state.charts.map((chart) =>
+        pick(chart, ["key", "title", "preferred", "timestamp", "specs"]),
+      ),
+    },
+    ["charts", "filename", "timestamp", "currentChartIndex"],
   );
+
+useSessionsStore.subscribe((state, prevState) => {
+  if (!isEqual(state, prevState) && state.loadingSession && state.appendingChart) return;
+  logger.log("Session Store", "state", pickSessionStore(state));
 });
 export default useSessionsStore;
