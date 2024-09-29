@@ -9,9 +9,10 @@ import {
   Settings,
   TabsContainer,
 } from "@components";
-import { useLayout, useLogger } from "@hooks";
+import { useLayout } from "@hooks";
 import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
+import { useLogger } from "../logger";
 
 export default function App() {
   const { cardHeight, cardColor, cardWidth } = useLayout();

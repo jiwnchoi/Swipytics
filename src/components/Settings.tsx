@@ -70,6 +70,7 @@ function DemoSelector() {
         icon={<Icon as={StartUp02Icon} />}
         aria-label={t("settings.load_data")}
         onClick={handleSubmit}
+        data-log-click="load-demo"
       />
     </>
   );

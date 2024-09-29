@@ -3,7 +3,7 @@ import { useColorMode, useToast } from "@chakra-ui/react";
 import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { downloadLogsAsJson } from "../utils/logs";
+import { downloadLogsAsJson } from "../logger";
 
 export default function useSettings() {
   const { fileCache, writeFile } = useDataStore();

@@ -1,27 +1,19 @@
 import { type IDBPDatabase, openDB } from "idb";
+import { type LogEntryPayload, type LogEntrySavedType } from "./types";
 
-export interface LogEntry {
-  dataTag: string | null;
-  data: object;
-}
+const LOCAL_STORAGE_KEY = "logs";
+const INDEXED_DB_KEY = "logs";
+const LOG_VERSION = 1;
+const LOG_FILE_NAME = "log";
+const LOG_FILE_FORMAT = "json";
 
-interface LogEntryWithVersion extends LogEntry {
-  version: number;
-}
-
-export const LOCAL_STORAGE_KEY = "logs";
-export const INDEXED_DB_KEY = "logs";
-export const LOG_VERSION = 1;
-export const LOG_FILE_NAME = "log";
-export const LOG_FILE_FORMAT = "json";
-
-const getEmptyMap = () => new Map<number, LogEntryWithVersion>();
+const getEmptyMap = () => new Map<number, LogEntrySavedType>();
 
 const readFromLocalStorage = () => {
   const existingLogs = localStorage.getItem(LOCAL_STORAGE_KEY) ?? "[]";
   try {
-    const parsedLogs = JSON.parse(existingLogs) as [number, LogEntryWithVersion][];
-    const logMap = new Map<number, LogEntryWithVersion>(parsedLogs);
+    const parsedLogs = JSON.parse(existingLogs) as [number, LogEntrySavedType][];
+    const logMap = new Map<number, LogEntrySavedType>(parsedLogs);
     return logMap;
   } catch (error) {
     console.error("Failed to parse existing logs:", error);
@@ -30,9 +22,9 @@ const readFromLocalStorage = () => {
   }
 };
 
-export const saveToLocalStorage = (timestamp: number, log: LogEntry) => {
+export const saveToLocalStorage = (timestamp: number, log: LogEntryPayload) => {
   const logMap = readFromLocalStorage();
-  logMap.set(timestamp, { ...log, version: LOG_VERSION });
+  logMap.set(timestamp, { ...log, timestamp, version: LOG_VERSION });
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Array.from(logMap.entries())));
 };
 
@@ -52,12 +44,7 @@ const readFromIndexedDB = async (db: IDBPDatabase | null) => {
       const store = tx.objectStore(INDEXED_DB_KEY);
       const logsMap = getEmptyMap();
 
-      const allLogs = (await store.getAll()) as {
-        timestamp: number;
-        dataTag: string;
-        data: object;
-        version: number;
-      }[];
+      const allLogs = (await store.getAll()) as LogEntrySavedType[];
       await tx.done;
 
       allLogs.forEach((log) => {
@@ -74,7 +61,7 @@ const readFromIndexedDB = async (db: IDBPDatabase | null) => {
   return [];
 };
 
-export const saveLog = (db: IDBPDatabase | null, timestamp: number, log: LogEntry) => {
+export const saveLog = (db: IDBPDatabase | null, timestamp: number, log: LogEntryPayload) => {
   if (db) {
     try {
       const tx = db.transaction(INDEXED_DB_KEY, "readwrite");

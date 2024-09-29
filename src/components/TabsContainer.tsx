@@ -52,7 +52,7 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
             flexDir={"column"}
             key={`tab-${config.name}`}
             isDisabled={!initialized && !config.displayingBeforeInit}
-            data-tag={`tab-${config.name}`}>
+            data-log-click={`tab-${config.name}`}>
             <Icon boxSize={tabIconSize} as={config.icon} />
             <Text fontSize={"sm"}>{config.displayName}</Text>
           </Tab>
