@@ -23,6 +23,7 @@ function Controller(props: ButtonGroupProps) {
         w="full"
         aria-label="Previous chart"
         onClick={handlePrevChart}
+        data-log-click="prev-chart"
         isDisabled={!sessionInitialized || !chartDisplaying}
         variant="ghost">
         <VStack spacing={2}>
@@ -36,6 +37,7 @@ function Controller(props: ButtonGroupProps) {
         w="full"
         aria-label="Next chart"
         onClick={handleNextChart}
+        data-log-click="next-chart"
         isDisabled={!sessionInitialized}
         variant="ghost">
         <VStack spacing={2}>
@@ -43,25 +45,13 @@ function Controller(props: ButtonGroupProps) {
           <Text fontSize="sm">{t("navigator.next")}</Text>
         </VStack>
       </Button>
-      {/* <Button
-        py={8}
-        size="lg"
-        w="full"
-        aria-label="Renew current chart"
-        onClick={handleRenewChart}
-        isDisabled={!sessionInitialized || !chartDisplaying}
-        variant="ghost">
-        <VStack spacing={2}>
-          <Icon as={Exchange01Icon} boxSize={6} />
-          <Text fontSize="sm">Redesign</Text>
-        </VStack>
-      </Button> */}
       <Button
         py={8}
         size="lg"
         w="full"
         aria-label="Bookmark current chart"
         onClick={handlePreferChart}
+        data-log-click="prefer-chart"
         colorScheme={currentChartPreferred ? "red" : "gray"}
         isDisabled={!sessionInitialized || !chartDisplaying}
         variant={currentChartPreferred ? "solid" : "ghost"}>

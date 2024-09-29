@@ -96,7 +96,7 @@ function EachField({ field }: { field: TDataField }) {
   const appendSearchTarget = useInteractionStore((state) => state.appendSearchTarget);
   return (
     <AccordionItem>
-      <AccordionButton borderRadius={"md"}>
+      <AccordionButton borderRadius={"md"} data-log-click={`open-field-${field.name}`}>
         <Flex w="full" gap={2} align={"center"}>
           <FieldIcon metadataType={field.type} boxSize={4} />
           <Heading fontSize="md">{field.name}</Heading>
@@ -114,6 +114,7 @@ function EachField({ field }: { field: TDataField }) {
                 appendSearchTarget(field.name);
                 e.stopPropagation();
               }}
+              data-log-click={`search-field-${field.name}`}
             />
           )}
           <AccordionIcon />

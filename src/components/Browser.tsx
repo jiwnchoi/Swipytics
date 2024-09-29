@@ -93,6 +93,7 @@ function Browser() {
               <Box
                 key={match.item}
                 onClick={() => appendBrowseField(match.item)}
+                data-log-click={`field-name-match-${match.item}`}
                 bgColor={(() => {
                   const isSelected = selectedFields.includes(match.item);
                   const isCurrentCursor = idx === suggestionCursorIndex;
