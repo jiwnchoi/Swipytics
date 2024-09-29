@@ -83,7 +83,7 @@ function pickDataStore(state: Partial<DataState>) {
 }
 
 useDataStore.subscribe((state, prevState) => {
-  if (!isEqual(state, prevState) && state.writingFile) return;
+  if (isEqual(state, prevState) && state.writingFile) return;
   logger.log("Data Store", "state", pickDataStore(state));
 });
 

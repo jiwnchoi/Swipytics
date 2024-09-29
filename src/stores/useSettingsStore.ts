@@ -37,7 +37,7 @@ const useSettingsStore = create(
 );
 
 useSettingsStore.subscribe((state, prevState) => {
-  if (!isEqual(state, prevState)) return;
+  if (isEqual(state, prevState)) return;
   logger.log(
     "Setting Store",
     "state",

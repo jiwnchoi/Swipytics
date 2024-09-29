@@ -147,7 +147,7 @@ const pickSessionStore = (state: SessionState) =>
   );
 
 useSessionsStore.subscribe((state, prevState) => {
-  if (!isEqual(state, prevState) && state.loadingSession && state.appendingChart) return;
+  if (isEqual(state, prevState) && state.loadingSession && state.appendingChart) return;
   logger.log("Session Store", "state", pickSessionStore(state));
 });
 export default useSessionsStore;

@@ -55,7 +55,7 @@ const useInteractionStore = create(
 );
 
 useInteractionStore.subscribe((state, prevState) => {
-  if (!isEqual(state, prevState)) return;
+  if (isEqual(state, prevState)) return;
   logger.log(
     "Interaction Store",
     "state",
