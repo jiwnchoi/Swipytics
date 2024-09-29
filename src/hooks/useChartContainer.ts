@@ -1,4 +1,4 @@
-import { logger } from "@logger";
+import { useLoggerClient } from "@logger/react";
 import { DEBOUNCE_DELAY } from "@shared/constants";
 import { useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
@@ -19,6 +19,7 @@ export default function useChartContainer() {
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
   const ref = useRef<HTMLDivElement>(null);
+  const logger = useLoggerClient();
 
   const scrollContainerCallback = debounce((container: HTMLDivElement) => {
     if (!container) return;
@@ -64,7 +65,7 @@ export default function useChartContainer() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentChartIndex, charts, setCurrentChartIndex, setCurrentChartPreferred]);
+  }, [currentChartIndex, charts, setCurrentChartIndex, setCurrentChartPreferred, logger]);
 
   return {
     charts,

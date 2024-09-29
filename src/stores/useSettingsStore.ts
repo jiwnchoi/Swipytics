@@ -1,6 +1,3 @@
-import { logger } from "@logger";
-import { getDifferences } from "@shared/utils";
-import { isEqual } from "es-toolkit";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -36,10 +33,5 @@ const useSettingsStore = create(
     },
   ),
 );
-
-useSettingsStore.subscribe((state, prevState) => {
-  if (isEqual(state, prevState)) return;
-  logger.log("settings-store", "state", getDifferences(state, prevState));
-});
 
 export default useSettingsStore;

@@ -1,1 +1,1 @@
-export { default as useLogger } from "./useLogger";
+export { LoggerClientProvider, useLoggerClient } from "./LoggerClientProvider";
