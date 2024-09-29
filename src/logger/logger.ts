@@ -1,5 +1,5 @@
+/* eslint-disable no-console */
 import { type IDBPDatabase } from "idb";
-import getLogData from "./getLogData";
 import { getIndexedDB, saveLog } from "./utils";
 
 class Logger {
@@ -24,8 +24,7 @@ class Logger {
     const key = closestEventElement.getAttribute(`data-log-${targetEventType}`);
     if (typeof key !== "string") return;
 
-    const data = getLogData(key);
-    saveLog(this.indexedDB, Date.now(), { key, data });
+    saveLog(this.indexedDB, Date.now(), { key, event: targetEventType });
   };
 
   private onClickListener = this.onEvent("click");
@@ -40,6 +39,10 @@ class Logger {
     window.removeEventListener("click", this.onClickListener);
     window.removeEventListener("scroll", this.onScrollListener);
   };
+
+  public log(key: string, event: string, data?: object) {
+    saveLog(this.indexedDB, Date.now(), { key, event, data });
+  }
 }
 
 export default new Logger();

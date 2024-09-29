@@ -1,11 +1,10 @@
 export interface LogEntryPayload {
   key: string;
-  data: object;
+  event: string;
+  data?: object;
 }
 
-export interface LogEntrySavedType {
-  key: string;
-  data: object;
+export interface LogEntrySavedType extends LogEntryPayload {
   version: number;
   timestamp: number;
 }

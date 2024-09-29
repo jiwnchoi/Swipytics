@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 import { type IDBPDatabase, openDB } from "idb";
-import { type LogEntryPayload, type LogEntrySavedType } from "./types";
-
+import type { LogEntryPayload, LogEntrySavedType } from "./types";
 const LOCAL_STORAGE_KEY = "logs";
 const INDEXED_DB_KEY = "logs";
 const LOG_VERSION = 1;

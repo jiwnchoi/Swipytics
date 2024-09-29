@@ -1,2 +1,2 @@
-export { default as useLogger } from "./useLogger";
+export { default as logger } from "./logger";
 export { downloadLogsAsJson } from "./utils";

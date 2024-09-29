@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import logger from "./logger";
+import logger from "../logger";
 
 export default function useLogger() {
   useEffect(() => {
