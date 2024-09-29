@@ -4,10 +4,10 @@ import logger from "../logger";
 export default function useLogger() {
   useEffect(() => {
     logger.initializeDB().then(() => {
-      logger.attachEventListener();
+      logger.attachEvent(window, ["click", "scroll"]);
     });
     return () => {
-      logger.detachEventListener();
+      logger.detachEvent(window, ["click", "scroll"]);
     };
   }, []);
 }

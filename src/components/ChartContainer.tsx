@@ -5,11 +5,13 @@ import PlaceHolder from "./PlaceHolder";
 import ScrollIndicator from "./ScrollIndicator";
 
 export default function ChartContainer(props: FlexProps) {
-  const { charts, ref } = useChartContainer();
+  const { charts, ref, scrollContainerCallback } = useChartContainer();
   const { mobile, cardHeight, cardColor, cardWidth } = useLayout();
   return (
     <Flex
       ref={ref}
+      onScroll={(e) => scrollContainerCallback(e.currentTarget)}
+      data-log-scroll={"chart-container"}
       scrollSnapType={"x mandatory"}
       overflowX={"auto"}
       style={{

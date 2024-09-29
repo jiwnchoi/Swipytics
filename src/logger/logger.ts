@@ -5,6 +5,8 @@ import { getIndexedDB, loadLogs, saveLog } from "./utils";
 
 class Logger {
   private indexedDB: IDBPDatabase | null = null;
+  private eventListeners: Record<string, (event: Event) => void> = {};
+  private scrollLogged = false;
 
   public async initializeDB() {
     try {
@@ -14,35 +16,58 @@ class Logger {
     }
   }
 
-  private onEvent = (targetEventType: string) => (event: Event) => {
-    const eventType = event.type;
-    if (eventType !== targetEventType) return;
+  private createEventListener = (eventType: string) => (event: Event) => {
+    console.log(eventType);
+    if (event.type !== eventType) return;
 
     const target = event.target as HTMLElement;
-    const closestEventElement = target.closest(`[data-log-${targetEventType}]`);
+    const closestEventElement = target.closest(`[data-log-${eventType}]`);
     if (!closestEventElement) return;
 
-    const key = closestEventElement.getAttribute(`data-log-${targetEventType}`);
+    const key = closestEventElement.getAttribute(`data-log-${eventType}`);
     if (typeof key !== "string") return;
 
-    saveLog(this.indexedDB, Date.now(), { key, event: targetEventType });
+    if (eventType === "scroll") {
+      console.log(this.scrollLogged);
+      if (this.scrollLogged) return;
+      this.scrollLogged = true;
+    } else {
+      this.scrollLogged = false;
+    }
+    saveLog(this.indexedDB, Date.now(), { key, event: eventType });
   };
 
-  private onClickListener = this.onEvent("click");
-  private onScrollListener = this.onEvent("scroll");
+  public attachEvent = (elem: HTMLElement | Window, eventTypes: string[]) => {
+    eventTypes.forEach((eventType) => {
+      if (!this.eventListeners[eventType]) {
+        this.eventListeners[eventType] = this.createEventListener(eventType);
+      }
 
-  public attachEventListener = () => {
-    window.addEventListener("click", this.onClickListener);
-    window.addEventListener("scroll", this.onScrollListener);
+      if (eventType === "scroll") {
+        elem.addEventListener(eventType, this.eventListeners[eventType], { capture: true });
+      } else {
+        elem.addEventListener(eventType, this.eventListeners[eventType]);
+      }
+    });
   };
 
-  public detachEventListener = () => {
-    window.removeEventListener("click", this.onClickListener);
-    window.removeEventListener("scroll", this.onScrollListener);
+  public detachEvent = (elem: HTMLElement | Window, eventTypes: string[]) => {
+    eventTypes.forEach((eventType) => {
+      if (this.eventListeners[eventType]) {
+        if (eventType === "scroll") {
+          elem.removeEventListener(eventType, this.eventListeners[eventType], { capture: true });
+        } else {
+          elem.removeEventListener(eventType, this.eventListeners[eventType]);
+        }
+      }
+    });
   };
 
   public log(key: string, event: string, data?: object) {
     saveLog(this.indexedDB, Date.now(), { key, event, data });
+    if (event !== "scroll") {
+      this.scrollLogged = false;
+    }
   }
 
   public export = async () => {
