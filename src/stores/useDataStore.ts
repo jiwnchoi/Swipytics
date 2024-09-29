@@ -3,7 +3,7 @@ import { JSONLoader, fetchFile, parse } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
 import { logger } from "@logger";
 import type { TSupportedDataType } from "@shared/models";
-import { getFileNameFromURL } from "@shared/utils";
+import { getDifferences, getFileNameFromURL } from "@shared/utils";
 import { isEqual, pick } from "es-toolkit";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
@@ -83,8 +83,11 @@ function pickDataStore(state: Partial<DataState>) {
 }
 
 useDataStore.subscribe((state, prevState) => {
-  if (isEqual(state, prevState) && state.writingFile) return;
-  logger.log("Data Store", "state", pickDataStore(state));
+  const pickedState = pickDataStore(state);
+  const pickedPrevState = pickDataStore(prevState);
+
+  if (isEqual(pickedState, pickedPrevState)) return;
+  logger.log("data-store", "state", getDifferences(pickedState, pickedPrevState));
 });
 
 export default useDataStore;

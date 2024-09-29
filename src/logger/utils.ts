@@ -81,7 +81,12 @@ export const downloadLogsAsJson = async () => {
   const indexedDBLogs = await readFromIndexedDB(indexedDB);
   const localStorageLogs = readFromLocalStorage();
   const combinedLogs = new Map([...indexedDBLogs, ...localStorageLogs]);
-  const sortedLogs = Array.from(combinedLogs.entries()).sort((a, b) => a[0] - b[0]);
+  const sortedLogs = Array.from(combinedLogs.entries())
+    .map(([timestamp, log]) => ({
+      ...log,
+      timestamp: timestamp,
+    }))
+    .sort((a, b) => a.timestamp - b.timestamp);
 
   const blob = new Blob([JSON.stringify(sortedLogs, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);

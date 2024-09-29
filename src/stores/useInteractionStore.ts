@@ -1,4 +1,5 @@
 import { logger } from "@logger";
+import { getDifferences } from "@shared/utils";
 import { isEqual, pickBy } from "es-toolkit";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
@@ -55,12 +56,10 @@ const useInteractionStore = create(
 );
 
 useInteractionStore.subscribe((state, prevState) => {
-  if (isEqual(state, prevState)) return;
-  logger.log(
-    "Interaction Store",
-    "state",
-    pickBy(state, (value) => typeof value !== "function"),
-  );
+  const pickedState = pickBy(state, (value) => typeof value !== "function");
+  const pickedPrevState = pickBy(prevState, (value) => typeof value !== "function");
+  if (isEqual(pickedState, pickedPrevState)) return;
+  logger.log("interaction-store", "state", getDifferences(pickedState, pickedPrevState));
 });
 
 export default useInteractionStore;
