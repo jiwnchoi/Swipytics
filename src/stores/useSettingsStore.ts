@@ -1,3 +1,5 @@
+import { logger } from "@logger";
+import { isEqual, pickBy } from "es-toolkit";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -12,9 +14,9 @@ interface SettingsState {
   // setBackend: (backend: "pyodide" | "server") => void;
 }
 
-const useSettingsStore = create<SettingsState>()(
+const useSettingsStore = create(
   devtools(
-    persist(
+    persist<SettingsState>(
       (set) => ({
         apiKey: "sk-...",
         setApiKey: (key: string) => set({ apiKey: key }),
@@ -33,5 +35,14 @@ const useSettingsStore = create<SettingsState>()(
     },
   ),
 );
+
+useSettingsStore.subscribe((state, prevState) => {
+  if (!isEqual(state, prevState)) return;
+  logger.log(
+    "Setting Store",
+    "state",
+    pickBy(state, (value) => typeof value !== "function"),
+  );
+});
 
 export default useSettingsStore;

@@ -1,8 +1,10 @@
 import { router } from "@api";
 import { JSONLoader, fetchFile, parse } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
+import { logger } from "@logger";
 import type { TSupportedDataType } from "@shared/models";
 import { getFileNameFromURL } from "@shared/utils";
+import { isEqual, pickBy } from "es-toolkit";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -75,5 +77,14 @@ const useDataStore = create(
     },
   ),
 );
+
+useDataStore.subscribe((state, prevState) => {
+  if (!isEqual(state, prevState)) return;
+  logger.log(
+    "Data Store",
+    "state",
+    pickBy(state, (value) => typeof value !== "function"),
+  );
+});
 
 export default useDataStore;

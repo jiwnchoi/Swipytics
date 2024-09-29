@@ -1,10 +1,11 @@
+import { router } from "@api";
+import { logger } from "@logger";
 import { CHART_PREFETCH_DELAY } from "@shared/constants";
 import type { TChart, TSession } from "@shared/models";
+import { isEqual, pickBy } from "es-toolkit";
 import { produce } from "immer";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-
-import { router } from "@api";
 
 interface SessionState extends TSession {
   currentChartIndex: number;
@@ -134,4 +135,12 @@ const useSessionsStore = create(
   ),
 );
 
+useSessionsStore.subscribe((state, prevState) => {
+  if (!isEqual(state, prevState)) return;
+  logger.log(
+    "Session Store",
+    "state",
+    pickBy(state, (value) => typeof value !== "function"),
+  );
+});
 export default useSessionsStore;

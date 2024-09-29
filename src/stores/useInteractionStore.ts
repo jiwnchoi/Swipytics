@@ -1,3 +1,5 @@
+import { logger } from "@logger";
+import { isEqual, pickBy } from "es-toolkit";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -51,5 +53,14 @@ const useInteractionStore = create(
     },
   ),
 );
+
+useInteractionStore.subscribe((state, prevState) => {
+  if (!isEqual(state, prevState)) return;
+  logger.log(
+    "Interaction Store",
+    "state",
+    pickBy(state, (value) => typeof value !== "function"),
+  );
+});
 
 export default useInteractionStore;
