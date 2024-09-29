@@ -1,15 +1,11 @@
 /* eslint-disable no-console */
 import { type IDBPDatabase, openDB } from "idb";
+import { INDEXED_DB_KEY, LOCAL_STORAGE_KEY, LOG_VERSION } from "./constants";
 import type { LogEntryPayload, LogEntrySavedType } from "./types";
-const LOCAL_STORAGE_KEY = "logs";
-const INDEXED_DB_KEY = "logs";
-const LOG_VERSION = 1;
-const LOG_FILE_NAME = "log";
-const LOG_FILE_FORMAT = "json";
 
-const getEmptyMap = () => new Map<number, LogEntrySavedType>();
+export const getEmptyMap = () => new Map<number, LogEntrySavedType>();
 
-const readFromLocalStorage = () => {
+export const readFromLocalStorage = () => {
   const existingLogs = localStorage.getItem(LOCAL_STORAGE_KEY) ?? "[]";
   try {
     const parsedLogs = JSON.parse(existingLogs) as [number, LogEntrySavedType][];
@@ -37,7 +33,7 @@ export const getIndexedDB = () =>
     },
   });
 
-const readFromIndexedDB = async (db: IDBPDatabase | null) => {
+export const readFromIndexedDB = async (db: IDBPDatabase | null) => {
   if (db) {
     try {
       const tx = db.transaction(INDEXED_DB_KEY, "readonly");
@@ -74,28 +70,4 @@ export const saveLog = (db: IDBPDatabase | null, timestamp: number, log: LogEntr
   } else {
     saveToLocalStorage(timestamp, log);
   }
-};
-
-export const downloadLogsAsJson = async () => {
-  const indexedDB = await openDB(INDEXED_DB_KEY, 1);
-  const indexedDBLogs = await readFromIndexedDB(indexedDB);
-  const localStorageLogs = readFromLocalStorage();
-  const combinedLogs = new Map([...indexedDBLogs, ...localStorageLogs]);
-  const sortedLogs = Array.from(combinedLogs.entries())
-    .map(([timestamp, log]) => ({
-      ...log,
-      timestamp: timestamp,
-    }))
-    .sort((a, b) => a.timestamp - b.timestamp);
-
-  const blob = new Blob([JSON.stringify(sortedLogs, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${LOG_FILE_NAME}.${LOG_FILE_FORMAT}`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 };

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { type IDBPDatabase } from "idb";
-import { getIndexedDB, saveLog } from "./utils";
+import { LOG_FILE_FORMAT, LOG_FILE_NAME } from "./constants";
+import { getIndexedDB, readFromIndexedDB, readFromLocalStorage, saveLog } from "./utils";
 
 class Logger {
   private indexedDB: IDBPDatabase | null = null;
@@ -43,6 +44,34 @@ class Logger {
   public log(key: string, event: string, data?: object) {
     saveLog(this.indexedDB, Date.now(), { key, event, data });
   }
+
+  public export = async () => {
+    if (!this.indexedDB) {
+      console.error("IndexedDB is not initialized.");
+      return;
+    }
+
+    const indexedDBLogs = await readFromIndexedDB(this.indexedDB);
+    const localStorageLogs = readFromLocalStorage();
+    const combinedLogs = new Map([...indexedDBLogs, ...localStorageLogs]);
+    const sortedLogs = Array.from(combinedLogs.entries())
+      .map(([timestamp, log]) => ({
+        ...log,
+        timestamp: timestamp,
+      }))
+      .sort((a, b) => a.timestamp - b.timestamp);
+
+    const blob = new Blob([JSON.stringify(sortedLogs, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${LOG_FILE_NAME}.${LOG_FILE_FORMAT}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 }
 
 export default new Logger();

@@ -1,9 +1,9 @@
 import { router } from "@api";
 import { useColorMode, useToast } from "@chakra-ui/react";
+import { logger } from "@logger";
 import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { downloadLogsAsJson } from "../logger";
 
 export default function useSettings() {
   const { fileCache, writeFile } = useDataStore();
@@ -20,7 +20,7 @@ export default function useSettings() {
 
   const handleDownloadLogs = () => {
     try {
-      downloadLogsAsJson();
+      logger.export();
     } catch (e) {
       toast({
         title: "Oh no!",

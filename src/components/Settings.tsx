@@ -136,9 +136,7 @@ function Settings(props: StackProps) {
       </SettingRow>
       <SettingRow label={t("settings.monitor_logs")}>
         <Flex gap={2} w={"full"}>
-          <Button w="full" onClick={handleDownloadLogs}>
-            {t("settings.load_latest_logs")}
-          </Button>
+          <Button w="full">{t("settings.load_latest_logs")}</Button>
           <Button w="full" onClick={handleDownloadLogs}>
             {t("settings.download_logs")}
           </Button>
