@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { type IDBPDatabase } from "idb";
 import { LOG_FILE_FORMAT, LOG_FILE_NAME } from "./constants";
-import { getIndexedDB, readFromIndexedDB, readFromLocalStorage, saveLog } from "./utils";
+import { getIndexedDB, loadLogs, saveLog } from "./utils";
 
 class Logger {
   private indexedDB: IDBPDatabase | null = null;
@@ -51,17 +51,9 @@ class Logger {
       return;
     }
 
-    const indexedDBLogs = await readFromIndexedDB(this.indexedDB);
-    const localStorageLogs = readFromLocalStorage();
-    const combinedLogs = new Map([...indexedDBLogs, ...localStorageLogs]);
-    const sortedLogs = Array.from(combinedLogs.entries())
-      .map(([timestamp, log]) => ({
-        ...log,
-        timestamp: timestamp,
-      }))
-      .sort((a, b) => a.timestamp - b.timestamp);
+    const logs = await loadLogs(this.indexedDB);
 
-    const blob = new Blob([JSON.stringify(sortedLogs, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(logs, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");

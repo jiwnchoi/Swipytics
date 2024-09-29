@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Difference = {
   path: string;
-  diff: any;
+  value: any;
 };
 
 function getDifferences(object: any, prevObject: any, path: string[] = []): Difference[] {
@@ -14,7 +14,7 @@ function getDifferences(object: any, prevObject: any, path: string[] = []): Diff
     if (object !== prevObject) {
       differences.push({
         path: path.join("."),
-        diff: object,
+        value: object,
       });
     }
     return differences;
@@ -25,7 +25,7 @@ function getDifferences(object: any, prevObject: any, path: string[] = []): Diff
     if (object !== prevObject) {
       differences.push({
         path: path.join("."),
-        diff: object,
+        value: object,
       });
     }
     return differences;
@@ -38,12 +38,12 @@ function getDifferences(object: any, prevObject: any, path: string[] = []): Diff
     if (!(key in prevObject)) {
       differences.push({
         path: newPath.join("."),
-        diff: object[key],
+        value: object[key],
       });
     } else if (!(key in object)) {
       differences.push({
         path: newPath.join("."),
-        diff: undefined,
+        value: undefined,
       });
     } else if (
       typeof object[key] === "object" &&
@@ -56,7 +56,7 @@ function getDifferences(object: any, prevObject: any, path: string[] = []): Diff
     } else if (object[key] !== prevObject[key]) {
       differences.push({
         path: newPath.join("."),
-        diff: object[key],
+        value: object[key],
       });
     }
   }
