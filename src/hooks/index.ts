@@ -12,3 +12,4 @@ export { default as useLayout } from "./useLayout";
 export { default as useLoadData } from "./useLoadData";
 export { default as useLoadingStatus } from "./useLoadingStatus";
 export { default as useSettings } from "./useSettings";
+export { default as useStoresLogging } from "./useStoresLogging";
