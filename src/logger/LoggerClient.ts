@@ -30,13 +30,13 @@ class LoggerClient {
     try {
       this.indexedDB = await getIndexedDB(this.storageKey);
     } catch (error) {
-      console.error("Failed to connect to IndexedDB:", error);
+      console.warn("Failed to connect to IndexedDB:", error);
     }
   }
 
   private saveLog = (timestamp: number, log: LogEntryPayload) => {
     if (!this.indexedDB) {
-      console.error("IndexedDB is not initialized.");
+      console.warn("IndexedDB is not initialized.");
       saveToLocalStorage(this.storageKey, timestamp, log, this.logVersion);
       return;
     }
@@ -116,8 +116,7 @@ class LoggerClient {
 
   public export = async () => {
     if (!this.indexedDB) {
-      console.error("IndexedDB is not initialized.");
-      return;
+      console.warn("IndexedDB is not initialized.");
     }
 
     const logs = await loadLogs(this.indexedDB, this.storageKey);
