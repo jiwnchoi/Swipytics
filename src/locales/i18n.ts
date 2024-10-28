@@ -18,7 +18,7 @@ i18n
     backend: {
       loadPath: "/Swipytics/locales/{{lng}}/translation.json", // JSON 파일 경로
     },
-    react: { useSuspense: false },
+    react: { useSuspense: true },
   });
 
 export default i18n;
