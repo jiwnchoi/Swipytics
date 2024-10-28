@@ -2,10 +2,10 @@
   "bookmarks": {
     "action": "Like",
     "empty": "No Likes",
-    "title": "likes"
+    "title": "Likes"
   },
   "fields": {
-    "title": "fields"
+    "title": "Fields"
   },
   "home": {
     "description": "The Simplest On-the-fly Exploratory Analytics"
@@ -15,7 +15,7 @@
     "prev": "Prev"
   },
   "search": {
-    "title": "search"
+    "title": "Search"
   },
   "settings": {
     "download_logs": "Download",
@@ -27,7 +27,7 @@
     "set_backend": "Backend",
     "set_color": "Color Mode",
     "set_locale": "Locale",
-    "title": "settings"
+    "title": "Settings"
   },
   "toast": {
     "server_not_available_description": "Failed to access Python backend. Only local Pyodide is available.",
