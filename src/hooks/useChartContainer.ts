@@ -3,6 +3,7 @@ import { DEBOUNCE_DELAY } from "@shared/constants";
 import { useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
 import { useEffect, useRef } from "react";
+import { useSwipeable } from "react-swipeable";
 
 function getChartWidth(container: HTMLDivElement | null) {
   if (!container) return 0;
@@ -20,6 +21,16 @@ export default function useChartContainer() {
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
   const ref: React.MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
   const logger = useLoggerClient();
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => console.log("Swiped left"),
+    onSwipedRight: () => console.log("Swiped right"),
+    onSwipedUp: () => setCurrentChartIndex(Math.max(0, currentChartIndex - 1)),
+    onSwipedDown: () => setCurrentChartIndex(Math.min(charts.length - 1, currentChartIndex + 1)),
+    delta: 10,
+    trackTouch: true,
+    trackMouse: true,
+  });
 
   const scrollContainerCallback = debounce((container: HTMLDivElement) => {
     if (!container) return;
@@ -72,5 +83,6 @@ export default function useChartContainer() {
     currentChartIndex,
     ref,
     scrollContainerCallback,
+    swipeHandlers,
   };
 }
