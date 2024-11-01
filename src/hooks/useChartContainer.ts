@@ -18,7 +18,7 @@ export default function useChartContainer() {
   const appendNextChart = useSessionsStore((state) => state.appendNextChart);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref: React.MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
   const logger = useLoggerClient();
 
   const scrollContainerCallback = debounce((container: HTMLDivElement) => {
