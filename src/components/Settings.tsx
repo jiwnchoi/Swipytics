@@ -6,6 +6,7 @@ import {
   Icon,
   IconButton,
   Select,
+  Spacer,
   type StackProps,
   TabPanel,
   Text,
@@ -93,7 +94,13 @@ function Settings(props: StackProps) {
   const { mobile } = useLayout();
   return (
     <TabPanel as={VStack} {...props}>
-      {mobile ? <PlaceHolder flexDir={"column"} w="full" mb={8} /> : null}
+      {mobile ? (
+        <>
+          <PlaceHolder flexDir={"column"} w="full" mb={8} />
+          <Spacer />
+        </>
+      ) : null}
+
       <SettingRow label={t("settings.load_data")}>
         <FileForm w="full" />
       </SettingRow>

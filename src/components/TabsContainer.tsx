@@ -59,7 +59,7 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
             isDisabled={!initialized && !config.displayingBeforeInit}
             data-log-click={`tab-${config.name}`}>
             <Icon boxSize={tabIconSize} as={config.icon} />
-            <Text fontSize={"sm"}>{config.displayName}</Text>
+            <Text fontSize={"xs"}>{config.displayName}</Text>
           </Tab>
         ))}
       </TabList>
