@@ -6,6 +6,7 @@ import {
   ControlPanel,
   Controller,
   Fields,
+  ScrollIndicator,
   Settings,
   TabsContainer,
 } from "@components";
@@ -14,7 +15,7 @@ import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugei
 import { useTranslation } from "react-i18next";
 
 export default function App() {
-  const { cardHeight, cardColor, cardWidth } = useLayout();
+  const { cardHeight, cardColor, cardWidth, mobile } = useLayout();
   const { t } = useTranslation();
   useStoresLogging();
 
@@ -24,7 +25,14 @@ export default function App() {
       maxH={cardHeight}
       gap={4}
       flexDir={{ base: "column", lg: "row" }}>
-      <Flex position="relative" w={cardWidth}>
+      <Flex position="relative" w={cardWidth} h={cardHeight}>
+        <ScrollIndicator
+          top={mobile ? 0 : undefined}
+          bottom={mobile ? undefined : 0}
+          h={8}
+          p={2}
+          w="full"
+        />
         <ChartPanel w={"full"} gap={{ base: 0, lg: 4 }} />
       </Flex>
       <ControlPanel

@@ -2,17 +2,25 @@ import { Flex, type FlexProps } from "@chakra-ui/react";
 import { useChartContainer, useLayout } from "@hooks";
 import Chart from "./Chart";
 import PlaceHolder from "./PlaceHolder";
-import ScrollIndicator from "./ScrollIndicator";
 
-export default function ChartContainer(props: FlexProps) {
-  const { charts, ref, scrollContainerCallback } = useChartContainer();
-  const { mobile, cardHeight, cardColor, cardWidth } = useLayout();
+interface ChartContainerProps extends FlexProps {
+  orientation?: "horizontal" | "vertical";
+}
+
+export default function ChartContainer({
+  orientation = "vertical",
+  ...props
+}: ChartContainerProps) {
+  const { charts, ref, scrollContainerCallback } = useChartContainer({ orientation });
+  const { cardHeight, cardColor, cardWidth } = useLayout();
   return (
     <Flex
       ref={ref}
       onScroll={(e) => scrollContainerCallback(e.currentTarget)}
       data-log-scroll={"chart-container"}
-      scrollSnapType={"x mandatory"}
+      scrollSnapType={"y mandatory"}
+      flexDir={"column"}
+      gap={2}
       overflowX={"auto"}
       style={{
         WebkitOverflowScrolling: "touch",
@@ -23,17 +31,11 @@ export default function ChartContainer(props: FlexProps) {
         },
       }}
       {...props}>
-      <ScrollIndicator
-        top={mobile ? 0 : undefined}
-        bottom={mobile ? undefined : 0}
-        h={8}
-        p={2}
-        w="full"
-      />
       <PlaceHolder
         flexDir={"column"}
         minW="full"
         w={cardWidth}
+        h={cardHeight}
         maxW={cardWidth}
         minH={cardHeight}
         bgColor={cardColor}
