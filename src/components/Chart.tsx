@@ -4,7 +4,6 @@ import type { TChart } from "@shared/models";
 import { memo } from "react";
 import { VegaLite } from "react-vega";
 import { Error as VegaError } from "vega";
-import { Handler } from "vega-tooltip";
 
 interface ChartProps extends CenterProps {
   chart: TChart;
@@ -18,9 +17,9 @@ function Chart({ chart, ...props }: ChartProps) {
         spec={spec}
         data={data}
         theme={chartTheme}
-        actions={true}
+        actions={false}
         logLevel={VegaError}
-        tooltip={new Handler().call}
+        // tooltip={new Handler().call}
       />
       <Flex minH={{ base: "300px", lg: "0px" }} />
     </Center>
