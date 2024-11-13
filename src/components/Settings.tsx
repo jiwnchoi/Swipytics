@@ -11,7 +11,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useDemo, useLoadingStatus, useSettings } from "@hooks";
+import { useDemo, useLayout, useLoadingStatus, useSettings } from "@hooks";
 import { DEMO_LIST, PRIMARY_COLOR } from "@shared/constants";
 import {
   ArrowDown01Icon,
@@ -24,6 +24,7 @@ import {
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import FileForm from "./FileForm";
+import PlaceHolder from "./PlaceHolder";
 
 interface SettingRowProps extends FlexProps {
   label: string;
@@ -89,8 +90,10 @@ function Settings(props: StackProps) {
     locale,
     setLocale,
   } = useSettings();
+  const { mobile } = useLayout();
   return (
     <TabPanel as={VStack} {...props}>
+      {mobile ? <PlaceHolder flexDir={"column"} w="full" mb={8} /> : null}
       <SettingRow label={t("settings.load_data")}>
         <FileForm w="full" />
       </SettingRow>

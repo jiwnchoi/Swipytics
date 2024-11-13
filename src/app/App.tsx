@@ -20,7 +20,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 export default function App() {
-  const { cardHeight, cardColor, cardWidth, mobile, borderColor } = useLayout();
+  const { cardHeight, cardColor, cardWidth, mobile, borderColor, tabPanelHeight } = useLayout();
   const { t } = useTranslation();
   useStoresLogging();
 
@@ -64,14 +64,14 @@ export default function App() {
               name: "likes",
               displayName: t("bookmarks.title"),
               icon: HeartCheckIcon,
-              Panel: <Bookmarks p={0} m={0} gap={2} w="full" />,
+              Panel: <Bookmarks h={tabPanelHeight} pt={4} m={0} gap={2} w="full" />,
               displayingBeforeInit: false,
             },
             {
               name: "search",
               displayName: t("search.title"),
               icon: Search01Icon,
-              Panel: <Browser />,
+              Panel: <Browser h={tabPanelHeight} pt={4} />,
               displayingBeforeInit: false,
             },
             {
@@ -85,14 +85,14 @@ export default function App() {
               name: "fields",
               displayName: t("fields.title"),
               icon: ProfileIcon,
-              Panel: <Fields />,
+              Panel: <Fields h={tabPanelHeight} pt={4} />,
               displayingBeforeInit: false,
             },
             {
               name: "settings",
               displayName: t("settings.title"),
               icon: Settings01Icon,
-              Panel: <Settings align={"start"} py={4} />,
+              Panel: <Settings h={tabPanelHeight} align={"start"} py={4} />,
               displayingBeforeInit: true,
             },
           ]}

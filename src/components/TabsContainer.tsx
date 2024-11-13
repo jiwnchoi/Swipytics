@@ -38,7 +38,6 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
   const filteredTabs = tabs.filter((config) =>
     !mobile && config.name === "charts" ? false : true,
   );
-  console.log(filteredTabs);
 
   return (
     <Tabs

@@ -1,14 +1,15 @@
 import { Center, ListItem, OrderedList, TabPanel } from "@chakra-ui/react";
-import { useBookmarks } from "@hooks";
+import { useBookmarks, useLayout } from "@hooks";
 import { useTranslation } from "react-i18next";
 import ChartItem from "./ChartItem";
 
 export default function Bookmarks({ ...props }) {
   const { preferredCharts, handleClickBookmark } = useBookmarks();
+  const { tabPanelHeight } = useLayout();
   const { t } = useTranslation();
 
   return (
-    <TabPanel display="flex" flexDirection="column" height="full" {...props}>
+    <TabPanel display="flex" flexDirection="column" height="full" h={tabPanelHeight} {...props}>
       <OrderedList m={0} p={0} width="full" overflowY="auto">
         {preferredCharts.length ? (
           preferredCharts.map((chart) => (

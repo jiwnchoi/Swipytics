@@ -1,3 +1,4 @@
+import { useLayout } from "@hooks";
 import { getFileNameFromURL } from "@shared/utils";
 import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 
@@ -6,10 +7,10 @@ function useLoadData() {
   const writeFile = useDataStore((state) => state.writeFile);
   const loadingSession = useSessionsStore((state) => state.loadingSession);
   const loadSession = useSessionsStore((state) => state.loadSession);
-  const setExpanded = useInteractionStore((state) => state.setDrawerExpanded);
   const resetSession = useSessionsStore((state) => state.resetSession);
   const sessionFileName = useSessionsStore((state) => state.filename);
   const setTabByName = useInteractionStore((state) => state.setTabByName);
+  const { mobile } = useLayout();
 
   const initializeSession = async (file: File | string) => {
     const filename = file instanceof File ? file.name : getFileNameFromURL(file);
@@ -21,8 +22,7 @@ function useLoadData() {
     await writeFile(file);
 
     await loadSession(filename);
-    setExpanded(false);
-    setTabByName("fields");
+    setTabByName(mobile ? "charts" : "fields");
   };
 
   return {
