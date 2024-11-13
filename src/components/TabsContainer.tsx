@@ -3,7 +3,6 @@ import {
   Icon,
   Tab,
   TabList,
-  TabPanel,
   TabPanels,
   Tabs,
   Text,
@@ -19,7 +18,7 @@ interface TabConfiguration {
   name: string;
   displayName: string;
   icon: typeof FirstBracketIcon;
-  panel: ReactNode;
+  Panel: ReactNode;
   displayingBeforeInit: boolean;
 }
 
@@ -35,17 +34,24 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
   const tabIndex = useInteractionStore((state) => state.tabIndex);
   const setTabByIndex = useInteractionStore((state) => state.setTabByIndex);
 
+  const { mobile } = useLayout();
+  const filteredTabs = tabs.filter((config) =>
+    !mobile && config.name === "charts" ? false : true,
+  );
+  console.log(filteredTabs);
+
   return (
     <Tabs
+      display={"flex"}
       w={"full"}
-      defaultIndex={tabIndex}
-      index={tabIndex}
+      defaultIndex={filteredTabs.length - 1}
+      index={tabIndex >= 0 ? tabIndex : filteredTabs.length + tabIndex}
       onChange={setTabByIndex}
       isFitted
       colorScheme={PRIMARY_COLOR}
       {...props}>
-      <TabList>
-        {tabs.map((config) => (
+      <TabList my={2}>
+        {filteredTabs.map((config) => (
           <Tab
             gap={1}
             as={Center}
@@ -58,9 +64,9 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
           </Tab>
         ))}
       </TabList>
-      <TabPanels mt={4} flex={1} overflow={"auto"} h={tabPanelHeight} sx={scrollbarStyle}>
-        {tabs.map((config) => (
-          <TabPanel key={`tabpanel-${config.name}`}>{config.panel}</TabPanel>
+      <TabPanels flex={1} overflow={"auto"} maxH={tabPanelHeight} sx={scrollbarStyle}>
+        {filteredTabs.map((config) => (
+          <>{config.Panel}</>
         ))}
       </TabPanels>
     </Tabs>

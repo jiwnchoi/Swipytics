@@ -18,9 +18,6 @@ export default function useController() {
   const handlePrevChart = () => setCurrentChartIndex(currentChartIndex - 1);
   const handlePreferChart = () => {
     setCurrentChartPreferred(!currentChartPreferred);
-    if (!currentChartPreferred) {
-      setCurrentChartIndex(currentChartIndex + 1);
-    }
   };
 
   return {

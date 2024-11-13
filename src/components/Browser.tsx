@@ -9,13 +9,14 @@ import {
   TagCloseButton,
   TagLabel,
   VStack,
+  type TabPanelProps,
 } from "@chakra-ui/react";
 import { useBrowser, useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
 import useColors from "../hooks/useLayout";
 import ChartItem from "./ChartItem";
 
-function Browser() {
+function Browser(props: TabPanelProps) {
   const {
     scrollbarStyle,
     buttonColor,
@@ -43,7 +44,7 @@ function Browser() {
   const { tabPanelHeight } = useColors();
 
   return (
-    <TabPanel as={VStack} w="full" alignItems="center" h={tabPanelHeight}>
+    <TabPanel as={VStack} w="full" alignItems="center" h={tabPanelHeight} {...props}>
       <Box w="100%" position="relative">
         <HStack
           spacing={1}

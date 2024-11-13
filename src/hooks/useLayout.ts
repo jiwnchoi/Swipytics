@@ -13,7 +13,7 @@ export default function useColors() {
   const cardColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);
   const borderColor = useColorModeValue(chakraColors["gray.200"], chakraColors["gray.700"]);
 
-  const tabPanelHeight = useBreakpointValue({ base: 320, lg: 560 });
+  const tabPanelHeight = useBreakpointValue({ base: 800, lg: 560 });
   const tabIconSize = 5;
 
   const thumbnailSize = "70px";

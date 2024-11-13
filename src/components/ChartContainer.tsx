@@ -18,8 +18,8 @@ export default function ChartContainer({
       ref={ref}
       onScroll={(e) => scrollContainerCallback(e.currentTarget)}
       data-log-scroll={"chart-container"}
-      scrollSnapType={"y mandatory"}
-      flexDir={"column"}
+      scrollSnapType={`${orientation === "horizontal" ? "x" : "y"} mandatory`}
+      flexDir={orientation === "horizontal" ? "row" : "column"}
       gap={2}
       overflowX={"auto"}
       style={{

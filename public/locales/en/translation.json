@@ -17,6 +17,9 @@
   "search": {
     "title": "Search"
   },
+  "charts": {
+    "title": "Charts"
+  },
   "settings": {
     "download_logs": "Download",
     "load_data": "Load Data",
