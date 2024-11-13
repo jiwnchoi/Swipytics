@@ -10,7 +10,6 @@ function Controller(props: ButtonGroupProps) {
     currentChartPreferred,
     handleNextChart,
     handlePrevChart,
-    // handleRenewChart,
     handlePreferChart,
   } = useController();
   const { t } = useTranslation();
