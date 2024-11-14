@@ -8,7 +8,10 @@ export default function useController() {
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
   const renewCurrentChart = useSessionsStore((state) => state.renewCurrentChart);
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
-  const currentChartPreferred = currentChartIndex !== -1 && charts[currentChartIndex].preferred;
+  const currentChartPreferred =
+    0 <= currentChartIndex &&
+    currentChartIndex < charts.length &&
+    charts[currentChartIndex]?.preferred;
 
   const chartDisplaying = currentChartIndex !== -1;
   const sessionInitialized = fields.length > 0;

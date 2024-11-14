@@ -4,6 +4,16 @@ body {
   height: 100dvh;
   overflow: smooth;
   overscroll-behavior: none;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+  }
 }
 
 svg {
