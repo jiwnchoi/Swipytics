@@ -13,6 +13,7 @@ export default function ChartContainer({
 }: ChartContainerProps) {
   const { charts, ref, scrollContainerCallback } = useChartContainer({ orientation });
   const { cardHeight, cardColor, cardWidth } = useLayout();
+
   return (
     <Flex
       ref={ref}

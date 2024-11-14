@@ -3,11 +3,11 @@ import { chakraColors, PRIMARY } from "@shared/constants";
 
 export default function useColors() {
   const cardPadding = useBreakpointValue({ base: 0, lg: "18px" });
-  const cardWidth = useBreakpointValue({ base: window.innerWidth, lg: 880 });
+  const cardWidth = useBreakpointValue({ base: "full", lg: 880 });
   const cardHeight = useBreakpointValue({
-    base: "100dvh",
+    base: "calc(100dvh - 140px)",
     lg: "calc(80dvh - 18px)",
-  });
+  })!;
   const mobile = useBreakpointValue({ base: true, lg: false });
   const drawerBgColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);
   const cardColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);

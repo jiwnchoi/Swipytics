@@ -3,10 +3,9 @@ import { devtools } from "zustand/middleware";
 
 const TABS = {
   likes: 0,
-  search: 1,
-  charts: 2,
-  fields: -2,
-  settings: -1,
+  fields: 1,
+  search: 2,
+  settings: 3,
 };
 
 interface SettingsState {

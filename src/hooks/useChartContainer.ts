@@ -51,9 +51,9 @@ export default function useChartContainer({ orientation = "vertical" }) {
 
   useEffect(() => {
     const keyActions = {
-      ArrowLeft: () => setCurrentChartIndex(currentChartIndex - 1),
-      ArrowRight: () => setCurrentChartIndex(currentChartIndex + 1),
-      ArrowUp: () => setCurrentChartPreferred(!charts[currentChartIndex].preferred),
+      ArrowUp: () => setCurrentChartIndex(currentChartIndex - 1),
+      ArrowDown: () => setCurrentChartIndex(currentChartIndex + 1),
+      Enter: () => setCurrentChartPreferred(!charts[currentChartIndex].preferred),
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {

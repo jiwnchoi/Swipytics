@@ -1,5 +1,6 @@
 import {
   Center,
+  Flex,
   Icon,
   Tab,
   TabList,
@@ -13,13 +14,14 @@ import { useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
 import { useInteractionStore, useSessionsStore } from "@stores";
 import { type FirstBracketIcon } from "hugeicons-react";
-import { type ReactNode } from "react";
+import { type ReactElement } from "react";
+import ScrollIndicator from "./ScrollIndicator";
 
 interface TabConfiguration {
   name: string;
   displayName: string;
   icon: typeof FirstBracketIcon;
-  Panel: ReactNode;
+  Panel: ReactElement;
   displayingBeforeInit: boolean;
 }
 
@@ -27,29 +29,47 @@ interface TabsContainerProps extends Omit<TabsProps, "children"> {
   tabs: TabConfiguration[];
 }
 
-function TabsContainer({ tabs, ...props }: TabsContainerProps) {
-  const { tabIconSize, tabPanelHeight, scrollbarStyle } = useLayout();
+function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
+  const { tabIconSize, cardWidth, cardHeight, cardColor, scrollbarStyle } = useLayout();
   const fields = useSessionsStore((state) => state.fields);
   const initialized = fields.length > 0;
 
   const tabIndex = useInteractionStore((state) => state.tabIndex);
   const setTabByIndex = useInteractionStore((state) => state.setTabByIndex);
 
-  const { mobile } = useLayout();
-  const filteredTabs = tabs.filter((config) =>
-    !mobile && config.name === "charts" ? false : true,
-  );
+  const filteredTabs = tabs.filter((config) => config.name !== "settings");
 
   return (
     <Tabs
       display={"flex"}
       w={"full"}
-      defaultIndex={filteredTabs.length - 1}
-      index={tabIndex >= 0 ? tabIndex : filteredTabs.length + tabIndex}
+      index={tabIndex}
       onChange={setTabByIndex}
       isFitted
       colorScheme={PRIMARY_COLOR}
       {...props}>
+      <ScrollIndicator
+        left={0}
+        top={12}
+        w={8}
+        h={cardHeight}
+        visibility={tabIndex === 1 ? "visible" : "hidden"}
+      />
+      <TabPanels overflow={"hidden"}>
+        {tabs.map((config) => (
+          <TabPanel key={`tabpanel-${config.name}`}>
+            <Flex
+              maxW={cardWidth}
+              bg={cardColor}
+              borderRadius={"md"}
+              flexDir={"column"}
+              h={cardHeight}
+              sx={scrollbarStyle}>
+              {config.Panel}
+            </Flex>
+          </TabPanel>
+        ))}
+      </TabPanels>
       <TabList my={2}>
         {filteredTabs.map((config) => (
           <Tab
@@ -64,13 +84,8 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
           </Tab>
         ))}
       </TabList>
-      <TabPanels flex={1} overflow={"auto"} maxH={tabPanelHeight} sx={scrollbarStyle}>
-        {filteredTabs.map((config) => (
-          <TabPanel key={`tabpanel-${config.name}`}>{config.Panel}</TabPanel>
-        ))}
-      </TabPanels>
     </Tabs>
   );
 }
 
-export default TabsContainer;
+export default TabsContainerBase;

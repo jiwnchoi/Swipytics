@@ -1,4 +1,13 @@
-import { Button, type CenterProps, Flex, Icon, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  type CenterProps,
+  Flex,
+  Heading,
+  Icon,
+  IconButton,
+  Spacer,
+} from "@chakra-ui/react";
 import { useChart, useDoubleTap, useLayout } from "@hooks";
 import type { TChart } from "@shared/models";
 import { useSessionsStore } from "@stores";
@@ -25,43 +34,38 @@ function Chart({ chart, ...props }: ChartProps) {
   const handlers = useDoubleTap(handlePreferChart);
 
   return (
-    <Flex
-      px={4}
-      pt={16}
-      pb={32}
+    <Center
+      p={6}
       flexDir={"column"}
-      justifyContent={"space-between"}
-      alignItems={"center"}
       maxW={"800px"}
       scrollSnapAlign={"start"}
       {...handlers}
       {...props}>
-      <VegaLite
-        spec={spec}
-        data={data}
-        theme={chartTheme}
-        actions={false}
-        logLevel={VegaError}
-        // tooltip={new Handler().call}
-      />
-      {!!mobile && (
-        <Flex justifyContent={"flex-end"} w="full">
-          <Button
-            borderRadius={"50%"}
-            py={8}
-            size="lg"
-            aria-label="Bookmark current chart"
-            onClick={handlePreferChart}
-            data-log-click="prefer-chart"
-            colorScheme={currentChartPreferred ? "red" : "gray"}
-            variant={currentChartPreferred ? "solid" : "ghost"}>
-            <VStack spacing={2}>
-              <Icon as={currentChartPreferred ? HeartCheckIcon : HeartAddIcon} boxSize={6} />
-            </VStack>
-          </Button>
-        </Flex>
+      <Box>
+        <Heading fontSize={18} mb={4} textAlign={"center"}>
+          {chart.title}
+        </Heading>
+        <VegaLite spec={spec} data={data} theme={chartTheme} actions={false} logLevel={VegaError} />
+      </Box>
+
+      {mobile && (
+        <>
+          <Spacer />
+          <Flex justifyContent={"flex-end"} w="full">
+            <IconButton
+              variant={"ghost"}
+              icon={<Icon as={currentChartPreferred ? HeartCheckIcon : HeartAddIcon} boxSize={6} />}
+              py={8}
+              size="lg"
+              aria-label="Bookmark current chart"
+              onClick={handlePreferChart}
+              data-log-click="prefer-chart"
+              colorScheme={currentChartPreferred ? "red" : "gray"}
+            />
+          </Flex>
+        </>
       )}
-    </Flex>
+    </Center>
   );
 }
 

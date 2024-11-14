@@ -1,24 +1,66 @@
-import { Center, type CenterProps, Flex, Heading, Icon, Text } from "@chakra-ui/react";
-import { useLayout } from "@hooks";
-import { SwipeUp02Icon } from "hugeicons-react";
+import {
+  Button,
+  Center,
+  type CenterProps,
+  Flex,
+  Heading,
+  Icon,
+  Link,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { GithubIcon, LabelImportantIcon, SwipeUp02Icon } from "hugeicons-react";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
-import CopyRight from "./CopyRight";
 
 function PlaceHolderImpl(props: CenterProps) {
-  const { mobile } = useLayout();
   const { t } = useTranslation();
   return (
-    <Flex py={4} justify={mobile ? "start" : "center"} {...props}>
+    <Center flexDir={"column"} p={2} {...props}>
       <Center gap={2} mb={4}>
-        <Icon as={SwipeUp02Icon} boxSize={16} />
-        <Heading fontSize={48}>Swipytics</Heading>
+        <Icon as={SwipeUp02Icon} boxSize={12} />
+        <Heading fontSize={40}>Swipytics</Heading>
       </Center>
-      <Text textColor={"gray"} textAlign={"center"}>
+      <Text textColor={"gray"} textAlign={"center"} fontSize={"sm"}>
         {t("home.description")}
       </Text>
-      <CopyRight />
-    </Flex>
+      <VStack w="full" color={"gray"} gap={1} mt={8} p={0}>
+        <Flex gap={1}>
+          <Text fontSize="xs" textAlign="center">
+            Swipytics @ 2024
+          </Text>
+          <Link href="https://jiwnchoi.me" isExternal>
+            <Text fontSize="xs" textAlign="center" textDecoration={"underline"}>
+              Jiwon Choi
+            </Text>
+          </Link>
+          <Text fontSize="xs" textAlign="center">
+            All rights reserved.
+          </Text>
+        </Flex>
+        <Flex gap={4}>
+          <Link href="https://github.com/jiwnchoi/Swipytics" isExternal>
+            <Button leftIcon={<Icon as={GithubIcon} />} size={"xs"} variant={"link"} color={"gray"}>
+              Github
+            </Button>
+          </Link>
+          <Link href="https://idclab.skku.edu" isExternal>
+            <Button
+              variant={"link"}
+              size={"xs"}
+              leftIcon={<Icon as={LabelImportantIcon} />}
+              color={"gray"}>
+              <Text fontFamily="Rajdhani" fontWeight={600} fontSize={"sm"}>
+                IDC
+              </Text>
+              <Text fontFamily="Rajdhani" fontWeight={500} fontSize={"sm"}>
+                Lab
+              </Text>
+            </Button>
+          </Link>
+        </Flex>
+      </VStack>
+    </Center>
   );
 }
 
