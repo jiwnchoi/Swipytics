@@ -50,8 +50,9 @@ export default function useDiscoverView() {
       await appendChart(chart);
       setCurrentChartIndex(charts.length - 1);
       setTabByName("charts");
+      setSelectedFields([]);
     },
-    [appendChart, charts.length, setCurrentChartIndex, setTabByName],
+    [appendChart, charts.length, setCurrentChartIndex, setSelectedFields, setTabByName],
   );
 
   return {

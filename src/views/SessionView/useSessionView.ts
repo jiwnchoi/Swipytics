@@ -4,28 +4,32 @@ import { useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
 import { useEffect, useRef } from "react";
 
-const getDimension = (container: HTMLDivElement | null, prop: "clientWidth" | "clientHeight") => {
-  if (!container) return 0;
-  const gap = parseFloat(window.getComputedStyle(container).gap);
-  return container[prop] + gap;
-};
+interface UseSessionViewProps {
+  cardWidth: number;
+  cardHeight: number;
+  orientation?: "horizontal" | "vertical";
+}
 
-export default function useSessionView({ orientation = "vertical" }) {
+export default function useSessionView({
+  cardWidth,
+  cardHeight,
+  orientation = "vertical",
+}: UseSessionViewProps) {
   const charts = useSessionsStore((state) => state.charts);
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
   const appendNextChart = useSessionsStore((state) => state.appendNextChart);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
 
+  const dimension = orientation === "horizontal" ? cardWidth : cardHeight;
+
   const ref = useRef<HTMLDivElement>(null);
+  const isInitialMount = useRef(true);
+
   const logger = useLoggerClient();
 
   const scrollContainerCallback = debounce((container: HTMLDivElement) => {
     if (!container) return;
-    const dimension = getDimension(
-      container,
-      orientation === "horizontal" ? "clientWidth" : "clientHeight",
-    );
     const scroll = orientation === "horizontal" ? container.scrollLeft : container.scrollTop;
     const newIndex = Math.round(scroll / dimension) - 1;
 
@@ -37,17 +41,14 @@ export default function useSessionView({ orientation = "vertical" }) {
     const container = ref.current;
     if (!container) return;
 
-    const dimension = getDimension(
-      container,
-      orientation === "horizontal" ? "clientWidth" : "clientHeight",
-    );
     const scrollProps = {
       [orientation === "horizontal" ? "left" : "top"]: (currentChartIndex + 1) * dimension,
-      behavior: "smooth" as const,
+      behavior: isInitialMount.current ? ("instant" as const) : ("smooth" as const),
     };
 
     container.scrollTo(scrollProps);
-  }, [currentChartIndex, orientation]);
+    isInitialMount.current = false;
+  }, [currentChartIndex, dimension, orientation]);
 
   useEffect(() => {
     const keyActions = {

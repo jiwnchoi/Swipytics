@@ -13,8 +13,8 @@ import type { TChart } from "@shared/models";
 import { useSessionsStore } from "@stores";
 import { HeartAddIcon, HeartCheckIcon } from "hugeicons-react";
 import { memo } from "react";
-import { VegaLite } from "react-vega";
 import { Error as VegaError } from "vega";
+import CachedVegaLite from "./CachedVegaLite";
 
 interface ChartProps extends CenterProps {
   chart: TChart;
@@ -34,18 +34,18 @@ function Chart({ chart, ...props }: ChartProps) {
   const handlers = useDoubleTap(handlePreferChart);
 
   return (
-    <Center
-      p={6}
-      flexDir={"column"}
-      maxW={"800px"}
-      scrollSnapAlign={"start"}
-      {...handlers}
-      {...props}>
+    <Center p={6} flexDir={"column"} scrollSnapAlign={"start"} {...handlers} {...props}>
       <Box>
         <Heading fontSize={18} mb={4} textAlign={"center"}>
           {chart.title}
         </Heading>
-        <VegaLite spec={spec} data={data} theme={chartTheme} actions={false} logLevel={VegaError} />
+        <CachedVegaLite
+          spec={spec}
+          data={data}
+          theme={chartTheme}
+          actions={false}
+          logLevel={VegaError}
+        />
       </Box>
 
       {mobile && (

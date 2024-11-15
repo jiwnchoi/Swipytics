@@ -1,9 +1,9 @@
 export { default as Bookmarks } from "./Bookmarks";
 export { default as Browser } from "./Browser";
 export { default as Chart } from "./Chart";
-export { default as ChartContainer } from "./ChartContainer";
 export { default as Controller } from "./Controller";
 
+export { default as CachedVegaLite } from "./CachedVegaLite";
 export { default as ChartItem } from "./ChartItem";
 export { default as Fields } from "./Fields";
 export { default as FieldTag } from "./FieldTag";

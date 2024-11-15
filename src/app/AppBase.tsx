@@ -10,9 +10,12 @@ import {
   Settings01Icon,
   SwipeUp02Icon,
 } from "hugeicons-react";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
-function Header() {
+const Header = memo(HeaderImpl);
+
+function HeaderImpl() {
   const { accentColor } = useLayout();
   const tabIndex = useInteractionStore((state) => state.tabIndex);
   const setTabByName = useInteractionStore((state) => state.setTabByName);
@@ -20,7 +23,7 @@ function Header() {
   const fields = useSessionsStore((state) => state.fields);
 
   return (
-    <Flex w="full" justifyContent={"space-between"} alignItems={"center"}>
+    <Flex w="full" justifyContent={"space-between"} alignItems={"center"} px={2} py={1}>
       {tabIndex !== 3 ? (
         <Flex alignItems={"center"} h="full" gap={1}>
           <Icon as={SwipeUp02Icon} boxSize={6} />
@@ -50,10 +53,10 @@ function Header() {
 
 export default function BaseApp() {
   const { t } = useTranslation();
-
   return (
     <Flex p={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column">
       <Header />
+
       <TabsContainerBase
         flexDir="column"
         variant="soft-rounded"

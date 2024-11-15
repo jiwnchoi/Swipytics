@@ -2,7 +2,6 @@ import { Flex, Spacer } from "@chakra-ui/react";
 import {
   Bookmarks,
   Browser,
-  ChartContainer,
   Controller,
   Fields,
   ScrollIndicator,
@@ -10,6 +9,7 @@ import {
   TabsContainer,
 } from "@components";
 import { useLayout } from "@hooks";
+import { SessionView } from "@views";
 import {
   ChartIcon,
   HeartCheckIcon,
@@ -27,7 +27,7 @@ export default function LargeApp() {
     <Flex minW="container.xl" maxH={cardHeight} gap={4} flexDir="row">
       <Flex position="relative" w={cardWidth} h={cardHeight}>
         <ScrollIndicator left={0} top={12} w={8} h={cardHeight} />
-        <ChartContainer w="full" gap={4} orientation="vertical" />
+        <SessionView w="full" gap={4} orientation="vertical" />
       </Flex>
       <Flex
         position="relative"

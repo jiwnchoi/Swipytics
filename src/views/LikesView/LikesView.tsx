@@ -9,7 +9,7 @@ interface LikesViewProps extends FlexProps {
 }
 
 export default function LikesView({ thumbnailSize, ...props }: LikesViewProps) {
-  const { preferredCharts, handleClickBookmark } = useLikesView();
+  const { preferredCharts, handleClickChart: handleClickBookmark } = useLikesView();
   const { t } = useTranslation();
 
   return (
@@ -18,8 +18,8 @@ export default function LikesView({ thumbnailSize, ...props }: LikesViewProps) {
         <OrderedList m={0} p={0} width="full" overflowY="auto">
           {preferredCharts.map((chart) => (
             <ChartItem
-              thumbnailSize={thumbnailSize}
               key={`bookmark-${chart.key}`}
+              thumbnailSize={thumbnailSize}
               chart={chart}
               data-log-click={`preferred-chart-${chart.key}`}
               handleClick={handleClickBookmark}

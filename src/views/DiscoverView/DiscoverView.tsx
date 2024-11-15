@@ -1,4 +1,4 @@
-import { Center, Flex, OrderedList, Spinner } from "@chakra-ui/react";
+import { Center, Fade, Flex, OrderedList, Spinner } from "@chakra-ui/react";
 import { ChartItem, FieldTag } from "@components";
 import { useLayout } from "@hooks";
 
@@ -17,14 +17,15 @@ export default function DiscoverView() {
         ) : (
           <OrderedList m={0} p={0} width="full" overflowY="scroll" sx={scrollbarStyle} flex={1}>
             {queriedCharts.map((chart) => (
-              <ChartItem
-                key={`discovered-chart-${chart.key}-${chart.timestamp}`}
-                thumbnailSize={130}
-                chart={chart}
-                handleClick={() => {
-                  handleChartClick(chart);
-                }}
-              />
+              <Fade key={`discovered-chart-${chart.key}-${chart.timestamp}`} in={true}>
+                <ChartItem
+                  thumbnailSize={130}
+                  chart={chart}
+                  handleClick={() => {
+                    handleChartClick(chart);
+                  }}
+                />
+              </Fade>
             ))}
           </OrderedList>
         )}

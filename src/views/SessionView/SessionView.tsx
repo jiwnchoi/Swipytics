@@ -1,15 +1,19 @@
 import { Flex, type FlexProps } from "@chakra-ui/react";
 import { Chart, PlaceHolder } from "@components";
-import { useChartContainer, useLayout } from "@hooks";
+import { useLayout } from "@hooks";
+import useSessionView from "./useSessionView";
 
 interface ChartContainerProps extends FlexProps {
   orientation?: "horizontal" | "vertical";
 }
 
 export default function SessionView({ orientation = "vertical", ...props }: ChartContainerProps) {
-  const { charts, ref, scrollContainerCallback } = useChartContainer({ orientation });
   const { cardHeight, cardColor, cardWidth } = useLayout();
-
+  const { charts, ref, scrollContainerCallback } = useSessionView({
+    cardHeight,
+    cardWidth,
+    orientation,
+  });
   return (
     <Flex
       ref={ref}
@@ -18,7 +22,7 @@ export default function SessionView({ orientation = "vertical", ...props }: Char
       scrollSnapType={`${orientation === "horizontal" ? "x" : "y"} mandatory`}
       flexDir={orientation === "horizontal" ? "row" : "column"}
       gap={2}
-      overflowX={"auto"}
+      overflowX={"hidden"}
       style={{
         WebkitOverflowScrolling: "touch",
       }}
@@ -31,9 +35,9 @@ export default function SessionView({ orientation = "vertical", ...props }: Char
       <PlaceHolder
         flexDir={"column"}
         minW="full"
-        w={cardWidth}
-        h={cardHeight}
+        w={cardWidth - 8}
         maxW={cardWidth}
+        h={cardHeight}
         minH={cardHeight}
         bgColor={cardColor}
         borderRadius={"lg"}
@@ -41,11 +45,12 @@ export default function SessionView({ orientation = "vertical", ...props }: Char
       />
       {charts.map((chart) => (
         <Chart
-          minW={cardWidth}
-          maxW={cardWidth}
+          minH={cardHeight - 8}
+          maxH={cardHeight - 8}
+          minW={cardWidth - 8}
+          maxW={cardWidth - 8}
           key={chart.key}
           chart={chart}
-          minH={cardHeight}
           bgColor={cardColor}
           flexDirection={"column"}
           borderRadius={"lg"}
