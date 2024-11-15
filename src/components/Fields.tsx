@@ -10,7 +10,6 @@ import {
   Heading,
   Icon,
   IconButton,
-  type IconProps,
   Spacer,
   type StackProps,
   TabPanel,
@@ -18,26 +17,13 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import type { TDataField, TFieldType, TMetadata } from "@shared/models";
+import type { TDataField, TMetadata } from "@shared/models";
 import { useInteractionStore, useSessionsStore } from "@stores";
 import { format } from "d3-format";
-import { Calendar03Icon, GridIcon, Search01Icon, Tag01Icon, TextFontIcon } from "hugeicons-react";
+import { Search01Icon } from "hugeicons-react";
 import { useMemo } from "react";
-
-const FieldIcon = ({ metadataType, ...props }: IconProps & { metadataType: TFieldType }) => {
-  switch (metadataType) {
-    case "numeric":
-      return <Icon as={GridIcon} {...props} />;
-    case "categorical":
-      return <Icon as={TextFontIcon} {...props} />;
-    case "datetime":
-      return <Icon as={Calendar03Icon} {...props} />;
-    case "name":
-      return <Icon as={Tag01Icon} {...props} />;
-    default:
-      return null;
-  }
-};
+import { sortDataFieldCallback } from "../shared/utils/index";
+import FieldIcon from "./FieldIcon";
 
 const formatter = format(".3~s");
 
@@ -98,7 +84,7 @@ function EachField({ field }: { field: TDataField }) {
     <AccordionItem>
       <AccordionButton borderRadius={"md"} data-log-click={`open-field-${field.name}`}>
         <Flex w="full" gap={2} align={"center"}>
-          <FieldIcon metadataType={field.type} boxSize={4} />
+          <FieldIcon fieldType={field.type} boxSize={4} />
           <Heading fontSize="md">{field.name}</Heading>
           <Spacer />
           {field.type !== "name" && (
@@ -133,19 +119,9 @@ function EachField({ field }: { field: TDataField }) {
   );
 }
 
-function fieldSortCallback(a: TDataField, b: TDataField) {
-  const sortKey = {
-    numeric: 0,
-    categorical: 1,
-    datetime: 2,
-    name: 3,
-  };
-  return sortKey[a.type] - sortKey[b.type];
-}
-
 function Fields(props: TabPanelProps & StackProps) {
   const fields = useSessionsStore((state) => state.fields);
-  const sortedFields = useMemo(() => Array.from(fields).sort(fieldSortCallback), [fields]);
+  const sortedFields = useMemo(() => Array.from(fields).sort(sortDataFieldCallback), [fields]);
 
   return (
     <TabPanel as={VStack} h="full" {...props}>

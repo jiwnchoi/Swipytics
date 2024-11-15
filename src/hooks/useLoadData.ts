@@ -6,9 +6,9 @@ function useLoadData() {
   const writeFile = useDataStore((state) => state.writeFile);
   const loadingSession = useSessionsStore((state) => state.loadingSession);
   const loadSession = useSessionsStore((state) => state.loadSession);
-  const setExpanded = useInteractionStore((state) => state.setDrawerExpanded);
   const resetSession = useSessionsStore((state) => state.resetSession);
   const sessionFileName = useSessionsStore((state) => state.filename);
+  const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setTabByName = useInteractionStore((state) => state.setTabByName);
 
   const initializeSession = async (file: File | string) => {
@@ -21,8 +21,8 @@ function useLoadData() {
     await writeFile(file);
 
     await loadSession(filename);
-    setExpanded(false);
     setTabByName("fields");
+    setCurrentChartIndex(0);
   };
 
   return {

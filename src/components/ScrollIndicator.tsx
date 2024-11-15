@@ -10,18 +10,17 @@ function Indicators({ width, height, r }: { width: number; height: number; r: nu
     <motion.circle
       key={key}
       cy={cy}
-      initial={{ r: 0 }}
-      animate={{ cx, r, fill }}
+      fill={fill}
+      animate={{ cx, cy, r, fill }}
       transition={{
         type: "spring",
         stiffness: 100,
         damping: 20,
-        fill: { duration: 0.3 },
+        fill: { duration: 0.2 },
       }}
     />
   ));
 }
-
 export default function ScrollIndicator(props: FlexProps) {
   const { parentRef, width, height } = useParentSize({ debounceTime: 50 });
 

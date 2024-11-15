@@ -20,6 +20,7 @@ interface SessionState extends TSession {
   resetSession: () => void;
 
   setCurrentChartPreferred: (preferred: boolean) => void;
+  setChartPreferred: (key: string, preferred: boolean) => void;
 }
 
 const useSessionsStore = create(
@@ -112,6 +113,19 @@ const useSessionsStore = create(
             currentChart.specIndex = (currentChart.specIndex + 1) % currentChart.specs.length;
           }),
         ),
+
+      setChartPreferred: (key, preferred) => {
+        router.call("setPreferred", { key, preferred });
+
+        set(
+          produce<SessionState>((draft) => {
+            const chart = draft.charts.find((c) => c.key === key);
+            if (chart) {
+              chart.preferred = preferred;
+            }
+          }),
+        );
+      },
 
       setCurrentChartPreferred: (preferred) => {
         const { charts, currentChartIndex } = get();

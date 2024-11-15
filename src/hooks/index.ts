@@ -1,10 +1,9 @@
 export { default as useBookmarks } from "./useBookmarks";
 export { default as useBrowser } from "./useBrowser";
 export { default as useChart } from "./useChart";
-export { default as useChartContainer } from "./useChartContainer";
 export { default as useController } from "./useController";
-export { default as useControlPanel } from "./useControlPanel";
 export { default as useDemo } from "./useDemo";
+export { default as useDoubleTap } from "./useDoubleTap";
 export { default as useFieldNameMatches } from "./useFieldNameMatch";
 export { default as useFileForm } from "./useFileForm";
 export { default as useIndicators } from "./useIndicators";

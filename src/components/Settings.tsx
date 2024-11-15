@@ -7,7 +7,6 @@ import {
   IconButton,
   Select,
   type StackProps,
-  TabPanel,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -90,16 +89,13 @@ function Settings(props: StackProps) {
     setLocale,
   } = useSettings();
   return (
-    <TabPanel as={VStack} {...props}>
+    <VStack {...props}>
       <SettingRow label={t("settings.load_data")}>
         <FileForm w="full" />
       </SettingRow>
       <SettingRow label={t("settings.load_demo")}>
         <DemoSelector />
       </SettingRow>
-      {/* <SettingRow label={"OpenAI Key"}>
-        <Input w="full" placeholder="sk-..." value={apiKey} onChange={handleApiKeyChange} />
-      </SettingRow> */}
 
       <Divider my={4} />
 
@@ -146,7 +142,7 @@ function Settings(props: StackProps) {
           </Button>
         </Flex>
       </SettingRow>
-    </TabPanel>
+    </VStack>
   );
 }
 

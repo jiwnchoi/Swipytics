@@ -4,18 +4,17 @@ import {
   Input,
   OrderedList,
   Spinner,
-  TabPanel,
   Tag,
   TagCloseButton,
   TagLabel,
   VStack,
+  type TabPanelProps,
 } from "@chakra-ui/react";
 import { useBrowser, useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
-import useColors from "../hooks/useLayout";
 import ChartItem from "./ChartItem";
 
-function Browser() {
+function Browser(props: TabPanelProps) {
   const {
     scrollbarStyle,
     buttonColor,
@@ -40,10 +39,8 @@ function Browser() {
     suggestionCursorIndex,
   } = useBrowser();
 
-  const { tabPanelHeight } = useColors();
-
   return (
-    <TabPanel as={VStack} w="full" alignItems="center" h={tabPanelHeight}>
+    <VStack w="full" alignItems="center" {...props}>
       <Box w="100%" position="relative">
         <HStack
           spacing={1}
@@ -120,14 +117,14 @@ function Browser() {
             <ChartItem
               key={`${chart.key}-${chart.timestamp}`}
               chart={chart}
-              onClick={() => {
+              handleClick={() => {
                 appendBrowsedChart(chart);
               }}
             />
           ))}
         </OrderedList>
       )}
-    </TabPanel>
+    </VStack>
   );
 }
 

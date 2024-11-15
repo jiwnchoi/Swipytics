@@ -7,45 +7,43 @@ import { scaleLinear } from "@visx/scale";
 const PADDING = { TOP: 12, RIGHT: 10, BOTTOM: 12, LEFT: 10 };
 const GAP = 6;
 
-interface TIndicator {
-  key: string;
-  cx: number;
-  cy: number;
+type Orientation = "horizontal" | "vertical";
+
+interface Props {
+  width: number;
+  height: number;
   r: number;
-  fill: string;
-  isActive: boolean;
+  orientation?: Orientation;
 }
 
-function useIndicators({ width, height, r: radius }: { width: number; height: number; r: number }) {
+function useIndicators({ width, height, r, orientation = "vertical" }: Props) {
   const charts = useSessionsStore((state) => state.charts);
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
   const { preferredColor } = useLayout();
   const fillColor = useColorModeValue(chakraColors["gray.400"], chakraColors["gray.600"]);
 
-  const innerWidth = Math.min(
-    width - PADDING.LEFT - PADDING.RIGHT,
-    (GAP + 2 * radius) * charts.length,
-  );
-  const innerHeight = height - PADDING.TOP - PADDING.BOTTOM;
-  const centerX = width / 2;
-  const centerY = innerHeight / 2 + PADDING.TOP;
-  const scaledRadius = radius - Math.floor(charts.length / 40);
+  const length =
+    orientation === "vertical"
+      ? height - PADDING.TOP - PADDING.BOTTOM
+      : width - PADDING.LEFT - PADDING.RIGHT;
 
-  const x = scaleLinear({
+  const center = orientation === "vertical" ? width / 2 : height / 2;
+
+  const maxLength = Math.min(length, (GAP + 2 * r) * charts.length);
+  const scaledRadius = r - Math.floor(charts.length / 60);
+
+  const scale = scaleLinear({
     domain: [0, charts.length - 1],
-    range: [centerX - innerWidth / 2, centerX + innerWidth / 2],
+    range: [length / 2 - maxLength / 2, length / 2 + maxLength / 2],
   });
 
-  const circles: TIndicator[] = charts.map((chart, i) => ({
+  return charts.map((chart, i) => ({
     key: `indicator-${chart.key}`,
-    cx: x(i),
-    cy: centerY,
+    cx: orientation === "vertical" ? center : scale(i),
+    cy: orientation === "vertical" ? scale(i) : center,
     r: i === currentChartIndex ? 2 * scaledRadius : scaledRadius,
     fill: chart.preferred ? preferredColor : fillColor,
-    isActive: i === currentChartIndex,
   }));
-
-  return circles;
 }
 
 export default useIndicators;

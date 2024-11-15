@@ -1,11 +1,15 @@
 import { Center, Flex, Heading, Icon, OrderedList, type FlexProps } from "@chakra-ui/react";
-import { useBookmarks } from "@hooks";
+import { ChartItem } from "@components";
 import { Sad02Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
-import ChartItem from "./ChartItem";
+import useLikesView from "./useLikesView";
 
-export default function Bookmarks(props: FlexProps) {
-  const { preferredCharts, handleClickBookmark } = useBookmarks();
+interface LikesViewProps extends FlexProps {
+  thumbnailSize?: number;
+}
+
+export default function LikesView({ thumbnailSize, ...props }: LikesViewProps) {
+  const { preferredCharts, handleClickChart: handleClickBookmark } = useLikesView();
   const { t } = useTranslation();
 
   return (
@@ -15,6 +19,7 @@ export default function Bookmarks(props: FlexProps) {
           {preferredCharts.map((chart) => (
             <ChartItem
               key={`bookmark-${chart.key}`}
+              thumbnailSize={thumbnailSize}
               chart={chart}
               data-log-click={`preferred-chart-${chart.key}`}
               handleClick={handleClickBookmark}

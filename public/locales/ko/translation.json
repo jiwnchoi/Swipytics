@@ -17,6 +17,9 @@
   "search": {
     "title": "검색"
   },
+  "charts": {
+    "title": "분석"
+  },
   "settings": {
     "download_logs": "로그 다운로드",
     "load_data": "데이터 불러오기",

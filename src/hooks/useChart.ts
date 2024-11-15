@@ -11,17 +11,16 @@ export default function useChart(chart: TChart) {
 
   const chartTheme: "dark" | undefined = colorMode === "dark" ? "dark" : undefined;
   const [width, height] = useBreakpointValue({
-    base: [300, 300],
-    lg: [600, 600],
+    base: [window.innerWidth - 100, Math.min(window.innerHeight - 250, 500)],
+    lg: [Math.min(window.innerWidth - 250, 600), Math.min(window.innerHeight - 250, 600)],
   }) ?? [300, 300];
 
   const spec = {
     ..._spec,
-    title: chart.title,
     width,
     mark: {
       ...("mark" in _spec ? (_spec.mark as object) : {}),
-      tooltip: { content: "data" },
+      // tooltip: { content: "data" },
     },
     height,
     background: "transparent",
