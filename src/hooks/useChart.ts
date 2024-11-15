@@ -12,7 +12,7 @@ export default function useChart(chart: TChart) {
   const chartTheme: "dark" | undefined = colorMode === "dark" ? "dark" : undefined;
   const [width, height] = useBreakpointValue({
     base: [window.innerWidth - 100, Math.min(window.innerHeight - 250, 500)],
-    lg: [600, 600],
+    lg: [Math.min(window.innerWidth - 250, 600), Math.min(window.innerHeight - 250, 600)],
   }) ?? [300, 300];
 
   const spec = {

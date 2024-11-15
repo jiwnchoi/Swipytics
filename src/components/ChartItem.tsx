@@ -4,12 +4,13 @@ import { type TChart } from "@shared/models";
 
 interface ChartItemProps {
   chart: TChart;
-  onClick: (chart: TChart) => void;
+  handleClick: (chart: TChart) => void;
+  thumbnailSize?: number;
 }
 
-function ChartItem({ chart, onClick }: ChartItemProps) {
-  const { buttonColor, thumbnailSize } = useLayout();
-  const thumbnail = useThumnail(chart);
+function ChartItem({ chart, handleClick, thumbnailSize = 70 }: ChartItemProps) {
+  const { buttonColor } = useLayout();
+  const thumbnail = useThumnail(chart, thumbnailSize * 1.5);
 
   return (
     <ListItem key={`bookmark-${chart.key}`} as={Flex} flexDir="column">
@@ -18,7 +19,7 @@ function ChartItem({ chart, onClick }: ChartItemProps) {
         gap={4}
         borderRadius="md"
         alignItems={"center"}
-        onClick={() => onClick(chart)}
+        onClick={() => handleClick(chart)}
         transition={"background-color 0.2s"}
         _hover={{ cursor: "pointer", bg: buttonColor }}>
         {!!thumbnail && (

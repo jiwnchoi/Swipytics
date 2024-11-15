@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from api.models import ChartModel, SessionModel
-from api.services import browse_charts, get_next_chart
+from api.services import browse_charts, get_chart, get_next_chart
 
 sessionState: SessionModel = SessionModel()
 
@@ -48,6 +48,18 @@ def browseCharts(field_names: list[str]):
   global sessionState
   browsed_chart = browse_charts(sessionState, field_names)
   return [chart.model_dump(by_alias=True, mode="json") for chart in browsed_chart]
+
+
+def getCharts(field_names: list[str]):
+  print(field_names)
+  global sessionState
+  fields = [
+    field
+    for field in sessionState.available_fields
+    if set(field_names) == set([f.name for f in field])
+  ]
+  charts = [get_chart(sessionState.df, field) for field in fields]
+  return [chart.model_dump(by_alias=True, mode="json") for chart in charts if chart]
 
 
 def setPreferred(key: str, preferred: bool):

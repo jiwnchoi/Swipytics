@@ -7,10 +7,14 @@ function getKey(spec: VisualizationSpec) {
   return `thumbnail@${JSON.stringify(spec)}`;
 }
 
-export async function getThumbnailFromSpec(spec: VisualizationSpec, data: TSupportedDataType) {
+export async function getThumbnailFromSpec(
+  spec: VisualizationSpec,
+  data: TSupportedDataType,
+  size = 100,
+) {
   const thumbnailFromCache = getThumbnailFromCache(spec);
   if (thumbnailFromCache) return thumbnailFromCache;
-  const thumbnail = await generateThumbnailFromSpec(spec, data);
+  const thumbnail = await generateThumbnailFromSpec(spec, data, size);
   if (thumbnail) sessionStorage.setItem(getKey(spec), thumbnail);
   return thumbnail;
 }
@@ -22,6 +26,7 @@ function getThumbnailFromCache(spec: VisualizationSpec) {
 async function generateThumbnailFromSpec(
   spec: VisualizationSpec,
   data: TSupportedDataType,
+  size = 100,
 ): Promise<string | undefined> {
   if (!("mark" in spec)) return undefined;
   if (!spec || !data) return undefined;
@@ -35,8 +40,8 @@ async function generateThumbnailFromSpec(
   };
   const newSpec = {
     ...spec,
-    width: 100,
-    height: 100,
+    width: size,
+    height: size,
     config: {
       ...spec.config,
       mark: { strokeWidth: spec.mark === "line" ? 4 : 0 },

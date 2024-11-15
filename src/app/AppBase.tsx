@@ -1,18 +1,12 @@
 import { Flex, Heading, Icon, IconButton, Spacer } from "@chakra-ui/react";
-import {
-  Bookmarks,
-  ChartPanel,
-  Fields,
-  PlaceHolder,
-  Settings,
-  TabsContainerBase,
-} from "@components";
+import { ChartPanel, PlaceHolder, Settings, TabsContainerBase } from "@components";
 import { useLayout } from "@hooks";
 import { useInteractionStore, useSessionsStore } from "@stores";
+import { DiscoverView, LikesView } from "@views";
 import {
   ChartIcon,
+  CompassIcon,
   HeartCheckIcon,
-  Search01Icon,
   Settings01Icon,
   SwipeUp02Icon,
 } from "hugeicons-react";
@@ -69,7 +63,7 @@ export default function BaseApp() {
             name: "likes",
             displayName: t("bookmarks.title"),
             icon: HeartCheckIcon,
-            Panel: <Bookmarks p={4} m={0} gap={2} w="full" />,
+            Panel: <LikesView />,
             displayingBeforeInit: false,
           },
           {
@@ -82,8 +76,8 @@ export default function BaseApp() {
           {
             name: "search",
             displayName: t("search.title"),
-            icon: Search01Icon,
-            Panel: <Fields p={4} />,
+            icon: CompassIcon,
+            Panel: <DiscoverView />,
             displayingBeforeInit: false,
           },
           {
