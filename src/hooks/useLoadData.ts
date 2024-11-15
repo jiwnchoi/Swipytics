@@ -1,4 +1,3 @@
-import { useLayout } from "@hooks";
 import { getFileNameFromURL } from "@shared/utils";
 import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 
@@ -9,8 +8,8 @@ function useLoadData() {
   const loadSession = useSessionsStore((state) => state.loadSession);
   const resetSession = useSessionsStore((state) => state.resetSession);
   const sessionFileName = useSessionsStore((state) => state.filename);
+  const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setTabByName = useInteractionStore((state) => state.setTabByName);
-  const { mobile } = useLayout();
 
   const initializeSession = async (file: File | string) => {
     const filename = file instanceof File ? file.name : getFileNameFromURL(file);
@@ -22,7 +21,8 @@ function useLoadData() {
     await writeFile(file);
 
     await loadSession(filename);
-    setTabByName(mobile ? "charts" : "fields");
+    setTabByName("fields");
+    setCurrentChartIndex(0);
   };
 
   return {

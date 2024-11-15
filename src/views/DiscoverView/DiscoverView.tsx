@@ -10,7 +10,7 @@ export default function DiscoverView() {
     useDiscoverView();
 
   return (
-    <Flex flexDir={"column"} w="full" h="full" p={4} justify={"space-between"}>
+    <Flex flexDir={"column"} w="full" h="full" justify={"space-between"}>
       <Center w="full">
         {loading ? (
           <Spinner size="md" my={8} color={accentColor} />

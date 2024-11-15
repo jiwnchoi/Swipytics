@@ -2,7 +2,7 @@ import { Flex, Spacer } from "@chakra-ui/react";
 import {
   Bookmarks,
   Browser,
-  ChartPanel,
+  ChartContainer,
   Controller,
   Fields,
   ScrollIndicator,
@@ -27,7 +27,7 @@ export default function LargeApp() {
     <Flex minW="container.xl" maxH={cardHeight} gap={4} flexDir="row">
       <Flex position="relative" w={cardWidth} h={cardHeight}>
         <ScrollIndicator left={0} top={12} w={8} h={cardHeight} />
-        <ChartPanel w="full" gap={4} orientation="vertical" />
+        <ChartContainer w="full" gap={4} orientation="vertical" />
       </Flex>
       <Flex
         position="relative"

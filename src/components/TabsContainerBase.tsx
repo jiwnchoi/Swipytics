@@ -50,7 +50,6 @@ function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
       {...props}>
       <ScrollIndicator
         left={0}
-        top={12}
         w={8}
         h={cardHeight}
         visibility={tabIndex === 1 ? "visible" : "hidden"}
@@ -64,7 +63,8 @@ function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
               borderRadius={"md"}
               flexDir={"column"}
               h={cardHeight}
-              sx={scrollbarStyle}>
+              sx={scrollbarStyle}
+              p={4}>
               {config.Panel}
             </Flex>
           </TabPanel>

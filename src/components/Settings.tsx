@@ -96,9 +96,6 @@ function Settings(props: StackProps) {
       <SettingRow label={t("settings.load_demo")}>
         <DemoSelector />
       </SettingRow>
-      {/* <SettingRow label={"OpenAI Key"}>
-        <Input w="full" placeholder="sk-..." value={apiKey} onChange={handleApiKeyChange} />
-      </SettingRow> */}
 
       <Divider my={4} />
 

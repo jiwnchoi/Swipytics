@@ -1,8 +1,8 @@
 import { Flex, Heading, Icon, IconButton, Spacer } from "@chakra-ui/react";
-import { ChartPanel, PlaceHolder, Settings, TabsContainerBase } from "@components";
+import { PlaceHolder, Settings, TabsContainerBase } from "@components";
 import { useLayout } from "@hooks";
 import { useInteractionStore, useSessionsStore } from "@stores";
-import { DiscoverView, LikesView } from "@views";
+import { DiscoverView, LikesView, SessionView } from "@views";
 import {
   ChartIcon,
   CompassIcon,
@@ -49,7 +49,6 @@ function Header() {
 }
 
 export default function BaseApp() {
-  const { cardWidth } = useLayout();
   const { t } = useTranslation();
 
   return (
@@ -70,7 +69,7 @@ export default function BaseApp() {
             name: "fields",
             displayName: t("charts.title"),
             icon: ChartIcon,
-            Panel: <ChartPanel maxW={cardWidth} gap={4} orientation="vertical" />,
+            Panel: <SessionView orientation="vertical" />,
             displayingBeforeInit: false,
           },
           {
