@@ -62,7 +62,7 @@ export default function BaseApp() {
             name: "likes",
             displayName: t("bookmarks.title"),
             icon: HeartCheckIcon,
-            Panel: <LikesView />,
+            Panel: <LikesView thumbnailSize={120} />,
             displayingBeforeInit: false,
           },
           {

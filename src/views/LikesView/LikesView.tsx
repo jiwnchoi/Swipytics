@@ -4,7 +4,11 @@ import { Sad02Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
 import useLikesView from "./useLikesView";
 
-export default function Bookmarks(props: FlexProps) {
+interface LikesViewProps extends FlexProps {
+  thumbnailSize?: number;
+}
+
+export default function LikesView({ thumbnailSize, ...props }: LikesViewProps) {
   const { preferredCharts, handleClickBookmark } = useLikesView();
   const { t } = useTranslation();
 
@@ -14,6 +18,7 @@ export default function Bookmarks(props: FlexProps) {
         <OrderedList m={0} p={0} width="full" overflowY="auto">
           {preferredCharts.map((chart) => (
             <ChartItem
+              thumbnailSize={thumbnailSize}
               key={`bookmark-${chart.key}`}
               chart={chart}
               data-log-click={`preferred-chart-${chart.key}`}

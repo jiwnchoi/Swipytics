@@ -34,7 +34,7 @@ function ChartItem({ chart, handleClick, thumbnailSize = 70 }: ChartItemProps) {
           {chart.fields.map((field, i) => (
             <Text
               key={`${chart.key}-field-name-${field.name}`}
-              fontSize={i !== 2 ? "md" : "sm"}
+              fontSize={i !== 2 ? "lg" : "md"}
               fontWeight={i !== 2 ? 800 : 500}>
               {field.name}
             </Text>
