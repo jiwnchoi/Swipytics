@@ -10,13 +10,7 @@ import {
 } from "@components";
 import { useLayout } from "@hooks";
 import { SessionView } from "@views";
-import {
-  ChartIcon,
-  HeartCheckIcon,
-  ProfileIcon,
-  Search01Icon,
-  Settings01Icon,
-} from "hugeicons-react";
+import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
 
 export default function LargeApp() {
@@ -56,13 +50,6 @@ export default function LargeApp() {
               displayName: t("search.title"),
               icon: Search01Icon,
               Panel: <Browser h={tabPanelHeight} pt={4} />,
-              displayingBeforeInit: false,
-            },
-            {
-              name: "charts",
-              displayName: t("charts.title"),
-              icon: ChartIcon,
-              Panel: null,
               displayingBeforeInit: false,
             },
             {

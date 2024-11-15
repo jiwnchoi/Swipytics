@@ -45,8 +45,8 @@ export default function SessionView({ orientation = "vertical", ...props }: Char
       />
       {charts.map((chart) => (
         <Chart
-          minH={cardHeight - 8}
-          maxH={cardHeight - 8}
+          minH={cardHeight}
+          maxH={cardHeight}
           minW={cardWidth - 8}
           maxW={cardWidth - 8}
           key={chart.key}
