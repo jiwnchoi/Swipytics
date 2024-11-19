@@ -1,12 +1,13 @@
+import { Tabs } from "@chakra-ui/react";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 const TABS = {
-  likes: 0,
-  fields: 1,
-  charts: 1,
+  likes: 1,
   search: 2,
-  settings: 3,
+  fields: 3,
+  charts: 0,
+  settings: -1,
 };
 
 interface SettingsState {
@@ -31,7 +32,8 @@ const useInteractionStore = create(
       setDrawerExpanded: (expanded) => set({ drawerExpanded: expanded }),
 
       tabIndex: TABS.settings,
-      setTabByIndex: (index) => set({ tabIndex: index }),
+      setTabByIndex: (index) =>
+        set({ tabIndex: index < 0 ? Object.keys(Tabs).length + index : index }),
       setTabByName: (name) => set({ tabIndex: TABS[name] }),
 
       searchTargetFieldNames: [],

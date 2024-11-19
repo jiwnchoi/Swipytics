@@ -15,7 +15,7 @@ export default function useColors() {
 
   const tabPanelHeight = useBreakpointValue({
     base: "calc(100dvh - 110px)",
-    lg: window.innerHeight * 0.8 - 160,
+    lg: window.innerHeight * 0.8 - 200,
   });
   const tabIconSize = 5;
 

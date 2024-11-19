@@ -38,3 +38,5 @@ public/artifacts
 data
 
 movies.json
+
+*.csv

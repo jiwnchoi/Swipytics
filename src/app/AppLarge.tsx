@@ -1,15 +1,7 @@
 import { Flex, Spacer } from "@chakra-ui/react";
-import {
-  Bookmarks,
-  Browser,
-  Controller,
-  Fields,
-  ScrollIndicator,
-  Settings,
-  TabsContainer,
-} from "@components";
+import { Controller, Fields, ScrollIndicator, Settings, TabsContainer } from "@components";
 import { useLayout } from "@hooks";
-import { SessionView } from "@views";
+import { DiscoverView, LikesView, SessionView } from "@views";
 import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
 
@@ -28,7 +20,7 @@ export default function LargeApp() {
         borderTop="none"
         borderColor={borderColor}
         px={4}
-        pb={2}
+        py={2}
         flexDir="column"
         bgColor={cardColor}
         borderRadius="lg"
@@ -42,14 +34,14 @@ export default function LargeApp() {
               name: "likes",
               displayName: t("bookmarks.title"),
               icon: HeartCheckIcon,
-              Panel: <Bookmarks h={tabPanelHeight} pt={4} m={0} gap={2} w="full" />,
+              Panel: <LikesView h={tabPanelHeight} thumbnailSize={100} />,
               displayingBeforeInit: false,
             },
             {
               name: "search",
               displayName: t("search.title"),
               icon: Search01Icon,
-              Panel: <Browser h={tabPanelHeight} pt={4} />,
+              Panel: <DiscoverView tagSize="md" h={tabPanelHeight} pb={4} thumbnailSize={80} />,
               displayingBeforeInit: false,
             },
             {

@@ -26,8 +26,8 @@ function ChartItem({ chart, handleClick, thumbnailSize = 70 }: ChartItemProps) {
           <Image
             src={thumbnail}
             alt={`Chart thumbnail ${chart.title}`}
-            w={thumbnailSize}
-            h={thumbnailSize}
+            w={`${thumbnailSize}px`}
+            h={`${thumbnailSize}px`}
           />
         )}
         <Flex flexDir="column">

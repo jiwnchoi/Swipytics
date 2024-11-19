@@ -160,7 +160,7 @@ export const DEMO_LIST: TDemo[] = [
   },
 ];
 export const EXPANDING_THRESHOLD = 50;
-export const DEBOUNCE_DELAY = 50;
+export const DEBOUNCE_DELAY = 100;
 export const CHART_PREFETCH_DELAY = 1;
 export const PRIMARY_COLOR = "orange";
 export const PRIMARY = {

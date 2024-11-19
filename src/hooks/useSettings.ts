@@ -35,6 +35,33 @@ export default function useSettings() {
     }
   };
 
+  const handleClearLogs = () => {
+    logger
+      .clearLogs()
+      .then(() => {
+        toast({
+          title: t("toast.logs_cleared_title"),
+          description: t("toast.logs_cleared_description"),
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "bottom",
+          containerStyle: { margin: 10 },
+        });
+      })
+      .catch((e) => {
+        toast({
+          title: t("toast.logs_clear_failed_title"),
+          description: JSON.stringify(e),
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "bottom",
+          containerStyle: { margin: 10 },
+        });
+      });
+  };
+
   const handleServerButtonClick = async () => {
     if (!router) return;
     const newType = python === "pyodide" ? "server" : "pyodide";
@@ -67,6 +94,7 @@ export default function useSettings() {
     apiKey,
     handleApiKeyChange,
     handleDownloadLogs,
+    handleClearLogs,
     colorMode,
     toggleColorMode,
     locale: i18n.language,

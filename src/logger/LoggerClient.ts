@@ -114,6 +114,30 @@ class LoggerClient {
     }
   }
 
+  public async clearLogs() {
+    try {
+      if (!this.indexedDB) {
+        console.warn("IndexedDB is not initialized.");
+        localStorage.removeItem(this.storageKey);
+        return;
+      }
+
+      const store = this.indexedDB
+        .transaction(this.storageKey, "readwrite")
+        .objectStore(this.storageKey);
+
+      await store.clear();
+
+      // Also clear localStorage in case it was used as fallback
+      localStorage.removeItem(this.storageKey);
+
+      console.log("Logs cleared successfully");
+    } catch (error) {
+      console.error("Failed to clear logs:", error);
+      throw error;
+    }
+  }
+
   public export = async () => {
     if (!this.indexedDB) {
       console.warn("IndexedDB is not initialized.");

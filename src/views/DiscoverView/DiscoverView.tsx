@@ -1,16 +1,25 @@
-import { Center, Fade, Flex, OrderedList, Spinner } from "@chakra-ui/react";
+import { Center, Fade, Flex, OrderedList, Spinner, type FlexProps } from "@chakra-ui/react";
 import { ChartItem, FieldTag } from "@components";
 import { useLayout } from "@hooks";
 
 import useDiscoverView from "./useDiscoverView";
 
-export default function DiscoverView() {
+interface DiscoverViewProps extends FlexProps {
+  thumbnailSize?: number;
+  tagSize?: "sm" | "md" | "lg";
+}
+
+export default function DiscoverView({
+  thumbnailSize = 80,
+  tagSize = "lg",
+  ...props
+}: DiscoverViewProps) {
   const { accentColor, scrollbarStyle } = useLayout();
   const { getTagVariant, loading, queriedCharts, handleFieldClick, handleChartClick, fields } =
     useDiscoverView();
 
   return (
-    <Flex flexDir={"column"} w="full" h="full" justify={"space-between"}>
+    <Flex flexDir={"column"} w="full" h="full" justify={"space-between"} {...props}>
       <Center w="full">
         {loading ? (
           <Spinner size="md" my={8} color={accentColor} />
@@ -19,7 +28,7 @@ export default function DiscoverView() {
             {queriedCharts.map((chart) => (
               <Fade key={`discovered-chart-${chart.key}-${chart.timestamp}`} in={true}>
                 <ChartItem
-                  thumbnailSize={130}
+                  thumbnailSize={thumbnailSize}
                   chart={chart}
                   handleClick={() => {
                     handleChartClick(chart);
@@ -36,7 +45,7 @@ export default function DiscoverView() {
           <FieldTag
             key={`discover-badge-${field.name}`}
             field={field}
-            size={"lg"}
+            size={tagSize}
             variant={getTagVariant(field)}
             onClick={() => handleFieldClick(field)}
           />

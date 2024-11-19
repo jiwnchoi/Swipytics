@@ -41,12 +41,10 @@ export default function useSessionView({
     const container = ref.current;
     if (!container) return;
 
-    const scrollProps = {
+    container.scrollTo({
       [orientation === "horizontal" ? "left" : "top"]: (currentChartIndex + 1) * dimension,
-      behavior: isInitialMount.current ? ("instant" as const) : ("smooth" as const),
-    };
-
-    container.scrollTo(scrollProps);
+      behavior: "smooth",
+    });
     isInitialMount.current = false;
   }, [currentChartIndex, dimension, orientation]);
 

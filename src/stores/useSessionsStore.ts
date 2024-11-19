@@ -16,7 +16,6 @@ interface SessionState extends TSession {
   appendNextChart: () => Promise<void>;
   appendChart: (chart: TChart) => Promise<void>;
 
-  renewCurrentChart: () => void;
   resetSession: () => void;
 
   setCurrentChartPreferred: (preferred: boolean) => void;
@@ -100,43 +99,34 @@ const useSessionsStore = create(
             if (draft.charts.length > CHART_PREFETCH_DELAY) {
               draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
             }
-            draft.charts.push(chart);
+            draft.charts.push({ ...chart, timestamp: Date.now() });
             draft.appendingChart = false;
           }),
         );
       },
 
-      renewCurrentChart: () =>
-        set(
-          produce<SessionState>((draft) => {
-            const currentChart = draft.charts[draft.currentChartIndex];
-            currentChart.specIndex = (currentChart.specIndex + 1) % currentChart.specs.length;
-          }),
-        ),
-
       setChartPreferred: (key, preferred) => {
         router.call("setPreferred", { key, preferred });
-
         set(
           produce<SessionState>((draft) => {
+            if (draft.charts.length > CHART_PREFETCH_DELAY) {
+              draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
+            }
             const chart = draft.charts.find((c) => c.key === key);
             if (chart) {
               chart.preferred = preferred;
             }
           }),
         );
+        get().appendNextChart();
       },
 
       setCurrentChartPreferred: (preferred) => {
-        const { charts, currentChartIndex } = get();
+        const { charts, currentChartIndex, setChartPreferred } = get();
         const currentChart = charts[currentChartIndex];
-        router.call("setPreferred", { key: currentChart.key, preferred });
-
-        set(
-          produce<SessionState>((draft) => {
-            draft.charts[draft.currentChartIndex].preferred = preferred;
-          }),
-        );
+        if (currentChart) {
+          setChartPreferred(currentChart.key, preferred);
+        }
       },
     }),
     {
