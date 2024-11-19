@@ -1,8 +1,8 @@
 import { Flex, Spacer } from "@chakra-ui/react";
-import { Controller, Fields, ScrollIndicator, Settings, TabsContainer } from "@components";
+import { Controller, ScrollIndicator, Settings, TabsContainer } from "@components";
 import { useLayout } from "@hooks";
 import { DiscoverView, LikesView, SessionView } from "@views";
-import { HeartCheckIcon, ProfileIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
+import { HeartCheckIcon, Search01Icon, Settings01Icon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
 
 export default function LargeApp() {
@@ -42,13 +42,6 @@ export default function LargeApp() {
               displayName: t("search.title"),
               icon: Search01Icon,
               Panel: <DiscoverView tagSize="md" h={tabPanelHeight} pb={4} thumbnailSize={80} />,
-              displayingBeforeInit: false,
-            },
-            {
-              name: "fields",
-              displayName: t("fields.title"),
-              icon: ProfileIcon,
-              Panel: <Fields h={tabPanelHeight} pt={4} />,
               displayingBeforeInit: false,
             },
             {

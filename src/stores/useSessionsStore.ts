@@ -45,14 +45,23 @@ const useSessionsStore = create(
         }),
 
       setCurrentChartIndex: (index) => {
-        const { appendingChart, charts } = get();
-        if (appendingChart || index < -1 || index > charts.length - 1) return;
+        const { appendingChart, charts, currentChartIndex } = get();
+        if (
+          appendingChart ||
+          index < -1 ||
+          index > charts.length - 1 ||
+          index === currentChartIndex
+        )
+          return;
         set({ currentChartIndex: index });
       },
 
       setCurrentChartToLast: () => {
-        const { charts, setCurrentChartIndex } = get();
-        setCurrentChartIndex(charts.length - 1);
+        const { charts, currentChartIndex } = get();
+        const lastIndex = charts.length - 1;
+        if (lastIndex !== currentChartIndex) {
+          set({ currentChartIndex: lastIndex });
+        }
       },
 
       loadSession: async (filename: string) => {
@@ -77,6 +86,8 @@ const useSessionsStore = create(
       },
 
       appendNextChart: async () => {
+        const { appendingChart } = get();
+        if (appendingChart) return;
         set({ appendingChart: true });
         const chart = await router.call("appendNextChart");
         if (chart) {
@@ -92,6 +103,8 @@ const useSessionsStore = create(
       },
 
       appendChart: async (chart: TChart) => {
+        const { appendingChart } = get();
+        if (appendingChart) return;
         set({ appendingChart: true });
         await router.call("appendChart", { chart });
         set(

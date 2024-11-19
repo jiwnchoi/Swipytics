@@ -40,11 +40,8 @@ function HeaderImpl() {
         icon={<Icon as={Settings01Icon} boxSize={4} />}
         aria-label={t("settings")}
         onClick={() => {
-          if (tabIndex === 3) {
-            setTabByName("fields");
-          } else {
-            setTabByName("settings");
-          }
+          if (tabIndex === 3) setTabByName("charts");
+          else setTabByName("settings");
         }}
       />
     </Flex>
@@ -62,17 +59,17 @@ export default function BaseApp() {
         variant="soft-rounded"
         tabs={[
           {
+            name: "charts",
+            displayName: t("charts.title"),
+            icon: ChartIcon,
+            Panel: <SessionView orientation="vertical" />,
+            displayingBeforeInit: false,
+          },
+          {
             name: "likes",
             displayName: t("bookmarks.title"),
             icon: HeartCheckIcon,
             Panel: <LikesView thumbnailSize={120} />,
-            displayingBeforeInit: false,
-          },
-          {
-            name: "fields",
-            displayName: t("charts.title"),
-            icon: ChartIcon,
-            Panel: <SessionView orientation="vertical" />,
             displayingBeforeInit: false,
           },
           {

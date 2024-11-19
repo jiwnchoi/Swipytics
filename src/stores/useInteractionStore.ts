@@ -3,10 +3,10 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 const TABS = {
+  charts: 0,
   likes: 1,
   search: 2,
-  fields: 3,
-  charts: 0,
+  fields: -2,
   settings: -1,
 };
 
