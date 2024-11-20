@@ -11,9 +11,9 @@ interface FieldTagProps extends TagProps {
 export default function FieldTag({ selected, field, ...props }: FieldTagProps) {
   const { name } = field;
   return (
-    <Tag gap={2} borderRadius="full" colorScheme={PRIMARY_COLOR} {...props}>
+    <Tag gap={2} p={2} borderRadius="full" colorScheme={PRIMARY_COLOR} {...props}>
       <Icon as={selected ? CancelCircleIcon : CheckmarkCircle01Icon} boxSize={5} />
-      <TagLabel>{name}</TagLabel>
+      <TagLabel fontSize={props.size}>{name}</TagLabel>
     </Tag>
   );
 }
