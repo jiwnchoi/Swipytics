@@ -1,8 +1,24 @@
-import { Flex, type FlexProps } from "@chakra-ui/react";
+import { Flex, type FlexProps, keyframes } from "@chakra-ui/react";
 import { Chart, PlaceHolder } from "@components";
 import { useLayout } from "@hooks";
 import useSessionView from "./useSessionView";
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
 export default function SessionView(props: FlexProps) {
   const { cardColor, cardInnerHeight, cardInnerWidth } = useLayout();
   const { charts, ref, scrollContainerCallback } = useSessionView();
@@ -16,10 +32,14 @@ export default function SessionView(props: FlexProps) {
       borderRadius={"lg"}
       bgColor={cardColor}
       overflowX={"hidden"}
+      animation={`${fadeIn} 0.2s ease-in-out`}
       style={{
         WebkitOverflowScrolling: "touch",
       }}
       sx={{
+        "&.removing": {
+          animation: `${fadeOut} 0.1s ease-in-out forwards`,
+        },
         "&::-webkit-scrollbar": {
           display: "none",
         },

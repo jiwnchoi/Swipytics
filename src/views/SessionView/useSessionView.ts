@@ -21,7 +21,7 @@ export default function useSessionView() {
     debounce((container: HTMLDivElement) => {
       if (!container) return;
       const scroll = container.scrollTop;
-      const newIndex = Math.floor((scroll + cardInnerHeight * 0.3) / cardInnerHeight) - 1;
+      const newIndex = Math.floor((scroll + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
       setCurrentChartIndex(newIndex);
       if (newIndex === charts.length - 1) {
         appendNextChart();

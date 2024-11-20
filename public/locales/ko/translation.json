@@ -15,7 +15,8 @@
     "prev": "이전"
   },
   "search": {
-    "title": "검색"
+    "title": "검색",
+    "empty": "아래 속성을 눌러 차트를 찾아보세요!"
   },
   "charts": {
     "title": "분석"

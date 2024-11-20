@@ -47,8 +47,6 @@ export default function useDiscoverView() {
     [selectedFields],
   );
 
-  const selectionFull = selectedFields.length === 3;
-
   const handleChartClick = useCallback(
     async (chart: TChart) => {
       await appendChart(chart);
@@ -66,6 +64,6 @@ export default function useDiscoverView() {
     handleChartClick,
     fields,
     isSelected,
-    selectionFull,
+    selectedFields,
   };
 }

@@ -5,8 +5,8 @@ import { useInteractionStore, useSessionsStore } from "@stores";
 import { DiscoverView, LikesView, SessionView } from "@views";
 import {
   ChartIcon,
-  CompassIcon,
   HeartCheckIcon,
+  Search02Icon,
   Settings01Icon,
   SwipeUp02Icon,
 } from "hugeicons-react";
@@ -75,7 +75,7 @@ export default function BaseApp() {
           {
             name: "search",
             displayName: t("search.title"),
-            icon: CompassIcon,
+            icon: Search02Icon,
             Panel: <DiscoverView tagSize="md" />,
             displayingBeforeInit: false,
           },

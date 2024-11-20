@@ -11,9 +11,6 @@ const TABS = {
 };
 
 interface SettingsState {
-  drawerExpanded: boolean;
-  setDrawerExpanded: (expanded: boolean) => void;
-
   tabIndex: number;
   setTabByIndex: (index: number) => void;
   setTabByName: (name: keyof typeof TABS) => void;
@@ -23,14 +20,13 @@ interface SettingsState {
     fieldNamesOrUpdater: string[] | ((prev: string[]) => string[]),
   ) => void;
   appendSearchTarget: (fieldName: string) => void;
+
+  resetInteractionStore: (tabName: keyof typeof TABS) => void;
 }
 
 const useInteractionStore = create(
   devtools<SettingsState>(
     (set) => ({
-      drawerExpanded: true,
-      setDrawerExpanded: (expanded) => set({ drawerExpanded: expanded }),
-
       tabIndex: TABS.settings,
       setTabByIndex: (index) =>
         set({ tabIndex: index < 0 ? Object.keys(Tabs).length + index : index }),
@@ -46,7 +42,10 @@ const useInteractionStore = create(
         })),
       appendSearchTarget: (fieldName) =>
         set((state) => ({ searchTargetFieldNames: [...state.searchTargetFieldNames, fieldName] })),
+      resetInteractionStore: (tabName: keyof typeof TABS) =>
+        set({ searchTargetFieldNames: [], tabIndex: TABS[tabName] }),
     }),
+
     {
       name: "InteractionStore",
       anonymousActionType: "InteractionStore Action",

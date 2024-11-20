@@ -15,7 +15,8 @@
     "prev": "Prev"
   },
   "search": {
-    "title": "Search"
+    "title": "Search",
+    "empty": "Select attributes below to search charts!"
   },
   "charts": {
     "title": "Charts"

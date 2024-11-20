@@ -9,7 +9,7 @@ function useLoadData() {
   const loadSession = useSessionsStore((state) => state.loadSession);
   const resetSession = useSessionsStore((state) => state.resetSession);
   const sessionFileName = useSessionsStore((state) => state.filename);
-  const setTabByName = useInteractionStore((state) => state.setTabByName);
+  const resetInteractionStore = useInteractionStore((state) => state.resetInteractionStore);
   const { mobile } = useLayout();
 
   const initializeSession = async (file: File | string) => {
@@ -23,9 +23,9 @@ function useLoadData() {
     await loadSession(filename);
 
     if (mobile) {
-      setTabByName("charts");
+      resetInteractionStore("charts");
     } else {
-      setTabByName("search");
+      resetInteractionStore("search");
     }
   };
   return {
