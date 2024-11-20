@@ -1,13 +1,24 @@
 import { useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { chakraColors, PRIMARY } from "@shared/constants";
+import { useRef } from "react";
 
-export default function useColors() {
-  const cardPadding = useBreakpointValue({ base: 0, lg: "18px" });
-  const cardWidth = useBreakpointValue({ base: window.innerWidth - 2 * 4, lg: 880 })!;
+export default function useLayout() {
+  const cardPadding = useBreakpointValue({
+    base: 4,
+    lg: 0,
+  })!;
+  const viewPadding = 2;
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const cardWidth = useBreakpointValue({ base: window.innerWidth - 2 * viewPadding * 4, lg: 880 })!;
   const cardHeight = useBreakpointValue({
     base: window.innerHeight - 140,
     lg: window.innerHeight * 0.8 - 18,
   })!;
+
+  const cardInnerWidth = cardWidth - 2 * cardPadding * 4;
+  const cardInnerHeight = cardHeight - 2 * cardPadding * 4;
+
   const mobile = useBreakpointValue({ base: true, lg: false });
   const drawerBgColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);
   const cardColor = useColorModeValue(chakraColors.white, chakraColors["gray.900"]);
@@ -30,8 +41,8 @@ export default function useColors() {
 
   const accentSelected = useColorModeValue(chakraColors["orange.50"], chakraColors["orange.800"]);
   const accentSelectedHover = useColorModeValue(
-    chakraColors["orange.100"],
-    chakraColors["orange.700"],
+    chakraColors["orange.600"],
+    chakraColors["orange.200"],
   );
 
   const scrollbarStyle = {
@@ -49,7 +60,20 @@ export default function useColors() {
       background: accentHoverColor,
     },
   };
+
+  const indicatorPadding = {
+    TOP: 12,
+    BOTTOM: 12,
+  };
+
+  const indicatorGap = 6;
+
   return {
+    cardRef,
+    cardInnerHeight,
+    cardInnerWidth,
+    indicatorGap,
+    indicatorPadding,
     accentColor,
     accentHoverColor,
     borderColor,

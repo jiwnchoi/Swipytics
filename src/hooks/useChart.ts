@@ -11,7 +11,7 @@ export default function useChart(chart: TChart) {
 
   const chartTheme: "dark" | undefined = colorMode === "dark" ? "dark" : undefined;
   const [width, height] = useBreakpointValue({
-    base: [window.innerWidth - 100, Math.min(window.innerHeight - 250, 500)],
+    base: [window.innerWidth - 64, Math.min(window.innerHeight - 350, 500)],
     lg: [Math.min(window.innerWidth - 250, 600), Math.min(window.innerHeight - 250, 600)],
   }) ?? [300, 300];
 
@@ -35,6 +35,7 @@ export default function useChart(chart: TChart) {
         labelFontSize: 14,
         titleFontSize: 16,
         titlePadding: 16,
+        labelLimit: 70,
       },
       autosize: {
         type: "fit",
@@ -42,7 +43,8 @@ export default function useChart(chart: TChart) {
       legend: {
         direction: "horizontal",
         titleLimit: width,
-        gradientLength: width,
+        gradientLength: width - 20,
+        columns: 2,
         orient: "bottom",
         labelFontSize: 14,
         titleFontSize: 16,
@@ -50,7 +52,6 @@ export default function useChart(chart: TChart) {
       numberFormat: ".3~s",
     },
   } as VisualizationSpec;
-
   const data = { [DATA_NAME]: _data };
 
   return { data, chartTheme, spec };

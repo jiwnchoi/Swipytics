@@ -1,6 +1,7 @@
-import { Divider, Flex, Image, ListItem, Text } from "@chakra-ui/react";
+import { Divider, Flex, Image, ListItem } from "@chakra-ui/react";
 import { useLayout, useThumnail } from "@hooks";
 import { type TChart } from "@shared/models";
+import ChartTitle from "./ChartTitle";
 
 interface ChartItemProps {
   chart: TChart;
@@ -30,16 +31,7 @@ function ChartItem({ chart, handleClick, thumbnailSize = 70 }: ChartItemProps) {
             h={`${thumbnailSize}px`}
           />
         )}
-        <Flex flexDir="column">
-          {chart.fields.map((field, i) => (
-            <Text
-              key={`${chart.key}-field-name-${field.name}`}
-              fontSize={i !== 2 ? "lg" : "md"}
-              fontWeight={i !== 2 ? 800 : 500}>
-              {field.name}
-            </Text>
-          ))}
-        </Flex>
+        <ChartTitle chart={chart} />
       </Flex>
       <Divider my={1} />
     </ListItem>

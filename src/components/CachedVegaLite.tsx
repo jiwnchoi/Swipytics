@@ -3,8 +3,8 @@ import VegaLite from "react-vega/lib/VegaLite";
 
 const cache = new Map<string, string>();
 
-export default function CachedVegaLite(props: VegaLiteProps) {
-  const key = JSON.stringify(props.spec);
+export default function CachedVegaLite({ spec, theme, ...props }: VegaLiteProps) {
+  const key = JSON.stringify({ spec, theme });
   const cached = cache.get(key);
 
   if (cached) {
@@ -12,7 +12,8 @@ export default function CachedVegaLite(props: VegaLiteProps) {
   }
   return (
     <VegaLite
-      {...props}
+      spec={spec}
+      theme={theme}
       actions={false}
       renderer="canvas"
       onNewView={(view) => {
@@ -20,6 +21,7 @@ export default function CachedVegaLite(props: VegaLiteProps) {
           cache.set(key, url);
         });
       }}
+      {...props}
     />
   );
 }

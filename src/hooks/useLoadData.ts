@@ -25,10 +25,9 @@ function useLoadData() {
     if (mobile) {
       setTabByName("charts");
     } else {
-      setTabByName("fields");
+      setTabByName("search");
     }
   };
-
   return {
     loading: loadingData || loadingSession,
     initializeSession,

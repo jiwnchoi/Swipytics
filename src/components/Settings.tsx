@@ -21,6 +21,7 @@ import {
   Sun03Icon,
 } from "hugeicons-react";
 import { t } from "i18next";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import FileForm from "./FileForm";
 
@@ -147,4 +148,4 @@ function Settings(props: StackProps) {
   );
 }
 
-export default Settings;
+export default memo(Settings);

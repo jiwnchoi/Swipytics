@@ -21,10 +21,10 @@
     "title": "분석"
   },
   "settings": {
-    "download_logs": "로그 다운로드",
+    "download_logs": "다운로드",
     "load_data": "데이터 불러오기",
     "load_demo": "데모 불러오기",
-    "clear_logs": "로그 초기화",
+    "clear_logs": "초기화",
     "load_latest_logs": "로그 불러오기",
     "monitor_logs": "시스템 로그",
     "select_demo": "데모 선택",

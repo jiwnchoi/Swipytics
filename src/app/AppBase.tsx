@@ -26,8 +26,8 @@ function HeaderImpl() {
     <Flex w="full" justifyContent={"space-between"} alignItems={"center"} px={2} py={1}>
       {tabIndex !== -1 ? (
         <Flex alignItems={"center"} h="full" gap={1}>
-          <Icon as={SwipeUp02Icon} boxSize={6} />
-          <Heading size={"xs"}>Swipytics</Heading>
+          <Icon as={SwipeUp02Icon} boxSize={7} />
+          <Heading size={"md"}>Swipytics</Heading>
         </Flex>
       ) : (
         <Flex />
@@ -37,8 +37,8 @@ function HeaderImpl() {
         padding={0}
         isDisabled={fields.length === 0}
         color={tabIndex === -1 ? accentColor : undefined}
-        icon={<Icon as={Settings01Icon} boxSize={4} />}
-        aria-label={t("settings")}
+        icon={<Icon as={Settings01Icon} boxSize={6} />}
+        aria-label={t("settings.title")}
         onClick={() => {
           if (tabIndex === -1) setTabByName("charts");
           else setTabByName("settings");
@@ -50,10 +50,10 @@ function HeaderImpl() {
 
 export default function BaseApp() {
   const { t } = useTranslation();
-  return (
-    <Flex p={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column">
-      <Header />
 
+  return (
+    <Flex p={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column" position={"relative"}>
+      <Header />
       <TabsContainerBase
         flexDir="column"
         variant="soft-rounded"
@@ -69,14 +69,14 @@ export default function BaseApp() {
             name: "likes",
             displayName: t("bookmarks.title"),
             icon: HeartCheckIcon,
-            Panel: <LikesView thumbnailSize={120} />,
+            Panel: <LikesView thumbnailSize={100} />,
             displayingBeforeInit: false,
           },
           {
             name: "search",
             displayName: t("search.title"),
             icon: CompassIcon,
-            Panel: <DiscoverView />,
+            Panel: <DiscoverView tagSize="md" />,
             displayingBeforeInit: false,
           },
           {
@@ -84,7 +84,7 @@ export default function BaseApp() {
             displayName: t("settings.title"),
             icon: Settings01Icon,
             Panel: (
-              <Flex flexDir={"column"} justify={"space-between"} p={4} h="full">
+              <Flex flexDir={"column"} justify={"space-between"} h="full">
                 <PlaceHolder h="full" />
                 <Spacer />
                 <Settings align="start" />

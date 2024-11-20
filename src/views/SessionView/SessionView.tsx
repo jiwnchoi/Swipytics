@@ -4,10 +4,8 @@ import { useLayout } from "@hooks";
 import useSessionView from "./useSessionView";
 
 export default function SessionView(props: FlexProps) {
-  const { cardHeight, cardColor, cardWidth } = useLayout();
-  const { charts, ref, scrollContainerCallback } = useSessionView({
-    cardHeight,
-  });
+  const { cardColor, cardInnerHeight, cardInnerWidth } = useLayout();
+  const { charts, ref, scrollContainerCallback } = useSessionView();
   return (
     <Flex
       ref={ref}
@@ -15,7 +13,8 @@ export default function SessionView(props: FlexProps) {
       data-log-scroll={"chart-container"}
       scrollSnapType={`y mandatory`}
       flexDir={"column"}
-      gap={2}
+      borderRadius={"lg"}
+      bgColor={cardColor}
       overflowX={"hidden"}
       style={{
         WebkitOverflowScrolling: "touch",
@@ -29,25 +28,22 @@ export default function SessionView(props: FlexProps) {
       <PlaceHolder
         flexDir={"column"}
         minW="full"
-        w={cardWidth - 8}
-        maxW={cardWidth}
-        h={cardHeight}
-        minH={cardHeight}
-        bgColor={cardColor}
-        borderRadius={"lg"}
-        scrollSnapAlign={"center"}
+        minH={cardInnerHeight}
+        maxH={cardInnerHeight}
+        scrollSnapStop={"always"}
+        scrollSnapAlign={"start"}
       />
       {charts.map((chart) => (
         <Chart
-          minH={cardHeight}
-          maxH={cardHeight}
-          minW={cardWidth - 8}
-          maxW={cardWidth - 8}
+          minH={cardInnerHeight}
+          maxH={cardInnerHeight}
+          w={cardInnerWidth}
           key={chart.key}
           chart={chart}
-          bgColor={cardColor}
           flexDirection={"column"}
           borderRadius={"lg"}
+          scrollSnapStop={"always"}
+          scrollSnapAlign={"start"}
         />
       ))}
     </Flex>

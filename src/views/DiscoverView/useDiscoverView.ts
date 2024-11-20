@@ -42,10 +42,12 @@ export default function useDiscoverView() {
     [dataFields],
   );
 
-  const getTagVariant = useCallback(
-    (field: TDataField) => (selectedFields.includes(field.name) ? "subtle" : "outline"),
+  const isSelected = useCallback(
+    (field: TDataField) => selectedFields.includes(field.name),
     [selectedFields],
   );
+
+  const selectionFull = selectedFields.length === 3;
 
   const handleChartClick = useCallback(
     async (chart: TChart) => {
@@ -63,6 +65,7 @@ export default function useDiscoverView() {
     handleFieldClick,
     handleChartClick,
     fields,
-    getTagVariant,
+    isSelected,
+    selectionFull,
   };
 }

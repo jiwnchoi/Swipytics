@@ -37,6 +37,7 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
 
   return (
     <Tabs
+      position={"relative"}
       display={"flex"}
       w={"full"}
       defaultIndex={tabs.length - 1}
@@ -59,6 +60,7 @@ function TabsContainer({ tabs, ...props }: TabsContainerProps) {
           </Tab>
         ))}
       </TabList>
+
       <TabPanels
         flex={1}
         overflow={"auto"}
