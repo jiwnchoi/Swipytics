@@ -25,9 +25,10 @@ interface ChartItemProps {
   chart: TChart;
   handleClick: (chart: TChart) => void;
   thumbnailSize?: number;
+  animation?: boolean;
 }
 
-function ChartItem({ chart, handleClick, thumbnailSize = 70 }: ChartItemProps) {
+function ChartItem({ chart, handleClick, thumbnailSize = 70, animation = true }: ChartItemProps) {
   const { buttonColor } = useLayout();
   const thumbnail = useThumnail(chart, thumbnailSize * 1.5);
 
@@ -36,10 +37,10 @@ function ChartItem({ chart, handleClick, thumbnailSize = 70 }: ChartItemProps) {
       key={`bookmark-${chart.key}`}
       as={Flex}
       flexDir="column"
-      animation={`${fadeIn} 0.2s ease-in-out`}
+      animation={animation ? `${fadeIn} 0.2s ease-in-out` : undefined}
       sx={{
         "&.removing": {
-          animation: `${fadeOut} 0.1s ease-in-out forwards`,
+          animation: animation ? `${fadeOut} 0.1s ease-in-out forwards` : undefined,
         },
       }}>
       <Flex

@@ -91,6 +91,7 @@ export default function DiscoverView({
           flex="1 1 auto">
           {queriedCharts.map((chart) => (
             <ChartItem
+              animation={true}
               key={`discovered-chart-${chart.key}-${chart.timestamp}`}
               thumbnailSize={thumbnailSize}
               chart={chart}
