@@ -5,23 +5,15 @@ import { debounce } from "es-toolkit";
 import { useEffect, useRef } from "react";
 
 interface UseSessionViewProps {
-  cardWidth: number;
   cardHeight: number;
-  orientation?: "horizontal" | "vertical";
 }
 
-export default function useSessionView({
-  cardWidth,
-  cardHeight,
-  orientation = "vertical",
-}: UseSessionViewProps) {
+export default function useSessionView({ cardHeight }: UseSessionViewProps) {
   const charts = useSessionsStore((state) => state.charts);
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
   const appendNextChart = useSessionsStore((state) => state.appendNextChart);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
-
-  const dimension = orientation === "horizontal" ? cardWidth : cardHeight;
 
   const ref = useRef<HTMLDivElement>(null);
   const isInitialMount = useRef(true);
@@ -30,8 +22,8 @@ export default function useSessionView({
 
   const scrollContainerCallback = debounce((container: HTMLDivElement) => {
     if (!container) return;
-    const scroll = orientation === "horizontal" ? container.scrollLeft : container.scrollTop;
-    const newIndex = Math.round(scroll / dimension) - 1;
+    const scroll = container.scrollTop;
+    const newIndex = Math.round(scroll / cardHeight) - 1;
 
     setCurrentChartIndex(newIndex);
     if (newIndex === charts.length - 1) appendNextChart();
@@ -42,11 +34,11 @@ export default function useSessionView({
     if (!container) return;
 
     container.scrollTo({
-      [orientation === "horizontal" ? "left" : "top"]: (currentChartIndex + 1) * dimension,
+      top: (currentChartIndex + 1) * cardHeight,
       behavior: "smooth",
     });
     isInitialMount.current = false;
-  }, [currentChartIndex, dimension, orientation]);
+  }, [currentChartIndex, cardHeight]);
 
   useEffect(() => {
     const keyActions = {

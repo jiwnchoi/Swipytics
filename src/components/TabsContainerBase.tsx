@@ -1,6 +1,5 @@
 import {
   Center,
-  Fade,
   Flex,
   Icon,
   Tab,
@@ -44,27 +43,25 @@ function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
       <Tabs
         display={"flex"}
         w={"full"}
-        index={tabIndex}
+        index={tabIndex < 0 ? tabs.length + tabIndex : tabIndex}
         onChange={setTabByIndex}
         isFitted
-        isLazy
+        // isLazy
         colorScheme={PRIMARY_COLOR}
         {...props}>
         <TabPanels overflow={"hidden"}>
           {tabs.map((config) => (
             <TabPanel key={`tabpanel-${config.name}`}>
-              <Fade in={config.name !== "charts"}>
-                <Flex
-                  maxW={cardWidth}
-                  bg={cardColor}
-                  borderRadius={"md"}
-                  flexDir={"column"}
-                  h={cardHeight}
-                  sx={scrollbarStyle}
-                  p={4}>
-                  {config.Panel}
-                </Flex>
-              </Fade>
+              <Flex
+                maxW={cardWidth}
+                bg={cardColor}
+                borderRadius={"md"}
+                flexDir={"column"}
+                h={cardHeight}
+                sx={scrollbarStyle}
+                p={4}>
+                {config.Panel}
+              </Flex>
             </TabPanel>
           ))}
         </TabPanels>
@@ -87,7 +84,7 @@ function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
         left={2}
         w={8}
         h={cardHeight}
-        visibility={tabIndex === 1 ? "visible" : "hidden"}
+        visibility={tabIndex === 0 ? "visible" : "hidden"}
       />
     </>
   );

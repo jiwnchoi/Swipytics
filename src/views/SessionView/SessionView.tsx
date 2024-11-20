@@ -3,24 +3,18 @@ import { Chart, PlaceHolder } from "@components";
 import { useLayout } from "@hooks";
 import useSessionView from "./useSessionView";
 
-interface ChartContainerProps extends FlexProps {
-  orientation?: "horizontal" | "vertical";
-}
-
-export default function SessionView({ orientation = "vertical", ...props }: ChartContainerProps) {
+export default function SessionView(props: FlexProps) {
   const { cardHeight, cardColor, cardWidth } = useLayout();
   const { charts, ref, scrollContainerCallback } = useSessionView({
     cardHeight,
-    cardWidth,
-    orientation,
   });
   return (
     <Flex
       ref={ref}
       onScroll={(e) => scrollContainerCallback(e.currentTarget)}
       data-log-scroll={"chart-container"}
-      scrollSnapType={`${orientation === "horizontal" ? "x" : "y"} mandatory`}
-      flexDir={orientation === "horizontal" ? "row" : "column"}
+      scrollSnapType={`y mandatory`}
+      flexDir={"column"}
       gap={2}
       overflowX={"hidden"}
       style={{

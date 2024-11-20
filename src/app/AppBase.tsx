@@ -24,7 +24,7 @@ function HeaderImpl() {
 
   return (
     <Flex w="full" justifyContent={"space-between"} alignItems={"center"} px={2} py={1}>
-      {tabIndex !== 3 ? (
+      {tabIndex !== -1 ? (
         <Flex alignItems={"center"} h="full" gap={1}>
           <Icon as={SwipeUp02Icon} boxSize={6} />
           <Heading size={"xs"}>Swipytics</Heading>
@@ -36,11 +36,11 @@ function HeaderImpl() {
         variant={"ghost"}
         padding={0}
         isDisabled={fields.length === 0}
-        color={tabIndex === 3 ? accentColor : undefined}
+        color={tabIndex === -1 ? accentColor : undefined}
         icon={<Icon as={Settings01Icon} boxSize={4} />}
         aria-label={t("settings")}
         onClick={() => {
-          if (tabIndex === 3) setTabByName("charts");
+          if (tabIndex === -1) setTabByName("charts");
           else setTabByName("settings");
         }}
       />
@@ -62,7 +62,7 @@ export default function BaseApp() {
             name: "charts",
             displayName: t("charts.title"),
             icon: ChartIcon,
-            Panel: <SessionView orientation="vertical" />,
+            Panel: <SessionView />,
             displayingBeforeInit: false,
           },
           {

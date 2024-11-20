@@ -13,7 +13,7 @@ export default function LargeApp() {
     <Flex minW="container.xl" maxH={cardHeight} gap={4} flexDir="row">
       <Flex position="relative" w={cardWidth} h={cardHeight}>
         <ScrollIndicator left={0} top={12} w={8} h={cardHeight} />
-        <SessionView w="full" gap={4} orientation="vertical" />
+        <SessionView w="full" gap={4} />
       </Flex>
       <Flex
         position="relative"
