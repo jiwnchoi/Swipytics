@@ -6,7 +6,6 @@ from typing import Self
 
 import pandas as pd
 from api.utils import (
-  clear_field_name_cache,
   get_clingo_field_name,
   get_file_extension,
   get_timestamp,
@@ -34,7 +33,6 @@ class SessionModel(BaseModel):
     if self.filename == "":
       return self
 
-    clear_field_name_cache()
     if self.df is None:
       extension = get_file_extension(self.filename)
       self.df = getattr(pd, f"read_{extension}")(Path("data", self.filename))
