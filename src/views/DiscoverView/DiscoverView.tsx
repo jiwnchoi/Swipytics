@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { ChartItem, FieldTag } from "@components";
 import { useLayout } from "@hooks";
-import { Search02Icon } from "hugeicons-react";
+import { Search01Icon, SearchRemoveIcon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
 import useDiscoverView from "./useDiscoverView";
 
@@ -75,11 +75,23 @@ export default function DiscoverView({
             count={selectedFields.length === 3 ? 3 : 1}
           />
         </OrderedList>
-      ) : queriedCharts.length === 0 ? (
+      ) : queriedCharts.length === 0 && selectedFields.length === 0 ? (
         <Center w="full" h="full" flexDir="column" gap={8} px={8}>
-          <Icon boxSize={16} as={Search02Icon} />
+          <Icon boxSize={16} as={Search01Icon} />
           <Heading fontSize={28} fontWeight={600} textAlign="center" overflowWrap="break-word">
             {t("search.empty")}
+          </Heading>
+        </Center>
+      ) : queriedCharts.length === 0 && selectedFields.length !== 0 ? (
+        <Center w="full" h="full" flexDir="column" gap={8} px={8}>
+          <Icon boxSize={16} as={SearchRemoveIcon} />
+          <Heading
+            fontSize={28}
+            fontWeight={600}
+            textAlign="center"
+            overflowWrap="break-word"
+            maxW={280}>
+            {t("search.no-results")}
           </Heading>
         </Center>
       ) : (

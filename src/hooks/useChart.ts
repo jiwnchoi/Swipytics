@@ -40,6 +40,7 @@ export default function useChart(chart: TChart) {
         titlePadding: 16,
         labelLimit: 70,
         labelExpr: `
+      isValid(datum.value) && isNumber(datum.value) ? (
       datum.value == 0 ? '0' :
       datum.value >= 1e15 ? format(datum.value/1e15, ',.1f') + '천조' :
       datum.value >= 1e14 ? format(datum.value/1e14, ',.1f') + '백조' :
@@ -56,7 +57,9 @@ export default function useChart(chart: TChart) {
       datum.value >= 1e3 ? format(datum.value/1e3, ',.1f') + '천' :
       datum.value >= 1e2 ? format(datum.value/1e2, ',.1f') + '백' :
       datum.value >= 1e1 ? format(datum.value/1e1, ',.1f') + '십' :
-      format(datum.value, ',.0f')`,
+      format(datum.value, ',.0f')
+    ) : datum.label
+     `,
       },
       autosize: {
         type: "fit",
