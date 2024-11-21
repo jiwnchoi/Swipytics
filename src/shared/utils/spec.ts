@@ -1,14 +1,13 @@
 import type { TSupportedDataType } from "@shared/models";
-import embed, { type VisualizationSpec } from "vega-embed";
-import type { Field } from "vega-lite/build/src/channeldef";
-import type { Encoding } from "vega-lite/build/src/encoding";
+import embed from "vega-embed";
+import type { TopLevelSpec } from "vega-lite";
 
-function getKey(spec: VisualizationSpec) {
+function getKey(spec: TopLevelSpec) {
   return `thumbnail@${JSON.stringify(spec)}`;
 }
 
 export async function getThumbnailFromSpec(
-  spec: VisualizationSpec,
+  spec: TopLevelSpec,
   data: TSupportedDataType,
   size = 100,
 ) {
@@ -19,34 +18,34 @@ export async function getThumbnailFromSpec(
   return thumbnail;
 }
 
-function getThumbnailFromCache(spec: VisualizationSpec) {
+function getThumbnailFromCache(spec: TopLevelSpec) {
   return sessionStorage.getItem(getKey(spec));
 }
 
 async function generateThumbnailFromSpec(
-  spec: VisualizationSpec,
+  spec: TopLevelSpec,
   data: TSupportedDataType,
   size = 100,
 ): Promise<string | undefined> {
-  if (!("mark" in spec)) return undefined;
   if (!spec || !data) return undefined;
 
-  const thumbnailAxis = {
-    disable: true,
-    title: "",
-    grid: false,
-    ticks: false,
-    labels: false,
-  };
   const newSpec = {
     ...spec,
     width: size,
     height: size,
     config: {
       ...spec.config,
-      mark: { strokeWidth: spec.mark === "line" ? 4 : 0 },
+      // line: {
+      //   width: 8,
+      // },
       legend: { disable: true },
-      axis: { disable: true },
+      axis: {
+        title: null,
+        disable: true,
+        grid: false,
+        ticks: false,
+        labels: false,
+      },
       style: {
         view: { stroke: "transparent" },
         cell: { stroke: "transparent" },
@@ -55,16 +54,6 @@ async function generateThumbnailFromSpec(
     data: { values: data },
     background: "transparent",
     title: undefined,
-    encoding: Object.fromEntries(
-      Object.entries(spec.encoding ?? {}).map(([key, value]: [string, Encoding<Field>]) => [
-        key,
-        {
-          ...value,
-          legend: null,
-          axis: thumbnailAxis,
-        },
-      ]),
-    ),
   };
 
   const view = await embed(document.createElement("div"), newSpec, {

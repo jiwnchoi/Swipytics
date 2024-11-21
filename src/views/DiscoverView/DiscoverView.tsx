@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   Divider,
   Flex,
@@ -11,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { ChartItem, FieldTag } from "@components";
 import { useLayout } from "@hooks";
-import { Search02Icon } from "hugeicons-react";
+import { Search01Icon, SearchRemoveIcon } from "hugeicons-react";
 import { useTranslation } from "react-i18next";
 import useDiscoverView from "./useDiscoverView";
 
@@ -22,8 +23,8 @@ interface DiscoverViewProps extends FlexProps {
 
 const LoadingSkeleton = ({ count = 5, thumbnailSize }: { count?: number; thumbnailSize: number }) =>
   Array.from({ length: count }).map((_, index) => (
-    <>
-      <Flex key={`skeleton-${index}`} gap={4} p={1} align="center">
+    <Box key={`skeleton-${index}`}>
+      <Flex gap={4} p={1} align="center">
         <Skeleton
           height={`${thumbnailSize - 8}px`}
           width={`${thumbnailSize - 8}px`}
@@ -39,7 +40,7 @@ const LoadingSkeleton = ({ count = 5, thumbnailSize }: { count?: number; thumbna
         </Flex>
       </Flex>
       <Divider my={1} />
-    </>
+    </Box>
   ));
 
 export default function DiscoverView({
@@ -74,11 +75,23 @@ export default function DiscoverView({
             count={selectedFields.length === 3 ? 3 : 1}
           />
         </OrderedList>
-      ) : queriedCharts.length === 0 ? (
+      ) : queriedCharts.length === 0 && selectedFields.length === 0 ? (
         <Center w="full" h="full" flexDir="column" gap={8} px={8}>
-          <Icon boxSize={16} as={Search02Icon} />
+          <Icon boxSize={16} as={Search01Icon} />
           <Heading fontSize={28} fontWeight={600} textAlign="center" overflowWrap="break-word">
             {t("search.empty")}
+          </Heading>
+        </Center>
+      ) : queriedCharts.length === 0 && selectedFields.length !== 0 ? (
+        <Center w="full" h="full" flexDir="column" gap={8} px={8}>
+          <Icon boxSize={16} as={SearchRemoveIcon} />
+          <Heading
+            fontSize={28}
+            fontWeight={600}
+            textAlign="center"
+            overflowWrap="break-word"
+            maxW={280}>
+            {t("search.no-results")}
           </Heading>
         </Center>
       ) : (
@@ -112,6 +125,7 @@ export default function DiscoverView({
             size={tagSize}
             variant={isSelected(field) ? "solid" : "outline"}
             onClick={() => handleFieldClick(field)}
+            data-log-click={`search-field-tag-${field.name}`}
             opacity={isSelected(field) ? 1 : selectedFields.length === 3 ? 0.2 : 1}
             transition={"all 0.1s ease-in-out"}
           />

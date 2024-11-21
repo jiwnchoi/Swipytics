@@ -1,23 +1,18 @@
 import { router } from "@api";
 import { useColorMode, useToast } from "@chakra-ui/react";
 import { useLoggerClient } from "@logger/react";
-import { useDataStore, useSessionsStore, useSettingsStore } from "@stores";
+import { useDataStore, useSessionsStore } from "@stores";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function useSettings() {
   const { fileCache, writeFile } = useDataStore();
   const { loadSession, filename: currentFilename } = useSessionsStore();
-  const { apiKey, setApiKey } = useSettingsStore();
   const { colorMode, toggleColorMode } = useColorMode();
   const [python, setPython] = useState<"pyodide" | "server">(() => router.getPythonType());
   const { t, i18n } = useTranslation();
   const toast = useToast();
   const logger = useLoggerClient();
-
-  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setApiKey(e.target.value);
-  };
 
   const handleDownloadLogs = () => {
     try {
@@ -91,8 +86,6 @@ export default function useSettings() {
   return {
     python,
     handleServerButtonClick,
-    apiKey,
-    handleApiKeyChange,
     handleDownloadLogs,
     handleClearLogs,
     colorMode,

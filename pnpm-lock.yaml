@@ -44,6 +44,9 @@ importers:
       d3-format:
         specifier: 3.1.0
         version: 3.1.0
+      es-hangul:
+        specifier: ^2.2.3
+        version: 2.2.3
       es-toolkit:
         specifier: ^1.16.0
         version: 1.16.0
@@ -2385,6 +2388,9 @@ packages:
   es-errors@1.3.0:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
     engines: {node: '>= 0.4'}
+
+  es-hangul@2.2.3:
+    resolution: {integrity: sha512-DTwM998yPTW6nY2+bCbR7uYIPH38WFDNaPwKu3Vdj0Bt7SsOQFFIqlxZF5JkE0qJiMpm/L3IsD1Uuv7p7WlJpg==}
 
   es-iterator-helpers@1.0.19:
     resolution: {integrity: sha512-zoMwbCcH5hwUkKJkT8kDIBZSz9I6mVG//+lDCinLCGov4+r7NIy0ld8o03M0cJxl2spVf6ESYVS6/gpIfq1FFw==}
@@ -6895,6 +6901,8 @@ snapshots:
       get-intrinsic: 1.2.4
 
   es-errors@1.3.0: {}
+
+  es-hangul@2.2.3: {}
 
   es-iterator-helpers@1.0.19:
     dependencies:

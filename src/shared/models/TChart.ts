@@ -1,10 +1,10 @@
-import type { VisualizationSpec } from "react-vega";
+import type { TopLevelSpec } from "vega-lite";
 import type TDataField from "./TDataField";
 
 interface TChart {
   key: string;
   fields: TDataField[];
-  specs: VisualizationSpec[];
+  specs: TopLevelSpec[];
   title: string | undefined;
   description: string;
 

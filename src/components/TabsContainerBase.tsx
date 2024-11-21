@@ -37,7 +37,6 @@ function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
   const tabIndex = useInteractionStore((state) => state.tabIndex);
   const setTabByIndex = useInteractionStore((state) => state.setTabByIndex);
 
-  const filteredTabs = tabs.filter((config) => config.name !== "settings");
   return (
     <Tabs
       display={"flex"}
@@ -45,7 +44,7 @@ function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
       index={tabIndex < 0 ? tabs.length + tabIndex : tabIndex}
       onChange={setTabByIndex}
       isFitted
-      isLazy
+      // isLazy
       colorScheme={PRIMARY_COLOR}
       {...props}>
       <TabPanels overflow={"hidden"}>
@@ -67,18 +66,20 @@ function TabsContainerBase({ tabs, ...props }: TabsContainerProps) {
       </TabPanels>
       <ScrollIndicator w={8} />
       <TabList my={2}>
-        {filteredTabs.map((config) => (
-          <Tab
-            gap={1}
-            as={Center}
-            flexDir={"column"}
-            key={`tab-${config.name}`}
-            isDisabled={!initialized && !config.displayingBeforeInit}
-            data-log-click={`tab-${config.name}`}>
-            <Icon boxSize={tabIconSize} as={config.icon} />
-            <Text fontSize={"xs"}>{config.displayName}</Text>
-          </Tab>
-        ))}
+        {tabs
+          .filter((config) => config.name !== "settings")
+          .map((config) => (
+            <Tab
+              gap={1}
+              as={Center}
+              flexDir={"column"}
+              key={`tab-${config.name}`}
+              isDisabled={!initialized && !config.displayingBeforeInit}
+              data-log-click={`tab-${config.name}`}>
+              <Icon boxSize={tabIconSize} as={config.icon} />
+              <Text fontSize={"xs"}>{config.displayName}</Text>
+            </Tab>
+          ))}
       </TabList>
     </Tabs>
   );

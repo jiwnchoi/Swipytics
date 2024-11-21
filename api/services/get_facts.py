@@ -13,6 +13,7 @@ def _get_base_facts() -> list[str]:
     ":- attribute((mark,type),m0, tick).",
     # Exclude Faceted Chart
     ":- {entity(facet,_,_)} > 0.",
+    "attribute(task,root,summary).",
   ]
 
 
@@ -33,10 +34,14 @@ def _get_encoding_facts(fields: tuple["FieldModel", ...]) -> list[str]:
       f"entity(encoding,m0,e{i}).",
       f"attribute((encoding,field),e{i},{field.clingo_name}).",
       f"attribute((encoding,channel),e{i},{channel}).",
-      f"entity(scale,v0,s{i})." if field.scale else None,
-      f"attribute((scale,channel),s{i},{channel})." if field.scale else None,
+      # no bin if field type is datetime
+      f":- attribute((encoding,binning),e{i},_)." if field.type == "datetime" else None,
+      f"entity(scale,v0,s{i})." if field.scale and field.type != "datetime" else None,
+      f"attribute((scale,channel),s{i},{channel})."
+      if field.scale and field.type != "datetime"
+      else None,
       f"attribute((scale,type),s{i},{'ordinal' if channel in ['x', 'y'] else field.scale})."
-      if field.scale
+      if field.scale and field.type != "datetime"
       else None,
     ]
     if f is not None

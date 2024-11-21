@@ -1,6 +1,6 @@
 import { useLoggerClient } from "@logger/react";
 import { getDifferences } from "@shared/utils";
-import { useDataStore, useInteractionStore, useSessionsStore, useSettingsStore } from "@stores";
+import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 import { pick, pickBy } from "es-toolkit";
 import { useEffect } from "react";
 import { isEqual } from "vega-lite";
@@ -49,18 +49,10 @@ function useStoresLogging() {
       logger.log("session-store", "state", getDifferences(pickedState, pickedPrevState));
     });
 
-    const unSubSettingsStore = useSettingsStore.subscribe((state, prevState) => {
-      const pickedState = pickBy(state, (value) => typeof value !== "function");
-      const pickedPrevState = pickBy(prevState, (value) => typeof value !== "function");
-      if (isEqual(pickedState, pickedPrevState)) return;
-      logger.log("settings-store", "state", getDifferences(pickedState, pickedPrevState));
-    });
-
     return () => {
       unSubDataStore();
       unSubInteractionStore();
       unSubSessionStore();
-      unSubSettingsStore();
     };
   }, [logger]);
 }

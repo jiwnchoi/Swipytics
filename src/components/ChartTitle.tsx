@@ -1,23 +1,30 @@
 import { Text, type TextProps } from "@chakra-ui/react";
 import { useLayout } from "@hooks";
 import { type TChart } from "@shared/models";
-
+import { josa } from "es-hangul";
+import { useTranslation } from "react-i18next";
 interface ChartTitleProps extends TextProps {
   chart: TChart;
+}
+
+function getOnlyKorean(text: string) {
+  return text.replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣]/g, "");
 }
 
 export default function ChartTitle({ chart, ...props }: ChartTitleProps) {
   const fields = chart.fields;
   const { accentSelectedHover } = useLayout();
+  const { i18n } = useTranslation();
   return (
     <Text as="p" fontSize={"md"} {...props}>
-      {/* Check field name is 3, 2, 1 */}
       <Text as={"span"} fontWeight={600} color={accentSelectedHover}>
         {fields[0].name}
       </Text>
       {fields.length > 1 && (
         <Text as={"span"} fontWeight={400}>
-          {" and "}
+          {i18n.language === "ko"
+            ? `${josa.pick(getOnlyKorean(fields[0].name), "와/과")} `
+            : " and "}
         </Text>
       )}
       {fields.length > 1 && (
@@ -27,12 +34,14 @@ export default function ChartTitle({ chart, ...props }: ChartTitleProps) {
       )}
       {fields.length > 2 && (
         <Text as={"span"} fontWeight={400}>
-          {" colored by "}
+          {i18n.language === "ko"
+            ? `${josa.pick(getOnlyKorean(fields[1].name), "와/과")} `
+            : " and "}
         </Text>
       )}
       {fields.length > 2 && (
         <Text as={"span"} fontWeight={600} color={accentSelectedHover}>
-          {fields[2].name}
+          {`${fields[2].name}`}
         </Text>
       )}
     </Text>

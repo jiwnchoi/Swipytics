@@ -58,7 +58,7 @@ export default function SessionView(props: FlexProps) {
           minH={cardInnerHeight}
           maxH={cardInnerHeight}
           w={cardInnerWidth}
-          key={chart.key}
+          key={`chart-${chart.key}-${chart.timestamp}`}
           chart={chart}
           flexDirection={"column"}
           borderRadius={"lg"}

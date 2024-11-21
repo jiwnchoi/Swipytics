@@ -25,9 +25,8 @@ const useDoubleTap = (
 
   const handleTouchEnd = useCallback(
     (e: React.TouchEvent): void => {
-      // 터치 지속 시간이 길면 더블탭으로 처리하지 않음
       const touchDuration = Date.now() - touchStartTime;
-      if (touchDuration > 500) return;
+      if (touchDuration > latency) return;
 
       const now = Date.now();
       if (now - lastTap < latency) {

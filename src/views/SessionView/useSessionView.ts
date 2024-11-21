@@ -17,25 +17,21 @@ export default function useSessionView() {
   const { cardInnerHeight } = useLayout();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const scrollContainerCallback = useCallback(
+  const handleScroll = useCallback(
     debounce((container: HTMLDivElement) => {
       if (!container) return;
-      const scroll = container.scrollTop;
-      const newIndex = Math.floor((scroll + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
+      const newIndex =
+        Math.floor((container.scrollTop + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
       setCurrentChartIndex(newIndex);
-      if (newIndex === charts.length - 1) {
-        appendNextChart();
-      }
-    }, 50),
-    [cardInnerHeight, charts, appendNextChart, setCurrentChartIndex],
+      if (newIndex === charts.length - 1) appendNextChart();
+    }, 100),
+    [cardInnerHeight, charts.length, appendNextChart, setCurrentChartIndex],
   );
 
-  const clickScrollCallback = useCallback(
-    (scrollIndex: number) => {
-      const container = ref.current;
-      if (!container) return;
-      container.scrollTo({
-        top: (scrollIndex + 1) * cardInnerHeight,
+  const scrollTo = useCallback(
+    (index: number) => {
+      ref.current?.scrollTo({
+        top: (index + 1) * cardInnerHeight,
         behavior: "smooth",
       });
     },
@@ -43,40 +39,34 @@ export default function useSessionView() {
   );
 
   useEffect(() => {
-    const container = ref.current;
-    if (!container) return;
-    container.scrollTo({
-      top: (currentChartIndex + 1) * cardInnerHeight,
-      behavior: "instant",
-    });
-  }, [currentChartIndex, cardInnerHeight]);
+    const scroll = () => {
+      if (ref.current?.clientHeight) scrollTo(currentChartIndex);
+      else requestAnimationFrame(scroll);
+    };
+    requestAnimationFrame(scroll);
+  }, [currentChartIndex, scrollTo]);
 
   useEffect(() => {
-    const keyActions = {
-      ArrowUp: () => clickScrollCallback(currentChartIndex - 1),
-      ArrowDown: () => clickScrollCallback(currentChartIndex + 1),
+    const keyMap = {
+      ArrowUp: () => scrollTo(currentChartIndex - 1),
+      ArrowDown: () => scrollTo(currentChartIndex + 1),
       Enter: () => setCurrentChartPreferred(!charts[currentChartIndex].preferred),
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      const action = keyActions[event.key as keyof typeof keyActions];
+    const handleKey = (e: KeyboardEvent) => {
+      const action = keyMap[e.key as keyof typeof keyMap];
       if (action) {
-        event.preventDefault();
+        e.preventDefault();
         logger.log("chart-container", "keydown", {
-          key: event.key.toLowerCase().replace("arrow", ""),
+          key: e.key.toLowerCase().replace("arrow", ""),
         });
         action();
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentChartIndex, charts, setCurrentChartPreferred, logger, clickScrollCallback]);
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [currentChartIndex, charts, setCurrentChartPreferred, logger, scrollTo]);
 
-  return {
-    charts,
-    currentChartIndex,
-    ref,
-    scrollContainerCallback,
-  };
+  return { charts, currentChartIndex, ref, scrollContainerCallback: handleScroll };
 }
