@@ -39,27 +39,6 @@ export default function useChart(chart: TChart) {
         titleFontSize: 16,
         titlePadding: 16,
         labelLimit: 70,
-        labelExpr: `
-      isValid(datum.value) && isNumber(datum.value) ? (
-      datum.value == 0 ? '0' :
-      datum.value >= 1e15 ? format(datum.value/1e15, ',.1f') + '천조' :
-      datum.value >= 1e14 ? format(datum.value/1e14, ',.1f') + '백조' :
-      datum.value >= 1e13 ? format(datum.value/1e13, ',.1f') + '십조' :
-      datum.value >= 1e12 ? format(datum.value/1e12, ',.1f') + '조' :
-      datum.value >= 1e11 ? format(datum.value/1e11, ',.1f') + '천억' :
-      datum.value >= 1e10 ? format(datum.value/1e10, ',.1f') + '백억' :
-      datum.value >= 1e9 ? format(datum.value/1e9, ',.1f') + '십억' :
-      datum.value >= 1e8 ? format(datum.value/1e8, ',.1f') + '억' :
-      datum.value >= 1e7 ? format(datum.value/1e7, ',.1f') + '천만' :
-      datum.value >= 1e6 ? format(datum.value/1e6, ',.1f') + '백만' :
-      datum.value >= 1e5 ? format(datum.value/1e5, ',.1f') + '십만' :
-      datum.value >= 1e4 ? format(datum.value/1e4, ',.1f') + '만' :
-      datum.value >= 1e3 ? format(datum.value/1e3, ',.1f') + '천' :
-      datum.value >= 1e2 ? format(datum.value/1e2, ',.1f') + '백' :
-      datum.value >= 1e1 ? format(datum.value/1e1, ',.1f') + '십' :
-      format(datum.value, ',.0f')
-    ) : datum.label
-     `,
       },
       autosize: {
         type: "fit",

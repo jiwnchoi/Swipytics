@@ -46,7 +46,7 @@ function DemoSelector() {
   return (
     <>
       <Select
-        size="sm"
+        size="md"
         onChange={(e) =>
           handleDemoSelect(DEMO_LIST.find((demo) => demo.name === e.target.value) ?? null)
         }
@@ -101,7 +101,7 @@ function Settings(props: StackProps) {
 
       <SettingRow label={t("settings.set_locale")}>
         <Select
-          size="sm"
+          size="md"
           variant="outline"
           value={locale}
           data-log-change="select-locale"
@@ -117,7 +117,7 @@ function Settings(props: StackProps) {
           leftIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
           onClick={toggleColorMode}
           data-log-click="toggle-color-mode"
-          size="sm"
+          size="md"
           w={"full"}>
           {colorMode === "light" ? "Light" : "Dark"}
         </Button>
@@ -129,7 +129,7 @@ function Settings(props: StackProps) {
             handleServerButtonClick();
           }}
           data-log-click="toggle-server"
-          size="sm"
+          size="md"
           w={"full"}>
           {python && python[0].toUpperCase() + python?.slice(1)}
         </Button>

@@ -42,6 +42,7 @@ export default function FileForm(props: FlexProps) {
             display={"none"}
             ref={fileInputRef}
             onChange={handleFileChange}
+            data-log-change={"file-attachment"}
             accept=".csv,.json"
           />
           <IconButton

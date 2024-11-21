@@ -6,7 +6,6 @@ export { default as useDemo } from "./useDemo";
 export { default as useDoubleTap } from "./useDoubleTap";
 export { default as useFieldNameMatches } from "./useFieldNameMatch";
 export { default as useFileForm } from "./useFileForm";
-export { default as useIndicators } from "./useIndicators";
 export { default as useLayout } from "./useLayout";
 export { default as useLoadData } from "./useLoadData";
 export { default as useLoadingStatus } from "./useLoadingStatus";

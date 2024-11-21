@@ -44,7 +44,7 @@ export default function useLayout() {
     chakraColors["orange.600"],
     chakraColors["orange.200"],
   );
-
+  const defaultGrayColor = useColorModeValue(chakraColors["gray.400"], chakraColors["gray.600"]);
   const scrollbarStyle = {
     "&::-webkit-scrollbar": {
       width: "5px",
@@ -86,6 +86,7 @@ export default function useLayout() {
     drawerBgColor,
     tabPanelHeight,
     tabIconSize,
+    defaultGrayColor,
     thumbnailSize,
     mobile,
     scrollbarStyle,

@@ -125,6 +125,7 @@ export default function DiscoverView({
             size={tagSize}
             variant={isSelected(field) ? "solid" : "outline"}
             onClick={() => handleFieldClick(field)}
+            data-log-click={`search-field-tag-${field.name}`}
             opacity={isSelected(field) ? 1 : selectedFields.length === 3 ? 0.2 : 1}
             transition={"all 0.1s ease-in-out"}
           />
