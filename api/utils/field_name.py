@@ -25,7 +25,7 @@ def get_clingo_field_name(field_name: str | list[str]) -> str | list[str]:
   if field_name in name_to_id:
     return name_to_id[field_name]
 
-  id = f"{str(uuid.uuid4())[:8]}_{len(id_to_name)}"
+  id = str(uuid.uuid4())[:8]
 
   id_to_name[id] = field_name
   name_to_id[field_name] = id
