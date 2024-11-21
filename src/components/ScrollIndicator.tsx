@@ -61,7 +61,7 @@ function ScrollIndicator(props: FlexProps) {
             cy={cy}
             fill={fill}
             initial={{ r: 0 }}
-            animate={{ r, fill }}
+            animate={{ r, fill, cy }}
             transition={{
               type: "spring",
               stiffness: 100,

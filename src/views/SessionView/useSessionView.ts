@@ -24,7 +24,7 @@ export default function useSessionView() {
         Math.floor((container.scrollTop + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
       setCurrentChartIndex(newIndex);
       if (newIndex === charts.length - 1) appendNextChart();
-    }, 50),
+    }, 100),
     [cardInnerHeight, charts.length, appendNextChart, setCurrentChartIndex],
   );
 

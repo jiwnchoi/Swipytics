@@ -63,6 +63,7 @@ function DemoSelector() {
         ))}
       </Select>
       <IconButton
+        size={"md"}
         borderLeftRadius={0}
         colorScheme={PRIMARY_COLOR}
         type="submit"

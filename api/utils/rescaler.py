@@ -1,8 +1,37 @@
 from __future__ import annotations
 
 from math import log
+from typing import Literal, TypeAlias, TypedDict
 
-from draco.schema import FieldProps
+# Field types recognized by a Draco schema.
+FieldType: TypeAlias = Literal["number", "string", "boolean", "datetime"]
+
+
+class BaseFieldProps(TypedDict):
+  """Properties shared by fields of all types in a `Schema`."""
+
+  name: str
+  type: FieldType
+  unique: int
+  entropy: float
+
+
+class NumberFieldProps(BaseFieldProps):
+  """Properties of a `number` field in a `Schema`."""
+
+  min: int
+  max: int
+  std: int
+
+
+class StringFieldProps(BaseFieldProps):
+  """Properties of a `string` field in a `Schema`."""
+
+  freq: int
+
+
+# Union of supported field properties.
+FieldProps = NumberFieldProps | StringFieldProps | BaseFieldProps
 
 MAX_32BIT = 2**31 - 1
 

@@ -28,7 +28,7 @@ export default function FileForm(props: FlexProps) {
 
   return (
     <Flex as={FormControl} {...props}>
-      <InputGroup>
+      <InputGroup size={"md"}>
         <Input
           placeholder="https://..."
           onChange={handleInputChange}
@@ -46,6 +46,7 @@ export default function FileForm(props: FlexProps) {
             accept=".csv,.json"
           />
           <IconButton
+            size={"md"}
             aria-label="Select File"
             icon={<Icon as={FileAttachmentIcon} />}
             variant={"link"}
@@ -55,6 +56,7 @@ export default function FileForm(props: FlexProps) {
         </InputRightElement>
       </InputGroup>
       <IconButton
+        size={"md"}
         borderLeftRadius={0}
         colorScheme={PRIMARY_COLOR}
         type="submit"
