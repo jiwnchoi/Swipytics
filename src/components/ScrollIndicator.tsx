@@ -4,8 +4,8 @@ import { useInteractionStore } from "@stores";
 import { useParentSize } from "@visx/responsive";
 import { motion } from "framer-motion";
 
-function Indicators({ width, height, r }: { width: number; height: number; r: number }) {
-  const indicators = useIndicators({ width, height, r });
+function Indicators({ height, r }: { height: number; r: number }) {
+  const indicators = useIndicators({ height, r });
 
   return indicators.map(({ key, cx, cy, r, fill }) => (
     <motion.circle
@@ -37,7 +37,7 @@ export default function ScrollIndicator(props: FlexProps) {
       visibility={!mobile || tabIndex === 0 ? "visible" : "hidden"}
       {...props}>
       <svg width={width} height={height}>
-        <Indicators width={width} height={height} r={3} />
+        <Indicators height={height} r={3} />
       </svg>
     </Flex>
   );
