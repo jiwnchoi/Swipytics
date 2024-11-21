@@ -16,10 +16,8 @@
   },
   "search": {
     "title": "Search",
-    "empty": "Select attributes below to search charts!"
-  },
-  "charts": {
-    "title": "Charts"
+    "empty": "Select attributes below to search charts!",
+    "no-results": "There is no chart for corresponding attribute!"
   },
   "charts": {
     "title": "Charts"

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Barley",
+    "href": "/data/barley.json"
+  },
+  {
+    "name": "Birdstrikes",
+    "href": "/data/birdstrikes_5000.json"
+  },
+  {
+    "name": "Burtin",
+    "href": "/data/burtin.json"
+  },
+  {
+    "name": "Cars",
+    "href": "/data/cars.json"
+  },
+  {
+    "name": "Cars (Korean)",
+    "href": "/data/cars_ko.json"
+  },
+  {
+    "name": "Crimea",
+    "href": "/data/crimea.json"
+  },
+  {
+    "name": "Jobs",
+    "href": "/data/jobs.json"
+  },
+  {
+    "name": "Movies",
+    "href": "/data/movies.json"
+  },
+  {
+    "name": "Movies (Korean)",
+    "href": "/data/movies_ko.json"
+  },
+  {
+    "name": "Population",
+    "href": "/data/population.json"
+  },
+  {
+    "name": "Seoul Bike Rides",
+    "href": "/data/SeoulBikeData_ko_cleaned_5000.json"
+  }
+]
