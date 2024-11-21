@@ -35,8 +35,7 @@ __pycache__
 public/artifacts
 
 *.ipynb
-data
+
 
 movies.json
 
-*.csv
