@@ -38,7 +38,7 @@ const LoadingSkeleton = ({ count = 5, thumbnailSize }: { count?: number; thumbna
           />
         </Flex>
       </Flex>
-      <Divider my={1} />
+      <Divider my={1} key={`divider-${index}`} />
     </>
   ));
 
