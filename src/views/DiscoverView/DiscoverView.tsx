@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   Divider,
   Flex,
@@ -22,8 +23,8 @@ interface DiscoverViewProps extends FlexProps {
 
 const LoadingSkeleton = ({ count = 5, thumbnailSize }: { count?: number; thumbnailSize: number }) =>
   Array.from({ length: count }).map((_, index) => (
-    <>
-      <Flex key={`skeleton-${index}`} gap={4} p={1} align="center">
+    <Box key={`skeleton-${index}`}>
+      <Flex gap={4} p={1} align="center">
         <Skeleton
           height={`${thumbnailSize - 8}px`}
           width={`${thumbnailSize - 8}px`}
@@ -38,8 +39,8 @@ const LoadingSkeleton = ({ count = 5, thumbnailSize }: { count?: number; thumbna
           />
         </Flex>
       </Flex>
-      <Divider my={1} key={`divider-${index}`} />
-    </>
+      <Divider my={1} />
+    </Box>
   ));
 
 export default function DiscoverView({

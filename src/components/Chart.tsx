@@ -35,6 +35,7 @@ function Chart({ chart, ...props }: ChartProps) {
 
   const handlePreferChart = () => {
     if (!chart.key) return;
+    console.log(chart.specs[0]);
     setChartPreferred(chart.key, !currentChartPreferred);
   };
 

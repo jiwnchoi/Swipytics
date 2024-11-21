@@ -11,7 +11,7 @@ import {
 
 const koreanAggregateTerms: Record<string, string> = {
   count: "항목 수",
-  sum: "합계",
+  sum: "합",
   mean: "평균",
   average: "평균",
   median: "중앙값",
@@ -63,6 +63,9 @@ function containsKorean(text: string) {
 }
 export default function getKoreanVegaLite(vlSpec: TopLevelSpec) {
   return vegaLite.compile(vlSpec, {
+    config: {
+      locale: {},
+    },
     fieldTitle: (fieldDef: FieldDefBase<string>, config: Config) => {
       const { field, aggregate, timeUnit, bin } = fieldDef;
       if (aggregate === "count") {
@@ -82,7 +85,7 @@ export default function getKoreanVegaLite(vlSpec: TopLevelSpec) {
         } else if (isArgminDef(aggregate)) {
           return `${aggregate.argmin}가 최소일 때의 ${field}`;
         } else {
-          return `${field}의 ${getKorean(aggregate)}값`;
+          return `${field}의 ${getKorean(aggregate)}`;
         }
       }
       return String(field);
