@@ -5,8 +5,8 @@ import { useInteractionStore, useSessionsStore } from "@stores";
 import { DiscoverView, LikesView, SessionView } from "@views";
 import {
   ChartIcon,
-  CompassIcon,
   HeartCheckIcon,
+  Search02Icon,
   Settings01Icon,
   SwipeUp02Icon,
 } from "hugeicons-react";
@@ -24,10 +24,10 @@ function HeaderImpl() {
 
   return (
     <Flex w="full" justifyContent={"space-between"} alignItems={"center"} px={2} py={1}>
-      {tabIndex !== 3 ? (
+      {tabIndex !== -1 ? (
         <Flex alignItems={"center"} h="full" gap={1}>
-          <Icon as={SwipeUp02Icon} boxSize={6} />
-          <Heading size={"xs"}>Swipytics</Heading>
+          <Icon as={SwipeUp02Icon} boxSize={7} />
+          <Heading size={"md"}>Swipytics</Heading>
         </Flex>
       ) : (
         <Flex />
@@ -36,15 +36,12 @@ function HeaderImpl() {
         variant={"ghost"}
         padding={0}
         isDisabled={fields.length === 0}
-        color={tabIndex === 3 ? accentColor : undefined}
-        icon={<Icon as={Settings01Icon} boxSize={4} />}
-        aria-label={t("settings")}
+        color={tabIndex === -1 ? accentColor : undefined}
+        icon={<Icon as={Settings01Icon} boxSize={6} />}
+        aria-label={t("settings.title")}
         onClick={() => {
-          if (tabIndex === 3) {
-            setTabByName("fields");
-          } else {
-            setTabByName("settings");
-          }
+          if (tabIndex === -1) setTabByName("charts");
+          else setTabByName("settings");
         }}
       />
     </Flex>
@@ -53,33 +50,33 @@ function HeaderImpl() {
 
 export default function BaseApp() {
   const { t } = useTranslation();
-  return (
-    <Flex p={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column">
-      <Header />
 
+  return (
+    <Flex p={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column" position={"relative"}>
+      <Header />
       <TabsContainerBase
         flexDir="column"
         variant="soft-rounded"
         tabs={[
           {
-            name: "likes",
-            displayName: t("bookmarks.title"),
-            icon: HeartCheckIcon,
-            Panel: <LikesView thumbnailSize={120} />,
+            name: "charts",
+            displayName: t("charts.title"),
+            icon: ChartIcon,
+            Panel: <SessionView />,
             displayingBeforeInit: false,
           },
           {
-            name: "fields",
-            displayName: t("charts.title"),
-            icon: ChartIcon,
-            Panel: <SessionView orientation="vertical" />,
+            name: "likes",
+            displayName: t("bookmarks.title"),
+            icon: HeartCheckIcon,
+            Panel: <LikesView thumbnailSize={100} />,
             displayingBeforeInit: false,
           },
           {
             name: "search",
             displayName: t("search.title"),
-            icon: CompassIcon,
-            Panel: <DiscoverView />,
+            icon: Search02Icon,
+            Panel: <DiscoverView tagSize="md" />,
             displayingBeforeInit: false,
           },
           {
@@ -87,7 +84,7 @@ export default function BaseApp() {
             displayName: t("settings.title"),
             icon: Settings01Icon,
             Panel: (
-              <Flex flexDir={"column"} justify={"space-between"} p={4} h="full">
+              <Flex flexDir={"column"} justify={"space-between"} h="full">
                 <PlaceHolder h="full" />
                 <Spacer />
                 <Settings align="start" />

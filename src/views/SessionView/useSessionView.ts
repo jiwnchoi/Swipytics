@@ -1,59 +1,60 @@
+import { useLayout } from "@hooks";
 import { useLoggerClient } from "@logger/react";
-import { DEBOUNCE_DELAY } from "@shared/constants";
 import { useSessionsStore } from "@stores";
 import { debounce } from "es-toolkit";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-interface UseSessionViewProps {
-  cardWidth: number;
-  cardHeight: number;
-  orientation?: "horizontal" | "vertical";
-}
-
-export default function useSessionView({
-  cardWidth,
-  cardHeight,
-  orientation = "vertical",
-}: UseSessionViewProps) {
+export default function useSessionView() {
   const charts = useSessionsStore((state) => state.charts);
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
   const appendNextChart = useSessionsStore((state) => state.appendNextChart);
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
 
-  const dimension = orientation === "horizontal" ? cardWidth : cardHeight;
-
   const ref = useRef<HTMLDivElement>(null);
-  const isInitialMount = useRef(true);
-
   const logger = useLoggerClient();
 
-  const scrollContainerCallback = debounce((container: HTMLDivElement) => {
-    if (!container) return;
-    const scroll = orientation === "horizontal" ? container.scrollLeft : container.scrollTop;
-    const newIndex = Math.round(scroll / dimension) - 1;
+  const { cardInnerHeight } = useLayout();
 
-    setCurrentChartIndex(newIndex);
-    if (newIndex === charts.length - 1) appendNextChart();
-  }, DEBOUNCE_DELAY);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const scrollContainerCallback = useCallback(
+    debounce((container: HTMLDivElement) => {
+      if (!container) return;
+      const scroll = container.scrollTop;
+      const newIndex = Math.floor((scroll + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
+      setCurrentChartIndex(newIndex);
+      if (newIndex === charts.length - 1) {
+        appendNextChart();
+      }
+    }, 50),
+    [cardInnerHeight, charts, appendNextChart, setCurrentChartIndex],
+  );
+
+  const clickScrollCallback = useCallback(
+    (scrollIndex: number) => {
+      const container = ref.current;
+      if (!container) return;
+      container.scrollTo({
+        top: (scrollIndex + 1) * cardInnerHeight,
+        behavior: "smooth",
+      });
+    },
+    [cardInnerHeight],
+  );
 
   useEffect(() => {
     const container = ref.current;
     if (!container) return;
-
-    const scrollProps = {
-      [orientation === "horizontal" ? "left" : "top"]: (currentChartIndex + 1) * dimension,
-      behavior: isInitialMount.current ? ("instant" as const) : ("smooth" as const),
-    };
-
-    container.scrollTo(scrollProps);
-    isInitialMount.current = false;
-  }, [currentChartIndex, dimension, orientation]);
+    container.scrollTo({
+      top: (currentChartIndex + 1) * cardInnerHeight,
+      behavior: "instant",
+    });
+  }, [currentChartIndex, cardInnerHeight]);
 
   useEffect(() => {
     const keyActions = {
-      ArrowUp: () => setCurrentChartIndex(currentChartIndex - 1),
-      ArrowDown: () => setCurrentChartIndex(currentChartIndex + 1),
+      ArrowUp: () => clickScrollCallback(currentChartIndex - 1),
+      ArrowDown: () => clickScrollCallback(currentChartIndex + 1),
       Enter: () => setCurrentChartPreferred(!charts[currentChartIndex].preferred),
     };
 
@@ -70,7 +71,12 @@ export default function useSessionView({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentChartIndex, charts, setCurrentChartIndex, setCurrentChartPreferred, logger]);
+  }, [currentChartIndex, charts, setCurrentChartPreferred, logger, clickScrollCallback]);
 
-  return { charts, currentChartIndex, ref, scrollContainerCallback };
+  return {
+    charts,
+    currentChartIndex,
+    ref,
+    scrollContainerCallback,
+  };
 }

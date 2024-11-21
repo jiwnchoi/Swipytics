@@ -101,12 +101,11 @@ class FieldModel(BaseModel):
     )
 
   @property
-  def scale(self) -> Literal["ordinal", "categorical"] | None:
+  def scale(self) -> Literal["ordinal", "categorical", "linear"] | None:
     if self.type == "numeric" and self.metadata.unique < 20:
       return "ordinal"
     if self.type == "categorical":
       return "categorical"
-
     return None
 
   def __hash__(self) -> int:

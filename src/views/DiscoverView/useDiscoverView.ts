@@ -1,4 +1,5 @@
 import { router } from "@api";
+import { useLayout } from "@hooks";
 import { type TChart, type TDataField } from "@shared/models";
 import { sortDataFieldCallback } from "@shared/utils";
 import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
@@ -15,6 +16,7 @@ export default function useDiscoverView() {
   const selectedFields = useInteractionStore((state) => state.searchTargetFieldNames);
   const setSelectedFields = useInteractionStore((state) => state.setSearchTargetFieldNames);
   const setTabByName = useInteractionStore((state) => state.setTabByName);
+  const { mobile } = useLayout();
 
   const { data: queriedCharts = [], isLoading: loading } = useQuery({
     queryKey: ["getCharts", filename, ...selectedFields.sort()],
@@ -40,19 +42,19 @@ export default function useDiscoverView() {
     [dataFields],
   );
 
-  const getTagVariant = useCallback(
-    (field: TDataField) => (selectedFields.includes(field.name) ? "subtle" : "outline"),
+  const isSelected = useCallback(
+    (field: TDataField) => selectedFields.includes(field.name),
     [selectedFields],
   );
 
   const handleChartClick = useCallback(
     async (chart: TChart) => {
       await appendChart(chart);
+      if (mobile) setTabByName("charts");
       setCurrentChartIndex(charts.length - 1);
-      setTabByName("charts");
       setSelectedFields([]);
     },
-    [appendChart, charts.length, setCurrentChartIndex, setSelectedFields, setTabByName],
+    [appendChart, charts.length, mobile, setCurrentChartIndex, setSelectedFields, setTabByName],
   );
 
   return {
@@ -61,6 +63,7 @@ export default function useDiscoverView() {
     handleFieldClick,
     handleChartClick,
     fields,
-    getTagVariant,
+    isSelected,
+    selectedFields,
   };
 }

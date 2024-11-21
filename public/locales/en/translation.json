@@ -15,7 +15,11 @@
     "prev": "Prev"
   },
   "search": {
-    "title": "Search"
+    "title": "Search",
+    "empty": "Select attributes below to search charts!"
+  },
+  "charts": {
+    "title": "Charts"
   },
   "charts": {
     "title": "Charts"
@@ -24,7 +28,7 @@
     "download_logs": "Download",
     "load_data": "Load Data",
     "load_demo": "Load Demo",
-    "load_latest_logs": "Load Latest",
+    "clear_logs": "Clear Logs",
     "monitor_logs": "System Logs",
     "select_demo": "Select Demo",
     "set_backend": "Backend",
@@ -34,6 +38,9 @@
   },
   "toast": {
     "server_not_available_description": "Failed to access Python backend. Only local Pyodide is available.",
-    "server_not_available_title": "Server is not available"
+    "server_not_available_title": "Server is not available",
+    "logs_cleared_title": "Logs Cleared",
+    "logs_cleared_description": "All logs have been cleared.",
+    "logs_cleared_failed_title": "Failed to Clear Logs"
   }
 }

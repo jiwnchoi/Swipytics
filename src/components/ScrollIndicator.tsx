@@ -1,5 +1,6 @@
 import { Flex, type FlexProps } from "@chakra-ui/react";
-import { useIndicators } from "@hooks";
+import { useIndicators, useLayout } from "@hooks";
+import { useInteractionStore } from "@stores";
 import { useParentSize } from "@visx/responsive";
 import { motion } from "framer-motion";
 
@@ -11,6 +12,7 @@ function Indicators({ width, height, r }: { width: number; height: number; r: nu
       key={key}
       cy={cy}
       fill={fill}
+      initial={{ r: 0 }}
       animate={{ cx, cy, r, fill }}
       transition={{
         type: "spring",
@@ -22,10 +24,18 @@ function Indicators({ width, height, r }: { width: number; height: number; r: nu
   ));
 }
 export default function ScrollIndicator(props: FlexProps) {
+  const { cardHeight, mobile } = useLayout();
   const { parentRef, width, height } = useParentSize({ debounceTime: 50 });
+  const tabIndex = useInteractionStore((state) => state.tabIndex);
 
   return (
-    <Flex ref={parentRef} position={"absolute"} minH={`${12 * 2 + 4 * 2}px`} {...props}>
+    <Flex
+      ref={parentRef}
+      position={"absolute"}
+      minH={`${12 * 2 + 4 * 2}px`}
+      h={cardHeight}
+      visibility={!mobile || tabIndex === 0 ? "visible" : "hidden"}
+      {...props}>
       <svg width={width} height={height}>
         <Indicators width={width} height={height} r={3} />
       </svg>

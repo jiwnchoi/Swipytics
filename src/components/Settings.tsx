@@ -21,6 +21,7 @@ import {
   Sun03Icon,
 } from "hugeicons-react";
 import { t } from "i18next";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import FileForm from "./FileForm";
 
@@ -80,8 +81,7 @@ function Settings(props: StackProps) {
   const {
     python,
     handleServerButtonClick,
-    // apiKey,
-    // handleApiKeyChange,
+    handleClearLogs,
     handleDownloadLogs,
     colorMode,
     toggleColorMode,
@@ -136,7 +136,9 @@ function Settings(props: StackProps) {
       </SettingRow>
       <SettingRow label={t("settings.monitor_logs")}>
         <Flex gap={2} w={"full"}>
-          <Button w="full">{t("settings.load_latest_logs")}</Button>
+          <Button w="full" onClick={handleClearLogs}>
+            {t("settings.clear_logs")}
+          </Button>
           <Button w="full" onClick={handleDownloadLogs} data-log-click="download-logs">
             {t("settings.download_logs")}
           </Button>
@@ -146,4 +148,4 @@ function Settings(props: StackProps) {
   );
 }
 
-export default Settings;
+export default memo(Settings);

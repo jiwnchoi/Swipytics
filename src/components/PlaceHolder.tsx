@@ -10,7 +10,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { GithubIcon, LabelImportantIcon, SwipeUp02Icon } from "hugeicons-react";
-import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 function PlaceHolderImpl(props: CenterProps) {
@@ -41,7 +40,7 @@ function PlaceHolderImpl(props: CenterProps) {
         <Flex gap={4}>
           <Link href="https://github.com/jiwnchoi/Swipytics" isExternal>
             <Button leftIcon={<Icon as={GithubIcon} />} size={"xs"} variant={"link"} color={"gray"}>
-              Github
+              GitHub
             </Button>
           </Link>
           <Link href="https://idclab.skku.edu" isExternal>
@@ -64,4 +63,4 @@ function PlaceHolderImpl(props: CenterProps) {
   );
 }
 
-export default memo(PlaceHolderImpl);
+export default PlaceHolderImpl;

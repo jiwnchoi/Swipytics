@@ -1,32 +1,45 @@
-import { Flex, type FlexProps } from "@chakra-ui/react";
+import { Flex, type FlexProps, keyframes } from "@chakra-ui/react";
 import { Chart, PlaceHolder } from "@components";
 import { useLayout } from "@hooks";
 import useSessionView from "./useSessionView";
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
-interface ChartContainerProps extends FlexProps {
-  orientation?: "horizontal" | "vertical";
-}
-
-export default function SessionView({ orientation = "vertical", ...props }: ChartContainerProps) {
-  const { cardHeight, cardColor, cardWidth } = useLayout();
-  const { charts, ref, scrollContainerCallback } = useSessionView({
-    cardHeight,
-    cardWidth,
-    orientation,
-  });
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
+export default function SessionView(props: FlexProps) {
+  const { cardColor, cardInnerHeight, cardInnerWidth } = useLayout();
+  const { charts, ref, scrollContainerCallback } = useSessionView();
   return (
     <Flex
       ref={ref}
       onScroll={(e) => scrollContainerCallback(e.currentTarget)}
       data-log-scroll={"chart-container"}
-      scrollSnapType={`${orientation === "horizontal" ? "x" : "y"} mandatory`}
-      flexDir={orientation === "horizontal" ? "row" : "column"}
-      gap={2}
+      scrollSnapType={`y mandatory`}
+      flexDir={"column"}
+      borderRadius={"lg"}
+      bgColor={cardColor}
       overflowX={"hidden"}
+      animation={`${fadeIn} 0.2s ease-in-out`}
       style={{
         WebkitOverflowScrolling: "touch",
       }}
       sx={{
+        "&.removing": {
+          animation: `${fadeOut} 0.1s ease-in-out forwards`,
+        },
         "&::-webkit-scrollbar": {
           display: "none",
         },
@@ -35,25 +48,22 @@ export default function SessionView({ orientation = "vertical", ...props }: Char
       <PlaceHolder
         flexDir={"column"}
         minW="full"
-        w={cardWidth - 8}
-        maxW={cardWidth}
-        h={cardHeight}
-        minH={cardHeight}
-        bgColor={cardColor}
-        borderRadius={"lg"}
-        scrollSnapAlign={"center"}
+        minH={cardInnerHeight}
+        maxH={cardInnerHeight}
+        scrollSnapStop={"always"}
+        scrollSnapAlign={"start"}
       />
       {charts.map((chart) => (
         <Chart
-          minH={cardHeight}
-          maxH={cardHeight}
-          minW={cardWidth - 8}
-          maxW={cardWidth - 8}
+          minH={cardInnerHeight}
+          maxH={cardInnerHeight}
+          w={cardInnerWidth}
           key={chart.key}
           chart={chart}
-          bgColor={cardColor}
           flexDirection={"column"}
           borderRadius={"lg"}
+          scrollSnapStop={"always"}
+          scrollSnapAlign={"start"}
         />
       ))}
     </Flex>
