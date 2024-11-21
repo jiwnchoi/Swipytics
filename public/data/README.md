@@ -12,6 +12,7 @@
 - Crimea
 - Jobs
 - Movies
+- Movies_ko (Korean translated 'Movies' dataset)
 - Population
 
 [UC Irvine ML Repository](https://archive.ics.uci.edu/datasets)

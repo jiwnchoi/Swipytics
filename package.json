@@ -29,6 +29,7 @@
     "@visx/scale": "^3.5.0",
     "comlink": "4.4.1",
     "d3-format": "3.1.0",
+    "es-hangul": "^2.2.3",
     "es-toolkit": "^1.16.0",
     "framer-motion": "^10.18.0",
     "fuse.js": "7.0.0",

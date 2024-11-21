@@ -32,6 +32,10 @@
     "href": "/data/movies.json"
   },
   {
+    "name": "Movies (Korean)",
+    "href": "/data/movies_ko.json"
+  },
+  {
     "name": "Population",
     "href": "/data/population.json"
   },
