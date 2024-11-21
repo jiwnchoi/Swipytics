@@ -4,7 +4,6 @@ import type { TChart } from "@shared/models";
 import { useSessionsStore } from "@stores";
 import { HeartAddIcon } from "hugeicons-react";
 import { memo, type SVGProps } from "react";
-import { Error as VegaError } from "vega";
 import CachedVegaLite from "./CachedVegaLite";
 import ChartTitle from "./ChartTitle";
 
@@ -49,7 +48,7 @@ function Chart({ chart, ...props }: ChartProps) {
           data={data}
           theme={chartTheme}
           actions={false}
-          logLevel={VegaError}
+          // logLevel={VegaError}
         />
       </VStack>
 

@@ -1,14 +1,15 @@
 import type { TSupportedDataType } from "@shared/models";
-import embed, { type VisualizationSpec } from "vega-embed";
+import embed from "vega-embed";
+import type { TopLevelSpec } from "vega-lite";
 import type { Field } from "vega-lite/build/src/channeldef";
 import type { Encoding } from "vega-lite/build/src/encoding";
 
-function getKey(spec: VisualizationSpec) {
+function getKey(spec: TopLevelSpec) {
   return `thumbnail@${JSON.stringify(spec)}`;
 }
 
 export async function getThumbnailFromSpec(
-  spec: VisualizationSpec,
+  spec: TopLevelSpec,
   data: TSupportedDataType,
   size = 100,
 ) {
@@ -19,12 +20,12 @@ export async function getThumbnailFromSpec(
   return thumbnail;
 }
 
-function getThumbnailFromCache(spec: VisualizationSpec) {
+function getThumbnailFromCache(spec: TopLevelSpec) {
   return sessionStorage.getItem(getKey(spec));
 }
 
 async function generateThumbnailFromSpec(
-  spec: VisualizationSpec,
+  spec: TopLevelSpec,
   data: TSupportedDataType,
   size = 100,
 ): Promise<string | undefined> {

@@ -1,8 +1,9 @@
 import { useBreakpointValue, useColorMode } from "@chakra-ui/react";
 import { DATA_NAME } from "@shared/constants";
 import type { TChart } from "@shared/models";
+import { compileWithKoreanTitle } from "@shared/utils";
 import { useDataStore } from "@stores";
-import type { VisualizationSpec } from "react-vega";
+import type { TopLevelSpec } from "vega-lite";
 
 export default function useChart(chart: TChart) {
   const { colorMode } = useColorMode();
@@ -51,8 +52,8 @@ export default function useChart(chart: TChart) {
       },
       numberFormat: ".3~s",
     },
-  } as VisualizationSpec;
+  } as TopLevelSpec;
   const data = { [DATA_NAME]: _data };
 
-  return { data, chartTheme, spec };
+  return { data, chartTheme, spec: compileWithKoreanTitle(spec) };
 }

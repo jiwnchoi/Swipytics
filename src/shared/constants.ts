@@ -1,3 +1,4 @@
+import demo_list from "public/data/LIST.json";
 import type { TDemo } from "./models";
 
 export const chakraColors = {
@@ -125,40 +126,11 @@ export const chakraColors = {
   "pink.900": "#521B41",
 };
 
-export const DEMO_LIST: TDemo[] = [
-  {
-    name: "Barley",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/barley.json",
-  },
-  {
-    name: "Cars",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/cars.json",
-  },
-  {
-    name: "Crimea",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/crimea.json",
-  },
-  {
-    name: "Jobs",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/jobs.json",
-  },
-  {
-    name: "Population",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/population.json",
-  },
-  {
-    name: "Movies",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/movies.json",
-  },
-  {
-    name: "Birdstrikes",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/birdstrikes.csv",
-  },
-  {
-    name: "Burtin",
-    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/burtin.json",
-  },
-];
+export const DEMO_LIST: TDemo[] = demo_list.map((demo) => ({
+  ...demo,
+  href: `${import.meta.env.BASE_URL}${demo.href}`,
+}));
+
 export const EXPANDING_THRESHOLD = 50;
 export const DEBOUNCE_DELAY = 300;
 export const CHART_PREFETCH_DELAY = 1;
