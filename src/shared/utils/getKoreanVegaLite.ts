@@ -8,13 +8,60 @@ import {
   isBinnedTimeUnit,
   normalizeTimeUnit,
 } from "vega-lite/build/src/timeunit";
-import { getKorean } from "./koSpecLocale";
+
+const koreanAggregateTerms: Record<string, string> = {
+  count: "항목 수",
+  sum: "합계",
+  mean: "평균",
+  average: "평균",
+  median: "중앙값",
+  min: "최소값",
+  max: "최대값",
+  variance: "분산",
+  stdev: "표준편차",
+  first: "첫번째",
+  last: "마지막",
+  ci0: "신뢰구간 하한",
+  ci1: "신뢰구간 상한",
+  missing: "결측값",
+  valid: "유효값",
+  distinct: "고유값",
+};
+
+const koreanTimeUnits: Record<string, string> = {
+  year: "년",
+  quarter: "분기",
+  month: "월",
+  week: "주",
+  day: "일",
+  date: "일",
+  hours: "시",
+  minutes: "분",
+  seconds: "초",
+  milliseconds: "밀리초",
+  yearquarter: "년분기",
+  yearquartermonth: "년분기월",
+  yearmonth: "년월",
+  yearmonthdate: "년월일",
+  yearmonthdatehours: "년월일시",
+  yearmonthdatehoursminutes: "년월일시분",
+  yearmonthdatehoursminutesseconds: "년월일시분초",
+  monthdate: "월일",
+  hoursminutes: "시분",
+  hoursminutesseconds: "시분초",
+  minutesseconds: "분초",
+  secondsmilliseconds: "초밀리초",
+};
+
+export function getKorean(word: string) {
+  return koreanAggregateTerms[word] || koreanTimeUnits[word] || word;
+}
 
 function containsKorean(text: string) {
   const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
   return koreanRegex.test(text);
 }
-export function compileWithKoreanTitle(vlSpec: TopLevelSpec) {
+export default function getKoreanVegaLite(vlSpec: TopLevelSpec) {
   return vegaLite.compile(vlSpec, {
     fieldTitle: (fieldDef: FieldDefBase<string>, config: Config) => {
       const { field, aggregate, timeUnit, bin } = fieldDef;

@@ -1,11 +1,13 @@
 import { useBreakpointValue, useColorMode } from "@chakra-ui/react";
 import { DATA_NAME } from "@shared/constants";
 import type { TChart } from "@shared/models";
-import { compileWithKoreanTitle } from "@shared/utils";
+import { getKoreanVegaLite } from "@shared/utils";
 import { useDataStore } from "@stores";
+import { useTranslation } from "react-i18next";
 import type { TopLevelSpec } from "vega-lite";
 
 export default function useChart(chart: TChart) {
+  const { i18n } = useTranslation();
   const { colorMode } = useColorMode();
   const _data = useDataStore((state) => state.data);
   const _spec = chart.specs[chart.specIndex];
@@ -53,7 +55,7 @@ export default function useChart(chart: TChart) {
       numberFormat: ".3~s",
     },
   } as TopLevelSpec;
-  const data = { [DATA_NAME]: _data };
 
-  return { data, chartTheme, spec: compileWithKoreanTitle(spec) };
+  const data = { [DATA_NAME]: _data };
+  return { data, chartTheme, spec: i18n.language === "ko" ? getKoreanVegaLite(spec) : spec };
 }
