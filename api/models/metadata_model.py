@@ -41,6 +41,11 @@ class MetadataDatetime(MetadataBase):
   min: str
   max: str
 
+  year_unique: int
+  month_unique: int
+  day_unique: int
+  hours_unique: int
+
 
 class MetadataName(MetadataBase):
   type: FieldType = "name"

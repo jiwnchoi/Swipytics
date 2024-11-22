@@ -17,7 +17,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import type { TDataField, TMetadata } from "@shared/models";
+import type { TField, TMetadata } from "@shared/models";
 import { useInteractionStore, useSessionsStore } from "@stores";
 import { format } from "d3-format";
 import { Search01Icon } from "hugeicons-react";
@@ -77,7 +77,7 @@ function EachMetaData({ metadata }: { metadata: TMetadata }) {
   }
 }
 
-function EachField({ field }: { field: TDataField }) {
+function EachField({ field }: { field: TField }) {
   const setTabByName = useInteractionStore((state) => state.setTabByName);
   const appendSearchTarget = useInteractionStore((state) => state.appendSearchTarget);
   return (

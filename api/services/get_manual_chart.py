@@ -21,7 +21,7 @@ def get_manual_chart(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> ChartM
   try:
     if key in chart_map:
       spec = replace_clingo_field_name(_clean_spec(chart_map[key](df, fields).to_dict()))
-      return ChartModel(fields=fields, specs=[spec])
+      return ChartModel(fields=fields, spec=spec)
   except ValueError as V:
     print(key)
     print(V)

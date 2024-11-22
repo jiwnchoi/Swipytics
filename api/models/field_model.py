@@ -67,6 +67,10 @@ def get_field_metadata(series: pd.Series, type: FieldType) -> MetadataModel:
       missing=series.isnull().sum(),
       min=str(series.min()),
       max=str(series.max()),
+      year_unique=series.dt.year.nunique(),
+      month_unique=series.dt.month.nunique(),
+      day_unique=series.dt.day.nunique(),
+      hours_unique=series.dt.hour.nunique(),
     )
 
   return MetadataBase(

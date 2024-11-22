@@ -26,6 +26,11 @@ type TMetadataDatetime = TMetadataBase & {
   type: "datetime";
   min: string;
   max: string;
+
+  yearUnique: number;
+  monthUnique: number;
+  dayUnique: number;
+  hoursUnique: number;
 };
 
 type TMetadataName = TMetadataBase & {

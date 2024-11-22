@@ -49,7 +49,6 @@ def heatmap_ct(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y=categorical_field.clingo_name,
       color="count()",
@@ -74,7 +73,6 @@ def heatmap_ct_n(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y=categorical_field.clingo_name,
       color=alt.Color(numeric_field.clingo_name, aggregate="mean"),

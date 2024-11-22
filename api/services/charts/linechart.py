@@ -22,7 +22,7 @@ def linechart_nt(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
+        axis=alt.Axis(format="%b"),
       ),
       y=alt.Y(numeric_field.clingo_name, aggregate="mean"),
     )
@@ -46,7 +46,6 @@ def linechart_nt_c(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y=alt.Y(numeric_field.clingo_name, aggregate="mean"),
       color=categorical_field.clingo_name,
@@ -57,7 +56,6 @@ def linechart_nt_c(
 def linechart_t(
   df: pd.DataFrame,
   fields: tuple[FieldModel, ...],
-  time_unit: TimeUnitType = "year",
 ) -> alt.Chart:
   if len(fields) != 1 and fields[0].type != "datetime":
     raise ValueError("Invalid field type for linechart_t")
@@ -69,7 +67,6 @@ def linechart_t(
       x=alt.X(
         fields[0].clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y="count()",
     )

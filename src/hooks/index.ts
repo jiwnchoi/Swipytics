@@ -1,6 +1,5 @@
 export { default as useBookmarks } from "./useBookmarks";
 export { default as useBrowser } from "./useBrowser";
-export { default as useChart } from "./useChart";
 export { default as useController } from "./useController";
 export { default as useDemo } from "./useDemo";
 export { default as useDoubleTap } from "./useDoubleTap";

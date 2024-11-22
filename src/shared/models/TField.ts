@@ -1,11 +1,11 @@
 import type TFieldType from "./TFieldType";
 import type TMetadata from "./TMetadata";
 
-interface TDataField {
+interface TField {
   name: string;
   clingo_name: string;
   type: TFieldType;
   metadata: TMetadata;
 }
 
-export default TDataField;
+export default TField;

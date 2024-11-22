@@ -1,6 +1,6 @@
-import { type TDataField } from "@shared/models";
+import { type TField } from "@shared/models";
 
-export function sortDataFieldCallback(a: TDataField, b: TDataField) {
+export function sortDataFieldCallback(a: TField, b: TField) {
   const sortKey = {
     numeric: 0,
     categorical: 1,

@@ -13,7 +13,6 @@ server = FastAPI()
 
 
 async def get_session_key(request: Request) -> str:
-  """기기 정보를 기반으로 세션 키 생성"""
   user_agent = request.headers.get("user-agent", "")
   ip = (
     request.headers.get("x-real-ip", "")
@@ -47,7 +46,7 @@ async def load_session(
   session: SessionModel, session_key: Annotated[str, Depends(get_session_key)]
 ):
   if os.path.isfile(f"data/{session.filename}"):
-    return loadSession(session=session, sessionKey=session_key)
+    return loadSession(session=session, session_key=session_key)
   else:
     return HTTPException(status_code=404, detail="File not found")
 
@@ -60,7 +59,7 @@ class BrowseChartRequest(BaseModel):
 async def browse_charts(
   req: BrowseChartRequest, session_key: Annotated[str, Depends(get_session_key)]
 ):
-  return browseCharts(req.field_names, sessionKey=session_key)
+  return browseCharts(req.field_names, session_key=session_key)
 
 
 class AppendChartRequest(BaseModel):
@@ -71,12 +70,12 @@ class AppendChartRequest(BaseModel):
 async def append_chart(
   req: AppendChartRequest, session_key: Annotated[str, Depends(get_session_key)]
 ):
-  return appendChart(req.chart, sessionKey=session_key)
+  return appendChart(req.chart, session_key=session_key)
 
 
 @server.get("/api/appendNextChart")
 async def append_next_chart(session_key: Annotated[str, Depends(get_session_key)]):
-  chart = appendNextChart(sessionKey=session_key)
+  chart = appendNextChart(session_key=session_key)
   return HTTPException(status_code=404, detail="No more charts") if not chart else chart
 
 
@@ -84,7 +83,7 @@ async def append_next_chart(session_key: Annotated[str, Depends(get_session_key)
 async def get_charts(
   req: BrowseChartRequest, session_key: Annotated[str, Depends(get_session_key)]
 ):
-  return getCharts(req.field_names, sessionKey=session_key)
+  return getCharts(req.field_names, session_key=session_key)
 
 
 class SetPreferredRequest(BaseModel):
@@ -96,7 +95,7 @@ class SetPreferredRequest(BaseModel):
 async def set_preferred(
   req: SetPreferredRequest, session_key: Annotated[str, Depends(get_session_key)]
 ):
-  chart = setPreferred(req.key, req.preferred, sessionKey=session_key)
+  chart = setPreferred(req.key, req.preferred, session_key=session_key)
   return HTTPException(status_code=404, detail="Chart not found") if not chart else chart
 
 

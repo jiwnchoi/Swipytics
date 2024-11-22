@@ -15,9 +15,8 @@ def get_chart(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> ChartModel | 
 
   # facts = get_facts_from_fields(df, fields)
   # specs = get_specs_from_facts(df, facts)
-  # chart = ChartModel(fields=fields, specs=specs) if specs else None
+  # chart = ChartModel(fields=fields, spec=specs[0]) if specs else None
   # if chart:
   #   chart_cache[fields] = chart
   # return chart
-  print(fields)
   return get_manual_chart(df, fields)

@@ -1,11 +1,11 @@
 import type TChart from "./TChart";
-import type TDataField from "./TDataField";
+import type TField from "./TField";
 
 interface TSession {
   filename: string;
   timestamp: number;
   charts: TChart[];
-  fields: TDataField[];
+  fields: TField[];
 }
 
 export default TSession;

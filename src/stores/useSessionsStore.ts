@@ -2,6 +2,7 @@ import { router } from "@api";
 import { CHART_PREFETCH_DELAY } from "@shared/constants";
 import type { TChart, TSession } from "@shared/models";
 import { produce } from "immer";
+import { type TimeUnit } from "vega";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -20,6 +21,7 @@ interface SessionState extends TSession {
 
   setCurrentChartPreferred: (preferred: boolean) => void;
   setChartPreferred: (key: string, preferred: boolean) => void;
+  setChartTimeUnit: (key: string, timeUnit: TimeUnit) => void;
 }
 
 const useSessionsStore = create(
@@ -141,6 +143,19 @@ const useSessionsStore = create(
           setChartPreferred(currentChart.key, preferred);
         }
       },
+
+      setChartTimeUnit: (key, timeUnit: TimeUnit) =>
+        set(
+          produce((draft: SessionState) => {
+            const chart = draft.charts.find((c) => c.key === key);
+            if (!chart) return;
+
+            chart.timeUnit = timeUnit;
+            chart.spec.transform?.forEach((t) => {
+              if ("timeUnit" in t) t.timeUnit = timeUnit;
+            });
+          }),
+        ),
     }),
     {
       name: "SessionStore",

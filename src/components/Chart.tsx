@@ -1,17 +1,3 @@
-import { Center, type CenterProps, Flex, Icon, IconButton, Spacer, VStack } from "@chakra-ui/react";
-import { useChart, useDoubleTap, useLayout } from "@hooks";
-import type { TChart } from "@shared/models";
-import { useSessionsStore } from "@stores";
-import { HeartAddIcon } from "hugeicons-react";
-import { memo, type SVGProps } from "react";
-import { Error as VegaError } from "vega";
-import CachedVegaLite from "./CachedVegaLite";
-import ChartTitle from "./ChartTitle";
-
-interface ChartProps extends CenterProps {
-  chart: TChart;
-}
-
 const HeartCheckSolidIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
@@ -27,11 +13,132 @@ const HeartCheckSolidIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+import {
+  Button,
+  ButtonGroup,
+  Center,
+  Flex,
+  Icon,
+  IconButton,
+  Spacer,
+  VStack,
+  type CenterProps,
+} from "@chakra-ui/react";
+import { useDoubleTap, useLayout } from "@hooks";
+import { DATA_NAME, PRIMARY_COLOR } from "@shared/constants";
+import type { TChart, TMetadata } from "@shared/models";
+import { getKoreanVegaLite, getMainSpec } from "@shared/utils";
+import { useDataStore, useSessionsStore } from "@stores";
+import { HeartAddIcon } from "hugeicons-react";
+import { memo, useMemo, useState, type SVGProps } from "react";
+import { useTranslation } from "react-i18next";
+import { Error as VegaError, type TimeUnit } from "vega";
+import type { TopLevelSpec } from "vega-lite";
+import CachedVegaLite from "./CachedVegaLite";
+import ChartTitle from "./ChartTitle";
+
+interface ChartProps extends CenterProps {
+  chart: TChart;
+}
+
+const timeFormats: Partial<Record<TimeUnit, string>> = {
+  year: "%Y",
+  month: "%b",
+  day: "%a",
+  hours: "%H",
+};
+
+interface TemporalConfig {
+  timeUnit: TimeUnit | undefined;
+  timeUnits: TimeUnit[];
+  setTimeUnit: (unit: TimeUnit) => void;
+}
+
+function useTemporalConfig(temporalField: TChart["fields"][number] | undefined): TemporalConfig {
+  const temporalMetadata = temporalField?.metadata;
+
+  const timeUnitUniques =
+    temporalMetadata && temporalMetadata.type === "datetime"
+      ? [
+          temporalMetadata.yearUnique,
+          temporalMetadata.monthUnique,
+          temporalMetadata.dayUnique,
+          temporalMetadata.hoursUnique,
+        ]
+      : [];
+
+  const argMaxTimeUnit = timeUnitUniques.reduce((iMax, x, i, arr) => (x > arr[iMax] ? i : iMax), 0);
+
+  const timeUnits = ["year", "month", "day", "hours"].filter(
+    (unit) => ((temporalMetadata?.[`${unit}Unique` as keyof TMetadata] as number) ?? 0) > 1,
+  ) as TimeUnit[];
+
+  const [timeUnit, setTimeUnit] = useState<TimeUnit | undefined>(() => {
+    if (timeUnits.length === 0) return undefined;
+    return timeUnits[argMaxTimeUnit];
+  });
+
+  return {
+    timeUnit,
+    timeUnits,
+    setTimeUnit,
+  };
+}
+
+function getTemporalSpec(
+  mainSpec: TopLevelSpec,
+  timeUnit: TimeUnit,
+  temporalField: { name: string },
+): TopLevelSpec {
+  return {
+    ...mainSpec,
+    config: {
+      ...mainSpec.config,
+      axisTemporal: {
+        format: timeFormats[timeUnit],
+      },
+    },
+    transform: [
+      {
+        timeUnit,
+        field: temporalField.name,
+        as: temporalField.name,
+      },
+    ],
+  };
+}
 function Chart({ chart, ...props }: ChartProps) {
-  const { data, chartTheme, spec } = useChart(chart);
-  const currentChartPreferred = chart.preferred;
+  const { mobile, chartTheme, chartWidth, chartHeight } = useLayout();
+  const { i18n } = useTranslation();
+  const _data = useDataStore((state) => state.data);
   const setChartPreferred = useSessionsStore((state) => state.setChartPreferred);
-  const { mobile } = useLayout();
+  const setChartTimeUnit = useSessionsStore((state) => state.setChartTimeUnit);
+
+  const temporalField = chart.fields.find((field) => field.type === "datetime");
+  const { timeUnit, timeUnits, setTimeUnit } = useTemporalConfig(temporalField);
+
+  const data = useMemo(() => ({ [DATA_NAME]: _data }), [_data]);
+  const spec = useMemo(() => {
+    let mainSpec = getMainSpec(chart.spec, chartWidth, chartHeight);
+
+    if (temporalField && timeUnit) {
+      setChartTimeUnit(chart.key, timeUnit);
+      mainSpec = getTemporalSpec(mainSpec, timeUnit, temporalField);
+      return i18n.language === "ko" ? getKoreanVegaLite(mainSpec) : mainSpec;
+    }
+    return mainSpec;
+  }, [
+    chart.spec,
+    chart.key,
+    chartWidth,
+    chartHeight,
+    temporalField,
+    timeUnit,
+    setChartTimeUnit,
+    i18n.language,
+  ]);
+
+  const currentChartPreferred = chart.preferred;
 
   const handlePreferChart = () => {
     if (!chart.key) return;
@@ -45,6 +152,8 @@ function Chart({ chart, ...props }: ChartProps) {
       <VStack>
         <ChartTitle chart={chart} textAlign={"center"} fontSize={"lg"} />
         <CachedVegaLite
+          width={chartWidth}
+          height={chartHeight}
           spec={spec}
           data={data}
           theme={chartTheme}
@@ -52,6 +161,25 @@ function Chart({ chart, ...props }: ChartProps) {
           logLevel={VegaError}
         />
       </VStack>
+      {timeUnit && (
+        <ButtonGroup gap={0} w="full" my={4} spacing={0}>
+          {timeUnits.map((unit, i) => (
+            <Button
+              borderLeftRadius={i === 0 ? "lg" : 0}
+              borderLeft={i === 0 ? "lg" : 0}
+              borderRightRadius={i === timeUnits.length - 1 ? "lg" : 0}
+              variant={timeUnit === unit ? "solid" : "outline"}
+              m={0}
+              key={`temporal-select-${unit}`}
+              colorScheme={PRIMARY_COLOR}
+              size={"md"}
+              onClick={() => setTimeUnit(unit)}
+              w="full">
+              {unit.charAt(0).toUpperCase() + unit.slice(1)}
+            </Button>
+          ))}
+        </ButtonGroup>
+      )}
 
       {mobile && (
         <>

@@ -10,12 +10,14 @@ export default function useThumbnail(chart: TChart, size = 100): string | undefi
   useEffect(() => {
     if (!thumbnail && data) {
       const fetchThumbnail = async () => {
-        const thumbnail = await getThumbnailFromSpec(chart.specs[0], data, size);
+        console.log(chart.spec);
+        const thumbnail = await getThumbnailFromSpec(chart.spec, data, size);
+
         setThumbnail(thumbnail);
       };
       fetchThumbnail();
     }
-  }, [chart.specs, data, thumbnail, size]);
+  }, [data, thumbnail, size, chart.spec]);
 
   return thumbnail;
 }

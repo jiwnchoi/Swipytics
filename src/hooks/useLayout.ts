@@ -16,6 +16,11 @@ export default function useLayout() {
     lg: window.innerHeight * 0.8 - 18,
   })!;
 
+  const [chartWidth, chartHeight] = useBreakpointValue({
+    base: [window.innerWidth - 64, Math.min(window.innerHeight - 350, 500)],
+    lg: [Math.min(window.innerWidth - 250, 600), Math.min(window.innerHeight - 250, 600)],
+  }) ?? [300, 300];
+
   const cardInnerWidth = cardWidth - 2 * cardPadding * 4;
   const cardInnerHeight = cardHeight - 2 * cardPadding * 4;
 
@@ -60,7 +65,7 @@ export default function useLayout() {
       background: accentHoverColor,
     },
   };
-
+  const chartTheme: "dark" | undefined = useColorModeValue(undefined, "dark");
   const indicatorPadding = {
     TOP: 12,
     BOTTOM: 12,
@@ -73,7 +78,11 @@ export default function useLayout() {
     cardInnerHeight,
     cardInnerWidth,
     indicatorGap,
+    chartTheme,
     indicatorPadding,
+    chartHeight,
+    chartWidth,
+
     accentColor,
     accentHoverColor,
     borderColor,

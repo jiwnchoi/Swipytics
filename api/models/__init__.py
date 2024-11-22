@@ -5,7 +5,7 @@ from .field_model import FieldModel
 from .metadata_model import FieldType, MetadataModel
 from .session_model import SessionModel
 
-TimeUnitType = Literal["year", "month", "day"]
+TimeUnitType = Literal["year", "month", "day", "hours"]
 
 __all__ = [
   "ChartModel",

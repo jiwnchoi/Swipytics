@@ -1,19 +1,20 @@
+import type { TimeUnit } from "vega";
 import type { TopLevelSpec } from "vega-lite";
-import type TDataField from "./TDataField";
+import type TField from "./TField";
 
 interface TChart {
   key: string;
-  fields: TDataField[];
-  specs: TopLevelSpec[];
+  fields: TField[];
+  spec: TopLevelSpec;
   title: string | undefined;
   description: string;
 
-  specIndex: number;
   preferred: boolean;
   timestamp: number;
 
   // Client-side only properties
   thumbnail?: string;
+  timeUnit?: TimeUnit | null;
 }
 
 export default TChart;

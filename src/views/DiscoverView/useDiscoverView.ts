@@ -1,6 +1,6 @@
 import { router } from "@api";
 import { useLayout } from "@hooks";
-import { type TChart, type TDataField } from "@shared/models";
+import { type TChart, type TField } from "@shared/models";
 import { sortDataFieldCallback } from "@shared/utils";
 import { useDataStore, useInteractionStore, useSessionsStore } from "@stores";
 import { useQuery } from "@tanstack/react-query";
@@ -26,7 +26,7 @@ export default function useDiscoverView() {
     },
   });
 
-  const handleFieldClick = (field: TDataField) => {
+  const handleFieldClick = (field: TField) => {
     if (selectedFields.includes(field.name)) {
       setSelectedFields((prev) => prev.filter((f) => f !== field.name));
     } else if (selectedFields.length < 3) {
@@ -43,7 +43,7 @@ export default function useDiscoverView() {
   );
 
   const isSelected = useCallback(
-    (field: TDataField) => selectedFields.includes(field.name),
+    (field: TField) => selectedFields.includes(field.name),
     [selectedFields],
   );
 

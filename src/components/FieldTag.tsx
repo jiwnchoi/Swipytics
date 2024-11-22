@@ -1,11 +1,11 @@
 import { Icon, Tag, TagLabel, type TagProps } from "@chakra-ui/react";
 import { PRIMARY_COLOR } from "@shared/constants";
-import type { TDataField } from "@shared/models";
+import type { TField } from "@shared/models";
 import { CancelCircleIcon, CheckmarkCircle01Icon } from "hugeicons-react";
 
 interface FieldTagProps extends TagProps {
   selected: boolean;
-  field: TDataField;
+  field: TField;
 }
 
 export default function FieldTag({ selected, field, ...props }: FieldTagProps) {
