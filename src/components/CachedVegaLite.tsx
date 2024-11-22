@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
+import { VegaLite } from "react-vega";
 import type { VegaLiteProps } from "react-vega/lib/VegaLite";
-import VegaLite from "react-vega/lib/VegaLite";
+import { Error } from "vega";
 
 const cache = new Map<string, string>();
 
@@ -16,6 +17,7 @@ export default function CachedVegaLite({ spec, theme, ...props }: VegaLiteProps)
     <VegaLite
       spec={spec}
       theme={theme}
+      logLevel={Error}
       actions={false}
       renderer="canvas"
       onNewView={(view) => {
