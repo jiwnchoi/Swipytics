@@ -27,7 +27,7 @@ import {
 import { useDoubleTap, useLayout } from "@hooks";
 import { DATA_NAME, PRIMARY_COLOR } from "@shared/constants";
 import type { TChart, TMetadata } from "@shared/models";
-import { getKoreanVegaLite, getMainSpec, getTemporalSpec } from "@shared/utils";
+import { getKorean, getKoreanVegaLite, getMainSpec, getTemporalSpec } from "@shared/utils";
 import { useDataStore, useSessionsStore } from "@stores";
 import { HeartAddIcon } from "hugeicons-react";
 import { memo, useMemo, useState, type SVGProps } from "react";
@@ -128,7 +128,9 @@ function Chart({ chart, ...props }: ChartProps) {
               size={"md"}
               onClick={() => setTimeUnit(unit)}
               w="full">
-              {unit.charAt(0).toUpperCase() + unit.slice(1)}
+              {i18n.language === "ko"
+                ? getKorean(unit)
+                : unit.charAt(0).toUpperCase() + unit.slice(1)}
             </Button>
           ))}
         </ButtonGroup>
