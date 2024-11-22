@@ -1,8 +1,16 @@
 import { useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { chakraColors, PRIMARY } from "@shared/constants";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 export default function useLayout() {
+  const bgColor = useColorModeValue("#EDF2F7", "#1A202C");
+
+  useLayoutEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
+    const metaThemeColor = document.querySelector("meta[name=theme-color]") as HTMLMetaElement;
+    metaThemeColor.content = bgColor;
+  }, [bgColor]);
+
   const cardPadding = useBreakpointValue({
     base: 4,
     lg: 0,
