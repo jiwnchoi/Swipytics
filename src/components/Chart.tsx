@@ -124,9 +124,8 @@ function Chart({ chart, ...props }: ChartProps) {
     if (temporalField && timeUnit) {
       setChartTimeUnit(chart.key, timeUnit);
       mainSpec = getTemporalSpec(mainSpec, timeUnit, temporalField);
-      return i18n.language === "ko" ? getKoreanVegaLite(mainSpec) : mainSpec;
     }
-    return mainSpec;
+    return i18n.language === "ko" ? getKoreanVegaLite(mainSpec) : mainSpec;
   }, [
     chart.spec,
     chart.key,
