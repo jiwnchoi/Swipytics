@@ -662,7 +662,6 @@ def linechart_nt(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        axis=alt.Axis(format="%b"),
       ),
       y=alt.Y(numeric_field.clingo_name, aggregate="mean"),
     )
