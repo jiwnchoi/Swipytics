@@ -1,13 +1,37 @@
+from typing import TYPE_CHECKING
+
 import altair as alt
 import pandas as pd
-from api.models import TimeUnitType
-from api.models.field_model import FieldModel
 
-# Univariate
+if TYPE_CHECKING:
+  from api.models import FieldModel, TimeUnitType
+
+
+def linechart_ct(
+  df: pd.DataFrame, fields: tuple["FieldModel", ...], time_unit: "TimeUnitType" = "year"
+):
+  if len(fields) != 2:
+    raise ValueError("Invalid number of fields for linechart")
+
+  categorical_field = fields[0] if fields[0].type == "categorical" else fields[1]
+  temporal_field = fields[1] if fields[0].type == "categorical" else fields[0]
+
+  return (
+    alt.Chart(df)
+    .mark_line()
+    .encode(
+      x=alt.X(
+        temporal_field.clingo_name,
+        type="temporal",
+      ),
+      y=alt.Y("count()", title="count"),
+      color=categorical_field.clingo_name,
+    )
+  )
 
 
 def linechart_nt(
-  df: pd.DataFrame, fields: tuple[FieldModel, ...], time_unit: TimeUnitType = "year"
+  df: pd.DataFrame, fields: tuple["FieldModel", ...], time_unit: "TimeUnitType" = "year"
 ) -> alt.Chart:
   if len(fields) != 2:
     raise ValueError("Invalid number of fields for linechart")
@@ -29,7 +53,7 @@ def linechart_nt(
 
 
 def linechart_nt_c(
-  df: pd.DataFrame, fields: tuple[FieldModel, ...], time_unit: TimeUnitType = "year"
+  df: pd.DataFrame, fields: tuple["FieldModel", ...], time_unit: "TimeUnitType" = "year"
 ) -> alt.Chart:
   if len(fields) != 3:
     raise ValueError("Invalid number of fields for linechart")
@@ -54,7 +78,7 @@ def linechart_nt_c(
 
 def linechart_t(
   df: pd.DataFrame,
-  fields: tuple[FieldModel, ...],
+  fields: tuple["FieldModel", ...],
 ) -> alt.Chart:
   if len(fields) != 1 and fields[0].type != "datetime":
     raise ValueError("Invalid field type for linechart_t")

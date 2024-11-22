@@ -1,10 +1,13 @@
+from typing import TYPE_CHECKING
+
 import altair as alt
 import pandas as pd
-from api.models import TimeUnitType
-from api.models.field_model import FieldModel
+
+if TYPE_CHECKING:
+  from api.models import FieldModel, TimeUnitType
 
 
-def heatmap_cc(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
+def heatmap_cc(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> alt.Chart:
   if len(fields) != 2 or fields[0].type != "categorical" or fields[1].type != "categorical":
     raise ValueError("Invalid number of fields for heatmap")
   return (
@@ -14,7 +17,7 @@ def heatmap_cc(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
   )
 
 
-def heatmap_cc_n(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
+def heatmap_cc_n(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> alt.Chart:
   if (
     len(fields) != 3
     or fields[0].type != "categorical"
@@ -34,7 +37,7 @@ def heatmap_cc_n(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
 
 
 def heatmap_ct(
-  df: pd.DataFrame, fields: tuple[FieldModel, ...], time_unit: TimeUnitType = "year"
+  df: pd.DataFrame, fields: tuple["FieldModel", ...], time_unit: "TimeUnitType" = "year"
 ) -> alt.Chart:
   if len(fields) != 2:
     raise ValueError("Invalid number of fields for heatmap")
@@ -57,7 +60,7 @@ def heatmap_ct(
 
 
 def heatmap_ct_n(
-  df: pd.DataFrame, fields: tuple[FieldModel, ...], time_unit: TimeUnitType = "year"
+  df: pd.DataFrame, fields: tuple["FieldModel", ...], time_unit: "TimeUnitType" = "year"
 ) -> alt.Chart:
   if len(fields) != 3:
     raise ValueError("Invalid number of fields for heatmap")

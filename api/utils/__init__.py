@@ -1,3 +1,4 @@
+from .chart import check_fields, get_spec
 from .decorators import df_required, exception_handler
 from .field_hash import get_fields_hash
 from .field_name import (
@@ -37,4 +38,6 @@ __all__ = [
   "find_right",
   "get_fields_hash",
   "sample",
+  "get_spec",
+  "check_fields",
 ]

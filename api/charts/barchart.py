@@ -1,9 +1,13 @@
+from typing import TYPE_CHECKING
+
 import altair as alt
 import pandas as pd
-from api.models.field_model import FieldModel
+
+if TYPE_CHECKING:
+  from api.models import FieldModel
 
 
-def barchart_n(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
+def barchart_n(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> alt.Chart:
   if len(fields) != 1 and fields[0].type != "numeric":
     raise ValueError("Invalid field type for histogram")
 
@@ -21,7 +25,7 @@ def barchart_n(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
   )
 
 
-def barchart_c(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
+def barchart_c(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> alt.Chart:
   if len(fields) != 1 and fields[0].type != "categorical":
     raise ValueError("Invalid field type for barchart_categorical")
 
@@ -29,7 +33,7 @@ def barchart_c(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
 
 
 # Bivariate
-def barchart_nc(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
+def barchart_nc(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> alt.Chart:
   if len(fields) != 2:
     raise ValueError("Invalid number of fields for barchart")
 
@@ -44,7 +48,7 @@ def barchart_nc(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
 
 
 # Trivariate
-def barchart_nc_c(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> alt.Chart:
+def barchart_nc_c(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> alt.Chart:
   if len(fields) != 3:
     raise ValueError("Invalid number of fields for barchart")
 
