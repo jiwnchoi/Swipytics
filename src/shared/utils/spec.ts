@@ -1,5 +1,6 @@
 import { DATA_NAME } from "@shared/constants";
 import type { TSupportedDataType } from "@shared/models";
+import { type TimeUnit } from "vega";
 import embed from "vega-embed";
 import type { TopLevelSpec } from "vega-lite";
 
@@ -106,4 +107,34 @@ async function _getThumbnailFromSpec(
     },
   ).then((result) => result.view);
   return (await view.toCanvas()).toDataURL();
+}
+
+const timeFormats: Partial<Record<TimeUnit, string>> = {
+  year: "%Y",
+  month: "%b",
+  day: "%a",
+  hours: "%H",
+};
+
+export function getTemporalSpec(
+  mainSpec: TopLevelSpec,
+  timeUnit: TimeUnit,
+  temporalField: { name: string },
+): TopLevelSpec {
+  return {
+    ...mainSpec,
+    config: {
+      ...mainSpec.config,
+      axisTemporal: {
+        format: timeFormats[timeUnit],
+      },
+    },
+    transform: [
+      {
+        timeUnit,
+        field: temporalField.name,
+        as: temporalField.name,
+      },
+    ],
+  };
 }

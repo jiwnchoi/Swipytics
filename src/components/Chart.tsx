@@ -27,13 +27,12 @@ import {
 import { useDoubleTap, useLayout } from "@hooks";
 import { DATA_NAME, PRIMARY_COLOR } from "@shared/constants";
 import type { TChart, TMetadata } from "@shared/models";
-import { getKoreanVegaLite, getMainSpec } from "@shared/utils";
+import { getKoreanVegaLite, getMainSpec, getTemporalSpec } from "@shared/utils";
 import { useDataStore, useSessionsStore } from "@stores";
 import { HeartAddIcon } from "hugeicons-react";
 import { memo, useMemo, useState, type SVGProps } from "react";
 import { useTranslation } from "react-i18next";
 import { Error as VegaError, type TimeUnit } from "vega";
-import type { TopLevelSpec } from "vega-lite";
 import CachedVegaLite from "./CachedVegaLite";
 import ChartTitle from "./ChartTitle";
 
@@ -41,20 +40,14 @@ interface ChartProps extends CenterProps {
   chart: TChart;
 }
 
-const timeFormats: Partial<Record<TimeUnit, string>> = {
-  year: "%Y",
-  month: "%b",
-  day: "%a",
-  hours: "%H",
-};
+function Chart({ chart, ...props }: ChartProps) {
+  const { mobile, chartTheme, chartWidth, chartHeight } = useLayout();
+  const { i18n } = useTranslation();
+  const _data = useDataStore((state) => state.data);
+  const setChartPreferred = useSessionsStore((state) => state.setChartPreferred);
+  const setChartTimeUnit = useSessionsStore((state) => state.setChartTimeUnit);
 
-interface TemporalConfig {
-  timeUnit: TimeUnit | undefined;
-  timeUnits: TimeUnit[];
-  setTimeUnit: (unit: TimeUnit) => void;
-}
-
-function useTemporalConfig(temporalField: TChart["fields"][number] | undefined): TemporalConfig {
+  const temporalField = chart.fields.find((field) => field.type === "datetime");
   const temporalMetadata = temporalField?.metadata;
 
   const timeUnitUniques =
@@ -77,45 +70,6 @@ function useTemporalConfig(temporalField: TChart["fields"][number] | undefined):
     if (timeUnits.length === 0) return undefined;
     return timeUnits[argMaxTimeUnit];
   });
-
-  return {
-    timeUnit,
-    timeUnits,
-    setTimeUnit,
-  };
-}
-
-function getTemporalSpec(
-  mainSpec: TopLevelSpec,
-  timeUnit: TimeUnit,
-  temporalField: { name: string },
-): TopLevelSpec {
-  return {
-    ...mainSpec,
-    config: {
-      ...mainSpec.config,
-      axisTemporal: {
-        format: timeFormats[timeUnit],
-      },
-    },
-    transform: [
-      {
-        timeUnit,
-        field: temporalField.name,
-        as: temporalField.name,
-      },
-    ],
-  };
-}
-function Chart({ chart, ...props }: ChartProps) {
-  const { mobile, chartTheme, chartWidth, chartHeight } = useLayout();
-  const { i18n } = useTranslation();
-  const _data = useDataStore((state) => state.data);
-  const setChartPreferred = useSessionsStore((state) => state.setChartPreferred);
-  const setChartTimeUnit = useSessionsStore((state) => state.setChartTimeUnit);
-
-  const temporalField = chart.fields.find((field) => field.type === "datetime");
-  const { timeUnit, timeUnits, setTimeUnit } = useTemporalConfig(temporalField);
 
   const data = useMemo(() => ({ [DATA_NAME]: _data }), [_data]);
   const spec = useMemo(() => {
