@@ -1,16 +1,16 @@
-var xe=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports);var rn=xe((sn,j)=>{/**
+var ke=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports);var rn=ke((sn,q)=>{/**
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
- */const z=Symbol("Comlink.proxy"),Se=Symbol("Comlink.endpoint"),ke=Symbol("Comlink.releaseProxy"),O=Symbol("Comlink.finalizer"),x=Symbol("Comlink.thrown"),H=e=>typeof e=="object"&&e!==null||typeof e=="function",Ee={canHandle:e=>H(e)&&e[z],serialize(e){const{port1:n,port2:i}=new MessageChannel;return I(e,n),[i,[i]]},deserialize(e){return e.start(),Pe(e)}},Te={canHandle:e=>H(e)&&x in e,serialize({value:e}){let n;return e instanceof Error?n={isError:!0,value:{message:e.message,name:e.name,stack:e.stack}}:n={isError:!1,value:e},[n,[]]},deserialize(e){throw e.isError?Object.assign(new Error(e.value.message),e.value):e.value}},W=new Map([["proxy",Ee],["throw",Te]]);function Ce(e,n){for(const i of e)if(n===i||i==="*"||i instanceof RegExp&&i.test(n))return!0;return!1}function I(e,n=globalThis,i=["*"]){n.addEventListener("message",function a(s){if(!s||!s.data)return;if(!Ce(i,s.origin)){console.warn(`Invalid origin '${s.origin}' for comlink proxy`);return}const{id:r,type:t,path:l}=Object.assign({path:[]},s.data),o=(s.data.argumentList||[]).map(w);let c;try{const d=l.slice(0,-1).reduce((m,u)=>m[u],e),f=l.reduce((m,u)=>m[u],e);switch(t){case"GET":c=f;break;case"SET":d[l.slice(-1)[0]]=w(s.data.value),c=!0;break;case"APPLY":c=f.apply(d,o);break;case"CONSTRUCT":{const m=new f(...o);c=Re(m)}break;case"ENDPOINT":{const{port1:m,port2:u}=new MessageChannel;I(e,u),c=Ae(m,[m])}break;case"RELEASE":c=void 0;break;default:return}}catch(d){c={value:d,[x]:0}}Promise.resolve(c).catch(d=>({value:d,[x]:0})).then(d=>{const[f,m]=T(d);n.postMessage(Object.assign(Object.assign({},f),{id:r}),m),t==="RELEASE"&&(n.removeEventListener("message",a),X(n),O in e&&typeof e[O]=="function"&&e[O]())}).catch(d=>{const[f,m]=T({value:new TypeError("Unserializable return value"),[x]:0});n.postMessage(Object.assign(Object.assign({},f),{id:r}),m)})}),n.start&&n.start()}function Ne(e){return e.constructor.name==="MessagePort"}function X(e){Ne(e)&&e.close()}function Pe(e,n){return L(e,[],n)}function M(e){if(e)throw new Error("Proxy has been released and is not useable")}function Y(e){return v(e,{type:"RELEASE"}).then(()=>{X(e)})}const k=new WeakMap,E="FinalizationRegistry"in globalThis&&new FinalizationRegistry(e=>{const n=(k.get(e)||0)-1;k.set(e,n),n===0&&Y(e)});function Oe(e,n){const i=(k.get(n)||0)+1;k.set(n,i),E&&E.register(e,n,e)}function De(e){E&&E.unregister(e)}function L(e,n=[],i=function(){}){let a=!1;const s=new Proxy(i,{get(r,t){if(M(a),t===ke)return()=>{De(s),Y(e),a=!0};if(t==="then"){if(n.length===0)return{then:()=>s};const l=v(e,{type:"GET",path:n.map(o=>o.toString())}).then(w);return l.then.bind(l)}return L(e,[...n,t])},set(r,t,l){M(a);const[o,c]=T(l);return v(e,{type:"SET",path:[...n,t].map(d=>d.toString()),value:o},c).then(w)},apply(r,t,l){M(a);const o=n[n.length-1];if(o===Se)return v(e,{type:"ENDPOINT"}).then(w);if(o==="bind")return L(e,n.slice(0,-1));const[c,d]=B(l);return v(e,{type:"APPLY",path:n.map(f=>f.toString()),argumentList:c},d).then(w)},construct(r,t){M(a);const[l,o]=B(t);return v(e,{type:"CONSTRUCT",path:n.map(c=>c.toString()),argumentList:l},o).then(w)}});return Oe(s,e),s}function Le(e){return Array.prototype.concat.apply([],e)}function B(e){const n=e.map(T);return[n.map(i=>i[0]),Le(n.map(i=>i[1]))]}const G=new WeakMap;function Ae(e,n){return G.set(e,n),e}function Re(e){return Object.assign(e,{[z]:!0})}function T(e){for(const[n,i]of W)if(i.canHandle(e)){const[a,s]=i.serialize(e);return[{type:"HANDLER",name:n,value:a},s]}return[{type:"RAW",value:e},G.get(e)||[]]}function w(e){switch(e.type){case"HANDLER":return W.get(e.name).deserialize(e.value);case"RAW":return e.value}}function v(e,n,i){return new Promise(a=>{const s=je();e.addEventListener("message",function r(t){!t.data||!t.data.id||t.data.id!==s||(e.removeEventListener("message",r),a(t.data))}),e.start&&e.start(),e.postMessage(Object.assign({id:s},n),i)})}function je(){return new Array(4).fill(0).map(()=>Math.floor(Math.random()*Number.MAX_SAFE_INTEGER).toString(16)).join("-")}var Ie=Object.create,$=Object.defineProperty,$e=Object.getOwnPropertyDescriptor,Ke=Object.getOwnPropertyNames,Ue=Object.getPrototypeOf,qe=Object.prototype.hasOwnProperty,_=(e,n)=>$(e,"name",{value:n,configurable:!0}),J=(e=>typeof require<"u"?require:typeof Proxy<"u"?new Proxy(e,{get:(n,i)=>(typeof require<"u"?require:n)[i]}):e)(function(e){if(typeof require<"u")return require.apply(this,arguments);throw new Error('Dynamic require of "'+e+'" is not supported')}),Q=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports),Ve=(e,n,i,a)=>{if(n&&typeof n=="object"||typeof n=="function")for(let s of Ke(n))!qe.call(e,s)&&s!==i&&$(e,s,{get:()=>n[s],enumerable:!(a=$e(n,s))||a.enumerable});return e},Be=(e,n,i)=>(i=e!=null?Ie(Ue(e)):{},Ve(!e||!e.__esModule?$(i,"default",{value:e,enumerable:!0}):i,e)),ze=Q((e,n)=>{(function(i,a){typeof define=="function"&&define.amd?define("stackframe",[],a):typeof e=="object"?n.exports=a():i.StackFrame=a()})(e,function(){function i(p){return!isNaN(parseFloat(p))&&isFinite(p)}_(i,"_isNumber");function a(p){return p.charAt(0).toUpperCase()+p.substring(1)}_(a,"_capitalize");function s(p){return function(){return this[p]}}_(s,"_getter");var r=["isConstructor","isEval","isNative","isToplevel"],t=["columnNumber","lineNumber"],l=["fileName","functionName","source"],o=["args"],c=["evalOrigin"],d=r.concat(t,l,o,c);function f(p){if(p)for(var y=0;y<d.length;y++)p[d[y]]!==void 0&&this["set"+a(d[y])](p[d[y]])}_(f,"StackFrame"),f.prototype={getArgs:function(){return this.args},setArgs:function(p){if(Object.prototype.toString.call(p)!=="[object Array]")throw new TypeError("Args must be an Array");this.args=p},getEvalOrigin:function(){return this.evalOrigin},setEvalOrigin:function(p){if(p instanceof f)this.evalOrigin=p;else if(p instanceof Object)this.evalOrigin=new f(p);else throw new TypeError("Eval Origin must be an Object or StackFrame")},toString:function(){var p=this.getFileName()||"",y=this.getLineNumber()||"",b=this.getColumnNumber()||"",F=this.getFunctionName()||"";return this.getIsEval()?p?"[eval] ("+p+":"+y+":"+b+")":"[eval]:"+y+":"+b:F?F+" ("+p+":"+y+":"+b+")":p+":"+y+":"+b}},f.fromString=_(function(p){var y=p.indexOf("("),b=p.lastIndexOf(")"),F=p.substring(0,y),we=p.substring(y+1,b).split(","),V=p.substring(b+1);if(V.indexOf("@")===0)var P=/@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(V,""),ve=P[1],Fe=P[2],Me=P[3];return new f({functionName:F,args:we||void 0,fileName:ve,lineNumber:Fe||void 0,columnNumber:Me||void 0})},"StackFrame$$fromString");for(var m=0;m<r.length;m++)f.prototype["get"+a(r[m])]=s(r[m]),f.prototype["set"+a(r[m])]=function(p){return function(y){this[p]=!!y}}(r[m]);for(var u=0;u<t.length;u++)f.prototype["get"+a(t[u])]=s(t[u]),f.prototype["set"+a(t[u])]=function(p){return function(y){if(!i(y))throw new TypeError(p+" must be a Number");this[p]=Number(y)}}(t[u]);for(var h=0;h<l.length;h++)f.prototype["get"+a(l[h])]=s(l[h]),f.prototype["set"+a(l[h])]=function(p){return function(y){this[p]=String(y)}}(l[h]);return f})}),He=Q((e,n)=>{(function(i,a){typeof define=="function"&&define.amd?define("error-stack-parser",["stackframe"],a):typeof e=="object"?n.exports=a(ze()):i.ErrorStackParser=a(i.StackFrame)})(e,_(function(i){var a=/(^|@)\S+:\d+/,s=/^\s*at .*(\S+:\d+|\(native\))/m,r=/^(eval@)?(\[native code])?$/;return{parse:_(function(t){if(typeof t.stacktrace<"u"||typeof t["opera#sourceloc"]<"u")return this.parseOpera(t);if(t.stack&&t.stack.match(s))return this.parseV8OrIE(t);if(t.stack)return this.parseFFOrSafari(t);throw new Error("Cannot parse given Error object")},"ErrorStackParser$$parse"),extractLocation:_(function(t){if(t.indexOf(":")===-1)return[t];var l=/(.+?)(?::(\d+))?(?::(\d+))?$/,o=l.exec(t.replace(/[()]/g,""));return[o[1],o[2]||void 0,o[3]||void 0]},"ErrorStackParser$$extractLocation"),parseV8OrIE:_(function(t){var l=t.stack.split(`
-`).filter(function(o){return!!o.match(s)},this);return l.map(function(o){o.indexOf("(eval ")>-1&&(o=o.replace(/eval code/g,"eval").replace(/(\(eval at [^()]*)|(,.*$)/g,""));var c=o.replace(/^\s+/,"").replace(/\(eval code/g,"(").replace(/^.*?\s+/,""),d=c.match(/ (\(.+\)$)/);c=d?c.replace(d[0],""):c;var f=this.extractLocation(d?d[1]:c),m=d&&c||void 0,u=["eval","<anonymous>"].indexOf(f[0])>-1?void 0:f[0];return new i({functionName:m,fileName:u,lineNumber:f[1],columnNumber:f[2],source:o})},this)},"ErrorStackParser$$parseV8OrIE"),parseFFOrSafari:_(function(t){var l=t.stack.split(`
-`).filter(function(o){return!o.match(r)},this);return l.map(function(o){if(o.indexOf(" > eval")>-1&&(o=o.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g,":$1")),o.indexOf("@")===-1&&o.indexOf(":")===-1)return new i({functionName:o});var c=/((.*".+"[^@]*)?[^@]*)(?:@)/,d=o.match(c),f=d&&d[1]?d[1]:void 0,m=this.extractLocation(o.replace(c,""));return new i({functionName:f,fileName:m[0],lineNumber:m[1],columnNumber:m[2],source:o})},this)},"ErrorStackParser$$parseFFOrSafari"),parseOpera:_(function(t){return!t.stacktrace||t.message.indexOf(`
+ */const H=Symbol("Comlink.proxy"),xe=Symbol("Comlink.endpoint"),Se=Symbol("Comlink.releaseProxy"),O=Symbol("Comlink.finalizer"),k=Symbol("Comlink.thrown"),W=e=>typeof e=="object"&&e!==null||typeof e=="function",Ee={canHandle:e=>W(e)&&e[H],serialize(e){const{port1:n,port2:i}=new MessageChannel;return j(e,n),[i,[i]]},deserialize(e){return e.start(),Pe(e)}},Te={canHandle:e=>W(e)&&k in e,serialize({value:e}){let n;return e instanceof Error?n={isError:!0,value:{message:e.message,name:e.name,stack:e.stack}}:n={isError:!1,value:e},[n,[]]},deserialize(e){throw e.isError?Object.assign(new Error(e.value.message),e.value):e.value}},Y=new Map([["proxy",Ee],["throw",Te]]);function Ce(e,n){for(const i of e)if(n===i||i==="*"||i instanceof RegExp&&i.test(n))return!0;return!1}function j(e,n=globalThis,i=["*"]){n.addEventListener("message",function a(s){if(!s||!s.data)return;if(!Ce(i,s.origin)){console.warn(`Invalid origin '${s.origin}' for comlink proxy`);return}const{id:r,type:t,path:l}=Object.assign({path:[]},s.data),o=(s.data.argumentList||[]).map(w);let f;try{const d=l.slice(0,-1).reduce((m,u)=>m[u],e),c=l.reduce((m,u)=>m[u],e);switch(t){case"GET":f=c;break;case"SET":d[l.slice(-1)[0]]=w(s.data.value),f=!0;break;case"APPLY":f=c.apply(d,o);break;case"CONSTRUCT":{const m=new c(...o);f=Re(m)}break;case"ENDPOINT":{const{port1:m,port2:u}=new MessageChannel;j(e,u),f=Ae(m,[m])}break;case"RELEASE":f=void 0;break;default:return}}catch(d){f={value:d,[k]:0}}Promise.resolve(f).catch(d=>({value:d,[k]:0})).then(d=>{const[c,m]=T(d);n.postMessage(Object.assign(Object.assign({},c),{id:r}),m),t==="RELEASE"&&(n.removeEventListener("message",a),X(n),O in e&&typeof e[O]=="function"&&e[O]())}).catch(d=>{const[c,m]=T({value:new TypeError("Unserializable return value"),[k]:0});n.postMessage(Object.assign(Object.assign({},c),{id:r}),m)})}),n.start&&n.start()}function Ne(e){return e.constructor.name==="MessagePort"}function X(e){Ne(e)&&e.close()}function Pe(e,n){return L(e,[],n)}function M(e){if(e)throw new Error("Proxy has been released and is not useable")}function G(e){return v(e,{type:"RELEASE"}).then(()=>{X(e)})}const S=new WeakMap,E="FinalizationRegistry"in globalThis&&new FinalizationRegistry(e=>{const n=(S.get(e)||0)-1;S.set(e,n),n===0&&G(e)});function Oe(e,n){const i=(S.get(n)||0)+1;S.set(n,i),E&&E.register(e,n,e)}function De(e){E&&E.unregister(e)}function L(e,n=[],i=function(){}){let a=!1;const s=new Proxy(i,{get(r,t){if(M(a),t===Se)return()=>{De(s),G(e),a=!0};if(t==="then"){if(n.length===0)return{then:()=>s};const l=v(e,{type:"GET",path:n.map(o=>o.toString())}).then(w);return l.then.bind(l)}return L(e,[...n,t])},set(r,t,l){M(a);const[o,f]=T(l);return v(e,{type:"SET",path:[...n,t].map(d=>d.toString()),value:o},f).then(w)},apply(r,t,l){M(a);const o=n[n.length-1];if(o===xe)return v(e,{type:"ENDPOINT"}).then(w);if(o==="bind")return L(e,n.slice(0,-1));const[f,d]=z(l);return v(e,{type:"APPLY",path:n.map(c=>c.toString()),argumentList:f},d).then(w)},construct(r,t){M(a);const[l,o]=z(t);return v(e,{type:"CONSTRUCT",path:n.map(f=>f.toString()),argumentList:l},o).then(w)}});return Oe(s,e),s}function Le(e){return Array.prototype.concat.apply([],e)}function z(e){const n=e.map(T);return[n.map(i=>i[0]),Le(n.map(i=>i[1]))]}const K=new WeakMap;function Ae(e,n){return K.set(e,n),e}function Re(e){return Object.assign(e,{[H]:!0})}function T(e){for(const[n,i]of Y)if(i.canHandle(e)){const[a,s]=i.serialize(e);return[{type:"HANDLER",name:n,value:a},s]}return[{type:"RAW",value:e},K.get(e)||[]]}function w(e){switch(e.type){case"HANDLER":return Y.get(e.name).deserialize(e.value);case"RAW":return e.value}}function v(e,n,i){return new Promise(a=>{const s=qe();e.addEventListener("message",function r(t){!t.data||!t.data.id||t.data.id!==s||(e.removeEventListener("message",r),a(t.data))}),e.start&&e.start(),e.postMessage(Object.assign({id:s},n),i)})}function qe(){return new Array(4).fill(0).map(()=>Math.floor(Math.random()*Number.MAX_SAFE_INTEGER).toString(16)).join("-")}var je=Object.create,I=Object.defineProperty,Ie=Object.getOwnPropertyDescriptor,$e=Object.getOwnPropertyNames,Ue=Object.getPrototypeOf,Ve=Object.prototype.hasOwnProperty,p=(e,n)=>I(e,"name",{value:n,configurable:!0}),J=(e=>typeof require<"u"?require:typeof Proxy<"u"?new Proxy(e,{get:(n,i)=>(typeof require<"u"?require:n)[i]}):e)(function(e){if(typeof require<"u")return require.apply(this,arguments);throw new Error('Dynamic require of "'+e+'" is not supported')}),Q=(e,n)=>()=>(n||e((n={exports:{}}).exports,n),n.exports),Be=(e,n,i,a)=>{if(n&&typeof n=="object"||typeof n=="function")for(let s of $e(n))!Ve.call(e,s)&&s!==i&&I(e,s,{get:()=>n[s],enumerable:!(a=Ie(n,s))||a.enumerable});return e},ze=(e,n,i)=>(i=e!=null?je(Ue(e)):{},Be(!e||!e.__esModule?I(i,"default",{value:e,enumerable:!0}):i,e)),He=Q((e,n)=>{(function(i,a){typeof define=="function"&&define.amd?define("stackframe",[],a):typeof e=="object"?n.exports=a():i.StackFrame=a()})(e,function(){function i(_){return!isNaN(parseFloat(_))&&isFinite(_)}p(i,"_isNumber");function a(_){return _.charAt(0).toUpperCase()+_.substring(1)}p(a,"_capitalize");function s(_){return function(){return this[_]}}p(s,"_getter");var r=["isConstructor","isEval","isNative","isToplevel"],t=["columnNumber","lineNumber"],l=["fileName","functionName","source"],o=["args"],f=["evalOrigin"],d=r.concat(t,l,o,f);function c(_){if(_)for(var y=0;y<d.length;y++)_[d[y]]!==void 0&&this["set"+a(d[y])](_[d[y]])}p(c,"StackFrame"),c.prototype={getArgs:function(){return this.args},setArgs:function(_){if(Object.prototype.toString.call(_)!=="[object Array]")throw new TypeError("Args must be an Array");this.args=_},getEvalOrigin:function(){return this.evalOrigin},setEvalOrigin:function(_){if(_ instanceof c)this.evalOrigin=_;else if(_ instanceof Object)this.evalOrigin=new c(_);else throw new TypeError("Eval Origin must be an Object or StackFrame")},toString:function(){var _=this.getFileName()||"",y=this.getLineNumber()||"",b=this.getColumnNumber()||"",F=this.getFunctionName()||"";return this.getIsEval()?_?"[eval] ("+_+":"+y+":"+b+")":"[eval]:"+y+":"+b:F?F+" ("+_+":"+y+":"+b+")":_+":"+y+":"+b}},c.fromString=p(function(_){var y=_.indexOf("("),b=_.lastIndexOf(")"),F=_.substring(0,y),we=_.substring(y+1,b).split(","),B=_.substring(b+1);if(B.indexOf("@")===0)var P=/@(.+?)(?::(\d+))?(?::(\d+))?$/.exec(B,""),ve=P[1],Fe=P[2],Me=P[3];return new c({functionName:F,args:we||void 0,fileName:ve,lineNumber:Fe||void 0,columnNumber:Me||void 0})},"StackFrame$$fromString");for(var m=0;m<r.length;m++)c.prototype["get"+a(r[m])]=s(r[m]),c.prototype["set"+a(r[m])]=function(_){return function(y){this[_]=!!y}}(r[m]);for(var u=0;u<t.length;u++)c.prototype["get"+a(t[u])]=s(t[u]),c.prototype["set"+a(t[u])]=function(_){return function(y){if(!i(y))throw new TypeError(_+" must be a Number");this[_]=Number(y)}}(t[u]);for(var h=0;h<l.length;h++)c.prototype["get"+a(l[h])]=s(l[h]),c.prototype["set"+a(l[h])]=function(_){return function(y){this[_]=String(y)}}(l[h]);return c})}),We=Q((e,n)=>{(function(i,a){typeof define=="function"&&define.amd?define("error-stack-parser",["stackframe"],a):typeof e=="object"?n.exports=a(He()):i.ErrorStackParser=a(i.StackFrame)})(e,p(function(i){var a=/(^|@)\S+:\d+/,s=/^\s*at .*(\S+:\d+|\(native\))/m,r=/^(eval@)?(\[native code])?$/;return{parse:p(function(t){if(typeof t.stacktrace<"u"||typeof t["opera#sourceloc"]<"u")return this.parseOpera(t);if(t.stack&&t.stack.match(s))return this.parseV8OrIE(t);if(t.stack)return this.parseFFOrSafari(t);throw new Error("Cannot parse given Error object")},"ErrorStackParser$$parse"),extractLocation:p(function(t){if(t.indexOf(":")===-1)return[t];var l=/(.+?)(?::(\d+))?(?::(\d+))?$/,o=l.exec(t.replace(/[()]/g,""));return[o[1],o[2]||void 0,o[3]||void 0]},"ErrorStackParser$$extractLocation"),parseV8OrIE:p(function(t){var l=t.stack.split(`
+`).filter(function(o){return!!o.match(s)},this);return l.map(function(o){o.indexOf("(eval ")>-1&&(o=o.replace(/eval code/g,"eval").replace(/(\(eval at [^()]*)|(,.*$)/g,""));var f=o.replace(/^\s+/,"").replace(/\(eval code/g,"(").replace(/^.*?\s+/,""),d=f.match(/ (\(.+\)$)/);f=d?f.replace(d[0],""):f;var c=this.extractLocation(d?d[1]:f),m=d&&f||void 0,u=["eval","<anonymous>"].indexOf(c[0])>-1?void 0:c[0];return new i({functionName:m,fileName:u,lineNumber:c[1],columnNumber:c[2],source:o})},this)},"ErrorStackParser$$parseV8OrIE"),parseFFOrSafari:p(function(t){var l=t.stack.split(`
+`).filter(function(o){return!o.match(r)},this);return l.map(function(o){if(o.indexOf(" > eval")>-1&&(o=o.replace(/ line (\d+)(?: > eval line \d+)* > eval:\d+:\d+/g,":$1")),o.indexOf("@")===-1&&o.indexOf(":")===-1)return new i({functionName:o});var f=/((.*".+"[^@]*)?[^@]*)(?:@)/,d=o.match(f),c=d&&d[1]?d[1]:void 0,m=this.extractLocation(o.replace(f,""));return new i({functionName:c,fileName:m[0],lineNumber:m[1],columnNumber:m[2],source:o})},this)},"ErrorStackParser$$parseFFOrSafari"),parseOpera:p(function(t){return!t.stacktrace||t.message.indexOf(`
 `)>-1&&t.message.split(`
 `).length>t.stacktrace.split(`
-`).length?this.parseOpera9(t):t.stack?this.parseOpera11(t):this.parseOpera10(t)},"ErrorStackParser$$parseOpera"),parseOpera9:_(function(t){for(var l=/Line (\d+).*script (?:in )?(\S+)/i,o=t.message.split(`
-`),c=[],d=2,f=o.length;d<f;d+=2){var m=l.exec(o[d]);m&&c.push(new i({fileName:m[2],lineNumber:m[1],source:o[d]}))}return c},"ErrorStackParser$$parseOpera9"),parseOpera10:_(function(t){for(var l=/Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i,o=t.stacktrace.split(`
-`),c=[],d=0,f=o.length;d<f;d+=2){var m=l.exec(o[d]);m&&c.push(new i({functionName:m[3]||void 0,fileName:m[2],lineNumber:m[1],source:o[d]}))}return c},"ErrorStackParser$$parseOpera10"),parseOpera11:_(function(t){var l=t.stack.split(`
-`).filter(function(o){return!!o.match(a)&&!o.match(/^Error created at/)},this);return l.map(function(o){var c=o.split("@"),d=this.extractLocation(c.pop()),f=c.shift()||"",m=f.replace(/<anonymous function(: (\w+))?>/,"$2").replace(/\([^)]*\)/g,"")||void 0,u;f.match(/\(([^)]*)\)/)&&(u=f.replace(/^[^(]+\(([^)]*)\)$/,"$1"));var h=u===void 0||u==="[arguments not available]"?void 0:u.split(",");return new i({functionName:m,args:h,fileName:d[0],lineNumber:d[1],columnNumber:d[2],source:o})},this)},"ErrorStackParser$$parseOpera11")}},"ErrorStackParser"))}),We=Be(He()),g=typeof process=="object"&&typeof process.versions=="object"&&typeof process.versions.node=="string"&&typeof process.browser>"u",Z=g&&typeof j<"u"&&typeof j.exports<"u"&&typeof J<"u"&&typeof __dirname<"u",Xe=g&&!Z,Ye=typeof Deno<"u",ee=!g&&!Ye,Ge=ee&&typeof window<"u"&&typeof document<"u"&&typeof document.createElement<"u"&&typeof sessionStorage<"u",Je=ee&&typeof importScripts<"u"&&typeof self<"u",ne,C,A,te,K,Qe=`"fetch" is not defined, maybe you're using node < 18? From Pyodide >= 0.25.0, node >= 18 is required. Older versions of Node.js may work, but it is not guaranteed or supported. Falling back to "node-fetch".`;async function U(){if(!g||(ne=(await import("./__vite-browser-external-CIEyP2s7.js")).default,K=await import("./__vite-browser-external-CIEyP2s7.js"),globalThis.fetch?C=fetch:(console.warn(Qe),C=(await import("./index-B489Fav_.js")).default),te=(await import("./__vite-browser-external-CIEyP2s7.js")).default,A=await import("./__vite-browser-external-CIEyP2s7.js"),q=A.sep,typeof J<"u"))return;let e=await import("./__vite-browser-external-CIEyP2s7.js"),n=await import("./__vite-browser-external-CIEyP2s7.js"),i=await import("./__vite-browser-external-CIEyP2s7.js"),a=await import("./__vite-browser-external-CIEyP2s7.js"),s={fs:e,crypto:n,ws:i,child_process:a};globalThis.require=function(r){return s[r]}}_(U,"initNodeModules");function ie(e,n){return A.resolve(n||".",e)}_(ie,"node_resolvePath");function re(e,n){return n===void 0&&(n=location),new URL(e,n).toString()}_(re,"browser_resolvePath");var R;g?R=ie:R=re;var q;g||(q="/");function ae(e,n){return e.startsWith("file://")&&(e=e.slice(7)),e.includes("://")?{response:C(e)}:{binary:K.readFile(e).then(i=>new Uint8Array(i.buffer,i.byteOffset,i.byteLength))}}_(ae,"node_getBinaryResponse");function se(e,n){let i=new URL(e,location);return{response:fetch(i,n?{integrity:n}:{})}}_(se,"browser_getBinaryResponse");var N;g?N=ae:N=se;async function oe(e,n){let{response:i,binary:a}=N(e,n);if(a)return a;let s=await i;if(!s.ok)throw new Error(`Failed to load '${e}': request failed.`);return new Uint8Array(await s.arrayBuffer())}_(oe,"loadBinaryFile");var S;if(Ge)S=_(async e=>await import(e),"loadScript");else if(Je)S=_(async e=>{try{globalThis.importScripts(e)}catch(n){if(n instanceof TypeError)await import(e);else throw n}},"loadScript");else if(g)S=le;else throw new Error("Cannot determine runtime environment");async function le(e){e.startsWith("file://")&&(e=e.slice(7)),e.includes("://")?te.runInThisContext(await(await C(e)).text()):await import(ne.pathToFileURL(e).href)}_(le,"nodeLoadScript");async function de(e){if(g){await U();let n=await K.readFile(e);return JSON.parse(n)}else return await(await fetch(e)).json()}_(de,"loadLockFile");async function ce(){if(Z)return __dirname;let e;try{throw new Error}catch(a){e=a}let n=We.default.parse(e)[0].fileName;if(Xe){let a=await import("./__vite-browser-external-CIEyP2s7.js");return(await import("./__vite-browser-external-CIEyP2s7.js")).fileURLToPath(a.dirname(n))}let i=n.lastIndexOf(q);if(i===-1)throw new Error("Could not extract indexURL path from pyodide module location");return n.slice(0,i)}_(ce,"calculateDirname");function fe(e){let n=e.FS,i=e.FS.filesystems.MEMFS,a=e.PATH,s={DIR_MODE:16895,FILE_MODE:33279,mount:function(r){if(!r.opts.fileSystemHandle)throw new Error("opts.fileSystemHandle is required");return i.mount.apply(null,arguments)},syncfs:async(r,t,l)=>{try{let o=s.getLocalSet(r),c=await s.getRemoteSet(r),d=t?c:o,f=t?o:c;await s.reconcile(r,d,f),l(null)}catch(o){l(o)}},getLocalSet:r=>{let t=Object.create(null);function l(d){return d!=="."&&d!==".."}_(l,"isRealDir");function o(d){return f=>a.join2(d,f)}_(o,"toAbsolute");let c=n.readdir(r.mountpoint).filter(l).map(o(r.mountpoint));for(;c.length;){let d=c.pop(),f=n.stat(d);n.isDir(f.mode)&&c.push.apply(c,n.readdir(d).filter(l).map(o(d))),t[d]={timestamp:f.mtime,mode:f.mode}}return{type:"local",entries:t}},getRemoteSet:async r=>{let t=Object.create(null),l=await Ze(r.opts.fileSystemHandle);for(let[o,c]of l)o!=="."&&(t[a.join2(r.mountpoint,o)]={timestamp:c.kind==="file"?(await c.getFile()).lastModifiedDate:new Date,mode:c.kind==="file"?s.FILE_MODE:s.DIR_MODE});return{type:"remote",entries:t,handles:l}},loadLocalEntry:r=>{let t=n.lookupPath(r).node,l=n.stat(r);if(n.isDir(l.mode))return{timestamp:l.mtime,mode:l.mode};if(n.isFile(l.mode))return t.contents=i.getFileDataAsTypedArray(t),{timestamp:l.mtime,mode:l.mode,contents:t.contents};throw new Error("node type not supported")},storeLocalEntry:(r,t)=>{if(n.isDir(t.mode))n.mkdirTree(r,t.mode);else if(n.isFile(t.mode))n.writeFile(r,t.contents,{canOwn:!0});else throw new Error("node type not supported");n.chmod(r,t.mode),n.utime(r,t.timestamp,t.timestamp)},removeLocalEntry:r=>{var t=n.stat(r);n.isDir(t.mode)?n.rmdir(r):n.isFile(t.mode)&&n.unlink(r)},loadRemoteEntry:async r=>{if(r.kind==="file"){let t=await r.getFile();return{contents:new Uint8Array(await t.arrayBuffer()),mode:s.FILE_MODE,timestamp:t.lastModifiedDate}}else{if(r.kind==="directory")return{mode:s.DIR_MODE,timestamp:new Date};throw new Error("unknown kind: "+r.kind)}},storeRemoteEntry:async(r,t,l)=>{let o=r.get(a.dirname(t)),c=n.isFile(l.mode)?await o.getFileHandle(a.basename(t),{create:!0}):await o.getDirectoryHandle(a.basename(t),{create:!0});if(c.kind==="file"){let d=await c.createWritable();await d.write(l.contents),await d.close()}r.set(t,c)},removeRemoteEntry:async(r,t)=>{await r.get(a.dirname(t)).removeEntry(a.basename(t)),r.delete(t)},reconcile:async(r,t,l)=>{let o=0,c=[];Object.keys(t.entries).forEach(function(m){let u=t.entries[m],h=l.entries[m];(!h||n.isFile(u.mode)&&u.timestamp.getTime()>h.timestamp.getTime())&&(c.push(m),o++)}),c.sort();let d=[];if(Object.keys(l.entries).forEach(function(m){t.entries[m]||(d.push(m),o++)}),d.sort().reverse(),!o)return;let f=t.type==="remote"?t.handles:l.handles;for(let m of c){let u=a.normalize(m.replace(r.mountpoint,"/")).substring(1);if(l.type==="local"){let h=f.get(u),p=await s.loadRemoteEntry(h);s.storeLocalEntry(m,p)}else{let h=s.loadLocalEntry(m);await s.storeRemoteEntry(f,u,h)}}for(let m of d)if(l.type==="local")s.removeLocalEntry(m);else{let u=a.normalize(m.replace(r.mountpoint,"/")).substring(1);await s.removeRemoteEntry(f,u)}}};e.FS.filesystems.NATIVEFS_ASYNC=s}_(fe,"initializeNativeFS");var Ze=_(async e=>{let n=[];async function i(s){for await(let r of s.values())n.push(r),r.kind==="directory"&&await i(r)}_(i,"collect"),await i(e);let a=new Map;a.set(".",e);for(let s of n){let r=(await e.resolve(s)).join("/");a.set(r,s)}return a},"getFsHandles");function me(){let e={};return e.noImageDecoding=!0,e.noAudioDecoding=!0,e.noWasmDecoding=!1,e.preRun=[],e.quit=(n,i)=>{throw e.exited={status:n,toThrow:i},i},e}_(me,"createModule");function pe(e,n){e.preRun.push(function(){let i="/";try{e.FS.mkdirTree(n)}catch(a){console.error(`Error occurred while making a home directory '${n}':`),console.error(a),console.error(`Using '${i}' for a home directory instead`),n=i}e.FS.chdir(n)})}_(pe,"createHomeDirectory");function _e(e,n){e.preRun.push(function(){Object.assign(e.ENV,n)})}_(_e,"setEnvironment");function ue(e,n){e.preRun.push(()=>{for(let i of n)e.FS.mkdirTree(i),e.FS.mount(e.FS.filesystems.NODEFS,{root:i},i)})}_(ue,"mountLocalDirectories");function ye(e,n){let i=oe(n);e.preRun.push(()=>{let a=e._py_version_major(),s=e._py_version_minor();e.FS.mkdirTree("/lib"),e.FS.mkdirTree(`/lib/python${a}.${s}/site-packages`),e.addRunDependency("install-stdlib"),i.then(r=>{e.FS.writeFile(`/lib/python${a}${s}.zip`,r)}).catch(r=>{console.error("Error occurred while installing the standard library:"),console.error(r)}).finally(()=>{e.removeRunDependency("install-stdlib")})})}_(ye,"installStdlib");function he(e,n){let i;n.stdLibURL!=null?i=n.stdLibURL:i=n.indexURL+"python_stdlib.zip",ye(e,i),pe(e,n.env.HOME),_e(e,n.env),ue(e,n._node_mounts),e.preRun.push(()=>fe(e))}_(he,"initializeFileSystem");function ge(e,n){let{binary:i,response:a}=N(n+"pyodide.asm.wasm");e.instantiateWasm=function(s,r){return async function(){try{let t;a?t=await WebAssembly.instantiateStreaming(a,s):t=await WebAssembly.instantiate(await i,s);let{instance:l,module:o}=t;typeof WasmOffsetConverter<"u"&&(wasmOffsetConverter=new WasmOffsetConverter(wasmBinary,o)),r(l,o)}catch(t){console.warn("wasm instantiation failed!"),console.warn(t)}}(),{}}}_(ge,"preloadWasm");var D="0.25.0";async function be(e={}){await U();let n=e.indexURL||await ce();n=R(n),n.endsWith("/")||(n+="/"),e.indexURL=n;let i={fullStdLib:!1,jsglobals:globalThis,stdin:globalThis.prompt?globalThis.prompt:void 0,lockFileURL:n+"pyodide-lock.json",args:[],_node_mounts:[],env:{},packageCacheDir:n,packages:[]},a=Object.assign(i,e);a.env.HOME||(a.env.HOME="/home/pyodide");let s=me();s.print=a.stdout,s.printErr=a.stderr,s.arguments=a.args;let r={config:a};s.API=r,r.lockFilePromise=de(a.lockFileURL),ge(s,n),he(s,a);let t=new Promise(o=>s.postRun=o);if(s.locateFile=o=>a.indexURL+o,typeof _createPyodideModule!="function"){let o=`${a.indexURL}pyodide.asm.js`;await S(o)}if(await _createPyodideModule(s),await t,s.exited)throw s.exited.toThrow;if(e.pyproxyToStringRepr&&r.setPyProxyToStringMethod(!0),r.version!==D)throw new Error(`Pyodide version does not match: '${D}' <==> '${r.version}'. If you updated the Pyodide version, make sure you also updated the 'indexURL' parameter passed to loadPyodide.`);s.locateFile=o=>{throw new Error("Didn't expect to load any more file_packager files!")};let l=r.finalizeBootstrap();if(l.version.includes("dev")||r.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${l.version}/full/`),await r.packageIndexReady,r._pyodide._importhook.register_module_not_found_hook(r._import_name_to_package_name,r.lockfile_unvendored_stdlibs_and_test),r.lockfile_info.version!==D)throw new Error("Lock file version doesn't match Pyodide version");return r.package_loader.init_loaded_packages(),a.fullStdLib&&await l.loadPackage(r.lockfile_unvendored_stdlibs),r.initializeStreams(a.stdin,a.stdout,a.stderr),l}_(be,"loadPyodide");async function en(e){const n={"api/app.py":`from __future__ import annotations
+`).length?this.parseOpera9(t):t.stack?this.parseOpera11(t):this.parseOpera10(t)},"ErrorStackParser$$parseOpera"),parseOpera9:p(function(t){for(var l=/Line (\d+).*script (?:in )?(\S+)/i,o=t.message.split(`
+`),f=[],d=2,c=o.length;d<c;d+=2){var m=l.exec(o[d]);m&&f.push(new i({fileName:m[2],lineNumber:m[1],source:o[d]}))}return f},"ErrorStackParser$$parseOpera9"),parseOpera10:p(function(t){for(var l=/Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i,o=t.stacktrace.split(`
+`),f=[],d=0,c=o.length;d<c;d+=2){var m=l.exec(o[d]);m&&f.push(new i({functionName:m[3]||void 0,fileName:m[2],lineNumber:m[1],source:o[d]}))}return f},"ErrorStackParser$$parseOpera10"),parseOpera11:p(function(t){var l=t.stack.split(`
+`).filter(function(o){return!!o.match(a)&&!o.match(/^Error created at/)},this);return l.map(function(o){var f=o.split("@"),d=this.extractLocation(f.pop()),c=f.shift()||"",m=c.replace(/<anonymous function(: (\w+))?>/,"$2").replace(/\([^)]*\)/g,"")||void 0,u;c.match(/\(([^)]*)\)/)&&(u=c.replace(/^[^(]+\(([^)]*)\)$/,"$1"));var h=u===void 0||u==="[arguments not available]"?void 0:u.split(",");return new i({functionName:m,args:h,fileName:d[0],lineNumber:d[1],columnNumber:d[2],source:o})},this)},"ErrorStackParser$$parseOpera11")}},"ErrorStackParser"))}),Ye=ze(We()),g=typeof process=="object"&&typeof process.versions=="object"&&typeof process.versions.node=="string"&&typeof process.browser>"u",Z=g&&typeof q<"u"&&typeof q.exports<"u"&&typeof J<"u"&&typeof __dirname<"u",Xe=g&&!Z,Ge=typeof Deno<"u",ee=!g&&!Ge,Ke=ee&&typeof window<"u"&&typeof document<"u"&&typeof document.createElement<"u"&&typeof sessionStorage<"u",Je=ee&&typeof importScripts<"u"&&typeof self<"u",ne,C,A,te,$,Qe=`"fetch" is not defined, maybe you're using node < 18? From Pyodide >= 0.25.0, node >= 18 is required. Older versions of Node.js may work, but it is not guaranteed or supported. Falling back to "node-fetch".`;async function U(){if(!g||(ne=(await import("./__vite-browser-external-CIEyP2s7.js")).default,$=await import("./__vite-browser-external-CIEyP2s7.js"),globalThis.fetch?C=fetch:(console.warn(Qe),C=(await import("./index-B489Fav_.js")).default),te=(await import("./__vite-browser-external-CIEyP2s7.js")).default,A=await import("./__vite-browser-external-CIEyP2s7.js"),V=A.sep,typeof J<"u"))return;let e=await import("./__vite-browser-external-CIEyP2s7.js"),n=await import("./__vite-browser-external-CIEyP2s7.js"),i=await import("./__vite-browser-external-CIEyP2s7.js"),a=await import("./__vite-browser-external-CIEyP2s7.js"),s={fs:e,crypto:n,ws:i,child_process:a};globalThis.require=function(r){return s[r]}}p(U,"initNodeModules");function ie(e,n){return A.resolve(n||".",e)}p(ie,"node_resolvePath");function re(e,n){return n===void 0&&(n=location),new URL(e,n).toString()}p(re,"browser_resolvePath");var R;g?R=ie:R=re;var V;g||(V="/");function ae(e,n){return e.startsWith("file://")&&(e=e.slice(7)),e.includes("://")?{response:C(e)}:{binary:$.readFile(e).then(i=>new Uint8Array(i.buffer,i.byteOffset,i.byteLength))}}p(ae,"node_getBinaryResponse");function se(e,n){let i=new URL(e,location);return{response:fetch(i,n?{integrity:n}:{})}}p(se,"browser_getBinaryResponse");var N;g?N=ae:N=se;async function oe(e,n){let{response:i,binary:a}=N(e,n);if(a)return a;let s=await i;if(!s.ok)throw new Error(`Failed to load '${e}': request failed.`);return new Uint8Array(await s.arrayBuffer())}p(oe,"loadBinaryFile");var x;if(Ke)x=p(async e=>await import(e),"loadScript");else if(Je)x=p(async e=>{try{globalThis.importScripts(e)}catch(n){if(n instanceof TypeError)await import(e);else throw n}},"loadScript");else if(g)x=le;else throw new Error("Cannot determine runtime environment");async function le(e){e.startsWith("file://")&&(e=e.slice(7)),e.includes("://")?te.runInThisContext(await(await C(e)).text()):await import(ne.pathToFileURL(e).href)}p(le,"nodeLoadScript");async function de(e){if(g){await U();let n=await $.readFile(e);return JSON.parse(n)}else return await(await fetch(e)).json()}p(de,"loadLockFile");async function fe(){if(Z)return __dirname;let e;try{throw new Error}catch(a){e=a}let n=Ye.default.parse(e)[0].fileName;if(Xe){let a=await import("./__vite-browser-external-CIEyP2s7.js");return(await import("./__vite-browser-external-CIEyP2s7.js")).fileURLToPath(a.dirname(n))}let i=n.lastIndexOf(V);if(i===-1)throw new Error("Could not extract indexURL path from pyodide module location");return n.slice(0,i)}p(fe,"calculateDirname");function ce(e){let n=e.FS,i=e.FS.filesystems.MEMFS,a=e.PATH,s={DIR_MODE:16895,FILE_MODE:33279,mount:function(r){if(!r.opts.fileSystemHandle)throw new Error("opts.fileSystemHandle is required");return i.mount.apply(null,arguments)},syncfs:async(r,t,l)=>{try{let o=s.getLocalSet(r),f=await s.getRemoteSet(r),d=t?f:o,c=t?o:f;await s.reconcile(r,d,c),l(null)}catch(o){l(o)}},getLocalSet:r=>{let t=Object.create(null);function l(d){return d!=="."&&d!==".."}p(l,"isRealDir");function o(d){return c=>a.join2(d,c)}p(o,"toAbsolute");let f=n.readdir(r.mountpoint).filter(l).map(o(r.mountpoint));for(;f.length;){let d=f.pop(),c=n.stat(d);n.isDir(c.mode)&&f.push.apply(f,n.readdir(d).filter(l).map(o(d))),t[d]={timestamp:c.mtime,mode:c.mode}}return{type:"local",entries:t}},getRemoteSet:async r=>{let t=Object.create(null),l=await Ze(r.opts.fileSystemHandle);for(let[o,f]of l)o!=="."&&(t[a.join2(r.mountpoint,o)]={timestamp:f.kind==="file"?(await f.getFile()).lastModifiedDate:new Date,mode:f.kind==="file"?s.FILE_MODE:s.DIR_MODE});return{type:"remote",entries:t,handles:l}},loadLocalEntry:r=>{let t=n.lookupPath(r).node,l=n.stat(r);if(n.isDir(l.mode))return{timestamp:l.mtime,mode:l.mode};if(n.isFile(l.mode))return t.contents=i.getFileDataAsTypedArray(t),{timestamp:l.mtime,mode:l.mode,contents:t.contents};throw new Error("node type not supported")},storeLocalEntry:(r,t)=>{if(n.isDir(t.mode))n.mkdirTree(r,t.mode);else if(n.isFile(t.mode))n.writeFile(r,t.contents,{canOwn:!0});else throw new Error("node type not supported");n.chmod(r,t.mode),n.utime(r,t.timestamp,t.timestamp)},removeLocalEntry:r=>{var t=n.stat(r);n.isDir(t.mode)?n.rmdir(r):n.isFile(t.mode)&&n.unlink(r)},loadRemoteEntry:async r=>{if(r.kind==="file"){let t=await r.getFile();return{contents:new Uint8Array(await t.arrayBuffer()),mode:s.FILE_MODE,timestamp:t.lastModifiedDate}}else{if(r.kind==="directory")return{mode:s.DIR_MODE,timestamp:new Date};throw new Error("unknown kind: "+r.kind)}},storeRemoteEntry:async(r,t,l)=>{let o=r.get(a.dirname(t)),f=n.isFile(l.mode)?await o.getFileHandle(a.basename(t),{create:!0}):await o.getDirectoryHandle(a.basename(t),{create:!0});if(f.kind==="file"){let d=await f.createWritable();await d.write(l.contents),await d.close()}r.set(t,f)},removeRemoteEntry:async(r,t)=>{await r.get(a.dirname(t)).removeEntry(a.basename(t)),r.delete(t)},reconcile:async(r,t,l)=>{let o=0,f=[];Object.keys(t.entries).forEach(function(m){let u=t.entries[m],h=l.entries[m];(!h||n.isFile(u.mode)&&u.timestamp.getTime()>h.timestamp.getTime())&&(f.push(m),o++)}),f.sort();let d=[];if(Object.keys(l.entries).forEach(function(m){t.entries[m]||(d.push(m),o++)}),d.sort().reverse(),!o)return;let c=t.type==="remote"?t.handles:l.handles;for(let m of f){let u=a.normalize(m.replace(r.mountpoint,"/")).substring(1);if(l.type==="local"){let h=c.get(u),_=await s.loadRemoteEntry(h);s.storeLocalEntry(m,_)}else{let h=s.loadLocalEntry(m);await s.storeRemoteEntry(c,u,h)}}for(let m of d)if(l.type==="local")s.removeLocalEntry(m);else{let u=a.normalize(m.replace(r.mountpoint,"/")).substring(1);await s.removeRemoteEntry(c,u)}}};e.FS.filesystems.NATIVEFS_ASYNC=s}p(ce,"initializeNativeFS");var Ze=p(async e=>{let n=[];async function i(s){for await(let r of s.values())n.push(r),r.kind==="directory"&&await i(r)}p(i,"collect"),await i(e);let a=new Map;a.set(".",e);for(let s of n){let r=(await e.resolve(s)).join("/");a.set(r,s)}return a},"getFsHandles");function me(){let e={};return e.noImageDecoding=!0,e.noAudioDecoding=!0,e.noWasmDecoding=!1,e.preRun=[],e.quit=(n,i)=>{throw e.exited={status:n,toThrow:i},i},e}p(me,"createModule");function _e(e,n){e.preRun.push(function(){let i="/";try{e.FS.mkdirTree(n)}catch(a){console.error(`Error occurred while making a home directory '${n}':`),console.error(a),console.error(`Using '${i}' for a home directory instead`),n=i}e.FS.chdir(n)})}p(_e,"createHomeDirectory");function pe(e,n){e.preRun.push(function(){Object.assign(e.ENV,n)})}p(pe,"setEnvironment");function ue(e,n){e.preRun.push(()=>{for(let i of n)e.FS.mkdirTree(i),e.FS.mount(e.FS.filesystems.NODEFS,{root:i},i)})}p(ue,"mountLocalDirectories");function ye(e,n){let i=oe(n);e.preRun.push(()=>{let a=e._py_version_major(),s=e._py_version_minor();e.FS.mkdirTree("/lib"),e.FS.mkdirTree(`/lib/python${a}.${s}/site-packages`),e.addRunDependency("install-stdlib"),i.then(r=>{e.FS.writeFile(`/lib/python${a}${s}.zip`,r)}).catch(r=>{console.error("Error occurred while installing the standard library:"),console.error(r)}).finally(()=>{e.removeRunDependency("install-stdlib")})})}p(ye,"installStdlib");function he(e,n){let i;n.stdLibURL!=null?i=n.stdLibURL:i=n.indexURL+"python_stdlib.zip",ye(e,i),_e(e,n.env.HOME),pe(e,n.env),ue(e,n._node_mounts),e.preRun.push(()=>ce(e))}p(he,"initializeFileSystem");function ge(e,n){let{binary:i,response:a}=N(n+"pyodide.asm.wasm");e.instantiateWasm=function(s,r){return async function(){try{let t;a?t=await WebAssembly.instantiateStreaming(a,s):t=await WebAssembly.instantiate(await i,s);let{instance:l,module:o}=t;typeof WasmOffsetConverter<"u"&&(wasmOffsetConverter=new WasmOffsetConverter(wasmBinary,o)),r(l,o)}catch(t){console.warn("wasm instantiation failed!"),console.warn(t)}}(),{}}}p(ge,"preloadWasm");var D="0.25.0";async function be(e={}){await U();let n=e.indexURL||await fe();n=R(n),n.endsWith("/")||(n+="/"),e.indexURL=n;let i={fullStdLib:!1,jsglobals:globalThis,stdin:globalThis.prompt?globalThis.prompt:void 0,lockFileURL:n+"pyodide-lock.json",args:[],_node_mounts:[],env:{},packageCacheDir:n,packages:[]},a=Object.assign(i,e);a.env.HOME||(a.env.HOME="/home/pyodide");let s=me();s.print=a.stdout,s.printErr=a.stderr,s.arguments=a.args;let r={config:a};s.API=r,r.lockFilePromise=de(a.lockFileURL),ge(s,n),he(s,a);let t=new Promise(o=>s.postRun=o);if(s.locateFile=o=>a.indexURL+o,typeof _createPyodideModule!="function"){let o=`${a.indexURL}pyodide.asm.js`;await x(o)}if(await _createPyodideModule(s),await t,s.exited)throw s.exited.toThrow;if(e.pyproxyToStringRepr&&r.setPyProxyToStringMethod(!0),r.version!==D)throw new Error(`Pyodide version does not match: '${D}' <==> '${r.version}'. If you updated the Pyodide version, make sure you also updated the 'indexURL' parameter passed to loadPyodide.`);s.locateFile=o=>{throw new Error("Didn't expect to load any more file_packager files!")};let l=r.finalizeBootstrap();if(l.version.includes("dev")||r.setCdnUrl(`https://cdn.jsdelivr.net/pyodide/v${l.version}/full/`),await r.packageIndexReady,r._pyodide._importhook.register_module_not_found_hook(r._import_name_to_package_name,r.lockfile_unvendored_stdlibs_and_test),r.lockfile_info.version!==D)throw new Error("Lock file version doesn't match Pyodide version");return r.package_loader.init_loaded_packages(),a.fullStdLib&&await l.loadPackage(r.lockfile_unvendored_stdlibs),r.initializeStreams(a.stdin,a.stdout,a.stderr),l}p(be,"loadPyodide");async function en(e){const n={"api/app.py":`from __future__ import annotations
 
 from typing import Any
 
@@ -20,17 +20,17 @@ from api.services import browse_charts, get_chart, get_next_chart
 sessions: dict[str, SessionModel] = {"default": SessionModel()}
 
 
-def getSession(sessionKey: str = "default") -> SessionModel:
-  if sessionKey not in sessions:
-    sessions[sessionKey] = SessionModel()
-  return sessions[sessionKey]
+def getSession(session_key: str = "default") -> SessionModel:
+  if session_key not in sessions:
+    sessions[session_key] = SessionModel()
+  return sessions[session_key]
 
 
-def setSession(session: SessionModel, sessionKey: str = "default") -> None:
-  sessions[sessionKey] = session
+def setSession(session: SessionModel, session_key: str = "default") -> None:
+  sessions[session_key] = session
 
 
-def loadSession(session: dict[str, Any] | SessionModel, sessionKey: str = "default"):
+def loadSession(session: dict[str, Any] | SessionModel, session_key: str = "default"):
   if isinstance(session, dict):
     session = SessionModel.model_validate(session)
 
@@ -42,36 +42,36 @@ def loadSession(session: dict[str, Any] | SessionModel, sessionKey: str = "defau
     chart = get_next_chart(new_session)
     new_session.charts.append(chart) if chart else None
 
-  setSession(new_session, sessionKey)
+  setSession(new_session, session_key)
   for key, session in sessions.items():
     print(session.filename, [f.name for f in session.fields])
 
   return new_session.model_dump(by_alias=True, mode="json")
 
 
-def appendChart(chart: dict[str, Any] | ChartModel, sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def appendChart(chart: dict[str, Any] | ChartModel, session_key: str = "default"):
+  session = getSession(session_key)
   if isinstance(chart, dict):
     chart = ChartModel.model_validate(chart)
   session.charts.append(chart)
   return session.model_dump(by_alias=True, mode="json")
 
 
-def appendNextChart(sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def appendNextChart(session_key: str = "default"):
+  session = getSession(session_key)
   chart = get_next_chart(session)
   session.charts.append(chart) if chart else None
   return chart.model_dump(by_alias=True, mode="json") if chart else None
 
 
-def browseCharts(field_names: list[str], sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def browseCharts(field_names: list[str], session_key: str = "default"):
+  session = getSession(session_key)
   browsed_chart = browse_charts(session, field_names)
   return [chart.model_dump(by_alias=True, mode="json") for chart in browsed_chart]
 
 
-def getCharts(field_names: list[str], sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def getCharts(field_names: list[str], session_key: str = "default"):
+  session = getSession(session_key)
   fields = [
     field for field in session.available_fields if set(field_names) == set([f.name for f in field])
   ]
@@ -79,8 +79,8 @@ def getCharts(field_names: list[str], sessionKey: str = "default"):
   return [chart.model_dump(by_alias=True, mode="json") for chart in charts if chart]
 
 
-def setPreferred(key: str, preferred: bool, sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def setPreferred(key: str, preferred: bool, session_key: str = "default"):
+  session = getSession(session_key)
   chart = next((chart for chart in session.charts if chart.key == key), None)
   if chart:
     chart.preferred = preferred
@@ -94,7 +94,7 @@ from .field_model import FieldModel
 from .metadata_model import FieldType, MetadataModel
 from .session_model import SessionModel
 
-TimeUnitType = Literal["year", "month", "day"]
+TimeUnitType = Literal["year", "month", "day", "hours"]
 
 __all__ = [
   "ChartModel",
@@ -105,27 +105,41 @@ __all__ = [
   "DefaultConfig",
   "TimeUnitType",
 ]
-`,"api/models/chart_model.py":`from typing import Any, Dict, List, Self
+`,"api/models/chart_model.py":`from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any, Self, cast
 
 from api.utils import get_fields_hash, get_timestamp
+from numpy import argmax
 from pydantic import BaseModel, Field, model_validator
 
 from .field_model import FieldModel
 from .model_config import DefaultConfig
 
+if TYPE_CHECKING:
+  from .metadata_model import MetadataDatetime
+
+timeFormats = {
+  "year": "%Y",
+  "month": "%b",
+  "day": "%a",
+  "hours": "%H",
+}
+
 
 class ChartModel(BaseModel):
   fields: tuple[FieldModel, ...] = Field(default_factory=tuple)
-  specs: List[Dict[str, Any]] = Field(default_factory=list)
+  spec: Any = Field(default_factory=dict)
   title: str = Field(default="")
   description: str = Field(default="")
 
-  spec_index: int = Field(default=0, init=False)
   preferred: bool = Field(default=False, init=False)
   timestamp: int = Field(default_factory=get_timestamp, init=False)
 
   attributes: tuple[str, ...] = Field(default_factory=tuple, init=False)
   key: str = Field(default="", init=False, repr=False)
+
+  time_unit: str | None = Field(default=None)
 
   model_config = DefaultConfig
 
@@ -134,6 +148,38 @@ class ChartModel(BaseModel):
     self.attributes = tuple([field.clingo_name for field in self.fields])
     self.key = f"chart-{str([field for field in self.attributes])}-{self.timestamp}"
     self.title = " & ".join([field.clingo_name for field in self.fields])
+
+    if "datetime" in [field.type for field in self.fields]:
+      datetimefield = [field for field in self.fields if field.type == "datetime"][0]
+      metadata = cast("MetadataDatetime", datetimefield.metadata)
+      self.time_unit = ["year", "month", "day", "hours"][
+        argmax(
+          [
+            metadata.year_unique,
+            metadata.month_unique,
+            metadata.day_unique,
+            metadata.hours_unique,
+          ]
+        )
+      ]
+
+      self.spec = {
+        **self.spec,
+        "config": {
+          **self.spec.get("config", {}),
+          "axisTemporal": {
+            "format": timeFormats[self.time_unit],
+          },
+        },
+        "transform": [
+          {
+            "timeUnit": self.time_unit,
+            "field": datetimefield.name,
+            "as": datetimefield.name,
+          },
+        ],
+      }
+
     return self
 
   def __hash__(self):
@@ -207,6 +253,10 @@ def get_field_metadata(series: pd.Series, type: FieldType) -> MetadataModel:
       missing=series.isnull().sum(),
       min=str(series.min()),
       max=str(series.max()),
+      year_unique=series.dt.year.nunique(),
+      month_unique=series.dt.month.nunique(),
+      day_unique=series.dt.day.nunique(),
+      hours_unique=series.dt.hour.nunique(),
     )
 
   return MetadataBase(
@@ -292,6 +342,11 @@ class MetadataDatetime(MetadataBase):
   type: FieldType = "datetime"
   min: str
   max: str
+
+  year_unique: int
+  month_unique: int
+  day_unique: int
+  hours_unique: int
 
 
 class MetadataName(MetadataBase):
@@ -554,7 +609,6 @@ def heatmap_ct(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y=categorical_field.clingo_name,
       color="count()",
@@ -579,7 +633,6 @@ def heatmap_ct_n(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y=categorical_field.clingo_name,
       color=alt.Color(numeric_field.clingo_name, aggregate="mean"),
@@ -609,7 +662,7 @@ def linechart_nt(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
+        axis=alt.Axis(format="%b"),
       ),
       y=alt.Y(numeric_field.clingo_name, aggregate="mean"),
     )
@@ -633,7 +686,6 @@ def linechart_nt_c(
       x=alt.X(
         temporal_field.clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y=alt.Y(numeric_field.clingo_name, aggregate="mean"),
       color=categorical_field.clingo_name,
@@ -644,7 +696,6 @@ def linechart_nt_c(
 def linechart_t(
   df: pd.DataFrame,
   fields: tuple[FieldModel, ...],
-  time_unit: TimeUnitType = "year",
 ) -> alt.Chart:
   if len(fields) != 1 and fields[0].type != "datetime":
     raise ValueError("Invalid field type for linechart_t")
@@ -656,7 +707,6 @@ def linechart_t(
       x=alt.X(
         fields[0].clingo_name,
         type="temporal",
-        timeUnit=time_unit,
       ),
       y="count()",
     )
@@ -720,11 +770,10 @@ def get_chart(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> ChartModel | 
 
   # facts = get_facts_from_fields(df, fields)
   # specs = get_specs_from_facts(df, facts)
-  # chart = ChartModel(fields=fields, specs=specs) if specs else None
+  # chart = ChartModel(fields=fields, spec=specs[0]) if specs else None
   # if chart:
   #   chart_cache[fields] = chart
   # return chart
-  print(fields)
   return get_manual_chart(df, fields)
 `,"api/services/get_facts.py":`import draco
 import pandas as pd
@@ -801,7 +850,7 @@ def get_manual_chart(df: pd.DataFrame, fields: tuple[FieldModel, ...]) -> ChartM
   try:
     if key in chart_map:
       spec = replace_clingo_field_name(_clean_spec(chart_map[key](df, fields).to_dict()))
-      return ChartModel(fields=fields, specs=[spec])
+      return ChartModel(fields=fields, spec=spec)
   except ValueError as V:
     print(key)
     print(V)
@@ -1282,17 +1331,17 @@ from api.services import browse_charts, get_chart, get_next_chart
 sessions: dict[str, SessionModel] = {"default": SessionModel()}
 
 
-def getSession(sessionKey: str = "default") -> SessionModel:
-  if sessionKey not in sessions:
-    sessions[sessionKey] = SessionModel()
-  return sessions[sessionKey]
+def getSession(session_key: str = "default") -> SessionModel:
+  if session_key not in sessions:
+    sessions[session_key] = SessionModel()
+  return sessions[session_key]
 
 
-def setSession(session: SessionModel, sessionKey: str = "default") -> None:
-  sessions[sessionKey] = session
+def setSession(session: SessionModel, session_key: str = "default") -> None:
+  sessions[session_key] = session
 
 
-def loadSession(session: dict[str, Any] | SessionModel, sessionKey: str = "default"):
+def loadSession(session: dict[str, Any] | SessionModel, session_key: str = "default"):
   if isinstance(session, dict):
     session = SessionModel.model_validate(session)
 
@@ -1304,36 +1353,36 @@ def loadSession(session: dict[str, Any] | SessionModel, sessionKey: str = "defau
     chart = get_next_chart(new_session)
     new_session.charts.append(chart) if chart else None
 
-  setSession(new_session, sessionKey)
+  setSession(new_session, session_key)
   for key, session in sessions.items():
     print(session.filename, [f.name for f in session.fields])
 
   return new_session.model_dump(by_alias=True, mode="json")
 
 
-def appendChart(chart: dict[str, Any] | ChartModel, sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def appendChart(chart: dict[str, Any] | ChartModel, session_key: str = "default"):
+  session = getSession(session_key)
   if isinstance(chart, dict):
     chart = ChartModel.model_validate(chart)
   session.charts.append(chart)
   return session.model_dump(by_alias=True, mode="json")
 
 
-def appendNextChart(sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def appendNextChart(session_key: str = "default"):
+  session = getSession(session_key)
   chart = get_next_chart(session)
   session.charts.append(chart) if chart else None
   return chart.model_dump(by_alias=True, mode="json") if chart else None
 
 
-def browseCharts(field_names: list[str], sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def browseCharts(field_names: list[str], session_key: str = "default"):
+  session = getSession(session_key)
   browsed_chart = browse_charts(session, field_names)
   return [chart.model_dump(by_alias=True, mode="json") for chart in browsed_chart]
 
 
-def getCharts(field_names: list[str], sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def getCharts(field_names: list[str], session_key: str = "default"):
+  session = getSession(session_key)
   fields = [
     field for field in session.available_fields if set(field_names) == set([f.name for f in field])
   ]
@@ -1341,12 +1390,12 @@ def getCharts(field_names: list[str], sessionKey: str = "default"):
   return [chart.model_dump(by_alias=True, mode="json") for chart in charts if chart]
 
 
-def setPreferred(key: str, preferred: bool, sessionKey: str = "default"):
-  session = getSession(sessionKey)
+def setPreferred(key: str, preferred: bool, session_key: str = "default"):
+  session = getSession(session_key)
   chart = next((chart for chart in session.charts if chart.key == key), None)
   if chart:
     chart.preferred = preferred
     return chart.model_dump(by_alias=True, mode="json")
   else:
     return None
-`)}const tn={pyodide:null,async writeFile(e,n){try{if(!this.pyodide)throw new Error("Pyodide is not initialized");this.pyodide.FS.mkdir("data"),this.pyodide.FS.writeFile(`data/${e}`,n,{encoding:"binary",flags:"w"})}catch(i){throw console.error(i),i}},async readFile(e){try{if(!this.pyodide)throw new Error("Pyodide is not initialized");return this.pyodide.FS.readFile(`${e}`,{encoding:"utf-8"})}catch(n){throw console.error(n),n}},async initialize(e=[]){this.pyodide=await be({indexURL:"/Swipytics/artifacts"});for(const n of e)await this.pyodide.loadPackage(n);await en(this.pyodide);try{await nn(this.pyodide)}catch(n){console.error(n)}},terminate(){if(this.pyodide){const e=new Uint8Array(new SharedArrayBuffer(1));e[0]=2,this.pyodide.setInterruptBuffer(e),this.pyodide=null}},async runPython(e,n={}){if(!this.pyodide)throw new Error("Pyodide is not initialized");const i=this.pyodide.globals.get("dict")();for(const[a,s]of Object.entries(n))i.set(a,s);return this.pyodide.runPython(e,{globals:i})},async callPythonFunction(e,n){if(!this.pyodide)throw new Error("Pyodide is not initialized");const i=this.pyodide.globals.get(e);if(!i)throw new Error(`Function ${e} is not defined in globals`);const a=this.pyodide.toPy(n),s=i.call(i,...a),r=s==null?void 0:s.toJs({dict_converter:Object.fromEntries,depth:1e5});return a.destroy(),s.destroy(),r}};I(tn)});export default rn();
+`)}const tn={pyodide:null,async writeFile(e,n){try{if(!this.pyodide)throw new Error("Pyodide is not initialized");this.pyodide.FS.mkdir("data"),this.pyodide.FS.writeFile(`data/${e}`,n,{encoding:"binary",flags:"w"})}catch(i){throw console.error(i),i}},async readFile(e){try{if(!this.pyodide)throw new Error("Pyodide is not initialized");return this.pyodide.FS.readFile(`${e}`,{encoding:"utf-8"})}catch(n){throw console.error(n),n}},async initialize(e=[]){this.pyodide=await be({indexURL:"/Swipytics/artifacts"});for(const n of e)await this.pyodide.loadPackage(n);await en(this.pyodide);try{await nn(this.pyodide)}catch(n){console.error(n)}},terminate(){if(this.pyodide){const e=new Uint8Array(new SharedArrayBuffer(1));e[0]=2,this.pyodide.setInterruptBuffer(e),this.pyodide=null}},async runPython(e,n={}){if(!this.pyodide)throw new Error("Pyodide is not initialized");const i=this.pyodide.globals.get("dict")();for(const[a,s]of Object.entries(n))i.set(a,s);return this.pyodide.runPython(e,{globals:i})},async callPythonFunction(e,n){if(!this.pyodide)throw new Error("Pyodide is not initialized");const i=this.pyodide.globals.get(e);if(!i)throw new Error(`Function ${e} is not defined in globals`);const a=this.pyodide.toPy(n),s=i.call(i,...a),r=s==null?void 0:s.toJs({dict_converter:Object.fromEntries,depth:1e5});return a.destroy(),s.destroy(),r}};j(tn)});export default rn();
