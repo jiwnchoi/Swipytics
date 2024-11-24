@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
 import { useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { chakraColors, PRIMARY } from "@shared/constants";
 import { useLayoutEffect, useRef } from "react";
@@ -6,9 +7,12 @@ export default function useLayout() {
   const bgColor = useColorModeValue("#EDF2F7", "#1A202C");
 
   useLayoutEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
     const metaThemeColor = document.querySelector("meta[name=theme-color]") as HTMLMetaElement;
+    const msApplicationNavButtonColor = document.querySelector(
+      "meta[name=msapplication-navbutton-color]",
+    ) as HTMLMetaElement;
     metaThemeColor.content = bgColor;
+    msApplicationNavButtonColor.content = bgColor;
   }, [bgColor]);
 
   const cardPadding = useBreakpointValue({
