@@ -38,9 +38,9 @@ class ChartModel(BaseModel):
 
   @model_validator(mode="after")
   def after(self) -> Self:
-    self.attributes = tuple([field.clingo_name for field in self.fields])
+    self.attributes = tuple([field.name for field in self.fields])
     self.key = f"chart-{str([field for field in self.attributes])}-{self.timestamp}"
-    self.title = " & ".join([field.clingo_name for field in self.fields])
+    self.title = " & ".join([field.name for field in self.fields])
 
     if "datetime" in [field.type for field in self.fields]:
       datetimefield = [field for field in self.fields if field.type == "datetime"][0]

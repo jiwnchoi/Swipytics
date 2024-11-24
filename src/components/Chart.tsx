@@ -63,7 +63,7 @@ function Chart({ chart, ...props }: ChartProps) {
   const argMaxTimeUnit = timeUnitUniques.reduce((iMax, x, i, arr) => (x > arr[iMax] ? i : iMax), 0);
 
   const timeUnits = ["year", "month", "day", "hours"].filter(
-    (unit) => ((temporalMetadata?.[`${unit}Unique` as keyof TMetadata] as number) ?? 0) > 1,
+    (unit) => ((temporalMetadata?.[`${unit}Unique` as keyof TMetadata] as number) ?? 0) > 2,
   ) as TimeUnit[];
 
   const initialTimeUnit = useMemo(() => {
