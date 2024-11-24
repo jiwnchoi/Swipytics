@@ -31,17 +31,17 @@ export default function LargeApp() {
           variant="line"
           tabs={[
             {
-              name: "likes",
-              displayName: t("bookmarks.title"),
-              icon: HeartCheckIcon,
-              Panel: <LikesView h={tabPanelHeight} thumbnailSize={100} />,
-              displayingBeforeInit: false,
-            },
-            {
               name: "search",
               displayName: t("search.title"),
               icon: Search01Icon,
               Panel: <DiscoverView tagSize="md" h={tabPanelHeight} pb={4} thumbnailSize={80} />,
+              displayingBeforeInit: false,
+            },
+            {
+              name: "likes",
+              displayName: t("bookmarks.title"),
+              icon: HeartCheckIcon,
+              Panel: <LikesView h={tabPanelHeight} thumbnailSize={100} />,
               displayingBeforeInit: false,
             },
             {

@@ -6,6 +6,7 @@ import { useParentSize } from "@visx/responsive";
 import { scaleLinear } from "@visx/scale";
 import { motion } from "framer-motion";
 import { ArrowDown03Icon } from "hugeicons-react";
+import { useMemo } from "react";
 
 function ScrollIndicator(props: FlexProps) {
   const {
@@ -45,6 +46,18 @@ function ScrollIndicator(props: FlexProps) {
     }));
   };
 
+  const indicators = useMemo(getIndicators, [
+    appendingChart,
+    charts,
+    height,
+    indicatorPadding.TOP,
+    indicatorPadding.BOTTOM,
+    indicatorGap,
+    currentChartIndex,
+    preferredColor,
+    defaultGrayColor,
+  ]);
+
   return (
     <Flex
       ref={parentRef}
@@ -54,7 +67,7 @@ function ScrollIndicator(props: FlexProps) {
       visibility={!mobile || tabIndex === 0 ? "visible" : "hidden"}
       {...props}>
       <svg width={width} height={height}>
-        {getIndicators().map(({ key, cy, r, fill }) => (
+        {indicators.map(({ key, cy, r, fill }) => (
           <motion.circle
             key={key}
             cx={9}

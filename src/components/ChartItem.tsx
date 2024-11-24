@@ -1,4 +1,5 @@
-import { Divider, Flex, Image, ListItem, keyframes } from "@chakra-ui/react";
+import { Divider, Flex, Image, ListItem } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { useLayout, useThumnail } from "@hooks";
 import { type TChart } from "@shared/models";
 import ChartTitle from "./ChartTitle";

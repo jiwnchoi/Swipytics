@@ -4,8 +4,8 @@ import { devtools } from "zustand/middleware";
 
 const TABS = {
   charts: 0,
-  likes: 1,
-  search: 2,
+  search: 1,
+  likes: 2,
   fields: -2,
   settings: -1,
 };

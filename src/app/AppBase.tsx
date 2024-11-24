@@ -23,7 +23,7 @@ function HeaderImpl() {
   const fields = useSessionsStore((state) => state.fields);
 
   return (
-    <Flex w="full" justifyContent={"space-between"} alignItems={"center"} px={2} py={1}>
+    <Flex w="full" justifyContent={"space-between"} alignItems={"center"} px={2} pb={1}>
       {tabIndex !== -1 ? (
         <Flex alignItems={"center"} h="full" gap={1}>
           <Icon as={SwipeUp02Icon} boxSize={7} />
@@ -53,7 +53,7 @@ export default function BaseApp() {
   const { t } = useTranslation();
 
   return (
-    <Flex p={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column" position={"relative"}>
+    <Flex px={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column" position={"relative"}>
       <Header />
       <TabsContainerBase
         flexDir="column"
@@ -67,17 +67,17 @@ export default function BaseApp() {
             displayingBeforeInit: false,
           },
           {
-            name: "likes",
-            displayName: t("bookmarks.title"),
-            icon: HeartCheckIcon,
-            Panel: <LikesView thumbnailSize={100} />,
-            displayingBeforeInit: false,
-          },
-          {
             name: "search",
             displayName: t("search.title"),
             icon: Search02Icon,
             Panel: <DiscoverView tagSize="md" />,
+            displayingBeforeInit: false,
+          },
+          {
+            name: "likes",
+            displayName: t("bookmarks.title"),
+            icon: HeartCheckIcon,
+            Panel: <LikesView thumbnailSize={100} />,
             displayingBeforeInit: false,
           },
           {

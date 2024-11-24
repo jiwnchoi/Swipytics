@@ -21,7 +21,7 @@ def relevance_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> fl
   recent_fields = set()
 
   for chart in session.charts[::-1]:
-    if len(recent_fields) > 5:
+    if len(recent_fields) > 5:  # 5인 것은 Miller의 법칙 최솟값
       break
     recent_fields.update(chart.fields)
 
@@ -49,7 +49,9 @@ def freshness_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> fl
   if last_index == -1:
     return 1.0
 
-  n_uni_and_bivariate = n_fields + (n_fields * (n_fields - 1) / 2)
+  n_uni_and_bivariate = n_fields + (
+    n_fields * (n_fields - 1) / 2
+  )  # Univariate 차트 수 + Bivariate 차트 수
 
   return min((len(session.charts) - last_index) / n_uni_and_bivariate, 1)
 

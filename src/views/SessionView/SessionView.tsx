@@ -1,7 +1,9 @@
-import { Flex, type FlexProps, keyframes } from "@chakra-ui/react";
+import { Flex, type FlexProps } from "@chakra-ui/react";
 import { Chart, PlaceHolder } from "@components";
+import { keyframes } from "@emotion/react";
 import { useLayout } from "@hooks";
 import useSessionView from "./useSessionView";
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
