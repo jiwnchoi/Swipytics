@@ -75,8 +75,8 @@ export default function useLayout() {
   };
   const chartTheme: "dark" | undefined = useColorModeValue(undefined, "dark");
   const indicatorPadding = {
-    TOP: 12,
-    BOTTOM: 12,
+    TOP: 24,
+    BOTTOM: 24,
   };
 
   const indicatorGap = 6;
