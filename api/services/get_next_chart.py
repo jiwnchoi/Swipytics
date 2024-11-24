@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from random import choice
 from typing import TypeVar
 
 import numpy as np
@@ -16,7 +17,7 @@ T = TypeVar("T")
 
 def relevance_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> float:
   if len(fields) == 1:
-    return 1.0
+    return 0.5
 
   recent_fields = set()
 
@@ -60,7 +61,7 @@ score_weight = [
   1,  # relevance
   2,  # preference
   3,  # freshness
-  1,  # simplicity
+  2,  # simplicity
 ]
 
 
@@ -83,7 +84,13 @@ def get_next_chart(session: SessionModel) -> ChartModel | None:
     ]
     return sum(w * s for w, s in zip(score_weight, scores))
 
-  total_scores = [get_score(fields) for fields in session.available_fields]
-  selected_fields, _ = max(zip(session.available_fields, total_scores), key=lambda x: x[1])
+  fields_and_scores = [(fields, get_score(fields)) for fields in session.available_fields]
+
+  max_score = max(score for _, score in fields_and_scores)
+
+  top_fields = [fields for fields, score in fields_and_scores if score == max_score]
+
+  selected_fields = choice(top_fields)
+
   chart = get_chart(session.df, selected_fields)
   return chart
