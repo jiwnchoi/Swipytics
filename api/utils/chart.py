@@ -31,8 +31,7 @@ def get_spec(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> Optional["Ch
     print(key)
     print(K)
 
-  finally:
-    return None
+  return None
 
 
 def check_fields(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> bool:
