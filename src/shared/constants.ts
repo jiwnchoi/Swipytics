@@ -127,6 +127,18 @@ export const chakraColors = {
 
 export const DEMO_LIST: TDemo[] = [
   {
+    name: "Cars (Korean)",
+    href: "/data/cars_ko.json",
+  },
+  {
+    name: "Movies (Korean)",
+    href: "/data/movies_ko.json",
+  },
+  {
+    name: "Seoul Bike Rides (Korean)",
+    href: "/data/SeoulBikeData_ko_cleaned_5000.json",
+  },
+  {
     name: "Barley",
     href: "/data/barley.json",
   },
@@ -143,10 +155,6 @@ export const DEMO_LIST: TDemo[] = [
     href: "/data/cars.json",
   },
   {
-    name: "Cars (Korean)",
-    href: "/data/cars_ko.json",
-  },
-  {
     name: "Crimea",
     href: "/data/crimea.json",
   },
@@ -159,16 +167,8 @@ export const DEMO_LIST: TDemo[] = [
     href: "/data/movies.json",
   },
   {
-    name: "Movies (Korean)",
-    href: "/data/movies_ko.json",
-  },
-  {
     name: "Population",
     href: "/data/population.json",
-  },
-  {
-    name: "Seoul Bike Rides",
-    href: "/data/SeoulBikeData_ko_cleaned_5000.json",
   },
 ];
 
