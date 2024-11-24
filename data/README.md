@@ -18,3 +18,5 @@
 [UC Irvine ML Repository](https://archive.ics.uci.edu/datasets)
 
 - SeoulBikeRide_ko_cleaned (Korean translated, bit cleaned, sampled 5000)
+
+Have to add data to @shared/constants.ts
