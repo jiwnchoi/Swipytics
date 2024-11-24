@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start:server": "pnpm build && hatch run fastapi run server.py",
+    "start:server": "hatch run fastapi run server.py",
     "dev": "vite",
     "dev:server": "concurrently \"vite\" \"hatch run fastapi dev server.py\"",
     "build": "tsc -b && vite build",

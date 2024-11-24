@@ -29,7 +29,7 @@ async def get_session_key(request: Request) -> str:
   return hashlib.sha256(device_string.encode()).hexdigest()
 
 
-if os.path.exists("dist"):
+if os.path.exists("dist") and os.getenv("ENV") != "development":
   server.mount("/Swipytics", StaticFiles(directory="dist", html=True), name="static")
 
 
