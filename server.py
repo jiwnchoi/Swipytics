@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Annotated
 
 from api.app import appendChart, appendNextChart, browseCharts, getCharts, loadSession, setPreferred
-from api.models import ChartModel, SessionModel
+from api.models import ChartModel, FieldModel
 from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile, status
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -41,12 +41,19 @@ async def write_file(file: UploadFile, session_key: Annotated[str, Depends(get_s
   return {"filename": file.filename}
 
 
+class LoadSessionRequest(BaseModel):
+  filename: str
+  charts: list["ChartModel"] = Field(default_factory=list)
+  fields: list["FieldModel"] = Field(default_factory=list)
+  timestamp: int = Field(default=0)
+
+
 @server.post("/api/loadSession")
 async def load_session(
-  session: SessionModel, session_key: Annotated[str, Depends(get_session_key)]
+  session: LoadSessionRequest, session_key: Annotated[str, Depends(get_session_key)]
 ):
   if os.path.isfile(f"data/{session.filename}"):
-    return loadSession(session=session, session_key=session_key)
+    return loadSession(session=session.model_dump(), session_key=session_key)
   else:
     return HTTPException(status_code=404, detail="File not found")
 

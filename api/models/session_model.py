@@ -20,7 +20,7 @@ from .model_config import DefaultConfig
 
 class SessionModel(BaseModel):
   filename: str = Field(default="")
-  df: pd.DataFrame = Field(default=None, repr=False, exclude=True)
+  df: pd.DataFrame = Field(default=None, repr=False, exclude=True, init=False)
   timestamp: int = Field(default_factory=get_timestamp, init=False)
   charts: list["ChartModel"] = Field(default_factory=list, init=False)
   fields: list["FieldModel"] = Field(default_factory=list, init=False)
