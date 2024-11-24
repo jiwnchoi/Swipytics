@@ -32,10 +32,10 @@ export default function SessionView(props: FlexProps) {
     <Flex
       ref={ref}
       onScroll={(e) => scrollContainerCallback(e.currentTarget)}
-      onPointerDown={() => {
+      onTouchStart={() => {
         mouseDown.current = true;
       }}
-      onPointerUpCapture={() => {
+      onTouchEnd={() => {
         mouseDown.current = false;
       }}
       onWheel={() => {

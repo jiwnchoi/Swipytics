@@ -1,6 +1,7 @@
 import { useLayout } from "@hooks";
 import { useLoggerClient } from "@logger/react";
 import { useSessionsStore } from "@stores";
+import { debounce } from "es-toolkit";
 import { useCallback, useEffect, useRef } from "react";
 
 export default function useSessionView() {
@@ -13,44 +14,38 @@ export default function useSessionView() {
   const ref = useRef<HTMLDivElement>(null);
   const logger = useLoggerClient();
 
-  const programmaticScroll = useRef(false);
-  const mouseDown = useRef(false);
   const { cardInnerHeight } = useLayout();
+  const mouseDown = useRef(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = useCallback(
-    (container: HTMLDivElement) => {
-      if (!container || programmaticScroll.current) return;
+    debounce((container: HTMLDivElement) => {
+      if (!container) return;
       const newIndex =
-        Math.floor((container.scrollTop + cardInnerHeight * 0.3) / cardInnerHeight) - 1;
-      if (newIndex !== currentChartIndex) setCurrentChartIndex(newIndex);
-    },
-    [cardInnerHeight, currentChartIndex, setCurrentChartIndex],
+        Math.floor((container.scrollTop + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
+      setCurrentChartIndex(newIndex);
+      if (newIndex === charts.length - 1) appendNextChart();
+    }, 100),
+    [cardInnerHeight, charts.length, appendNextChart, setCurrentChartIndex],
   );
 
   const scrollTo = useCallback(
     (index: number) => {
-      if (mouseDown.current) return;
-      programmaticScroll.current = true;
       ref.current?.scrollTo({
         top: (index + 1) * cardInnerHeight,
         behavior: "smooth",
       });
-      setTimeout(() => {
-        programmaticScroll.current = false;
-      }, 600);
     },
     [cardInnerHeight],
   );
 
   useEffect(() => {
     const scroll = () => {
-      if (ref.current?.clientHeight && currentChartIndex > -1) {
-        scrollTo(currentChartIndex);
-        if (currentChartIndex === charts.length - 1) appendNextChart();
-      } else requestAnimationFrame(scroll);
+      if (ref.current?.clientHeight) scrollTo(currentChartIndex);
+      else requestAnimationFrame(scroll);
     };
     requestAnimationFrame(scroll);
-  }, [appendNextChart, charts.length, currentChartIndex, scrollTo]);
+  }, [currentChartIndex, scrollTo]);
 
   useEffect(() => {
     const keyMap = {
