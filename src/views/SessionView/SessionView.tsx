@@ -4,6 +4,7 @@ import { keyframes } from "@emotion/react";
 import { useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
 import { useSessionsStore } from "@stores";
+import { debounce } from "es-toolkit";
 import { ArrowDown03Icon } from "hugeicons-react";
 import useSessionView from "./useSessionView";
 
@@ -36,6 +37,12 @@ export default function SessionView(props: FlexProps) {
       }}
       onPointerUpCapture={() => {
         mouseDown.current = false;
+      }}
+      onWheel={() => {
+        mouseDown.current = true;
+        debounce(() => {
+          mouseDown.current = false;
+        }, 150);
       }}
       data-log-scroll={"chart-container"}
       scrollSnapType={`y mandatory`}

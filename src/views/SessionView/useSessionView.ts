@@ -10,61 +10,52 @@ export default function useSessionView() {
   const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
   const setCurrentChartPreferred = useSessionsStore((state) => state.setCurrentChartPreferred);
 
-  const mouseDown = useRef(false);
-  const isProgrammaticScroll = useRef(false);
-
   const ref = useRef<HTMLDivElement>(null);
   const logger = useLoggerClient();
 
+  const programmaticScroll = useRef(false);
+  const mouseDown = useRef(false);
   const { cardInnerHeight } = useLayout();
 
   const handleScroll = useCallback(
     (container: HTMLDivElement) => {
-      if (!container || isProgrammaticScroll.current) return;
-
+      if (!container || programmaticScroll.current) return;
       const newIndex =
-        Math.floor((container.scrollTop + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
-      setCurrentChartIndex(newIndex);
-      if (newIndex === charts.length - 1) appendNextChart();
+        Math.floor((container.scrollTop + cardInnerHeight * 0.3) / cardInnerHeight) - 1;
+      if (newIndex !== currentChartIndex) setCurrentChartIndex(newIndex);
     },
-    [cardInnerHeight, charts.length, appendNextChart, setCurrentChartIndex],
+    [cardInnerHeight, currentChartIndex, setCurrentChartIndex],
   );
 
   const scrollTo = useCallback(
-    (index: number, behavior: "instant" | "smooth" = "smooth") => {
+    (index: number) => {
       if (mouseDown.current) return;
-
-      isProgrammaticScroll.current = true;
+      programmaticScroll.current = true;
       ref.current?.scrollTo({
         top: (index + 1) * cardInnerHeight,
-        behavior,
+        behavior: "smooth",
       });
-
-      setTimeout(
-        () => {
-          isProgrammaticScroll.current = false;
-        },
-        behavior === "smooth" ? 1000 : 0,
-      );
+      setTimeout(() => {
+        programmaticScroll.current = false;
+      }, 600);
     },
     [cardInnerHeight],
   );
 
   useEffect(() => {
     const scroll = () => {
-      if (ref.current?.clientHeight) {
-        console.log(ref.current.clientHeight);
-        console.log(currentChartIndex);
+      if (ref.current?.clientHeight && currentChartIndex > -1) {
         scrollTo(currentChartIndex);
+        if (currentChartIndex === charts.length - 1) appendNextChart();
       } else requestAnimationFrame(scroll);
     };
     requestAnimationFrame(scroll);
-  }, [currentChartIndex, scrollTo]);
+  }, [appendNextChart, charts.length, currentChartIndex, scrollTo]);
 
   useEffect(() => {
     const keyMap = {
-      ArrowUp: () => scrollTo(currentChartIndex - 1, "smooth"),
-      ArrowDown: () => scrollTo(currentChartIndex + 1, "smooth"),
+      ArrowUp: () => scrollTo(currentChartIndex - 1),
+      ArrowDown: () => scrollTo(currentChartIndex + 1),
       Enter: () => setCurrentChartPreferred(!charts[currentChartIndex].preferred),
     };
 
@@ -83,11 +74,5 @@ export default function useSessionView() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [currentChartIndex, charts, setCurrentChartPreferred, logger, scrollTo]);
 
-  return {
-    charts,
-    currentChartIndex,
-    ref,
-    scrollContainerCallback: handleScroll,
-    mouseDown,
-  };
+  return { charts, currentChartIndex, ref, scrollContainerCallback: handleScroll, mouseDown };
 }
