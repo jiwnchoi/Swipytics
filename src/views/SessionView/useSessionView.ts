@@ -16,32 +16,54 @@ export default function useSessionView() {
 
   const { cardInnerHeight } = useLayout();
   const mouseDown = useRef(false);
+  const scrolling = useRef(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  const updateChartIndexByScroll = useCallback(
+    debounce(() => {
+      scrolling.current = false;
+    }, 50),
+    [currentChartIndex, charts, appendNextChart],
+  );
+
   const handleScroll = useCallback(
-    debounce((container: HTMLDivElement) => {
-      if (!container) return;
+    (container: HTMLDivElement) => {
+      if (!container || scrolling.current) return;
+      scrolling.current = true;
       const newIndex =
         Math.floor((container.scrollTop + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
       setCurrentChartIndex(newIndex);
       if (newIndex === charts.length - 1) appendNextChart();
-    }, 100),
-    [cardInnerHeight, charts.length, appendNextChart, setCurrentChartIndex],
+      updateChartIndexByScroll();
+    },
+    [
+      appendNextChart,
+      cardInnerHeight,
+      charts.length,
+      setCurrentChartIndex,
+      updateChartIndexByScroll,
+    ],
   );
 
   const scrollTo = useCallback(
     (index: number) => {
+      if (scrolling.current) return;
+      console.log("scrolling to", index);
+      scrolling.current = true;
       ref.current?.scrollTo({
         top: (index + 1) * cardInnerHeight,
         behavior: "smooth",
       });
+      setTimeout(() => {
+        scrolling.current = false;
+      }, 500);
     },
     [cardInnerHeight],
   );
 
   useEffect(() => {
     const scroll = () => {
-      if (ref.current?.clientHeight) scrollTo(currentChartIndex);
+      if (ref.current?.clientHeight || !scrolling.current) scrollTo(currentChartIndex);
       else requestAnimationFrame(scroll);
     };
     requestAnimationFrame(scroll);
