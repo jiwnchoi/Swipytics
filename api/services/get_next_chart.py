@@ -30,8 +30,8 @@ def relevance_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> fl
 
 
 def preference_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> float:
-  preferred_charts = [chart for chart in session.charts[::-1] if chart.preferred][
-    : len(session.fields)
+  preferred_charts = [
+    chart for chart in session.charts[::-1][: len(session.fields)] if chart.preferred
   ]
   preferred_scores = [
     len(set(fields) & set(chart.fields)) / len(fields) for chart in preferred_charts
