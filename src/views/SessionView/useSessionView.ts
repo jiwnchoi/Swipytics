@@ -15,7 +15,6 @@ export default function useSessionView() {
   const logger = useLoggerClient();
 
   const { cardInnerHeight } = useLayout();
-  const mouseDown = useRef(false);
   const scrolling = useRef(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +47,6 @@ export default function useSessionView() {
   const scrollTo = useCallback(
     (index: number) => {
       if (scrolling.current) return;
-      console.log("scrolling to", index);
       scrolling.current = true;
       ref.current?.scrollTo({
         top: (index + 1) * cardInnerHeight,
@@ -91,5 +89,5 @@ export default function useSessionView() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [currentChartIndex, charts, setCurrentChartPreferred, logger, scrollTo]);
 
-  return { charts, currentChartIndex, ref, scrollContainerCallback: handleScroll, mouseDown };
+  return { charts, currentChartIndex, ref, scrollContainerCallback: handleScroll };
 }

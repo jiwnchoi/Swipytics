@@ -4,8 +4,8 @@ import { keyframes } from "@emotion/react";
 import { useLayout } from "@hooks";
 import { PRIMARY_COLOR } from "@shared/constants";
 import { useSessionsStore } from "@stores";
-import { debounce } from "es-toolkit";
 import { ArrowDown03Icon } from "hugeicons-react";
+import { memo } from "react";
 import useSessionView from "./useSessionView";
 
 const fadeIn = keyframes`
@@ -27,23 +27,11 @@ const fadeOut = keyframes`
 `;
 export default function SessionView(props: FlexProps) {
   const { cardColor, cardInnerHeight, cardInnerWidth } = useLayout();
-  const { charts, ref, scrollContainerCallback, mouseDown } = useSessionView();
+  const { charts, ref, scrollContainerCallback } = useSessionView();
   return (
     <Flex
       ref={ref}
       onScroll={(e) => scrollContainerCallback(e.currentTarget)}
-      onTouchStart={() => {
-        mouseDown.current = true;
-      }}
-      onTouchEnd={() => {
-        mouseDown.current = false;
-      }}
-      onWheel={() => {
-        mouseDown.current = true;
-        debounce(() => {
-          mouseDown.current = false;
-        }, 150);
-      }}
       data-log-scroll={"chart-container"}
       scrollSnapType={`y mandatory`}
       flexDir={"column"}
@@ -90,7 +78,9 @@ export default function SessionView(props: FlexProps) {
   );
 }
 
-function ScrollToBottomButton(props: FlexProps) {
+const ScrollToBottomButton = memo(ScrollToBottomButtonImpl);
+
+function ScrollToBottomButtonImpl(props: FlexProps) {
   const currentChartIndex = useSessionsStore((state) => state.currentChartIndex);
   const charts = useSessionsStore((state) => state.charts);
   const appendingChart = useSessionsStore((state) => state.appendingChart);

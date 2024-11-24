@@ -10,6 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { GithubIcon, LabelImportantIcon, SwipeUp02Icon } from "hugeicons-react";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 function PlaceHolderImpl(props: CenterProps) {
@@ -63,4 +64,4 @@ function PlaceHolderImpl(props: CenterProps) {
   );
 }
 
-export default PlaceHolderImpl;
+export default memo(PlaceHolderImpl);
