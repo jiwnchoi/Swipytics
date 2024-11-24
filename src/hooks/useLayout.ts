@@ -20,7 +20,7 @@ export default function useLayout() {
 
   const cardWidth = useBreakpointValue({ base: window.innerWidth - 2 * viewPadding * 4, lg: 880 })!;
   const cardHeight = useBreakpointValue({
-    base: window.innerHeight - 140,
+    base: window.innerHeight - 150,
     lg: window.innerHeight * 0.8 - 18,
   })!;
 
