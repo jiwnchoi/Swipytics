@@ -1,4 +1,3 @@
-import demo_list from "public/data/LIST.json";
 import type { TDemo } from "./models";
 
 export const chakraColors = {
@@ -126,10 +125,52 @@ export const chakraColors = {
   "pink.900": "#521B41",
 };
 
-export const DEMO_LIST: TDemo[] = demo_list.map((demo) => ({
-  ...demo,
-  href: `${import.meta.env.BASE_URL}${demo.href}`,
-}));
+export const DEMO_LIST: TDemo[] = [
+  {
+    name: "Barley",
+    href: "/data/barley.json",
+  },
+  {
+    name: "Birdstrikes",
+    href: "/data/birdstrikes_5000.json",
+  },
+  {
+    name: "Burtin",
+    href: "/data/burtin.json",
+  },
+  {
+    name: "Cars",
+    href: "/data/cars.json",
+  },
+  {
+    name: "Cars (Korean)",
+    href: "/data/cars_ko.json",
+  },
+  {
+    name: "Crimea",
+    href: "/data/crimea.json",
+  },
+  {
+    name: "Jobs",
+    href: "/data/jobs.json",
+  },
+  {
+    name: "Movies",
+    href: "/data/movies.json",
+  },
+  {
+    name: "Movies (Korean)",
+    href: "/data/movies_ko.json",
+  },
+  {
+    name: "Population",
+    href: "/data/population.json",
+  },
+  {
+    name: "Seoul Bike Rides",
+    href: "/data/SeoulBikeData_ko_cleaned_5000.json",
+  },
+];
 
 export const EXPANDING_THRESHOLD = 50;
 export const DEBOUNCE_DELAY = 300;
