@@ -12,6 +12,7 @@ export default function useDemo() {
 
   const handleSubmit = () => {
     if (selectedDemo?.href) {
+      console.log(selectedDemo.href);
       initializeSession(selectedDemo.href);
     }
   };

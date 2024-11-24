@@ -128,47 +128,47 @@ export const chakraColors = {
 export const DEMO_LIST: TDemo[] = [
   {
     name: "Cars (Korean)",
-    href: "/data/cars_ko.json",
+    href: `${import.meta.env.BASE_URL}/data/cars_ko.json`,
   },
   {
     name: "Movies (Korean)",
-    href: "/data/movies_ko.json",
+    href: `${import.meta.env.BASE_URL}/data/movies_ko.json`,
   },
   {
     name: "Seoul Bike Rides (Korean)",
-    href: "/data/SeoulBikeData_ko_cleaned_5000.json",
+    href: `${import.meta.env.BASE_URL}/data/SeoulBikeData_ko_cleaned_5000.json`,
   },
   {
     name: "Barley",
-    href: "/data/barley.json",
+    href: `${import.meta.env.BASE_URL}/data/barley.json`,
   },
   {
     name: "Birdstrikes",
-    href: "/data/birdstrikes_5000.json",
+    href: `${import.meta.env.BASE_URL}/data/birdstrikes_5000.json`,
   },
   {
     name: "Burtin",
-    href: "/data/burtin.json",
+    href: `${import.meta.env.BASE_URL}/data/burtin.json`,
   },
   {
     name: "Cars",
-    href: "/data/cars.json",
+    href: `${import.meta.env.BASE_URL}/data/cars.json`,
   },
   {
     name: "Crimea",
-    href: "/data/crimea.json",
+    href: `${import.meta.env.BASE_URL}/data/crimea.json`,
   },
   {
     name: "Jobs",
-    href: "/data/jobs.json",
+    href: `${import.meta.env.BASE_URL}/data/jobs.json`,
   },
   {
     name: "Movies",
-    href: "/data/movies.json",
+    href: `${import.meta.env.BASE_URL}/data/movies.json`,
   },
   {
     name: "Population",
-    href: "/data/population.json",
+    href: `${import.meta.env.BASE_URL}/data/population.json`,
   },
 ];
 

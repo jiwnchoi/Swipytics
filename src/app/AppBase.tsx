@@ -55,6 +55,7 @@ export default function BaseApp() {
   return (
     <Flex px={2} w={"100dvw"} h={"100dvh"} gap={2} flexDir="column" position={"relative"}>
       <Header />
+
       <TabsContainerBase
         flexDir="column"
         variant="soft-rounded"

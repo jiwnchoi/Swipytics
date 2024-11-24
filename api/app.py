@@ -29,6 +29,8 @@ def loadSession(session: dict[str, Any] | SessionModel, session_key: str = "defa
   if len(new_session.charts) == 0:
     chart = get_next_chart(new_session)
     new_session.charts.append(chart) if chart else None
+    chart = get_next_chart(new_session)
+    new_session.charts.append(chart) if chart else None
 
   setSession(new_session, session_key)
   return new_session.model_dump(by_alias=True, mode="json")

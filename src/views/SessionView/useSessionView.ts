@@ -52,8 +52,11 @@ export default function useSessionView() {
 
   useEffect(() => {
     const scroll = () => {
-      if (ref.current?.clientHeight) scrollTo(currentChartIndex);
-      else requestAnimationFrame(scroll);
+      if (ref.current?.clientHeight) {
+        console.log(ref.current.clientHeight);
+        console.log(currentChartIndex);
+        scrollTo(currentChartIndex);
+      } else requestAnimationFrame(scroll);
     };
     requestAnimationFrame(scroll);
   }, [currentChartIndex, scrollTo]);
