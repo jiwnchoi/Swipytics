@@ -31,9 +31,6 @@ def loadSession(session: dict[str, Any] | SessionModel, session_key: str = "defa
     new_session.charts.append(chart) if chart else None
 
   setSession(new_session, session_key)
-  for key, session in sessions.items():
-    print(session.filename, [f.name for f in session.fields])
-
   return new_session.model_dump(by_alias=True, mode="json")
 
 

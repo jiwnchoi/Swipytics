@@ -30,7 +30,7 @@ import type { TChart, TMetadata } from "@shared/models";
 import { getKorean, getKoreanVegaLite, getMainSpec, getTemporalSpec } from "@shared/utils";
 import { useDataStore, useSessionsStore } from "@stores";
 import { HeartAddIcon } from "hugeicons-react";
-import { memo, useMemo, useState, type SVGProps } from "react";
+import { memo, useEffect, useMemo, useState, type SVGProps } from "react";
 import { useTranslation } from "react-i18next";
 import { Error as VegaError, type TimeUnit } from "vega";
 import CachedVegaLite from "./CachedVegaLite";
@@ -66,36 +66,34 @@ function Chart({ chart, ...props }: ChartProps) {
     (unit) => ((temporalMetadata?.[`${unit}Unique` as keyof TMetadata] as number) ?? 0) > 1,
   ) as TimeUnit[];
 
-  const [timeUnit, setTimeUnit] = useState<TimeUnit | undefined>(() => {
+  const initialTimeUnit = useMemo(() => {
     if (timeUnits.length === 0) return undefined;
     return timeUnits[argMaxTimeUnit];
-  });
+  }, [timeUnits, argMaxTimeUnit]);
+
+  const [timeUnit, setTimeUnit] = useState<TimeUnit | undefined>(initialTimeUnit);
+
+  useEffect(() => {
+    if (temporalField && timeUnit && chart.key) {
+      setChartTimeUnit(chart.key, timeUnit);
+    }
+  }, [temporalField, timeUnit, chart.key, setChartTimeUnit]);
 
   const data = useMemo(() => ({ [DATA_NAME]: _data }), [_data]);
+
   const spec = useMemo(() => {
     let mainSpec = getMainSpec(chart.spec, chartWidth, chartHeight);
 
     if (temporalField && timeUnit) {
-      setChartTimeUnit(chart.key, timeUnit);
       mainSpec = getTemporalSpec(mainSpec, timeUnit, temporalField);
     }
     return i18n.language === "ko" ? getKoreanVegaLite(mainSpec) : mainSpec;
-  }, [
-    chart.spec,
-    chart.key,
-    chartWidth,
-    chartHeight,
-    temporalField,
-    timeUnit,
-    setChartTimeUnit,
-    i18n.language,
-  ]);
+  }, [chart.spec, chartWidth, chartHeight, temporalField, timeUnit, i18n.language]);
 
   const currentChartPreferred = chart.preferred;
 
   const handlePreferChart = () => {
     if (!chart.key) return;
-    console.log(chart);
     setChartPreferred(chart.key, !currentChartPreferred);
   };
 

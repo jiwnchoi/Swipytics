@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from pprint import pprint
 from typing import TypeVar
 
 import numpy as np
@@ -85,5 +84,4 @@ def get_next_chart(session: SessionModel) -> ChartModel | None:
   total_scores = [get_score(fields) for fields in session.available_fields]
   selected_fields, _ = max(zip(session.available_fields, total_scores), key=lambda x: x[1])
   chart = get_chart(session.df, selected_fields)
-  pprint(chart)
   return chart

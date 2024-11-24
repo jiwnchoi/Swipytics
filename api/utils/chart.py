@@ -30,7 +30,9 @@ def get_spec(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> Optional["Ch
   except KeyError as K:
     print(key)
     print(K)
-  return None
+
+  finally:
+    return None
 
 
 def check_fields(df: pd.DataFrame, fields: tuple["FieldModel", ...]) -> bool:

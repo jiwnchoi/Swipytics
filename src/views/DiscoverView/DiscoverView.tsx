@@ -78,19 +78,14 @@ export default function DiscoverView({
       ) : queriedCharts.length === 0 && selectedFields.length === 0 ? (
         <Center w="full" h="full" flexDir="column" gap={8} px={8}>
           <Icon boxSize={16} as={Search01Icon} />
-          <Heading fontSize={28} fontWeight={600} textAlign="center" overflowWrap="break-word">
+          <Heading maxW={240} fontSize={24} fontWeight={600} textAlign="center">
             {t("search.empty")}
           </Heading>
         </Center>
       ) : queriedCharts.length === 0 && selectedFields.length !== 0 ? (
         <Center w="full" h="full" flexDir="column" gap={8} px={8}>
           <Icon boxSize={16} as={SearchRemoveIcon} />
-          <Heading
-            fontSize={28}
-            fontWeight={600}
-            textAlign="center"
-            overflowWrap="break-word"
-            maxW={280}>
+          <Heading fontSize={24} fontWeight={600} textAlign="center" maxW={280}>
             {t("search.no-results")}
           </Heading>
         </Center>

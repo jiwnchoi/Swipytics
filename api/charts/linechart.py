@@ -24,7 +24,7 @@ def linechart_ct(
         temporal_field.clingo_name,
         type="temporal",
       ),
-      y=alt.Y("count()", title="count"),
+      y=alt.Y("count()"),
       color=categorical_field.clingo_name,
     )
   )

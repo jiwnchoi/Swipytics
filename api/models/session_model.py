@@ -17,8 +17,6 @@ from .chart_model import ChartModel
 from .field_model import FieldModel
 from .model_config import DefaultConfig
 
-NEW_FIELD_P = 0.2
-
 
 class SessionModel(BaseModel):
   filename: str = Field(default="")
@@ -65,10 +63,8 @@ class SessionModel(BaseModel):
     fields = [*len_1_fields, *len_2_fields, *len_3_fields]
 
     fields = [f for f in fields if check_fields(self.df, f)]
-    print(len(fields))
     return fields
 
   @cached_property
   def visualizable_fields(self) -> list[FieldModel]:
-    print(self.fields)
     return [field for field in self.fields if field.type != "name"]
