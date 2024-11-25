@@ -38,7 +38,7 @@ export default function SessionView(props: FlexProps) {
       borderRadius={"lg"}
       bgColor={cardColor}
       overflowX={"hidden"}
-      animation={`${fadeIn} 0.2s ease-in-out`}
+      fade={`${fadeIn} 0.2s ease-in-out`}
       style={{
         WebkitOverflowScrolling: "touch",
       }}

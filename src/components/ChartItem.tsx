@@ -1,4 +1,4 @@
-import { Divider, Flex, Image, ListItem } from "@chakra-ui/react";
+import { Divider, Flex, Image, ListItem, type FlexProps } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { useLayout, useThumnail } from "@hooks";
 import { type TChart } from "@shared/models";
@@ -22,14 +22,14 @@ const fadeOut = keyframes`
   }
 `;
 
-interface ChartItemProps {
+interface ChartItemProps extends FlexProps {
   chart: TChart;
   handleClick: (chart: TChart) => void;
   thumbnailSize?: number;
-  animation?: boolean;
+  logClick?: string;
 }
 
-function ChartItem({ chart, handleClick, thumbnailSize = 70, animation = true }: ChartItemProps) {
+function ChartItem({ chart, handleClick, logClick, thumbnailSize = 70 }: ChartItemProps) {
   const { buttonColor } = useLayout();
   const thumbnail = useThumnail(chart, thumbnailSize * 1.5);
 
@@ -38,12 +38,13 @@ function ChartItem({ chart, handleClick, thumbnailSize = 70, animation = true }:
       key={`bookmark-${chart.key}`}
       as={Flex}
       flexDir="column"
-      animation={animation ? `${fadeIn} 0.2s ease-in-out` : undefined}
+      fade={`${fadeIn} 0.2s ease-in-out`}
       sx={{
         "&.removing": {
-          animation: animation ? `${fadeOut} 0.1s ease-in-out forwards` : undefined,
+          animation: `${fadeOut} 0.1s ease-in-out forwards`,
         },
-      }}>
+      }}
+      data-log-click={logClick}>
       <Flex
         p={1}
         gap={4}

@@ -11,8 +11,10 @@ export default function useLikesView() {
 
   const handleClickChart = (chart: TChart) => {
     const index = charts.findIndex((c) => c === chart);
-    setCurrentChartIndex(index);
     if (mobile) setTabByName("charts");
+    setTimeout(() => {
+      setCurrentChartIndex(index);
+    }, 100);
   };
 
   return {

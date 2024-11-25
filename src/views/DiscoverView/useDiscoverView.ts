@@ -51,8 +51,11 @@ export default function useDiscoverView() {
     async (chart: TChart) => {
       await appendChart(chart);
       if (mobile) setTabByName("charts");
-      setCurrentChartIndex(charts.length - 1);
+
       setSelectedFields([]);
+      setTimeout(() => {
+        setCurrentChartIndex(charts.length - 1);
+      }, 100);
     },
     [appendChart, charts.length, mobile, setCurrentChartIndex, setSelectedFields, setTabByName],
   );
