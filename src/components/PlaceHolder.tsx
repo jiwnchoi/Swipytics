@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Image,
   Link,
   Text,
   VStack,
@@ -50,12 +51,7 @@ function PlaceHolderImpl(props: CenterProps) {
               size={"xs"}
               leftIcon={<Icon as={LabelImportantIcon} />}
               color={"gray"}>
-              <Text fontFamily="Rajdhani" fontWeight={600} fontSize={"sm"}>
-                IDC
-              </Text>
-              <Text fontFamily="Rajdhani" fontWeight={500} fontSize={"sm"}>
-                Lab
-              </Text>
+              <Image m={0} p={0} src={"/Swipytics/idclab.svg"} height={"10px"} />
             </Button>
           </Link>
         </Flex>

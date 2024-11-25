@@ -17,9 +17,6 @@ importers:
       '@emotion/styled':
         specifier: ^11.13.0
         version: 11.13.0(@emotion/react@11.13.3(@types/react@18.3.4)(react@18.3.1))(@types/react@18.3.4)(react@18.3.1)
-      '@fontsource/rajdhani':
-        specifier: ^5.0.14
-        version: 5.0.14
       '@loaders.gl/core':
         specifier: ^4.2.2
         version: 4.2.2
@@ -929,9 +926,6 @@ packages:
   '@eslint/plugin-kit@0.1.0':
     resolution: {integrity: sha512-autAXT203ixhqei9xt+qkYOvY8l6LAFIdT2UXc/RPNeUVfqRF1BV94GTJyVPFKT8nFM6MyVJhjLj9E8JWvf5zQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@fontsource/rajdhani@5.0.14':
-    resolution: {integrity: sha512-pwxSCFeqgzm+aANXTaez8lziKMxFAdxkzr+i6bqClwjieFytdCtdN4wvTXjWYsNO2iT+wL9ZK2l7HSWOiB+MZA==}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -4262,8 +4256,6 @@ snapshots:
   '@eslint/plugin-kit@0.1.0':
     dependencies:
       levn: 0.4.1
-
-  '@fontsource/rajdhani@5.0.14': {}
 
   '@humanwhocodes/module-importer@1.0.1': {}
 

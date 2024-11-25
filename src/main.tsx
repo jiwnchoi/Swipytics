@@ -1,6 +1,5 @@
 import { App } from "@app";
 import { Center, ChakraProvider } from "@chakra-ui/react";
-import "@fontsource/rajdhani";
 import { theme } from "@shared/theme";
 import "@shared/theme/global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
