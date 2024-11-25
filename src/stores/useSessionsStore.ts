@@ -112,13 +112,18 @@ const useSessionsStore = create(
         if (appendingChart) return;
         set({ appendingChart: true });
         await router.call("appendChart", { chart });
+        const nextChart = await router.call("appendNextChart");
         set(
           produce<SessionState>((draft) => {
             if (draft.charts.length > CHART_PREFETCH_DELAY) {
               draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
             }
             draft.charts.push({ ...chart, timestamp: Date.now(), generatedBy: "append" });
+            if (nextChart) {
+              draft.charts.push({ ...nextChart, generatedBy: "scroll" });
+            }
             draft.appendingChart = false;
+            draft.currentChartIndex = draft.charts.length - 2;
           }),
         );
       },

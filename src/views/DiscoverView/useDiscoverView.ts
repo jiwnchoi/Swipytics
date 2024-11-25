@@ -8,8 +8,6 @@ import { useCallback, useMemo } from "react";
 
 export default function useDiscoverView() {
   const appendChart = useSessionsStore((state) => state.appendChart);
-  const setCurrentChartIndex = useSessionsStore((state) => state.setCurrentChartIndex);
-  const charts = useSessionsStore((state) => state.charts);
   const data = useDataStore((state) => state.data);
   const filename = useDataStore((state) => state.filename);
   const dataFields = useSessionsStore((state) => state.fields);
@@ -48,16 +46,13 @@ export default function useDiscoverView() {
   );
 
   const handleChartClick = useCallback(
-    async (chart: TChart) => {
-      await appendChart(chart);
-      if (mobile) setTabByName("charts");
-
-      setSelectedFields([]);
-      setTimeout(() => {
-        setCurrentChartIndex(charts.length - 1);
-      }, 150);
+    (chart: TChart) => {
+      appendChart(chart).then(() => {
+        if (mobile) setTabByName("charts");
+        setSelectedFields([]);
+      });
     },
-    [appendChart, charts.length, mobile, setCurrentChartIndex, setSelectedFields, setTabByName],
+    [appendChart, mobile, setSelectedFields, setTabByName],
   );
 
   return {
