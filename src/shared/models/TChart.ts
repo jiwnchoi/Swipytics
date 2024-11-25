@@ -15,6 +15,8 @@ interface TChart {
   // Client-side only properties
   thumbnail?: string;
   timeUnit?: TimeUnit | null;
+
+  generatedBy?: string;
 }
 
 export default TChart;

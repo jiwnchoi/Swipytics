@@ -95,7 +95,10 @@ const useSessionsStore = create(
         if (chart) {
           set(
             produce<SessionState>((draft) => {
-              draft.charts.push(chart);
+              draft.charts.push({
+                ...chart,
+                generatedBy: "scroll",
+              });
               draft.appendingChart = false;
             }),
           );
@@ -114,7 +117,7 @@ const useSessionsStore = create(
             if (draft.charts.length > CHART_PREFETCH_DELAY) {
               draft.charts = draft.charts.slice(0, -CHART_PREFETCH_DELAY);
             }
-            draft.charts.push({ ...chart, timestamp: Date.now() });
+            draft.charts.push({ ...chart, timestamp: Date.now(), generatedBy: "append" });
             draft.appendingChart = false;
           }),
         );

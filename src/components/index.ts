@@ -1,5 +1,4 @@
 export { default as Bookmarks } from "./Bookmarks";
-export { default as Browser } from "./Browser";
 export { default as Chart } from "./Chart";
 export { default as Controller } from "./Controller";
 
