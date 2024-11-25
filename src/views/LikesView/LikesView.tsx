@@ -21,7 +21,7 @@ export default function LikesView({ thumbnailSize, ...props }: LikesViewProps) {
               key={`bookmark-${chart.key}`}
               thumbnailSize={thumbnailSize}
               chart={chart}
-              logClick={`preferred-chart-${chart.key}`}
+              logClick={`move_to_preferred_chart-${chart.title}`}
               handleClick={handleClickBookmark}
             />
           ))}

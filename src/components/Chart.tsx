@@ -151,7 +151,7 @@ function Chart({ chart, ...props }: ChartProps) {
               size="lg"
               aria-label="Bookmark current chart"
               onClick={handlePreferChart}
-              data-log-click="prefer-chart"
+              data-log-click="prefer_chart"
               colorScheme={currentChartPreferred ? "red" : "gray"}
             />
           </Flex>

@@ -14,14 +14,17 @@ function useStoresLogging() {
       const pickedPrevState = pick(prevState, ["filename"]);
 
       if (isEqual(pickedState, pickedPrevState)) return;
-      logger.log("data-store", "state", getDifferences(pickedState, pickedPrevState));
+      const diff = getDifferences(pickedState, pickedPrevState);
+      logger.log("data-store", "state", diff);
     });
 
     const unSubInteractionStore = useInteractionStore.subscribe((state, prevState) => {
       const pickedState = pickBy(state, (value) => typeof value !== "function");
       const pickedPrevState = pickBy(prevState, (value) => typeof value !== "function");
       if (isEqual(pickedState, pickedPrevState)) return;
-      logger.log("interaction-store", "state", getDifferences(pickedState, pickedPrevState));
+      const diff = getDifferences(pickedState, pickedPrevState);
+      if (!diff.length) return;
+      logger.log("interaction-store", "state", diff);
     });
 
     const unSubSessionStore = useSessionsStore.subscribe((state, prevState) => {
@@ -46,6 +49,8 @@ function useStoresLogging() {
       );
 
       if (isEqual(pickedState, pickedPrevState)) return;
+      const diff = getDifferences(pickedState, pickedPrevState);
+      if (!diff.length) return;
       logger.log("session-store", "state", getDifferences(pickedState, pickedPrevState));
     });
 

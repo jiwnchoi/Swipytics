@@ -39,7 +39,7 @@ function HeaderImpl() {
         color={tabIndex === -1 ? accentColor : undefined}
         icon={<Icon as={Settings01Icon} boxSize={6} />}
         aria-label={t("settings.title")}
-        data-log-click={"setting button"}
+        data-log-click={"settings_button"}
         onClick={() => {
           if (tabIndex === -1) setTabByName("charts");
           else setTabByName("settings");

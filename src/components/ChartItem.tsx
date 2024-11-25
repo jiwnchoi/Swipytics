@@ -38,18 +38,18 @@ function ChartItem({ chart, handleClick, logClick, thumbnailSize = 70 }: ChartIt
       key={`bookmark-${chart.key}`}
       as={Flex}
       flexDir="column"
-      fade={`${fadeIn} 0.2s ease-in-out`}
       sx={{
+        animation: `${fadeIn} 0.2s ease-in-out`,
         "&.removing": {
           animation: `${fadeOut} 0.1s ease-in-out forwards`,
         },
-      }}
-      data-log-click={logClick}>
+      }}>
       <Flex
         p={1}
         gap={4}
         borderRadius="md"
         alignItems="center"
+        data-log-click={logClick}
         onClick={() => handleClick(chart)}
         _hover={{ cursor: "pointer", bg: buttonColor }}>
         {!!thumbnail && (

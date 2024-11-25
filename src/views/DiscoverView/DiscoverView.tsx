@@ -102,7 +102,7 @@ export default function DiscoverView({
               key={`discovered-chart-${chart.key}-${chart.timestamp}`}
               thumbnailSize={thumbnailSize}
               chart={chart}
-              logClick={`append-discovered-chart-${chart.key}`}
+              logClick={`append_discovered_chart-${chart.title}`}
               handleClick={() => {
                 handleChartClick(chart);
               }}

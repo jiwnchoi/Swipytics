@@ -1,3 +1,4 @@
+import { useLoggerClient } from "@logger/react";
 import { useCallback, useState } from "react";
 
 interface DoubleTapOptions {
@@ -18,6 +19,7 @@ const useDoubleTap = (
   const { latency = 200 } = options;
   const [lastTap, setLastTap] = useState<number>(0);
   const [touchStartTime, setTouchStartTime] = useState<number>(0);
+  const logger = useLoggerClient();
 
   const handleTouchStart = useCallback((): void => {
     setTouchStartTime(Date.now());
@@ -31,11 +33,12 @@ const useDoubleTap = (
       const now = Date.now();
       if (now - lastTap < latency) {
         e.preventDefault(); // 기본 동작 방지 (확대 등)
+        logger.log("prefer_chart", "double_tap");
         callback(e);
       }
       setLastTap(now);
     },
-    [callback, lastTap, latency, touchStartTime],
+    [callback, lastTap, latency, logger, touchStartTime],
   );
 
   const handleDoubleClick = useCallback(
