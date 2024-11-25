@@ -32,7 +32,9 @@
     "set_backend": "Backend",
     "set_color": "Color Mode",
     "set_locale": "Locale",
-    "title": "Settings"
+    "title": "Settings",
+    "refresh_app": "Refresh App",
+    "share_logs": "Share Logs"
   },
   "toast": {
     "server_not_available_description": "Failed to access Python backend. Only local Pyodide is available.",
