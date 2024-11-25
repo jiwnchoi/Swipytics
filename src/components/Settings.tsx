@@ -14,9 +14,9 @@ import { useDemo, useLoadingStatus, useSettings } from "@hooks";
 import { DEMO_LIST, PRIMARY_COLOR } from "@shared/constants";
 import {
   ArrowDown01Icon,
+  ChartBreakoutSquareIcon,
   CleanIcon,
   CloudIcon,
-  Download01Icon,
   Moon01Icon,
   ReloadIcon,
   Share01Icon,
@@ -89,8 +89,8 @@ function Settings(props: StackProps) {
     handleServerButtonClick,
     handleClearLogs,
     handleShareLogs,
+    handleShareSession,
     handleRefreshApp,
-    handleDownloadLogs,
     colorMode,
     toggleColorMode,
     locale,
@@ -159,18 +159,20 @@ function Settings(props: StackProps) {
             data-log-click="clean_logs"
           />
           <IconButton
-            aria-label={t("settings.download_logs")}
-            icon={<Icon as={Download01Icon} boxSize={5} />}
-            w="full"
-            onClick={handleDownloadLogs}
-            data-log-click="share_logs"
-          />
-          <IconButton
             aria-label={t("settings.share_logs")}
             icon={<Icon as={Share01Icon} boxSize={5} />}
             w="full"
             onClick={handleShareLogs}
             data-log-click="share_logs"
+          />
+          <IconButton
+            aria-label={"Share Charts"}
+            icon={<Icon as={ChartBreakoutSquareIcon} boxSize={5} />}
+            w="full"
+            onClick={() => {
+              handleShareSession();
+            }}
+            data-log-click="share_charts"
           />
         </Flex>
       </SettingRow>

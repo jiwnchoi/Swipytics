@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { router } from "@api";
 import { useColorMode, useToast } from "@chakra-ui/react";
 import { useLoggerClient } from "@logger/react";
@@ -76,7 +77,72 @@ export default function useSettings() {
         });
       });
   };
+  const handleExport = () => {
+    const charts = useSessionsStore.getState().charts;
+    const filteredCharts = charts.map((chart) => ({
+      title: chart.title,
+      n_fields: chart.fields.length,
+      preferred: chart.preferred,
+      generatedBy: chart.generatedBy,
+    }));
 
+    const blob = new Blob([JSON.stringify(filteredCharts, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "charts.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleShareSession = async () => {
+    try {
+      if (!navigator.share) {
+        console.warn("Web Share API is not supported in this browser");
+        handleExport();
+        return;
+      }
+
+      const charts = useSessionsStore.getState().charts;
+      const filteredCharts = charts.map((chart) => ({
+        title: chart.title,
+        n_fields: chart.fields.length,
+        preferred: chart.preferred,
+        generatedBy: chart.generatedBy,
+      }));
+
+      const blob = new Blob([JSON.stringify(filteredCharts, null, 2)], {
+        type: "application/json",
+      });
+      const file = new File([blob], "charts.json", {
+        type: "application/json",
+      });
+
+      // Try sharing
+      try {
+        await navigator.share({
+          title: "Charts Data",
+          files: [file],
+        });
+      } catch (shareError) {
+        console.warn("Share failed, falling back to download:", shareError);
+        handleExport();
+      }
+    } catch (error) {
+      console.error("Failed to process share/export:", error);
+      // 에러 발생 시 export 시도
+      try {
+        handleExport();
+      } catch (exportError) {
+        console.error("Failed to export as fallback:", exportError);
+      }
+    }
+  };
   const handleServerButtonClick = async () => {
     if (!router) return;
     const newType = python === "pyodide" ? "server" : "pyodide";
@@ -112,6 +178,7 @@ export default function useSettings() {
     toggleColorMode,
     handleShareLogs,
     handleRefreshApp,
+    handleShareSession,
     locale: i18n.language,
     setLocale: (newLanguage: string) => i18n.changeLanguage(newLanguage),
   };
