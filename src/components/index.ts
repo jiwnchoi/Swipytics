@@ -9,6 +9,7 @@ export { default as FieldTag } from "./FieldTag";
 export { default as FileForm } from "./FileForm";
 export { default as PlaceHolder } from "./PlaceHolder";
 export { default as ScrollIndicator } from "./ScrollIndicator";
+export { ScrollToBottomButton } from "./ScrollToBottomButton";
 export { default as Settings } from "./Settings";
 export { default as TabsContainer } from "./TabsContainer";
 export { default as TabsContainerBase } from "./TabsContainerBase";

@@ -33,8 +33,9 @@ interface SettingRowProps extends FlexProps {
   label: string;
   children: React.ReactNode;
 }
+const SettingRow = memo(SettingRowImpl);
 
-function SettingRow({ label, children, ...props }: SettingRowProps) {
+function SettingRowImpl({ label, children, ...props }: SettingRowProps) {
   return (
     <Flex w="full" flexDir={"row"} justify={"space-between"} alignItems={"center"} {...props}>
       <Text minW={"130px"}>{label}</Text>
