@@ -28,7 +28,7 @@ export default function SessionView(props: FlexProps) {
     <Flex
       ref={ref}
       onScroll={(e) => scrollContainerCallback(e.currentTarget)}
-      data-log-scroll={"chart-container"}
+      data-log-scroll={"chart_container"}
       scrollSnapType={`y mandatory`}
       flexDir={"column"}
       borderRadius={"lg"}

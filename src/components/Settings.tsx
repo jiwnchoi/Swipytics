@@ -77,7 +77,7 @@ function DemoSelector() {
         icon={<Icon as={StartUp02Icon} boxSize={5} />}
         aria-label={t("settings.load_data")}
         onClick={handleSubmit}
-        data-log-click="load-demo"
+        data-log-click="load_demo"
       />
     </>
   );
@@ -124,7 +124,7 @@ function Settings(props: StackProps) {
         <Button
           leftIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
           onClick={toggleColorMode}
-          data-log-click="toggle-color-mode"
+          data-log-click="toggle_color_mode"
           size="sm"
           w={"full"}>
           {colorMode === "light" ? "Light" : "Dark"}
@@ -136,7 +136,7 @@ function Settings(props: StackProps) {
           onClick={() => {
             handleServerButtonClick();
           }}
-          data-log-click="toggle-server"
+          data-log-click="toggle_server"
           size="sm"
           w={"full"}>
           {python && python[0].toUpperCase() + python?.slice(1)}
@@ -149,28 +149,28 @@ function Settings(props: StackProps) {
             icon={<Icon as={ReloadIcon} boxSize={5} />}
             w="full"
             onClick={handleRefreshApp}
-            data-log-click="refresh-app"
+            data-log-click="refresh_app"
           />
           <IconButton
             aria-label={t("settings.clear_logs")}
             icon={<Icon as={CleanIcon} boxSize={5} />}
             w="full"
             onClick={handleClearLogs}
-            data-log-click="clean-logs"
+            data-log-click="clean_logs"
           />
           <IconButton
             aria-label={t("settings.download_logs")}
             icon={<Icon as={Download01Icon} boxSize={5} />}
             w="full"
             onClick={handleDownloadLogs}
-            data-log-click="share-logs"
+            data-log-click="share_logs"
           />
           <IconButton
             aria-label={t("settings.share_logs")}
             icon={<Icon as={Share01Icon} boxSize={5} />}
             w="full"
             onClick={handleShareLogs}
-            data-log-click="share-logs"
+            data-log-click="share_logs"
           />
         </Flex>
       </SettingRow>

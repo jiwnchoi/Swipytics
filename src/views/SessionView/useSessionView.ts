@@ -78,7 +78,7 @@ export default function useSessionView() {
       const action = keyMap[e.key as keyof typeof keyMap];
       if (action) {
         e.preventDefault();
-        logger.log("chart-container", "keydown", {
+        logger.log("chart_container", "keydown", {
           key: e.key.toLowerCase().replace("arrow", ""),
         });
         action();
