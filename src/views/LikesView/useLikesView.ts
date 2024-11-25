@@ -14,7 +14,7 @@ export default function useLikesView() {
     if (mobile) setTabByName("charts");
     setTimeout(() => {
       setCurrentChartIndex(index);
-    }, 100);
+    }, 150);
   };
 
   return {

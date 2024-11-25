@@ -55,7 +55,7 @@ export default function useDiscoverView() {
       setSelectedFields([]);
       setTimeout(() => {
         setCurrentChartIndex(charts.length - 1);
-      }, 100);
+      }, 150);
     },
     [appendChart, charts.length, mobile, setCurrentChartIndex, setSelectedFields, setTabByName],
   );
