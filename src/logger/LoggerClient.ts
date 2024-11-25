@@ -194,7 +194,6 @@ class LoggerClient {
       });
     } catch (error) {
       console.error("Failed to share logs:", error);
-      alert(error);
     }
   };
 
