@@ -32,7 +32,7 @@ function useStoresLogging() {
         {
           ...state,
           charts: state.charts.map((chart) =>
-            pick(chart, ["key", "title", "preferred", "timestamp"]),
+            pick(chart, ["title", "preferred", "timestamp", "generatedBy"]),
           ),
         },
         ["charts", "filename", "timestamp", "currentChartIndex"],
@@ -42,7 +42,7 @@ function useStoresLogging() {
         {
           ...prevState,
           charts: prevState.charts.map((chart) =>
-            pick(chart, ["key", "title", "preferred", "timestamp"]),
+            pick(chart, ["title", "preferred", "timestamp", "generatedBy"]),
           ),
         },
         ["charts", "filename", "timestamp", "currentChartIndex"],
