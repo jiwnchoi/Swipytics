@@ -14,8 +14,12 @@ import { useDemo, useLoadingStatus, useSettings } from "@hooks";
 import { DEMO_LIST, PRIMARY_COLOR } from "@shared/constants";
 import {
   ArrowDown01Icon,
+  CleanIcon,
   CloudIcon,
+  Download01Icon,
   Moon01Icon,
+  ReloadIcon,
+  Share01Icon,
   SmartPhone01Icon,
   StartUp02Icon,
   Sun03Icon,
@@ -54,7 +58,7 @@ function DemoSelector() {
         placeholder={t("settings.select_demo")}
         variant="outline"
         colorScheme={PRIMARY_COLOR}
-        icon={<Icon as={ArrowDown01Icon} />}
+        icon={<Icon as={ArrowDown01Icon} boxSize={5} />}
         borderRightRadius={0}>
         {DEMO_LIST.map((demo) => (
           <option key={demo.name} value={demo.name}>
@@ -69,7 +73,7 @@ function DemoSelector() {
         type="submit"
         isLoading={loading || loadingRouter}
         isDisabled={!selectedDemo || loadingRouter}
-        icon={<Icon as={StartUp02Icon} />}
+        icon={<Icon as={StartUp02Icon} boxSize={5} />}
         aria-label={t("settings.load_data")}
         onClick={handleSubmit}
         data-log-click="load-demo"
@@ -83,6 +87,8 @@ function Settings(props: StackProps) {
     python,
     handleServerButtonClick,
     handleClearLogs,
+    handleShareLogs,
+    handleRefreshApp,
     handleDownloadLogs,
     colorMode,
     toggleColorMode,
@@ -102,7 +108,7 @@ function Settings(props: StackProps) {
 
       <SettingRow label={t("settings.set_locale")}>
         <Select
-          size="md"
+          size="sm"
           variant="outline"
           value={locale}
           data-log-change="select-locale"
@@ -118,7 +124,7 @@ function Settings(props: StackProps) {
           leftIcon={<Icon as={colorMode === "light" ? Sun03Icon : Moon01Icon} />}
           onClick={toggleColorMode}
           data-log-click="toggle-color-mode"
-          size="md"
+          size="sm"
           w={"full"}>
           {colorMode === "light" ? "Light" : "Dark"}
         </Button>
@@ -130,19 +136,41 @@ function Settings(props: StackProps) {
             handleServerButtonClick();
           }}
           data-log-click="toggle-server"
-          size="md"
+          size="sm"
           w={"full"}>
           {python && python[0].toUpperCase() + python?.slice(1)}
         </Button>
       </SettingRow>
       <SettingRow label={t("settings.monitor_logs")}>
         <Flex gap={2} w={"full"}>
-          <Button w="full" onClick={handleClearLogs}>
-            {t("settings.clear_logs")}
-          </Button>
-          <Button w="full" onClick={handleDownloadLogs} data-log-click="download-logs">
-            {t("settings.download_logs")}
-          </Button>
+          <IconButton
+            aria-label={t("settings.refresh_app")}
+            icon={<Icon as={ReloadIcon} boxSize={5} />}
+            w="full"
+            onClick={handleRefreshApp}
+            data-log-click="refresh-app"
+          />
+          <IconButton
+            aria-label={t("settings.clear_logs")}
+            icon={<Icon as={CleanIcon} boxSize={5} />}
+            w="full"
+            onClick={handleClearLogs}
+            data-log-click="clean-logs"
+          />
+          <IconButton
+            aria-label={t("settings.download_logs")}
+            icon={<Icon as={Download01Icon} boxSize={5} />}
+            w="full"
+            onClick={handleDownloadLogs}
+            data-log-click="share-logs"
+          />
+          <IconButton
+            aria-label={t("settings.share_logs")}
+            icon={<Icon as={Share01Icon} boxSize={5} />}
+            w="full"
+            onClick={handleShareLogs}
+            data-log-click="share-logs"
+          />
         </Flex>
       </SettingRow>
     </VStack>

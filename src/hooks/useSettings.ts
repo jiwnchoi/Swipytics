@@ -30,6 +30,26 @@ export default function useSettings() {
     }
   };
 
+  const handleRefreshApp = () => {
+    window.location.reload();
+  };
+
+  const handleShareLogs = () => {
+    try {
+      logger.share();
+    } catch (e) {
+      toast({
+        title: "Oh no!",
+        description: JSON.stringify(e),
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+        containerStyle: { margin: 10 },
+      });
+    }
+  };
+
   const handleClearLogs = () => {
     logger
       .clearLogs()
@@ -90,6 +110,8 @@ export default function useSettings() {
     handleClearLogs,
     colorMode,
     toggleColorMode,
+    handleShareLogs,
+    handleRefreshApp,
     locale: i18n.language,
     setLocale: (newLanguage: string) => i18n.changeLanguage(newLanguage),
   };

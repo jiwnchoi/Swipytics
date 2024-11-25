@@ -26,6 +26,18 @@ class LoggerClient {
     this.initializeDB();
   }
 
+  private getTimestampedFileName() {
+    const now = new Date();
+    const timestamp =
+      now.getFullYear().toString() +
+      (now.getMonth() + 1).toString().padStart(2, "0") +
+      now.getDate().toString().padStart(2, "0") +
+      now.getHours().toString().padStart(2, "0") +
+      now.getMinutes().toString().padStart(2, "0");
+
+    return `${this.logFileName}-${timestamp}.${this.logFileFormat}`;
+  }
+
   public async initializeDB() {
     try {
       this.indexedDB = await getIndexedDB(this.storageKey);
@@ -150,11 +162,40 @@ class LoggerClient {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${this.logFileName}.${this.logFileFormat}`;
+    a.download = this.getTimestampedFileName();
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  public share = async () => {
+    try {
+      // Check if Web Share API is supported
+      if (!navigator.share) {
+        console.warn("Web Share API is not supported in this browser");
+        await this.export();
+        return;
+      }
+
+      if (!this.indexedDB) {
+        console.warn("IndexedDB is not initialized.");
+      }
+
+      const logs = await loadLogs(this.indexedDB, this.storageKey);
+      const blob = new Blob([JSON.stringify(logs, null, 2)], { type: "application/json" });
+      const file = new File([blob], this.getTimestampedFileName(), {
+        type: "application/json",
+      });
+
+      await navigator.share({
+        title: `${this.logFileName} - Logs`,
+        files: [file],
+      });
+    } catch (error) {
+      console.error("Failed to share logs:", error);
+      alert(error);
+    }
   };
 
   public registerLogger = (
