@@ -31,11 +31,10 @@ function ScrollToBottomButtonImpl(props: FlexProps) {
           size="lg"
           aria-label="Scroll to bottom"
           icon={<Icon as={ArrowDown03Icon} boxSize={8} />}
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={() => {
             setCurrentChartIndex(charts.length - 2);
           }}
-          data-log-click="scroll-to-bottom"
+          data-log-click="scroll_to_bottom"
         />
       </Flex>
     </Fade>
