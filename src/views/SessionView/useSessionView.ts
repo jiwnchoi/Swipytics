@@ -32,6 +32,9 @@ export default function useSessionView() {
       const newIndex =
         Math.floor((container.scrollTop + cardInnerHeight * 0.5) / cardInnerHeight) - 1;
       setCurrentChartIndex(newIndex);
+      if (currentChartIndex !== newIndex) {
+        logger.log("chart_container", "scroll", { chartIndex: newIndex });
+      }
       if (newIndex === charts.length - 1) appendNextChart();
       updateChartIndexByScroll();
     },
@@ -39,6 +42,8 @@ export default function useSessionView() {
       appendNextChart,
       cardInnerHeight,
       charts.length,
+      currentChartIndex,
+      logger,
       setCurrentChartIndex,
       updateChartIndexByScroll,
     ],
@@ -80,6 +85,12 @@ export default function useSessionView() {
         e.preventDefault();
         logger.log("chart_container", "keydown", {
           key: e.key.toLowerCase().replace("arrow", ""),
+          chartIndex:
+            e.key === "ArrowUp"
+              ? currentChartIndex - 1
+              : e.key === "ArrowDown"
+                ? currentChartIndex + 1
+                : currentChartIndex,
         });
         action();
       }

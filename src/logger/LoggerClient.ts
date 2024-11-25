@@ -172,7 +172,8 @@ class LoggerClient {
   public share = async () => {
     try {
       // Check if Web Share API is supported
-      if (!navigator.share) {
+      console.log(navigator.canShare());
+      if (!navigator.share || ("canShare" in navigator && !navigator.canShare())) {
         console.warn("Web Share API is not supported in this browser");
         await this.export();
         return;
