@@ -15,8 +15,8 @@ export default function LikesView({ thumbnailSize, ...props }: LikesViewProps) {
   return (
     <Flex w="full" h="full" {...props}>
       {preferredCharts.length ? (
-        <OrderedList m={0} p={0} width="full" overflowY="auto">
-          {preferredCharts.map((chart) => (
+        <OrderedList m={0} p={0} width="full" overflowY="auto" flexDirection={"column-reverse"}>
+          {[...preferredCharts].reverse().map((chart) => (
             <ChartItem
               key={`bookmark-${chart.key}`}
               thumbnailSize={thumbnailSize}
