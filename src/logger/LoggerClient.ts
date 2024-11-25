@@ -171,9 +171,7 @@ class LoggerClient {
 
   public share = async () => {
     try {
-      // Check if Web Share API is supported
-      console.log(navigator.canShare());
-      if (!navigator.share || ("canShare" in navigator && !navigator.canShare())) {
+      if (!navigator.share) {
         console.warn("Web Share API is not supported in this browser");
         await this.export();
         return;
@@ -189,12 +187,20 @@ class LoggerClient {
         type: "application/json",
       });
 
-      await navigator.share({
-        title: `${this.logFileName} - Logs`,
-        files: [file],
-      });
+      try {
+        await navigator.share({
+          title: `${this.logFileName} - Logs`,
+          files: [file],
+        });
+      } catch (shareError) {
+        console.error("Failed to share using Web Share API:", shareError);
+        // Web Share API failed, fallback to export
+        await this.export();
+      }
     } catch (error) {
-      console.error("Failed to share logs:", error);
+      console.error("Failed to process share/export:", error);
+      // Any other error occurred, try export as fallback
+      await this.export();
     }
   };
 

@@ -123,24 +123,15 @@ export default function useSettings() {
         type: "application/json",
       });
 
-      // Try sharing
-      try {
-        await navigator.share({
-          title: "Charts Data",
-          files: [file],
-        });
-      } catch (shareError) {
-        console.warn("Share failed, falling back to download:", shareError);
-        handleExport();
-      }
+      await navigator.share({
+        title: "Charts Data",
+        files: [file],
+      });
     } catch (error) {
       console.error("Failed to process share/export:", error);
       // 에러 발생 시 export 시도
-      try {
-        handleExport();
-      } catch (exportError) {
-        console.error("Failed to export as fallback:", exportError);
-      }
+    } finally {
+      handleExport();
     }
   };
   const handleServerButtonClick = async () => {
