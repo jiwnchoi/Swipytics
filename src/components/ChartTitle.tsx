@@ -33,16 +33,17 @@ export default function ChartTitle({ chart, ...props }: ChartTitleProps) {
         </Text>
       )}
       {fields.length > 2 && (
-        <Text as={"span"} fontWeight={400}>
-          {i18n.language === "ko"
-            ? `${josa.pick(getOnlyKorean(fields[1].name), "와/과")} `
-            : " and "}
-        </Text>
-      )}
-      {fields.length > 2 && (
-        <Text as={"span"} fontWeight={600} color={accentSelectedHover}>
-          {`${fields[2].name}`}
-        </Text>
+        <>
+          <Text as={"span"} fontWeight={400}>
+            {i18n.language === "ko" ? `, ` : `, colored by `}
+          </Text>
+          <Text as={"span"} fontWeight={600} color={accentSelectedHover}>
+            {fields[2].name}
+          </Text>
+          <Text as={"span"} fontWeight={400}>
+            {i18n.language === "ko" ? `에 따라 색칠` : ``}
+          </Text>
+        </>
       )}
     </Text>
   );

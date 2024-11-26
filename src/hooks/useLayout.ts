@@ -29,7 +29,7 @@ export default function useLayout() {
   })!;
 
   const [chartWidth, chartHeight] = useBreakpointValue({
-    base: [window.innerWidth - 64, Math.min(window.innerHeight - 350, 500)],
+    base: [window.innerWidth - 64, Math.min(window.innerHeight - 380, 500)],
     lg: [Math.min(window.innerWidth - 250, 600), Math.min(window.innerHeight - 250, 600)],
   }) ?? [300, 300];
 

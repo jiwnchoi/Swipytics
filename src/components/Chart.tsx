@@ -126,6 +126,7 @@ function Chart({ chart, ...props }: ChartProps) {
               data-log-click={`temporal_select-${unit}`}
               colorScheme={PRIMARY_COLOR}
               size={"md"}
+              p={1}
               onClick={() => setTimeUnit(unit)}
               w="full">
               {i18n.language === "ko"

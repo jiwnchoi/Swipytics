@@ -119,7 +119,7 @@ export default function useSettings() {
       const blob = new Blob([JSON.stringify(filteredCharts, null, 2)], {
         type: "application/json",
       });
-      const file = new File([blob], "charts.json", {
+      const file = new File([blob], `${useSessionsStore.getState().filename}.json`, {
         type: "application/json",
       });
 
@@ -129,11 +129,13 @@ export default function useSettings() {
       });
     } catch (error) {
       console.error("Failed to process share/export:", error);
-      // 에러 발생 시 export 시도
-    } finally {
-      handleExport();
+
+      if (!(error instanceof DOMException && error.name === "AbortError")) {
+        handleExport();
+      }
     }
   };
+
   const handleServerButtonClick = async () => {
     if (!router) return;
     const newType = python === "pyodide" ? "server" : "pyodide";

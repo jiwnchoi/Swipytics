@@ -2,7 +2,9 @@
   "bookmarks": {
     "action": "좋아요",
     "empty": "좋아요 없음",
-    "title": "좋아요"
+    "title": "좋아요",
+    "sort_newest": "최신순",
+    "sort_oldest": "오래된순"
   },
   "fields": {
     "title": "필드"
