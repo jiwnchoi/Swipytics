@@ -2,7 +2,9 @@
   "bookmarks": {
     "action": "Like",
     "empty": "No Likes",
-    "title": "Likes"
+    "title": "Likes",
+    "sort_newest": "Newest",
+    "sort_oldest": "Oldest"
   },
   "fields": {
     "title": "Fields"
