@@ -77,7 +77,8 @@ export default function useSettings() {
         });
       });
   };
-  const handleExport = () => {
+
+  const getSessionBlob = () => {
     const charts = useSessionsStore.getState().charts;
     const filteredCharts = charts.map((chart) => ({
       title: chart.title,
@@ -86,14 +87,17 @@ export default function useSettings() {
       generatedBy: chart.generatedBy,
     }));
 
-    const blob = new Blob([JSON.stringify(filteredCharts, null, 2)], {
+    return new Blob([JSON.stringify(filteredCharts, null, 2)], {
       type: "application/json",
     });
+  };
+  const handleExport = () => {
+    const blob = getSessionBlob();
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "charts.json";
+    a.download = `${currentFilename}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -108,18 +112,8 @@ export default function useSettings() {
         return;
       }
 
-      const charts = useSessionsStore.getState().charts;
-      const filteredCharts = charts.map((chart) => ({
-        title: chart.title,
-        n_fields: chart.fields.length,
-        preferred: chart.preferred,
-        generatedBy: chart.generatedBy,
-      }));
-
-      const blob = new Blob([JSON.stringify(filteredCharts, null, 2)], {
-        type: "application/json",
-      });
-      const file = new File([blob], `${useSessionsStore.getState().filename}.json`, {
+      const blob = getSessionBlob();
+      const file = new File([blob], `${currentFilename}.json`, {
         type: "application/json",
       });
       await navigator.share({
