@@ -1,0 +1,66 @@
+[
+  {
+    "title": "연비",
+    "n_fields": 1,
+    "preferred": false
+  },
+  {
+    "title": "제조국",
+    "n_fields": 1,
+    "preferred": false
+  },
+  {
+    "title": "실린더 수",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "생산 연도",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "무게 (파운드)",
+    "n_fields": 1,
+    "preferred": true,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "배기량",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "배기량 & 무게 (파운드)",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "무게 (파운드) & 생산 연도",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "무게 (파운드) & 가속 성능",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "실린더 수",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "배기량 & 생산 연도",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  }
+]

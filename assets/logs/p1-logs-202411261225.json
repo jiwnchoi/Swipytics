@@ -1,0 +1,6716 @@
+[
+  {
+    "timestamp": 1732590035449,
+    "key": "select-locale",
+    "event": "change",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590038981,
+    "key": "select-locale",
+    "event": "change",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590049210,
+    "key": "select-demo",
+    "event": "change",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590052567,
+    "key": "select-demo",
+    "event": "change",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590053306,
+    "key": "load_demo",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590053333,
+    "key": "data_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "filename",
+        "value": "barley.json"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590053345,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "filename",
+        "value": "barley.json"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590053396,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.0",
+        "value": {
+          "title": "site",
+          "preferred": false,
+          "timestamp": 1732590053398
+        }
+      },
+      {
+        "path": "charts.1",
+        "value": {
+          "title": "variety",
+          "preferred": false,
+          "timestamp": 1732590053403
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590053458,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590054629,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590054630,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 1
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590054654,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.2",
+        "value": {
+          "title": "year",
+          "preferred": false,
+          "timestamp": 1732590054668,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590055629,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": -1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590055635,
+    "key": "settings_button",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590056747,
+    "key": "refresh_app",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590423149,
+    "key": "select-demo",
+    "event": "change",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590424584,
+    "key": "load_demo",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590424699,
+    "key": "data_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "filename",
+        "value": "cars_ko.json"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590424712,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "filename",
+        "value": "cars_ko.json"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590424760,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.0",
+        "value": {
+          "title": "연비",
+          "preferred": false,
+          "timestamp": 1732590424761
+        }
+      },
+      {
+        "path": "charts.1",
+        "value": {
+          "title": "제조국",
+          "preferred": false,
+          "timestamp": 1732590424770
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590424812,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590462283,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590462284,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 1
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590462356,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.2",
+        "value": {
+          "title": "실린더 수",
+          "preferred": false,
+          "timestamp": 1732590462365,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590462882,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590462883,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 2
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590462921,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.3",
+        "value": {
+          "title": "생산 연도",
+          "preferred": false,
+          "timestamp": 1732590462924,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590463514,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590463515,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 3
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590463550,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.4",
+        "value": {
+          "title": "무게 (파운드)",
+          "preferred": false,
+          "timestamp": 1732590463555,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590463832,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590463833,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590463860,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.5",
+        "value": {
+          "title": "배기량",
+          "preferred": false,
+          "timestamp": 1732590463873,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590464564,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590464565,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 3
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590465798,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590465799,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590466081,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590466082,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 5
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590466112,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.6",
+        "value": {
+          "title": "가속 성능",
+          "preferred": false,
+          "timestamp": 1732590466122,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590467164,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590467165,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590470742,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.4.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.6"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590470793,
+    "key": "prefer_chart",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590470794,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.6",
+        "value": {
+          "title": "무게 (파운드) & 제조국",
+          "preferred": false,
+          "timestamp": 1732590470805,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590472751,
+    "key": "prefer_chart",
+    "event": "double_tap",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590472755,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.4.preferred",
+        "value": false
+      },
+      {
+        "path": "charts.6"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590472786,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.6",
+        "value": {
+          "title": "마력",
+          "preferred": false,
+          "timestamp": 1732590472798,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590473486,
+    "key": "prefer_chart",
+    "event": "double_tap",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590473492,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.4.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.6"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590473529,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.6",
+        "value": {
+          "title": "배기량 & 무게 (파운드)",
+          "preferred": false,
+          "timestamp": 1732590473532,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590482170,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590482171,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 5
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590482849,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590482850,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590484110,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590484125,
+    "key": "scroll_to_bottom",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590485848,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 6
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590485849,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 6
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590485879,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.7",
+        "value": {
+          "title": "무게 (파운드) & 생산 연도",
+          "preferred": false,
+          "timestamp": 1732590485889,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590486899,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590486900,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 7
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590486934,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.8",
+        "value": {
+          "title": "무게 (파운드) & 가속 성능",
+          "preferred": false,
+          "timestamp": 1732590486946,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590490327,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590490365,
+    "key": "tab-likes",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590491462,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590491492,
+    "key": "tab-charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590494456,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590494457,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590494491,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.9",
+        "value": {
+          "title": "마력 & 무게 (파운드)",
+          "preferred": false,
+          "timestamp": 1732590494498,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590496290,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590506356,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590506358,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590508476,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590508518,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590508676,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590510523,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "배기량"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590510550,
+    "key": "search_tag-배기량",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590511470,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "가속 성능"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590511488,
+    "key": "search_tag-가속 성능",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590513170,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.2",
+        "value": "생산 연도"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590513190,
+    "key": "search_tag-생산 연도",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590514173,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.2"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590514194,
+    "key": "search_tag-생산 연도",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590514553,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "배기량"
+      },
+      {
+        "path": "searchTargetFieldNames.1"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590514572,
+    "key": "search_tag-가속 성능",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590515198,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590515202,
+    "key": "search_tag-배기량",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590518156,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590518179,
+    "key": "tab-likes",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590518978,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590518991,
+    "key": "move_to_preferred_chart-무게 (파운드)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590519130,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590520434,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590520435,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 3
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590521534,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590521535,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 2
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590522552,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590524844,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590524860,
+    "key": "scroll_to_bottom",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590526404,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590526405,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 7
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590526920,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 6
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590527353,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590527853,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590527854,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590528320,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590528321,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 3
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590528753,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590528754,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 2
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590529237,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590530954,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590530955,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 0
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590531687,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": -1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590533288,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590544577,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590544596,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590545324,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "실린더 수"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590545335,
+    "key": "search_tag-실린더 수",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590546192,
+    "key": "append_discovered_chart-실린더 수",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590546218,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.9.title",
+        "value": "실린더 수"
+      },
+      {
+        "path": "charts.9.timestamp",
+        "value": 1732590546217
+      },
+      {
+        "path": "charts.9.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.10",
+        "value": {
+          "title": "배기량 & 생산 연도",
+          "preferred": false,
+          "timestamp": 1732590546229,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 9
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590546246,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590546247,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590548758,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590548780,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590550830,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "무게 (파운드)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590550848,
+    "key": "search_tag-무게 (파운드)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590551722,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590551752,
+    "key": "tab-charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590552402,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590552427,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590574171,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": -1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590574181,
+    "key": "settings_button",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590576777,
+    "key": "share_charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590625169,
+    "key": "refresh_app",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590628511,
+    "key": "select-demo",
+    "event": "change",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590629456,
+    "key": "load_demo",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590629654,
+    "key": "data_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "filename",
+        "value": "movies_ko.json"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590629660,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "filename",
+        "value": "movies_ko.json"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590630071,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.0",
+        "value": {
+          "title": "IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732590629952
+        }
+      },
+      {
+        "path": "charts.1",
+        "value": {
+          "title": "개봉일",
+          "preferred": false,
+          "timestamp": 1732590629994
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590630123,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590662008,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590662009,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 1
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590662096,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.2",
+        "value": {
+          "title": "로튼 토마토 평점",
+          "preferred": false,
+          "timestamp": 1732590662106,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590663291,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590663292,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 0
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590679001,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590684124,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590688413,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": -1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590689080,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590690330,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590690646,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590693297,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590694196,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590694287,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.3",
+        "value": {
+          "title": "IMDB 평점",
+          "preferred": false,
+          "timestamp": 1732590694295,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590701774,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590701839,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.4",
+        "value": {
+          "title": "영화 관람 등급",
+          "preferred": false,
+          "timestamp": 1732590701849,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590703944,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590704006,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.5",
+        "value": {
+          "title": "창작 유형",
+          "preferred": false,
+          "timestamp": 1732590704016,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590705075,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590705342,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590705926,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590706157,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590706158,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 0
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590708585,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590708586,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 1
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590711965,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590715582,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590723342,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590731052,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590731119,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.6",
+        "value": {
+          "title": "상영 시간 (분)",
+          "preferred": false,
+          "timestamp": 1732590731128,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590735692,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590735693,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590738259,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590738260,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 3
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590738625,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590738626,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590741461,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590742179,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 6
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590742243,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.7",
+        "value": {
+          "title": "미국 수익 ($)",
+          "preferred": false,
+          "timestamp": 1732590742252,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590745850,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590745851,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 7
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590745916,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.8",
+        "value": {
+          "title": "제작 예산 ($)",
+          "preferred": false,
+          "timestamp": 1732590745925,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590757816,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590757817,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590757882,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.9",
+        "value": {
+          "title": "전세계 수익 ($)",
+          "preferred": false,
+          "timestamp": 1732590757890,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590758430,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590761099,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590761100,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590769227,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 9
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590769292,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.10",
+        "value": {
+          "title": "미국 DVD 판매 ($)",
+          "preferred": false,
+          "timestamp": 1732590769301,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590773529,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590773530,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590773928,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590774496,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 6
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590774728,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590775762,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590775763,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590776179,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 9
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590777028,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 10
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590777029,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 10
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590777093,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.11",
+        "value": {
+          "title": "미국 DVD 판매 ($) & 제작 예산 ($)",
+          "preferred": false,
+          "timestamp": 1732590777103,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590782269,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 11
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590782335,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.12",
+        "value": {
+          "title": "전세계 수익 ($) & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732590782342,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590790027,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 12
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590790028,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 12
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590790092,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.13",
+        "value": {
+          "title": "미국 DVD 판매 ($) & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732590790101,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590793329,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590793381,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590797760,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "IMDB 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590797799,
+    "key": "search_tag-IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590798514,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "IMDB 투표수"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590798534,
+    "key": "search_tag-IMDB 투표수",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590799736,
+    "key": "append_discovered_chart-IMDB 평점 & IMDB 투표수",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590799802,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.13.title",
+        "value": "IMDB 평점 & IMDB 투표수"
+      },
+      {
+        "path": "charts.13.timestamp",
+        "value": 1732590799801
+      },
+      {
+        "path": "charts.13.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.14",
+        "value": {
+          "title": "미국 DVD 판매 ($) & IMDB 평점",
+          "preferred": false,
+          "timestamp": 1732590799809,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 13
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590799829,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590809269,
+    "key": "tab-charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590810165,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590810204,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590810766,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590810799,
+    "key": "tab-charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590811357,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 12
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590811358,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 12
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590811924,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 11
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590812351,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 13
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590812361,
+    "key": "scroll_to_bottom",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590812363,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 11
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590812999,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 13
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590813008,
+    "key": "scroll_to_bottom",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590813990,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 12
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590814340,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 11
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590817203,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590817231,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590819200,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590819219,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590820469,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "전세계 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590820479,
+    "key": "search_tag-전세계 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590821232,
+    "key": "append_discovered_chart-미국 수익 ($) & 전세계 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590821298,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.14.title",
+        "value": "미국 수익 ($) & 전세계 수익 ($)"
+      },
+      {
+        "path": "charts.14.timestamp",
+        "value": 1732590821297
+      },
+      {
+        "path": "charts.14.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.15",
+        "value": {
+          "title": "창작 유형 & IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732590821307,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 14
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590821326,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590822586,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590822619,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590824821,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590824846,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590825186,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "상영 시간 (분)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590825202,
+    "key": "search_tag-상영 시간 (분)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590826246,
+    "key": "append_discovered_chart-미국 수익 ($) & 상영 시간 (분)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590826312,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.15.title",
+        "value": "미국 수익 ($) & 상영 시간 (분)"
+      },
+      {
+        "path": "charts.15.timestamp",
+        "value": 1732590826311
+      },
+      {
+        "path": "charts.15.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.16",
+        "value": {
+          "title": "미국 수익 ($) & IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732590826320,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 15
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590826337,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590844059,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 16
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590844060,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 16
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590844129,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.17",
+        "value": {
+          "title": "미국 수익 ($) & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732590844137,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590844734,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590844754,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590847060,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "IMDB 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590847082,
+    "key": "search_tag-IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590848250,
+    "key": "append_discovered_chart-IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590848319,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.17.title",
+        "value": "IMDB 평점"
+      },
+      {
+        "path": "charts.17.timestamp",
+        "value": 1732590848318
+      },
+      {
+        "path": "charts.17.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.18",
+        "value": {
+          "title": "전세계 수익 ($) & IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732590848327,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 17
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590848345,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590848418,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 16
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590850203,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590850233,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590855975,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "개봉일"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590855993,
+    "key": "search_tag-개봉일",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590858823,
+    "key": "append_discovered_chart-개봉일",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590858888,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.18.title",
+        "value": "개봉일"
+      },
+      {
+        "path": "charts.18.timestamp",
+        "value": 1732590858887
+      },
+      {
+        "path": "charts.18.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.19",
+        "value": {
+          "title": "개봉일 & IMDB 평점",
+          "preferred": false,
+          "timestamp": 1732590858897,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 18
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590858919,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590861804,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590861838,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590862922,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "개봉일"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590862938,
+    "key": "search_tag-개봉일",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590863627,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590863644,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590864672,
+    "key": "append_discovered_chart-미국 수익 ($) & 개봉일",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590864740,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.19.title",
+        "value": "미국 수익 ($) & 개봉일"
+      },
+      {
+        "path": "charts.19.timestamp",
+        "value": 1732590864739
+      },
+      {
+        "path": "charts.19.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.20",
+        "value": {
+          "title": "전세계 수익 ($) & 개봉일",
+          "preferred": false,
+          "timestamp": 1732590864748,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 19
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590864765,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590864766,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0"
+      },
+      {
+        "path": "searchTargetFieldNames.1"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590881713,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590881748,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590882823,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590882847,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590883736,
+    "key": "append_discovered_chart-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590883804,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.20.title",
+        "value": "미국 수익 ($)"
+      },
+      {
+        "path": "charts.20.timestamp",
+        "value": 1732590883803
+      },
+      {
+        "path": "charts.20.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.21",
+        "value": {
+          "title": "개봉일 & IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732590883812,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 20
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590883830,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590885842,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590885875,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590887010,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590887031,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590888799,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "개봉일"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590888828,
+    "key": "search_tag-개봉일",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590889787,
+    "key": "append_discovered_chart-미국 수익 ($) & 개봉일",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590889858,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.21.title",
+        "value": "미국 수익 ($) & 개봉일"
+      },
+      {
+        "path": "charts.21.timestamp",
+        "value": 1732590889857
+      },
+      {
+        "path": "charts.21.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.22",
+        "value": {
+          "title": "개봉일 & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732590889866,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 21
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590889895,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590915332,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590915369,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590919041,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "로튼 토마토 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590919060,
+    "key": "search_tag-로튼 토마토 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590920310,
+    "key": "append_discovered_chart-로튼 토마토 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590920376,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.22.title",
+        "value": "로튼 토마토 평점"
+      },
+      {
+        "path": "charts.22.timestamp",
+        "value": 1732590920375
+      },
+      {
+        "path": "charts.22.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.23",
+        "value": {
+          "title": "개봉일 & 로튼 토마토 평점",
+          "preferred": false,
+          "timestamp": 1732590920384,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 22
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590920405,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590923248,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590923285,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590924683,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "로튼 토마토 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590924705,
+    "key": "search_tag-로튼 토마토 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590925119,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590925137,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590926782,
+    "key": "append_discovered_chart-미국 수익 ($) & 로튼 토마토 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590926910,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.23.title",
+        "value": "미국 수익 ($) & 로튼 토마토 평점"
+      },
+      {
+        "path": "charts.23.timestamp",
+        "value": 1732590926908
+      },
+      {
+        "path": "charts.23.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.24",
+        "value": {
+          "title": "창작 유형 & 로튼 토마토 평점",
+          "preferred": false,
+          "timestamp": 1732590926865,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 23
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590926941,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590936869,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590936895,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590938504,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "로튼 토마토 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590938529,
+    "key": "search_tag-로튼 토마토 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590939258,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "IMDB 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590939278,
+    "key": "search_tag-IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590940160,
+    "key": "append_discovered_chart-로튼 토마토 평점 & IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590940287,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.24.title",
+        "value": "로튼 토마토 평점 & IMDB 평점"
+      },
+      {
+        "path": "charts.24.timestamp",
+        "value": 1732590940286
+      },
+      {
+        "path": "charts.24.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.25",
+        "value": {
+          "title": "미국 수익 ($) & IMDB 평점",
+          "preferred": false,
+          "timestamp": 1732590940290,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590940316,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590953783,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590953784,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 25
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590953969,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.26",
+        "value": {
+          "title": "로튼 토마토 평점 & IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732590953871,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590954867,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590955200,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590955201,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 25
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590956985,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590956986,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 24
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590957651,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590959652,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590964207,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590964208,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 25
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590965057,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 26
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590965144,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.27",
+        "value": {
+          "title": "창작 유형 & IMDB 평점",
+          "preferred": false,
+          "timestamp": 1732590965139,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590969112,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 27
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590969113,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 27
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732590969217,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.28",
+        "value": {
+          "title": "상영 시간 (분) & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732590969195,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590974821,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590974856,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590976581,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "창작 유형"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590976598,
+    "key": "search_tag-창작 유형",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590977292,
+    "key": "append_discovered_chart-창작 유형",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590977372,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.28.title",
+        "value": "창작 유형"
+      },
+      {
+        "path": "charts.28.timestamp",
+        "value": 1732590977371
+      },
+      {
+        "path": "charts.28.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.29",
+        "value": {
+          "title": "상영 시간 (분) & 로튼 토마토 평점",
+          "preferred": false,
+          "timestamp": 1732590977380,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590977396,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590982998,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590983033,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590984754,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "창작 유형"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590984778,
+    "key": "search_tag-창작 유형",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590985660,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "영화 관람 등급"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590985679,
+    "key": "search_tag-영화 관람 등급",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590986540,
+    "key": "append_discovered_chart-영화 관람 등급 & 창작 유형",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732590986618,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.29.title",
+        "value": "영화 관람 등급 & 창작 유형"
+      },
+      {
+        "path": "charts.29.timestamp",
+        "value": 1732590986617
+      },
+      {
+        "path": "charts.29.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.30",
+        "value": {
+          "title": "영화 관람 등급 & IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732590986625,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 29
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590986665,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590997909,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732590997941,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591006838,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591006876,
+    "key": "tab-charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591007364,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591007365,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 28
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591007672,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 27
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591009097,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 26
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591009098,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 26
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591009497,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591009947,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591009949,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 24
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591010130,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 23
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591010131,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 23
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591010380,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 22
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591010381,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 22
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591010597,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 21
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591010897,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 20
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591011114,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 19
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591011115,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 19
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591011364,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 18
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591011624,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 17
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591011847,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 16
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591012097,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 15
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591012098,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 15
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591012318,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 14
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591012547,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 13
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591012548,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 13
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591012764,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 12
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591012997,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 11
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591013231,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 10
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591013480,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 9
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591013682,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591013683,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591013947,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591014180,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 6
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591014430,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591014431,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 5
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591014648,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591014914,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591015163,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591015164,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 2
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591015430,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591015696,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591015697,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 0
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591017549,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591017550,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 1
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591018030,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591018031,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 0
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591020102,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591020732,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591021398,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591021399,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 1
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591023049,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591023050,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 2
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591023633,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591023634,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 1
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591025467,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591027051,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591027052,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 3
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591054142,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591054143,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591055191,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 3
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591055941,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591055942,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591057709,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591057959,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 4
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591057960,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 4
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591059277,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 5
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591059278,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 5
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591062026,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 6
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591065230,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591065231,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 7
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591066897,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591066898,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591077255,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591077256,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 7
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591077770,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591077771,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591078471,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 7
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591078473,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 7
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591079488,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 8
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591079489,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 8
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591080287,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 9
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591081872,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 10
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591082854,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 9
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591082855,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 9
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591083462,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591083481,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591085560,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "제작 예산 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591085591,
+    "key": "search_tag-제작 예산 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591086151,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591086169,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591087883,
+    "key": "append_discovered_chart-미국 수익 ($) & 제작 예산 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591087960,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.30.title",
+        "value": "미국 수익 ($) & 제작 예산 ($)"
+      },
+      {
+        "path": "charts.30.timestamp",
+        "value": 1732591087958
+      },
+      {
+        "path": "charts.30.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.31",
+        "value": {
+          "title": "영화 관람 등급 & 로튼 토마토 평점",
+          "preferred": false,
+          "timestamp": 1732591087966,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 30
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591087986,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591088090,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 9
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591088091,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 9
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591089720,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591089753,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591091588,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "제작 예산 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591091609,
+    "key": "search_tag-제작 예산 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591092290,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591092311,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591093359,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.2",
+        "value": "전세계 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591093390,
+    "key": "search_tag-전세계 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591095514,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "제작 예산 ($)"
+      },
+      {
+        "path": "searchTargetFieldNames.2"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591095536,
+    "key": "search_tag-전세계 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591095910,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "제작 예산 ($)"
+      },
+      {
+        "path": "searchTargetFieldNames.1"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591095932,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591096780,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "전세계 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591096797,
+    "key": "search_tag-전세계 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591100163,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "제작 예산 ($)"
+      },
+      {
+        "path": "searchTargetFieldNames.1"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591100184,
+    "key": "search_tag-전세계 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591100951,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "미국 수익 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591100968,
+    "key": "search_tag-미국 수익 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591102606,
+    "key": "append_discovered_chart-미국 수익 ($) & 제작 예산 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591102681,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.31.title",
+        "value": "미국 수익 ($) & 제작 예산 ($)"
+      },
+      {
+        "path": "charts.31.timestamp",
+        "value": 1732591102681
+      },
+      {
+        "path": "charts.31.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.32",
+        "value": {
+          "title": "제작 예산 ($) & IMDB 투표수",
+          "preferred": false,
+          "timestamp": 1732591102687,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 31
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591102711,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591108682,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 30
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591108683,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 30
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591111514,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 31
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591112697,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 30
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591113780,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 31
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591113781,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 31
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591114513,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 30
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591114514,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 30
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591115330,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 29
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591117481,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591117482,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 28
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591124069,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 27
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591127422,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591128263,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 27
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591129038,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 26
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591129040,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 26
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591132289,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591132290,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 25
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591143334,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 26
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591151757,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591151758,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 25
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591153425,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591155157,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 23
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591160742,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 22
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591160743,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 22
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591161843,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 21
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591163642,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 20
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591163643,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 20
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591168581,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 19
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591168582,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 19
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591169847,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 18
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591169848,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 18
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591171297,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 19
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591171298,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 19
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591180906,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591180944,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591184552,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "제작 예산 ($)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591184577,
+    "key": "search_tag-제작 예산 ($)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591186191,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "IMDB 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591186210,
+    "key": "search_tag-IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591187778,
+    "key": "append_discovered_chart-제작 예산 ($) & IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591187856,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.32.title",
+        "value": "제작 예산 ($) & IMDB 평점"
+      },
+      {
+        "path": "charts.32.timestamp",
+        "value": 1732591187855
+      },
+      {
+        "path": "charts.32.generatedBy",
+        "value": "append"
+      },
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "영화 관람 등급 & IMDB 평점",
+          "preferred": false,
+          "timestamp": 1732591187863,
+          "generatedBy": "scroll"
+        }
+      },
+      {
+        "path": "currentChartIndex",
+        "value": 32
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591187880,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591208301,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 2
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591208340,
+    "key": "tab-likes",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591209145,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591209185,
+    "key": "tab-charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591209679,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 1
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591209713,
+    "key": "tab-search",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591212231,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "상영 시간 (분)"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591212248,
+    "key": "search_tag-상영 시간 (분)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591213234,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "IMDB 평점"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591213252,
+    "key": "search_tag-IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591214735,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.2",
+        "value": "IMDB 투표수"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591214759,
+    "key": "search_tag-IMDB 투표수",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591215903,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "IMDB 평점"
+      },
+      {
+        "path": "searchTargetFieldNames.1",
+        "value": "상영 시간 (분)"
+      },
+      {
+        "path": "searchTargetFieldNames.2"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591215926,
+    "key": "search_tag-IMDB 투표수",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591216403,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0",
+        "value": "상영 시간 (분)"
+      },
+      {
+        "path": "searchTargetFieldNames.1"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591216423,
+    "key": "search_tag-IMDB 평점",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591216855,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "searchTargetFieldNames.0"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591216870,
+    "key": "search_tag-상영 시간 (분)",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591218889,
+    "key": "interaction_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "tabIndex",
+        "value": 0
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591218933,
+    "key": "tab-charts",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591219850,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 31
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591219851,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 31
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591220931,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 30
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591223317,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 29
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591223318,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 29
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591224400,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591228951,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 27
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591230085,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 26
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591230086,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 26
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591232769,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591232771,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 25
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591236315,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 32
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591236327,
+    "key": "scroll_to_bottom",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591238979,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.32.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.33"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591238990,
+    "key": "prefer_chart",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591239071,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "제작 예산 ($) & 영화 관람 등급",
+          "preferred": false,
+          "timestamp": 1732591239078,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591239608,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 31
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591239609,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 31
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591242477,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 32
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591243610,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 31
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591246167,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.31.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.33"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591246180,
+    "key": "prefer_chart",
+    "event": "click",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591246246,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "제작 예산 ($) & 로튼 토마토 평점",
+          "preferred": false,
+          "timestamp": 1732591246253,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591254839,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 30
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591254840,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 30
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591266956,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 29
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591266958,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 29
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591268590,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591268591,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 28
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591269473,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 29
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591269474,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 29
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591271030,
+    "key": "prefer_chart",
+    "event": "double_tap",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591271035,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.29.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.33"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591271109,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "미국 수익 ($) & 영화 관람 등급",
+          "preferred": false,
+          "timestamp": 1732591271115,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591271592,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591271593,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 28
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591274075,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 29
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591274724,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591274725,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 28
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591276741,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 27
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591276742,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 27
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591278208,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 28
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591278210,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 28
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591279892,
+    "key": "prefer_chart",
+    "event": "double_tap",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591279898,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.28.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.33"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591279977,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "제작 예산 ($) & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732591279981,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591281160,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 27
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591283561,
+    "key": "prefer_chart",
+    "event": "double_tap",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591283566,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.27.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.33"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591283648,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "제작 예산 ($) & IMDB 평점 & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732591283655,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591284181,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 26
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591284182,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 26
+    },
+    "version": 1
+  },
+  {
+    "timestamp": 1732591286297,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 25
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591287814,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591289016,
+    "key": "prefer_chart",
+    "event": "double_tap",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591289022,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.24.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.33"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591289102,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "미국 수익 ($) & 제작 예산 ($) & 창작 유형",
+          "preferred": false,
+          "timestamp": 1732591289105,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591289465,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 23
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591290947,
+    "key": "prefer_chart",
+    "event": "double_tap",
+    "version": 1
+  },
+  {
+    "timestamp": 1732591290948,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.23.preferred",
+        "value": true
+      },
+      {
+        "path": "charts.33"
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591291026,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "charts.33",
+        "value": {
+          "title": "영화 관람 등급 & 창작 유형 & 제작 예산 ($)",
+          "preferred": false,
+          "timestamp": 1732591291034,
+          "generatedBy": "scroll"
+        }
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591291498,
+    "key": "session_store",
+    "event": "state",
+    "data": [
+      {
+        "path": "currentChartIndex",
+        "value": 24
+      }
+    ],
+    "version": 1
+  },
+  {
+    "timestamp": 1732591291499,
+    "key": "chart_container",
+    "event": "scroll",
+    "data": {
+      "chartIndex": 24
+    },
+    "version": 1
+  }
+]
