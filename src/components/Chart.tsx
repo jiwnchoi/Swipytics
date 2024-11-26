@@ -123,6 +123,7 @@ function Chart({ chart, ...props }: ChartProps) {
               variant={timeUnit === unit ? "solid" : "outline"}
               m={0}
               key={`temporal-select-${unit}`}
+              data-log-click={`temporal_select-${unit}`}
               colorScheme={PRIMARY_COLOR}
               size={"md"}
               onClick={() => setTimeUnit(unit)}
