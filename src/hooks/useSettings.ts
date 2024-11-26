@@ -122,7 +122,6 @@ export default function useSettings() {
       const file = new File([blob], `${useSessionsStore.getState().filename}.json`, {
         type: "application/json",
       });
-
       await navigator.share({
         title: "Charts Data",
         files: [file],

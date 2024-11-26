@@ -195,7 +195,9 @@ class LoggerClient {
       } catch (shareError) {
         console.error("Failed to share using Web Share API:", shareError);
         // Web Share API failed, fallback to export
-        // await this.export();
+        if (!(shareError instanceof DOMException && shareError.name === "AbortError")) {
+          await this.export();
+        }
       }
     } catch (error) {
       console.error("Failed to process share/export:", error);
