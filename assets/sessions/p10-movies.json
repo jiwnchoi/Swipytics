@@ -1,0 +1,79 @@
+[
+  {
+    "title": "제작 예산 ($)",
+    "n_fields": 1,
+    "preferred": false
+  },
+  {
+    "title": "미국 수익 ($)",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "전세계 수익 ($)",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "미국 DVD 판매 ($)",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "제작 예산 ($) & 상영 시간 (분)",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "로튼 토마토 평점",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "IMDB 평점",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "영화 관람 등급",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "창작 유형",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "개봉일",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "창작 유형",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "영화 관람 등급",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "개봉일 & 창작 유형",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  }
+]
