@@ -8,10 +8,10 @@ from .scatterplot import scatterplot_nn, scatterplot_nn_c, scatterplot_nnn
 
 if TYPE_CHECKING:
   import altair as alt
-  import pandas as pd
   from api.models import FieldModel
+  from pandas import DataFrame
 
-ChartRenderer = Callable[["pd.DataFrame", tuple["FieldModel", ...]], "alt.Chart"]
+ChartRenderer = Callable[["DataFrame", tuple["FieldModel", ...]], "alt.Chart"]
 
 chart_map: dict[str, ChartRenderer] = {
   "categorical": barchart_c,

@@ -21,18 +21,14 @@ def relevance_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> fl
 
   recent_fields = set()
 
-  for chart in session.charts[::-1]:
-    if len(recent_fields) > 5:  # 5인 것은 Miller의 법칙 최솟값
-      break
+  for chart in session.charts[::-1][:5]:
     recent_fields.update(chart.fields)
 
   return len(set(fields) & recent_fields) / len(fields)
 
 
 def preference_score(session: SessionModel, fields: tuple[FieldModel, ...]) -> float:
-  preferred_charts = [
-    chart for chart in session.charts[::-1][: len(session.fields)] if chart.preferred
-  ]
+  preferred_charts = [chart for chart in session.charts[::-1][:5] if chart.preferred]
   preferred_scores = [
     len(set(fields) & set(chart.fields)) / len(fields) for chart in preferred_charts
   ]

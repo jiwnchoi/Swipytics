@@ -1,0 +1,114 @@
+[
+  {
+    "title": "무게 (파운드)",
+    "n_fields": 1,
+    "preferred": false
+  },
+  {
+    "title": "생산 연도",
+    "n_fields": 1,
+    "preferred": true
+  },
+  {
+    "title": "배기량",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "가속 성능",
+    "n_fields": 1,
+    "preferred": true,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "마력",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "실린더 수",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "연비 & 가속 성능",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "생산 연도 & 제조국",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "가속 성능 & 생산 연도",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "마력 & 제조국",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "연비 & 마력",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "연비 & 실린더 수",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "연비 & 생산 연도",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "실린더 수 & 가속 성능",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "실린더 수 & 생산 연도",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "가속 성능 & 제조국",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "무게 (파운드) & 가속 성능 & 연비",
+    "n_fields": 3,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "마력 & 제조국",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "append"
+  },
+  {
+    "title": "연비 & 무게 (파운드)",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  }
+]

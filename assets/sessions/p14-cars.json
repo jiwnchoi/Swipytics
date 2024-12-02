@@ -1,0 +1,36 @@
+[
+  {
+    "title": "가속 성능",
+    "n_fields": 1,
+    "preferred": false
+  },
+  {
+    "title": "생산 연도",
+    "n_fields": 1,
+    "preferred": false
+  },
+  {
+    "title": "마력",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "무게 (파운드)",
+    "n_fields": 1,
+    "preferred": false,
+    "generatedBy": "scroll"
+  },
+  {
+    "title": "무게 (파운드)",
+    "n_fields": 1,
+    "preferred": true,
+    "generatedBy": "append"
+  },
+  {
+    "title": "무게 (파운드) & 제조국",
+    "n_fields": 2,
+    "preferred": false,
+    "generatedBy": "scroll"
+  }
+]
