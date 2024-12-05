@@ -152,7 +152,7 @@ export const DEMO_LIST: TDemo[] = [
   },
   {
     name: "Cars",
-    href: `${import.meta.env.BASE_URL}/data/cars.json`,
+    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/cars.json",
   },
   {
     name: "Crimea",
@@ -164,7 +164,7 @@ export const DEMO_LIST: TDemo[] = [
   },
   {
     name: "Movies",
-    href: `${import.meta.env.BASE_URL}/data/movies.json`,
+    href: "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/movies.json",
   },
   {
     name: "Population",
